@@ -7,19 +7,29 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "precommit": "npx nuxi generate && bash minify.sh",
+    "buildbot": "node commit.js"
   },
   "dependencies": {
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.6.8",
     "lucide-vue-next": "^0.370.0",
+    "nuxt": "^3.11.2",
     "vue": "^3.4.23",
     "vue-router": "^4.3.1",
-    "vue-toastification": "^2.0.0-rc.5",
-    "nuxt": "^3.11.2"
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.0",
     "@vitejs/plugin-vue": "^4.5.2",
+    "cssnano": "^6.0.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "prettier": "3.2.4",
+    "uglify-js": "^3.17.4",
     "vite": "^5.0.13"
   }
 }

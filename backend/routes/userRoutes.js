@@ -19,12 +19,13 @@ export default (transporter) => {
     router.post('/create', (req, res) => {
         let user = createUser(req, res)
         let token = user.emailVerifyToken
+        let url = req.protocol + '://' + req.get('host')
         const mailOptions = {
             from: process.env.EMAIL_FROM_USERNAME,
             to: user.email,
             subject: 'Please verify your email',
             text: 'Please verify your email by clicking the following link: ' 
-                + process.env.FRONTEND_URL 
+                + url
                 + '/api/user/verifyemail?token=' + token 
                 + '&email=' + encodeURIComponent(user.email),
         }

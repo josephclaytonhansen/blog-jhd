@@ -42,7 +42,8 @@ if (process.env.NODE_ENV === 'development') {
     app.use(cors({origin: `http://localhost:`+ process.env.PORT}))
 }
 else if (process.env.NODE_ENV === 'production') {
-    app.use(cors({origin: process.env.FRONTEND_URL}))
+    let frontendUrls = process.env.FRONTEND_URLS.split(',')
+    app.use(cors({origin: frontendUrls}))
 
 }
 

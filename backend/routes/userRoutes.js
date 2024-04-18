@@ -8,7 +8,10 @@ import {
     anonymizeUser,
     addToUserComments,
     addToUserPosts,
-    verifyEmailUser
+    verifyEmailUser,
+    getUserByDisplayName,
+    getUserById,
+    getUserByEmail
 } from '../controllers/userController.js'
 
 const router = express.Router()
@@ -46,6 +49,9 @@ export default (transporter) => {
     router.delete('/delete/:id', deleteUser)
     router.put('/anonymize/:id', anonymizeUser)
     router.get('/verifyemail', verifyEmailUser)
+    router.get('/user/:displayName', getUserByDisplayName)
+    router.get('/id/:id', getUserById)
+    router.get('/email/:email', getUserByEmail)
 
     return router
 }

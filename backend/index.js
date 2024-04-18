@@ -38,14 +38,8 @@ app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
 
 app.use(passport.initialize())
 
-if (process.env.NODE_ENV === 'development') {
-    app.use(cors({origin: `http://localhost:`+ process.env.PORT}))
-}
-else if (process.env.NODE_ENV === 'production') {
-    let frontendUrls = process.env.FRONTEND_URLS.split(',')
-    app.use(cors({origin: frontendUrls}))
-
-}
+const frontendUrls = process.env.FRONTEND_URLS.split(',')
+app.use(cors({origin: frontendUrls}))
 
 passport.serializeUser(async function (user, done) {
     done(null, user.id)

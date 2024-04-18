@@ -170,6 +170,27 @@ const anonymizeUser = asyncHandler(async (req, res) => {
     }
 })
 
+const getUserByDisplayName = asyncHandler(async (req, res) => {
+    const user = await User.findOne({ displayName: {$eq:req.params.displayName} })
+    if (user) {
+        res.json(user._id)
+    }
+})
+
+const getUserById = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    if (user) {
+        res.json(user)
+    }
+})
+
+const getUserByEmail = asyncHandler(async (req, res) => {
+    const user = await User.findOne({ email: {$eq:req.params.email} })
+    if (user) {
+        res.json(user)
+    }
+})
+
 export {
     userLoginByEmail,
     verifyTokenUser,
@@ -179,5 +200,8 @@ export {
     anonymizeUser,
     addToUserPosts,
     addToUserComments,
-    verifyEmailUser
+    verifyEmailUser,
+    getUserByDisplayName,
+    getUserById,
+    getUserByEmail
 }

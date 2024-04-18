@@ -94,7 +94,9 @@ app.get('/health', (req, res) => {
         "secure": req.secure,
         "ip": req.ip,
         "request count": requestCount,
-
+        "authenticated": req.isAuthenticated(),
+        "user": req.user,
+        "host": req.headers.host,
     }
     res.send(r)
 })

@@ -1,5 +1,6 @@
 import express from 'express'
 import asyncHandler from "../middleware/asyncHandler.js"
+import Blog from '../models/blog.js'
 
 import {
     getCommentsByBlogPost,
@@ -43,11 +44,14 @@ export default (transporter) => {
                     await comment.save()
 
                     // Send email to the original commentor
+                    let blogPost = await Blog.findById(comment.blogPost)
+                    let blogUrl = blogPost.site + '/blog/' + blogPost.slug
+                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${reply.user.displayName}: ${reply.content}`
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: comment.user.email,
-                        subject: 'New reply to your comment',
-                        text: `A new reply has been made to your comment: ${reply.content}`,
+                        subject: 'New reply to your comment on' + blogPost.site + ': ' + blogPost.title,
+                        text: emailBody,
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {

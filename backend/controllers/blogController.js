@@ -67,6 +67,7 @@ const createBlog = asyncHandler(async (req, res) => {
         excerpt: req.body.excerpt,
         author: req.user.displayName,
         comments: [],
+        site: req.body.site,
     })
     await blog.save()
     res.status(201).json(blog)
@@ -91,6 +92,7 @@ const editBlog = asyncHandler(async (req, res) => {
         blog.metaDescription = req.body.metaDescription || blog.metaDescription
         blog.metaKeywords = req.body.metaKeywords || blog.metaKeywords
         blog.excerpt = req.body.excerpt || blog.excerpt
+        blog.site = req.body.site || blog.site
         await blog.save()
         res.json(blog)
     } else {

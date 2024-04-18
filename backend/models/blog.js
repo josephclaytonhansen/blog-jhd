@@ -16,6 +16,7 @@ const blogSchema = new mongoose.Schema({
     excerpt: String,
     author: String,
     comments: Array,
+    site: String,
 })
 
 blogSchema.pre('save', function(next) {

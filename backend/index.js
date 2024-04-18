@@ -38,7 +38,13 @@ app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
 
 app.use(passport.initialize())
 
-app.use(cors({origin: '*'}))
+if (process.env.NODE_ENV === 'development') {
+    app.use(cors({origin: `http://localhost:`+ process.env.PORT}))
+}
+else if (process.env.NODE_ENV === 'production') {
+    app.use(cors({origin: process.env.FRONTEND_URL}))
+
+}
 
 passport.serializeUser(async function (user, done) {
     done(null, user.id)
@@ -59,7 +65,7 @@ app.use(express.urlencoded({
 
 const limiter = rate_limit({
     windowMs: 15 * 60 * 1000,
-    max: 400,
+    max: 200,
     standardHeaders: true,
     legacyHeaders: false,
 })

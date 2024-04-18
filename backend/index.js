@@ -14,6 +14,9 @@ import passport from 'passport'
 import cookieParser from 'cookie-parser'
 
 import userRoutes from './routes/userRoutes.js'
+import blogRoutes from './routes/blogRoutes.js'
+import eventRoutes from './routes/eventRoutes.js'
+import articleRoutes from './routes/articleRoutes.js'
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -74,6 +77,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/user', userRoutes(transporter))
+app.use('/api/blog', blogRoutes)
+app.use('/api/event', eventRoutes)
+app.use('/api/article', articleRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)

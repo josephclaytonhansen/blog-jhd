@@ -14,12 +14,21 @@ const getBlogsByAuthor = asyncHandler(async (req, res) => {
     res.json(blogs)
 })
 const getBlogsByStatus = asyncHandler(async (req, res) => {
-    const blogs = await Blog.find({ status: {$eq:req.params.status} })
-    res.json(blogs)
+    const blogs = await Blog.find({ status: {$eq:req.body.status} })
+    if (req.isAuthenticated()) {
+        if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+            return res.status(403).send('Not authorized')
+        } else {
+            res.json(blogs)
+        
+        }
+    } else {
+        return res.status(403).send('Not authorized')
+    }
 })
 const getBlogsByDate = asyncHandler(async (req, res) => {
-    let startDate = new Date(req.params.start_date)
-    let endDate = new Date(req.params.end_date)
+    let startDate = new Date(req.body.start_date)
+    let endDate = new Date(req.body.end_date)
     const blogs = await Blog.find({ date: {$gte:startDate, $lte:endDate} })
     res.json(blogs)
 })
@@ -136,6 +145,11 @@ const deleteCommentFromBlog = asyncHandler(async (req, res) => {
     }
 })
 
+const getBlogsByTag = asyncHandler(async (req, res) => {
+    const blogs = await Blog.find({ tags: {$eq:req.params.tag} })
+    res.json(blogs)
+})
+
 export {
     getBlogs,
     getBlogsByCategory,
@@ -148,5 +162,6 @@ export {
     deleteBlog,
     addCommentToBlog,
     deleteCommentFromBlog,
-    getBlogById
+    getBlogById,
+    getBlogsByTag
 }

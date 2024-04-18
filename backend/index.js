@@ -1,4 +1,5 @@
 import db from './mongo.js'
+import User from './models/user.js'
 
 import express from 'express'
 
@@ -34,6 +35,8 @@ const transporter = nodemailer.createTransport({
 
 const startUpTime = new Date().getTime()
 let requestCount = 0
+const requests = []
+const removedUsers = []
 
 const app = express()
 app.disable('x-powered-by')
@@ -79,6 +82,14 @@ app.use(limiter)
 app.use((req, res, next) => {
     requestCount++
     res.setHeader('Referrer-Policy', 'no-referrer')
+    requests.push({
+        url: req.originalUrl,
+        method: req.method,
+        ip: req.ip,
+        rate_limit: req.rateLimit,
+        authenticated: req.isAuthenticated(),
+        user: req.user,
+    })
     next()
 })
 
@@ -101,11 +112,45 @@ app.get('/health', (req, res) => {
     res.send(r)
 })
 
+app.get('/requests', (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== 'admin') {
+        return res.status(403).send('Not authorized')
+    }
+    res.json(requests)
+})
+
+app.get('/removed-users', (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== 'admin') {
+        return res.status(403).send('Not authorized')
+    }
+    res.json(removedUsers)
+})
+
 app.use('/user', userRoutes(transporter))
 app.use('/blog', blogRoutes)
 app.use('/event', eventRoutes)
 app.use('/article', articleRoutes)
 app.use('/comment', commentRoutes(transporter))
+
+cron.schedule('0 0 * * 0', async () => {
+    console.log('Clearing requests')
+    requests = []
+})
+
+cron.schedule('0 0 1 * *', async () => {
+    console.log('Pruning unverified users')
+    let users = await User.find({
+        role: 'unverified-user',
+        createdAt: {
+            $lt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7)
+        }})
+    users.forEach(async (user) => {
+        console.log('Removing user ' + user.displayName)
+        removedUsers.push(user)
+        await user.remove()
+
+    })
+})
 
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)

@@ -36,7 +36,7 @@ export default (transporter) => {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: comment.user.email,
                         subject: 'Your comment has been flagged',
-                        text: 'Your comment has been flagged and is not currently visible on the site:\n ' + comment.content + "\nComments may be flagged for a variety of reasons, including but not limited to: inappropriate language, personal attacks, or spam. If you believe this was done in error, please contact the site administrator.",
+                        text: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "\nComments may be flagged for a variety of reasons, including but not limited to: inappropriate language, personal attacks, or spam. If you believe this was done in error, please contact the site administrator.\n\nThis is an automated message, do not reply.",
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
@@ -80,7 +80,7 @@ export default (transporter) => {
                     // Send email to the original commentor
                     let blogPost = await Blog.findById(comment.blogPost)
                     let blogUrl = blogPost.site + '/blog/' + blogPost.slug
-                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${reply.user.displayName}: ${reply.content}`
+                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${reply.user.displayName}: ${reply.content}\nIf you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.\n\nThis is an automated message, do not reply.`
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: comment.user.email,

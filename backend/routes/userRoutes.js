@@ -27,10 +27,12 @@ export default (transporter) => {
             from: process.env.EMAIL_FROM_USERNAME,
             to: user.email,
             subject: 'Please verify your email',
-            text: 'Please verify your email by clicking the following link: ' 
+            text: 'Please verify your email by clicking the following link: <a href = "' 
                 + url
                 + '/api/user/verifyemail?token=' + token 
-                + '&email=' + encodeURIComponent(user.email),
+                + '&email=' + encodeURIComponent(user.email)
+                + '">Verify Email</a>\nIf you did not create an account on hansenstudios.art or blog.josephhansen.dev, please ignore this email.'
+                + '\n\nThis is an automated message, do not reply.'
         }
         
         transporter.sendMail(mailOptions, function(error, info){

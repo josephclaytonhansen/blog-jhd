@@ -1,0 +1,16 @@
+import mongoose from 'mongoose'
+
+const commentSchema = new mongoose.Schema({
+    content: String,
+    date: Date,
+    user: String,
+    visible: Boolean,
+    replies: Array,
+    nestedLevel: Number,
+    blogPost: String,
+    flagged: Boolean,
+})
+
+const Comment = mongoose.model('commentSchema', commentSchema)
+
+export default Comment

@@ -17,6 +17,7 @@ import userRoutes from './routes/userRoutes.js'
 import blogRoutes from './routes/blogRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
 import articleRoutes from './routes/articleRoutes.js'
+import commentRoutes from './routes/commentRoutes.js'
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -80,6 +81,7 @@ app.use('/api/user', userRoutes(transporter))
 app.use('/api/blog', blogRoutes)
 app.use('/api/event', eventRoutes)
 app.use('/api/article', articleRoutes)
+app.use('/api/comment', commentRoutes(transporter))
 
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)

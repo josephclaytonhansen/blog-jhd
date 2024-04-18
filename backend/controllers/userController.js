@@ -1,18 +1,29 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import User from '../models/user.js'
-import { createToken, verifyToken } from './jwt.js'
+import {
+    createToken,
+    verifyToken
+} from './jwt.js'
 import jwt from 'jsonwebtoken'
 
 const userLoginByEmail = asyncHandler(async (req, res) => {
-    const user = await User.findOne({ email: {$eq:req.body.email} })
+    const user = await User.findOne({
+        email: {
+            $eq: req.body.email
+        }
+    })
     if (user && user.validPassword(req.body.password)) {
+        user.lastLogin = new Date()
+        await user.save()
         let auth_token = createToken(user)
-        res.json({auth_token: auth_token, email: user.email} )
+        res.json({
+            auth_token: auth_token,
+            email: user.email
+        })
     } else {
         res.status(401)
         throw new Error('Invalid credentials')
     }
-
 })
 
 const verifyTokenUser = asyncHandler(async (req, res, next) => {
@@ -27,12 +38,14 @@ const verifyTokenUser = asyncHandler(async (req, res, next) => {
             let auth_secret = process.env.JWT_SECRET
             let signature_check = jwt.verify(token, auth_secret)
             if (signature_check.signature === signature) {
-            res.status(200)
-            res.json({message:'success'})
-        } else {
-            res.status(401)
-            throw new Error('Invalid credentials')
-        }
+                res.status(200)
+                res.json({
+                    message: 'success'
+                })
+            } else {
+                res.status(401)
+                throw new Error('Invalid credentials')
+            }
         }
     } else {
         res.status(401)
@@ -41,7 +54,15 @@ const verifyTokenUser = asyncHandler(async (req, res, next) => {
 })
 
 const createUser = asyncHandler(async (req, res) => {
-    let existingUser = await User.findOne({ email: {$eq:req.body.email} } || { registeredIp: {$eq:req.ip} })
+    let existingUser = await User.findOne({
+        email: {
+            $eq: req.body.email
+        }
+    } || {
+        registeredIp: {
+            $eq: req.ip
+        }
+    })
     if (existingUser) {
         res.status(401).message('User already exists')
     }
@@ -72,12 +93,19 @@ const createUser = asyncHandler(async (req, res) => {
 
 const verifyEmailUser = asyncHandler(async (req, res) => {
     let token = req.query.token
-    const user = await User.findOne({ email: {$eq:req.query.email}, emailVerifyToken: {$eq:token} })
+    const user = await User.findOne({
+        email: {
+            $eq: req.query.email
+        },
+        emailVerifyToken: {
+            $eq: token
+        }
+    })
     if (user) {
         user.role = 'user'
         user.verifiedEmail = true
         await user.save()
-        res.json(user)
+        res.status(200).send('Email verified')
     } else {
         res.status(401).send('Verification failed')
     }
@@ -86,30 +114,46 @@ const verifyEmailUser = asyncHandler(async (req, res) => {
 const editUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
-        if (user.role !== 'unverified-user') {
-        user.email = req.body.email || user.email
-        user.password = req.body.password || user.password
-        user.displayName = req.body.displayName || user.displayName
-        user.picture = req.body.picture || user.picture
-        user.shortBio = req.body.shortBio || user.shortBio
-        user.longBio = req.body.longBio || user.longBio
-        user.displayEmail = req.body.displayEmail || user.displayEmail
-        user.website = req.body.website || user.website
-        user.lastLogin = req.body.lastLogin || user.lastLogin
-        user.lastEdit = new Date()
-        user.posts = req.body.posts || user.posts
-        user.comments = req.body.comments || user.comments
-        user.registeredIp = user.registeredIp
-        user.lastIp = req.body.lastIp || user.lastIp
+        if (user.role !== 'unverified-user' && (req.user._id === user._id || req.user.role === 'admin')) {
+            user.email = req.body.email || user.email
+            user.password = req.body.password || user.password
+            user.displayName = req.body.displayName || user.displayName
+            user.picture = req.body.picture || user.picture
+            user.shortBio = req.body.shortBio || user.shortBio
+            user.longBio = req.body.longBio || user.longBio
+            user.displayEmail = req.body.displayEmail || user.displayEmail
+            user.website = req.body.website || user.website
+            user.lastEdit = new Date()
+            user.posts = req.body.posts || user.posts
+            user.comments = req.body.comments || user.comments
 
-        if (user.role !== "user"){
-            user.role = req.body.role || user.role
-        } } else {
+            if (req.user.role === 'admin') {
+                user.role = req.body.role || user.role
+            } else {
+                res.status(401).send('User role cannot be edited- insufficient permissions.')
+            }
+        } else {
             res.status(401)
             throw new Error('User cannot be edited- insufficient permissions.')
         }
         await user.save()
-        res.json(user)
+        if (req.user._id === user._id || req.user.role === 'admin') {
+            res.json(user)
+        } else {
+            res.json({
+                displayName: user.displayName,
+                picture: user.picture,
+                shortBio: user.shortBio,
+                longBio: user.longBio,
+                displayEmail: user.displayEmail,
+                website: user.website,
+                posts: user.posts,
+                comments: user.comments
+            })
+        }
+    } else {
+        res.status(404)
+        throw new Error('User not found')
     }
 })
 
@@ -135,7 +179,9 @@ const deleteUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user && user.role !== "user") {
         await user.remove()
-        res.json({message: 'User removed'})
+        res.json({
+            message: 'User removed'
+        })
     } else if (user && user.role === "user") {
         res.status(401)
         throw new Error('User cannot be deleted- insufficient permissions.')
@@ -155,23 +201,29 @@ const randomString = (length) => {
 const anonymizeUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
-        user.email = randomString(10) + '@' + randomString(5) + '.' + randomString(3)
-        user.displayName = 'anon' + randomString(10)
-        user.picture = ""
-        user.shortBio = ""
-        user.longBio = ""
-        user.displayEmail = randomString(10) + '@' + randomString(5) + '.' + randomString(3)
-        user.website = ""
-        user.lastLogin = new Date()
-        user.lastEdit = new Date()
-        user.password = randomString(10)
-        await user.save()
-        res.json(user)
+        if (req.user._id === user._id || req.user.role === 'admin') {
+            user.email = randomString(10) + '@' + randomString(5) + '.' + randomString(3)
+            user.displayName = 'anon' + randomString(10)
+            user.picture = ""
+            user.shortBio = ""
+            user.longBio = ""
+            user.displayEmail = randomString(10) + '@' + randomString(5) + '.' + randomString(3)
+            user.website = ""
+            user.lastLogin = new Date()
+            user.lastEdit = new Date()
+            user.password = randomString(10)
+            await user.save()
+            res.json(user)
+        }
     }
 })
 
 const getUserByDisplayName = asyncHandler(async (req, res) => {
-    const user = await User.findOne({ displayName: {$eq:req.params.displayName} })
+    const user = await User.findOne({
+        displayName: {
+            $eq: req.params.displayName
+        }
+    })
     if (user) {
         res.json(user._id)
     }
@@ -180,14 +232,44 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
-        res.json(user)
+        if (req.user._id === user._id || req.user.role === 'admin') {
+            res.json(user)
+        } else {
+            res.json({
+                displayName: user.displayName,
+                picture: user.picture,
+                shortBio: user.shortBio,
+                longBio: user.longBio,
+                displayEmail: user.displayEmail,
+                website: user.website,
+                posts: user.posts,
+                comments: user.comments
+            })
+        }
     }
 })
 
 const getUserByEmail = asyncHandler(async (req, res) => {
-    const user = await User.findOne({ email: {$eq:req.params.email} })
+    const user = await User.findOne({
+        email: {
+            $eq: req.params.email
+        }
+    })
     if (user) {
-        res.json(user)
+        if (req.user._id === user._id || req.user.role === 'admin') {
+            res.json(user)
+        } else {
+            res.json({
+                displayName: user.displayName,
+                picture: user.picture,
+                shortBio: user.shortBio,
+                longBio: user.longBio,
+                displayEmail: user.displayEmail,
+                website: user.website,
+                posts: user.posts,
+                comments: user.comments
+            })
+        }
     }
 })
 

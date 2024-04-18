@@ -36,7 +36,7 @@ export default (transporter) => {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: comment.user.email,
                         subject: 'Your comment has been flagged',
-                        text: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "\nComments may be flagged for a variety of reasons, including but not limited to: inappropriate language, personal attacks, or spam. If you believe this was done in error, please contact the site administrator.\n\nThis is an automated message, do not reply.",
+                        text: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "\nIf you believe this was done in error, please contact the site administrator.\n\nThis is an automated message, do not reply.",
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {

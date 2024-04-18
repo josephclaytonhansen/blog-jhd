@@ -1,13 +1,16 @@
 import express from 'express'
 import asyncHandler from "../middleware/asyncHandler.js"
 import Blog from '../models/blog.js'
+import dotenv from 'dotenv'
+import Comment from '../models/comment.js'
+
+dotenv.config()
 
 import {
     getCommentsByBlogPost,
     getCommentsByUser,
     getCommentById,
     getFlaggedComments,
-    flagComment,
     createComment,
     deleteComment
 } from '../controllers/commentController.js'
@@ -19,7 +22,38 @@ export default (transporter) => {
     router.get('/user/:id', getCommentsByUser)
     router.get('/id/:id', getCommentById)
     router.get('/flagged', getFlaggedComments)
-    router.put('/flag/:id', flagComment)
+    router.put('/flag/:id', asyncHandler(async (req, res) => {
+        if (req.isAuthenticated()) {
+            if (req.user.role === 'unverified-user') {
+                return res.status(403).send('Not authorized')
+            } else {
+                const comment = await Comment.findById(req.params.id)
+                if (comment) {
+                    comment.flagged = true
+                    comment.visible = false
+                    await comment.save()
+                    const mailOptions = {
+                        from: process.env.EMAIL_FROM_USERNAME,
+                        to: comment.user.email,
+                        subject: 'Your comment has been flagged',
+                        text: 'Your comment has been flagged and is not currently visible on the site:\n ' + comment.content + "\nComments may be flagged for a variety of reasons, including but not limited to: inappropriate language, personal attacks, or spam. If you believe this was done in error, please contact the site administrator.",
+                    }
+                    transporter.sendMail(mailOptions, function (error, info) {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            console.log('Email sent: ' + info.response)
+                        }
+                    })
+                    res.json(comment)
+                } else {
+                    res.status(404).send('Comment not found')
+                }
+            }
+        } else {
+            return res.status(403).send('Not authorized')
+        }
+    }))
     router.post('/create', createComment)
     router.delete('/delete/:id', deleteComment)
 

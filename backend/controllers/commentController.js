@@ -36,26 +36,6 @@ const getFlaggedComments = asyncHandler(async (req, res) => {
     res.json(comments)
 })
 
-const flagComment = asyncHandler(async (req, res) => {
-    if (req.isAuthenticated()) {
-        if (req.user.role === 'unverified-user') {
-            return res.status(403).send('Not authorized')
-        } else {
-            const comment = await Comment.findById(req.params.id)
-            if (comment) {
-                comment.flagged = true
-                comment.visible = false
-                await comment.save()
-                res.json(comment)
-            } else {
-                res.status(404).send('Comment not found')
-            }
-        }
-    } else {
-        return res.status(403).send('Not authorized')
-    }
-})
-
 const createComment = asyncHandler(async (req, res) => {
     if (req.isAuthenticated()) {
         if (req.user.role === 'unverified-user') {
@@ -108,7 +88,6 @@ export {
     getCommentsByUser,
     getCommentById,
     getFlaggedComments,
-    flagComment,
     createComment,
     deleteComment,
 }

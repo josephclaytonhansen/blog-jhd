@@ -225,7 +225,22 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
         }
     })
     if (user) {
-        res.json(user._id)
+        if (req.user._id === user._id || req.user.role === 'admin') {
+            res.json(user)
+        } else {
+            res.json({
+                displayName: user.displayName,
+                picture: user.picture,
+                shortBio: user.shortBio,
+                longBio: user.longBio,
+                displayEmail: user.displayEmail,
+                website: user.website,
+                posts: user.posts,
+                comments: user.comments
+            })
+        }
+    } else {
+        res.status(404).send('User not found')
     }
 })
 
@@ -270,6 +285,8 @@ const getUserByEmail = asyncHandler(async (req, res) => {
                 comments: user.comments
             })
         }
+    } else {
+        res.status(404).send('User not found')
     }
 })
 

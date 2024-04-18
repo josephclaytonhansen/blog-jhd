@@ -2,6 +2,9 @@ import asyncHandler from "../middleware/asyncHandler.js"
 import Event from "../models/event.js"
 
 const getEvents = asyncHandler(async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(403).send('Not authorized')
+    }
     const events = await Event.find({})
     res.json(events)
 })

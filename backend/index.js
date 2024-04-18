@@ -101,11 +101,11 @@ app.get('/health', (req, res) => {
     res.send(r)
 })
 
-app.use('/api/user', userRoutes(transporter))
-app.use('/api/blog', blogRoutes)
-app.use('/api/event', eventRoutes)
-app.use('/api/article', articleRoutes)
-app.use('/api/comment', commentRoutes(transporter))
+app.use('/user', userRoutes(transporter))
+app.use('/blog', blogRoutes)
+app.use('/event', eventRoutes)
+app.use('/article', articleRoutes)
+app.use('/comment', commentRoutes(transporter))
 
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)

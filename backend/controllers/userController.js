@@ -244,6 +244,14 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
     }
 })
 
+const getUsers = asyncHandler(async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(403).send('Not authorized')
+    }
+    const users = await User.find({})
+    res.json(users)
+})
+
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
@@ -302,5 +310,6 @@ export {
     verifyEmailUser,
     getUserByDisplayName,
     getUserById,
-    getUserByEmail
+    getUserByEmail,
+    getUsers
 }

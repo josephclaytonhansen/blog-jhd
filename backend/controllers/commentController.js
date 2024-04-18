@@ -82,6 +82,14 @@ const deleteComment = asyncHandler(async (req, res) => {
     }
 })
 
+const getComments = asyncHandler(async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(403).send('Not authorized')
+    } else {
+    const comments = await Comment.find({})
+    res.json(comments)}
+})
+
 
 export {
     getCommentsByBlogPost,

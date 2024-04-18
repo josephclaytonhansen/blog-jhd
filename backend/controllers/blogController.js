@@ -67,7 +67,7 @@ const createBlog = asyncHandler(async (req, res) => {
         excerpt: req.body.excerpt,
         author: req.user.displayName,
         comments: [],
-        site: req.body.site,
+        site: req.protocol + '://' + req.get('host'),
     })
     await blog.save()
     res.status(201).json(blog)

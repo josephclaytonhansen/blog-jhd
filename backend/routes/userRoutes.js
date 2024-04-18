@@ -11,25 +11,25 @@ import {
     verifyEmailUser,
     getUserByDisplayName,
     getUserById,
-    getUserByEmail
+    getUserByEmail,
+    getUsers
 } from '../controllers/userController.js'
 
 const router = express.Router()
 
 export default (transporter) => {
+    router.get('/', getUsers)
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
     router.post('/create', (req, res) => {
         let user = createUser(req, res)
         let token = user.emailVerifyToken
-        let url = req.protocol + '://' + req.get('host')
         const mailOptions = {
             from: process.env.EMAIL_FROM_USERNAME,
             to: user.email,
             subject: 'Please verify your email',
             text: 'Please verify your email by clicking the following link: <a href = "' 
-                + url
-                + '/api/user/verifyemail?token=' + token 
+                + 'https://api.josephhansen.dev/user/verifyemail?token=' + token 
                 + '&email=' + encodeURIComponent(user.email)
                 + '">Verify Email</a>\nIf you did not create an account on hansenstudios.art or blog.josephhansen.dev, please ignore this email.'
                 + '\n\nThis is an automated message, do not reply.'

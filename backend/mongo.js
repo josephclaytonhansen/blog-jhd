@@ -4,7 +4,7 @@ dotenv.config()
 
 const MONGO_STRING = process.env.MONGO_STRING
 
-const failureCount = 0
+let failureCount = 0
 
 const connectWithRetry = async () => {
     console.log('MongoDB connection with retry')
@@ -12,11 +12,18 @@ const connectWithRetry = async () => {
         console.log('MongoDB connection unsuccessful, retry after 1 seconds.')
         setTimeout(connectWithRetry, 1000)
         failureCount++
+        if (failureCount < 20){
+            console.log('Database connection failed too many times')
+            mongoose.disconnect()
+        }
     })
 }
 
 if (failureCount < 20){
     connectWithRetry()
+} else {
+    console.log('Database connection failed too many times')
+    mongoose.disconnect()
 }
 
 
@@ -29,6 +36,9 @@ db.on('error', (error) => {
         if (failureCount < 20){
         connectWithRetry()
         failureCount++
+        } else {
+            console.log('Database connection failed too many times')
+            mongoose.disconnect()
         }
     })
 })
@@ -39,7 +49,12 @@ db.on('connected', () => {
 })
 
 db.on('disconnected', () => {
-    if (db.readyState === 0) {connectWithRetry()}
+    if (failureCount < 20){
+    if (db.readyState === 0) {connectWithRetry()}} else {
+        console.log('Database connection failed too many times')
+        mongoose.disconnect()
+    
+    }
 })
 
 db.ObjectId = mongoose.Types.ObjectId

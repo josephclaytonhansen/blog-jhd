@@ -1,4 +1,4 @@
-import asyncHandler from '../middleware/asyncHandler.min.js'
+import asyncHandler from '../middleware/asyncHandler.js'
 import User from '../models/user.js'
 import { createToken, verifyToken } from './jwt.js'
 import jwt from 'jsonwebtoken'

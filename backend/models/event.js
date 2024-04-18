@@ -23,6 +23,6 @@ const eventSchema = new mongoose.Schema({
     bannerPageUrls: Array,
 })
 
-const Event = mongoose.model('eventSchema', eventSchema)
+const Event = mongoose.model('events', eventSchema)
 
 export default Event

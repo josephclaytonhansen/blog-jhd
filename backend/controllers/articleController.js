@@ -1,5 +1,5 @@
-import asyncHandler from "../middleware/asyncHandler"
-import Article from "../models/article"
+import asyncHandler from "../middleware/asyncHandler.js"
+import Article from "../models/article.js"
 
 const getArticles = asyncHandler(async (req, res) => {
     const articles = await Article.find({})

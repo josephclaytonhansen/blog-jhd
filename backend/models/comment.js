@@ -11,6 +11,6 @@ const commentSchema = new mongoose.Schema({
     flagged: Boolean,
 })
 
-const Comment = mongoose.model('commentSchema', commentSchema)
+const Comment = mongoose.model('comments', commentSchema)
 
 export default Comment

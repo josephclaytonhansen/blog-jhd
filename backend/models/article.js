@@ -19,6 +19,6 @@ articleSchema.pre('save', function(next) {
     next()
 })
 
-const Article = mongoose.model('articleSchema', articleSchema)
+const Article = mongoose.model('articles', articleSchema)
 
 export default Article

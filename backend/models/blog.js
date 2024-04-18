@@ -23,6 +23,6 @@ blogSchema.pre('save', function(next) {
     next()
 })
 
-const Blog = mongoose.model('blogSchema', blogSchema)
+const Blog = mongoose.model('blogs', blogSchema)
 
 export default Blog

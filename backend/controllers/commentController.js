@@ -1,5 +1,5 @@
-import asyncHandler from "../middleware/asyncHandler"
-import Comment from "../models/comment"
+import asyncHandler from "../middleware/asyncHandler.js"
+import Comment from "../models/comment.js"
 
 const getCommentsByBlogPost = asyncHandler(async (req, res) => {
     const comments = await Comment.find({

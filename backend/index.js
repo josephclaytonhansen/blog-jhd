@@ -32,7 +32,11 @@ const transporter = nodemailer.createTransport({
     },
   })
 
+const startUpTime = new Date().getTime()
+let requestCount = 0
+
 const app = express()
+app.disable('x-powered-by')
 
 app.use(express.urlencoded({
     extended: false
@@ -72,9 +76,29 @@ const limiter = rate_limit({
 
 app.use(limiter)
 
+app.use((req, res, next) => {
+    req._startTime = new Date().getTime()
+    requestCount++
+    next()
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
+})
+
+app.get('/health', (req, res) => {
+    let r = {
+        "database": db.readyState === 1 ? "connected" : "disconnected",
+        "server": "running",
+        "time": new Date().toISOString(),
+        "ping time": new Date().getTime() - req._startTime,
+        "uptime": (new Date().getTime() - startUpTime) / 1000 /60,
+        "secure": req.secure,
+        "ip": req.ip,
+        "request count": requestCount,
+
+    }
+    res.send(r)
 })
 
 app.use('/api/user', userRoutes(transporter))

@@ -96,7 +96,7 @@ function fromDir(startPath, filter, callback) {
   }
 }
 
-fromDir(process.cwd(), '.js', function (filename) {
+fromDir(path.resolve(process.cwd(), '..'), '.js', function (filename) {
   console.log('-- found: ', filename);
 })
 

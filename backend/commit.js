@@ -12,12 +12,13 @@ function parse(filename, data) {
   const todos = lines
     .map((line, index) => {
       const match = line.match(/\/\/ TODO: (.*)/);
+      let fil = filename.split('/')[filename.split('/').length - 2] + '/' + filename.split('/')[filename.split('/').length - 1];
       if (match) {
         return {
           tag: 'TODO',
           text: match[1],
           line: index + 1,
-          file: filename,
+          file: fil,
         };
       }
     })

@@ -44,6 +44,9 @@ app.disable('x-powered-by')
 app.use(express.urlencoded({
     extended: false
 }))
+
+// TODO: Add middleware to get nuxt-auth session data and set it to req.user
+
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
 
 

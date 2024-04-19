@@ -13,8 +13,6 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
 
-console.log(octokit)
-
 function parse(filename, data) {
   const lines = data.split('\n');
   const todos = lines

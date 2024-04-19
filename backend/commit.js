@@ -2,6 +2,7 @@ import { execSync } from "child_process"
 import { Octokit } from "@octokit/rest"
 import { parse } from "leasot"
 import fs from "fs"
+import { glob } from "glob"
 
 const date = new Date()
 const formattedDate = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`

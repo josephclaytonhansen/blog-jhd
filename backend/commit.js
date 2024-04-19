@@ -6,12 +6,14 @@ import {
 } from "@octokit/rest"
 import fs from "fs"
 import path from "path"
+import dotenv from "dotenv"
+dotenv.config()
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
-import dotenv from "dotenv"
-dotenv.config()
+
+console.log(octokit)
 
 function parse(filename, data) {
   const lines = data.split('\n');

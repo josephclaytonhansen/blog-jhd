@@ -4,15 +4,6 @@ import { parse } from "leasot"
 import fs from "fs"
 import {glob} from "glob"
 
-const date = new Date()
-const formattedDate = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`
-const commitMessage = `buildbot: ${formattedDate}`
-
-execSync(
-  `git add . && git commit --allow-empty -m "${commitMessage}" && git push`,
-  { stdio: "inherit" },
-)
-
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
@@ -59,3 +50,13 @@ glob("**/*.js", { ignore: ["**/node_modules/**", "**/commit.js"] }, (err, files)
     })
   })
 })
+
+const date = new Date()
+const formattedDate = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`
+const commitMessage = `buildbot: ${formattedDate}`
+
+execSync(
+  `git add . && git commit --allow-empty -m "${commitMessage}" && git push`,
+  { stdio: "inherit" },
+)
+

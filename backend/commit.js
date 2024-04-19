@@ -10,6 +10,8 @@ import path from "path"
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
+import dotenv from "dotenv"
+dotenv.config()
 
 function parse(filename, data) {
   const lines = data.split('\n');

@@ -34,6 +34,7 @@ function fromDir(startPath, filter, callback){
               }
 
               const todos = parse(data)
+              console.log(`Found ${todos.length} TODOs in ${filename}`)
 
               todos.forEach((todo) => {
                   if (todo.tag === "TODO") {

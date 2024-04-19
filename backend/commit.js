@@ -75,8 +75,8 @@ function fromDir(startPath, filter, callback) {
               state: 'open',
             });
 
-            // Check if an issue with the same title already exists
-            const existingIssue = issues.find(issue => issue.title === title);
+            // Check if an issue with the same title already exists and is open 
+            const existingIssue = issues.find(issue => issue.title === title && issue.state === 'open');
 
             if (!existingIssue && todo.file.indexOf('node_modules') === -1 || todo.file.indexOf('.git') === -1 && todo.file.indexOf('.nuxt') === -1 && todo.file.indexOf('.output') !== -1) {
               console.log(`Creating issue for TODO: ${todo.text}`);

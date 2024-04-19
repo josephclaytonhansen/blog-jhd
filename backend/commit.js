@@ -54,7 +54,7 @@ function fromDir(startPath, filter, callback) {
 
       fromDir(filename, filter, callback); //recurse
     } else if (filename.indexOf(filter) >= 0 && !filename.endsWith('commit.js')) {
-      fs.readFile(filename, "utf8", (err, data) => {
+      fs.readFile(filename, "utf8", async (err, data) => {
         if (err) {
           console.error(err)
           return
@@ -62,36 +62,39 @@ function fromDir(startPath, filter, callback) {
 
         const todos = parse(filename, data)
 
-        todos.forEach(async (todo) => {
+        // Fetch the list of open issues once
+        const {
+          data: issues
+        } = await octokit.issues.listForRepo({
+          owner,
+          repo,
+          state: 'open',
+        });
+
+        for (const todo of todos) {
           if (todo.tag === "TODO") {
             const title = `TODO: ${todo.text}`;
-
-            // Fetch the list of open issues
-            const {
-              data: issues
-            } = await octokit.issues.listForRepo({
-              owner,
-              repo,
-              state: 'open',
-            });
 
             // Check if an issue with the same title already exists and is open 
             const existingIssue = issues.find(issue => issue.title === title && issue.state === 'open');
 
             if (!existingIssue && todo.file.indexOf('node_modules') === -1 || todo.file.indexOf('.git') === -1 && todo.file.indexOf('.nuxt') === -1 && todo.file.indexOf('.output') !== -1) {
               console.log(`Creating issue for TODO: ${todo.text}`);
-              octokit.issues.create({
+              await octokit.issues.create({
                 owner,
                 repo,
                 title,
                 body: `This issue is automatically created by a build script.\n\nFile: ${todo.file}\nLine: ${todo.line}\nDescription: ${todo.text}`,
               });
+
+              // Wait for one second before the next request
+              await new Promise(resolve => setTimeout(resolve, 1000));
             } else if (existingIssue) {
               console.log(`Skipping issue for TODO: ${todo.text} as it already exists.`);
             }
           }
-        })
-      })
+        }
+      });
     }
   }
 }

@@ -23,6 +23,7 @@ const owner = "josephclaytonhansen";
 const repo = "blog-jhd";
 
 glob("**/*.js", { ignore: ["**/node_modules/**", "**/commit.js"] }, (err, files) => {
+  console.log(`Files: ${files}`)
   if (err) {
     console.error(err);
     return

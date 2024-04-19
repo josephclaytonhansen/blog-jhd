@@ -1,12 +1,28 @@
 import { execSync } from "child_process"
 import { Octokit } from "@octokit/rest"
-import { parse } from "leasot"
 import fs from "fs"
 import path from "path"
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
+
+function parse(data) {
+  const lines = data.split('\n');
+  const todos = lines
+    .map((line, index) => {
+      const match = line.match(/\/\/ TODO: (.*)/);
+      if (match) {
+        return {
+          tag: 'TODO',
+          text: match[1],
+          line: index + 1,
+        };
+      }
+    })
+    .filter(Boolean);
+  return todos;
+}
 
 console.log(`Current working directory: ${process.cwd()}`);
 

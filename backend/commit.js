@@ -17,7 +17,7 @@ function parse(filename, data) {
   const lines = data.split('\n');
   const todos = lines
     .map((line, index) => {
-      const match = line.match(/\/\/ TODO: (.*)/)
+      const match = line.match(/\s*\/\/ TODO: (.*)/)
       let fil = filename.split('blog-jhd')[1]
       if (match) {
         return {
@@ -48,7 +48,7 @@ function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      if (filename.includes('/node_modules')) {
+      if (path.basename(filename) === 'node_modules') {
         continue; // Skip node_modules directory
       }
       fromDir(filename, filter, callback); //recurse

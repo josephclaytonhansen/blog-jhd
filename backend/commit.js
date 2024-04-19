@@ -42,12 +42,16 @@ function fromDir(startPath, filter, callback) {
     console.log("no dir ", startPath);
     return;
   }
+  if (!fs.existsSync(startPath)) {
+    console.log("no dir ", startPath);
+    return;
+  }
   const files = fs.readdirSync(startPath);
   for (let i = 0; i < files.length; i++) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      if (filename.split(path.sep).includes('node_modules')) {
+      if (filename.includes('/node_modules')) {
         continue; // Skip node_modules directory
       }
       fromDir(filename, filter, callback); //recurse

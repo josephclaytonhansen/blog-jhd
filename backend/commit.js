@@ -51,7 +51,7 @@ function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      if (filename.includes('/node_modules')) {
+      if (files[i] === 'node_modules') {
         continue; // Skip node_modules directory
       }
       fromDir(filename, filter, callback); //recurse

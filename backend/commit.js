@@ -17,6 +17,8 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
 
+console.log(`Current working directory: ${process.cwd()}`);
+
 const owner = "josephclaytonhansen";
 const repo = "blog-jhd";
 

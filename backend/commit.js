@@ -51,7 +51,7 @@ function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      if (filename.indexOf('node_modules') !== -1) {
+      if (filename.indexOf('node_modules') !== -1 || filename.indexOf('.git') !== -1 && filename.indexOf('.nuxt') !== -1 && filename.indexOf('.output') !== -1)  {
         continue; // Skip node_modules directory
       }
       fromDir(filename, filter, callback); //recurse
@@ -81,7 +81,7 @@ function fromDir(startPath, filter, callback) {
             // Check if an issue with the same title already exists
             const existingIssue = issues.find(issue => issue.title === title);
 
-            if (!existingIssue && filename.indexOf('node_modules') === -1) {
+            if (!existingIssue && filename.indexOf('node_modules') !== -1 || filename.indexOf('.git') !== -1 && filename.indexOf('.nuxt') !== -1 && filename.indexOf('.output') !== -1) {
               console.log(`Creating issue for TODO: ${todo.text}`);
               octokit.issues.create({
                 owner,

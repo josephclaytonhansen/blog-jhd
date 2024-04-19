@@ -7,7 +7,7 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
 
-function parse(data) {
+function parse(filename, data) {
   const lines = data.split('\n');
   const todos = lines
     .map((line, index) => {
@@ -17,6 +17,7 @@ function parse(data) {
           tag: 'TODO',
           text: match[1],
           line: index + 1,
+          file: filename,
         };
       }
     })
@@ -52,7 +53,7 @@ function fromDir(startPath, filter, callback){
                   return
               }
 
-              const todos = parse(data)
+              const todos = parse(filename, data)
               console.log(`Found ${todos.length} TODOs in ${filename}`)
 
               todos.forEach((todo) => {

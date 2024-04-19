@@ -17,6 +17,8 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
 
+console.log(octokit)
+
 const owner = "josephclaytonhansen";
 const repo = "blog-jhd";
 
@@ -27,6 +29,7 @@ glob("**/*.js", (err, files) => {
   }
 
   files.forEach((file) => {
+    console.log(`Checking file: ${file}`)
     if (file.includes("node_modules")) {
       return
     }

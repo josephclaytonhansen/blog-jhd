@@ -81,7 +81,7 @@ function fromDir(startPath, filter, callback) {
             // Check if an issue with the same title already exists
             const existingIssue = issues.find(issue => issue.title === title);
 
-            if (!existingIssue) {
+            if (!existingIssue && filename.indexOf('node_modules') === -1) {
               console.log(`Creating issue for TODO: ${todo.text}`);
               octokit.issues.create({
                 owner,

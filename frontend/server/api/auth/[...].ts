@@ -9,8 +9,8 @@ export default NuxtAuthHandler({
     verifyRequest: '/auth/verify-request',
     newUser: '/auth/new-user'
   }, */
-  // TODO: Build custom auth pages - /auth/signin, /auth/signout, /auth/error, /auth/verify-request, /auth/new-user
-  // TODO: Configure .env variables for the secret and the providers
+ // TODO: Build custom auth pages - /auth/signin, /auth/signout, /auth/error, /auth/verify-request, /auth/new-user
+ // TODO: Configure .env variables for the secret and the providers
   secret: process.env.AUTH_SECRET || 'my-auth-secret',
 
   providers: [

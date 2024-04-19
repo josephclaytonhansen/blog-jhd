@@ -40,9 +40,12 @@ function fromDir(startPath, filter, callback){
       const filename=path.join(startPath,files[i]);
       const stat = fs.lstatSync(filename);
       if (stat.isDirectory()){
+          if (filename.includes('/node_modules')) {
+              continue; // Skip node_modules directory
+          }
           fromDir(filename,filter,callback); //recurse
       }
-      else if (filename.indexOf(filter)>=0) {
+      else if (filename.indexOf(filter)>=0 && !filename.endsWith('commit.js')) {
           fs.readFile(filename, "utf8", (err, data) => {
               if (err) {
                   console.error(err)

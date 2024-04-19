@@ -11,8 +11,8 @@ function parse(filename, data) {
   const lines = data.split('\n');
   const todos = lines
     .map((line, index) => {
-      const match = line.match(/\/\/ TODO: (.*)/);
-      let fil = filename.split('/')[filename.split('/').length - 2] + '/' + filename.split('/')[filename.split('/').length - 1];
+      const match = line.match(/\/\/ TODO: (.*)/)
+      let fil = filename.split('blog-jhd')[1]
       if (match) {
         return {
           tag: 'TODO',

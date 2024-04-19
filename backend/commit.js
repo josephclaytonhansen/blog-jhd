@@ -14,7 +14,7 @@ execSync(
 )
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN, // Make sure to set this environment variable
+  auth: process.env.GITHUB_TOKEN,
 })
 
 const owner = "josephclaytonhansen";
@@ -27,6 +27,12 @@ glob("**/*.js", (err, files) => {
   }
 
   files.forEach((file) => {
+    if (file.includes("node_modules")) {
+      return
+    }
+    if (file.includes("commit.js")) {
+      return
+    }
     fs.readFile(file, "utf8", (err, data) => {
       if (err) {
         console.error(err)
@@ -37,6 +43,7 @@ glob("**/*.js", (err, files) => {
 
       todos.forEach((todo) => {
         if (todo.tag === "TODO") {
+          console.log(`Creating issue for TODO: ${todo.text}`)
           octokit.issues.create({
             owner,
             repo,

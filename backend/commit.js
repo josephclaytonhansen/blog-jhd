@@ -86,7 +86,7 @@ function fromDir(startPath, filter, callback) {
                 title,
                 body: `This issue is automatically created by a build script.\n\nFile: ${todo.file}\nLine: ${todo.line}\nDescription: ${todo.text}`,
               });
-            } else {
+            } else if (existingIssue) {
               console.log(`Skipping issue for TODO: ${todo.text} as it already exists.`);
             }
           }

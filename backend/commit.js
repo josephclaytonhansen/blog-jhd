@@ -37,11 +37,7 @@ console.log(`Current working directory: ${process.cwd()}`);
 const owner = "josephclaytonhansen";
 const repo = "blog-jhd";
 
-function fromDir(startPath, filter, callback) {
-  if (!fs.existsSync(startPath)) {
-    console.log("no dir ", startPath);
-    return;
-  }
+async function fromDir(startPath, filter, callback) {
   if (!fs.existsSync(startPath)) {
     console.log("no dir ", startPath);
     return;
@@ -51,14 +47,10 @@ function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-
       fromDir(filename, filter, callback); //recurse
     } else if (filename.indexOf(filter) >= 0 && !filename.endsWith('commit.js')) {
-      fs.readFileSync(filename, "utf8", async (err, data) => {
-        if (err) {
-          console.error(err)
-          return
-        }
+      try {
+        const data = fs.readFileSync(filename, "utf8");
 
         const todos = parse(filename, data)
 
@@ -95,7 +87,9 @@ function fromDir(startPath, filter, callback) {
             }
           }
         }
-      });
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }

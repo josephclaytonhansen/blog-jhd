@@ -72,7 +72,8 @@ async function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      await fromDir(filename, filter, callback); //recurse
+      console.log(`Found directory: ${filename}`)
+      await fromDir(filename, filter, callback)
     } else if (filename.indexOf(filter) >= 0 && !filename.endsWith('commit.js')) {
       try {
         const data = fs.readFileSync(filename, "utf8");

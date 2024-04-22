@@ -54,7 +54,7 @@ function fromDir(startPath, filter, callback) {
 
       fromDir(filename, filter, callback); //recurse
     } else if (filename.indexOf(filter) >= 0 && !filename.endsWith('commit.js')) {
-      fs.readFile(filename, "utf8", async (err, data) => {
+      fs.readFileSync(filename, "utf8", async (err, data) => {
         if (err) {
           console.error(err)
           return

@@ -74,6 +74,7 @@ function fromDir(startPath, filter, callback) {
         for (const todo of todos) {
           if (todo.tag === "TODO") {
             const title = `TODO: ${todo.text}`;
+            console.log(`Checking for issue with title: ${title}`);
 
             // Check if an issue with the same title already exists and is open 
             const existingIssue = issues.find(issue => issue.title === title && issue.state === 'open');

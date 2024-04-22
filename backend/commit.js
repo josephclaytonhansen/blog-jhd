@@ -20,9 +20,7 @@ const octokit = new Octokit({
 if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_TOKEN.length) {
   console.error("GITHUB_TOKEN environment variable is required.")
   process.exit(1)
-
 }
-
 
 const owner = "josephclaytonhansen"
 const repo = "blog-jhd"
@@ -61,8 +59,7 @@ function parse(filename, data) {
 
 console.log(`Current working directory: ${process.cwd()}`)
 
-
-async function fromDir(startPath, filter, callback) {
+async function fromDir(startPath, filters, callback) {
   if (!fs.existsSync(startPath)) {
     console.log("no dir ", startPath);
     return;
@@ -72,22 +69,17 @@ async function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      console.log(`Found directory: ${filename}`)
-      await fromDir(filename, filter, callback)
-    } else if (filename.indexOf(filter) >= 0 && !filename.endsWith('commit.js')) {
+      await fromDir(filename, filters, callback)
+    } else if (filters.some(filter => filename.indexOf(filter) >= 0) && !filename.endsWith('commit.js')) {
       try {
         const data = fs.readFileSync(filename, "utf8");
 
         const todos = parse(filename, data)
 
-        // Fetch the list of open issues once
-        
-
         for (const todo of todos) {
           if (todo.tag === "TODO") {
             const title = `TODO: ${todo.text}`;
 
-            // Check if an issue with the same title already exists and is open 
             const existingIssue = issues.find(issue => issue.title === title && issue.state === 'open');
 
             if (!existingIssue && todo.file.indexOf('node_modules') === -1 || todo.file.indexOf('.git') === -1 && todo.file.indexOf('.nuxt') === -1 && todo.file.indexOf('.output') !== -1) {
@@ -99,7 +91,6 @@ async function fromDir(startPath, filter, callback) {
                 body: `This issue is automatically created by a build script.\n\nFile: ${todo.file}\nLine: ${todo.line}\nDescription: ${todo.text}`,
               });
 
-              // Wait for one second before the next request
               await new Promise(resolve => setTimeout(resolve, 1000));
             } else if (existingIssue) {
               console.log(`Skipping issue for TODO: ${todo.text} as it already exists.`);
@@ -113,7 +104,7 @@ async function fromDir(startPath, filter, callback) {
   }
 }
 
-await fromDir(path.resolve(process.cwd(), '..'), '.js', function (filename) {
+await fromDir(path.resolve(process.cwd(), '..'), ['.js', '.vue', '.ts'], function (filename) {
   console.log('-- found: ', filename);
 })
 

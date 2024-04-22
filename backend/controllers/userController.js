@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken'
 const userLoginByEmail = asyncHandler(async (req, res) => {
     const user = await User.findOne({
         email: {
-            $eq: req.body.email
+            $eq: req.body.email || req.body.username
         }
     })
     if (user && user.validPassword(req.body.password)) {

@@ -6,12 +6,39 @@ import {
 } from "@octokit/rest"
 import fs from "fs"
 import path from "path"
+import fetch from "node-fetch";
 import dotenv from "dotenv"
 dotenv.config()
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
+  request: {
+    fetch: fetch,
+  },
 })
+
+if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_TOKEN.length) {
+  console.error("GITHUB_TOKEN environment variable is required.")
+  process.exit(1)
+
+}
+
+
+const owner = "josephclaytonhansen"
+const repo = "blog-jhd"
+
+const {
+  data: issues
+} = await octokit.issues.listForRepo({
+  owner,
+  repo,
+  state: 'open',
+})
+
+if (!issues) {
+  console.error("Failed to fetch issues.")
+  process.exit(1)
+}
 
 function parse(filename, data) {
   const lines = data.split('\n');
@@ -32,10 +59,8 @@ function parse(filename, data) {
   return todos;
 }
 
-console.log(`Current working directory: ${process.cwd()}`);
+console.log(`Current working directory: ${process.cwd()}`)
 
-const owner = "josephclaytonhansen";
-const repo = "blog-jhd";
 
 async function fromDir(startPath, filter, callback) {
   if (!fs.existsSync(startPath)) {
@@ -47,7 +72,7 @@ async function fromDir(startPath, filter, callback) {
     const filename = path.join(startPath, files[i]);
     const stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      fromDir(filename, filter, callback); //recurse
+      await fromDir(filename, filter, callback); //recurse
     } else if (filename.indexOf(filter) >= 0 && !filename.endsWith('commit.js')) {
       try {
         const data = fs.readFileSync(filename, "utf8");
@@ -55,18 +80,11 @@ async function fromDir(startPath, filter, callback) {
         const todos = parse(filename, data)
 
         // Fetch the list of open issues once
-        const {
-          data: issues
-        } = await octokit.issues.listForRepo({
-          owner,
-          repo,
-          state: 'open',
-        });
+        
 
         for (const todo of todos) {
           if (todo.tag === "TODO") {
             const title = `TODO: ${todo.text}`;
-            console.log(`Checking for issue with title: ${title}`);
 
             // Check if an issue with the same title already exists and is open 
             const existingIssue = issues.find(issue => issue.title === title && issue.state === 'open');
@@ -94,7 +112,7 @@ async function fromDir(startPath, filter, callback) {
   }
 }
 
-fromDir(path.resolve(process.cwd(), '..'), '.js', function (filename) {
+await fromDir(path.resolve(process.cwd(), '..'), '.js', function (filename) {
   console.log('-- found: ', filename);
 })
 

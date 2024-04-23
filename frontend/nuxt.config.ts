@@ -2,7 +2,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@sidebase/nuxt-auth'
   ],
-  plugins: ['~/plugins/toast.js']
+  plugins: ['~/plugins/toast.js'],
+  auth: {        provider: {            type: 'authjs'        }    }
 })

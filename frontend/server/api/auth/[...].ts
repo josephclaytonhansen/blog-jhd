@@ -23,8 +23,8 @@ export default NuxtAuthHandler({
       },
       authorize (credentials: any) {
         console.warn('ATTENTION: You should replace this with your real providers or credential provider logic! The current setup is not safe')
-        // TODO: Connect this to MongoDB - first check if the user exists, then check if the password is correct.
-        // TODO: Remove testUser
+// TODO: Connect this to MongoDB through blogapi.josephhansen.dev - first check if the user exists, then check if the password is correct.
+// TODO: Remove testUser
 
         const testUser = { 
           _id: '1',

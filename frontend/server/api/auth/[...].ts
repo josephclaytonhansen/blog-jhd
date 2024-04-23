@@ -23,7 +23,6 @@ export default NuxtAuthHandler({
         password: { label: 'Password', type: 'password' }
       },
       authorize: async (credentials: any) => {
-        console.warn('ATTENTION: You should replace this with your real providers or credential provider logic! The current setup is not safe')
         let usersUrl = 'http://localhost:3720/user'
         try {
             const response = await axios.get(usersUrl).then((res) => res).catch((err) => console.error(err))

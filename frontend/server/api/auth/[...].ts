@@ -44,6 +44,7 @@ export default NuxtAuthHandler({
                             username: user.email,
                             shortBio: user.shortBio,
                             picture: user.picture,
+                            verifiedEmail: user.verifiedEmail,
                         }
                         return u
                     }
@@ -68,6 +69,7 @@ export default NuxtAuthHandler({
             token.id = user ? user.id || '' : '';
             token.shortBio = user ? user.shortBio || '' : '';
             token.picture = user ? user.picture || '' : '';
+            token.verifiedEmail = user ? user.verifiedEmail || '' : '';
 
         }
         return Promise.resolve(token);
@@ -79,6 +81,7 @@ export default NuxtAuthHandler({
         (session as any).user.id = token.id;
         (session as any).user.shortBio = token.shortBio;
         (session as any).user.picture = token.picture;
+        (session as any).user.verifiedEmail = token.verifiedEmail;
 
         return Promise.resolve(session)
     },

@@ -65,6 +65,8 @@ const register = async () => {
         <p :v-model="data">Data: {{ data }}</p>
         <nuxt-link v-if="status==='unauthenticated'" @click="signIn">Sign in</nuxt-link>
         <nuxt-link v-if="status==='authenticated'" @click="signOut">Sign out</nuxt-link>
+        <p v-if="data?.user?.verifiedEmail">Email verified</p>
+        <p v-else>Email: Not verified</p>
         <hr/>
         <form @submit.prevent="register">
           <input type="text" v-model="email" placeholder="Email" />

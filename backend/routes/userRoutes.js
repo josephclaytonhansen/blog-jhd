@@ -21,29 +21,39 @@ export default (transporter) => {
     router.get('/', getUsers)
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
-    router.post('/create', (req, res) => {
-        let user = createUser(req, res)
-        let token = user.emailVerifyToken
-        const mailOptions = {
-            from: process.env.EMAIL_FROM_USERNAME,
-            to: user.email,
-            subject: 'Please verify your email',
-            text: 'Please verify your email by clicking the following link: <a href = "' 
-                + 'https://api.josephhansen.dev/user/verifyemail?token=' + token 
-                + '&email=' + encodeURIComponent(user.email)
-                + '">Verify Email</a>\nIf you did not create an account on hansenstudios.art or blog.josephhansen.dev, please ignore this email.'
-                + '\n\nThis is an automated message, do not reply.'
-        }
-        
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-            console.log(error)
-            } else {
-            console.log('Email sent: ' + info.response)
+    router.post('/create', async (req, res) => {
+        try {
+            let user = await createUser(req)
+            let token = user.emailVerifyToken
+            let text =  'Please verify your email by clicking the following link: <a href = "' 
+            + 'https://api.josephhansen.dev/user/verifyemail?token=' + token 
+            + '&email=' + encodeURIComponent(user.email)
+            + '">Verify Email</a>\nIf you did not create an account on hansenstudios.art or blog.josephhansen.dev, please ignore this email.'
+            + '\n\nThis is an automated message, do not reply.'
+            console.log(text)
+            try {
+            const mailOptions = {
+                from: process.env.EMAIL_FROM_USERNAME,
+                to: user.email,
+                subject: 'Please verify your email',
+                text: text,
             }
-        })
-        
-        res.status(200).send('User created')
+            
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            })} catch (error) {
+                console.error(error)
+            }
+            
+            res.status(200).send('User created')
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({message: error.message})
+        }
     })
     router.put('/edit/:id', editUser)
     router.put('/addcomment/:id', addToUserComments)

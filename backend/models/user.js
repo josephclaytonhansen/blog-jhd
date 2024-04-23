@@ -29,7 +29,7 @@ userSchema.methods.validPassword = function( pwd ) {
     return bcrypt.compareSync(pwd, this.password)
 }
 
-userSchema.generateEmailVerifyToken = function() {
+userSchema.methods.generateEmailVerifyToken = function() {
     let token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     this.emailVerifyToken = token
     return token
@@ -38,7 +38,6 @@ userSchema.generateEmailVerifyToken = function() {
 userSchema.pre('save', function(next) {
     if (this.password) {
         this.password = this.encryptPassword(this.password)
-        this.save()
     }
     next()
 })

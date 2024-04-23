@@ -111,6 +111,7 @@ app.get('/health', (req, res) => {
         "authenticated": req.isAuthenticated(),
         "user": req.user,
         "host": req.headers.host,
+        "requests": requests,
     }
     res.send(r)
 })
@@ -134,6 +135,11 @@ app.use('/blog', blogRoutes)
 app.use('/event', eventRoutes)
 app.use('/article', articleRoutes)
 app.use('/comment', commentRoutes(transporter))
+
+app.use((err, req, res, next) => {
+    console.error(err)
+    res.status(500).send('An error occurred')
+})
 
 cron.schedule('0 0 * * 0', async () => {
     console.log('Clearing requests')

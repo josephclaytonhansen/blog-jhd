@@ -64,10 +64,12 @@ const createUser = asyncHandler(async (req, res) => {
         }
     })
     if (existingUser) {
-        res.status(401).message('User already exists')
-    }
-    if (req.body.password !== req.body.confirm_password) {
-        res.status(401).message('Passwords do not match')
+        throw new Error('User already exists')
+    } else {
+        if (req.body.confirmPassword){
+            if (req.body.password !== req.body.confirmPassword) {
+                throw new Error('Passwords do not match')
+        }
     }
     const user = new User({
         email: req.body.email,
@@ -85,10 +87,17 @@ const createUser = asyncHandler(async (req, res) => {
         comments: [],
         registeredIp: req.ip,
         lastIp: req.ip,
-        emailVerifyToken: user.generateEmailVerifyToken(),
     })
-    await user.save()
-    res.status(201).json(user)
+    
+    user.emailVerifyToken = user.generateEmailVerifyToken()
+    
+    try {
+        await user.save()
+        return user
+    }
+    catch (error) {
+        throw new Error(error.message)
+    }}
 })
 
 const verifyEmailUser = asyncHandler(async (req, res) => {

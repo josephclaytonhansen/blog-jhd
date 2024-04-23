@@ -32,9 +32,7 @@ export default NuxtAuthHandler({
                 console.log('User:', user)
                 if (credentials?.username === user.email) {
                     let passwordMatch = await bcrypt.compare(credentials.password, user.password)
-                    console.log('Password match:', passwordMatch)
                     if (!passwordMatch) {
-                        console.error('Warning: password match failed')
                         throw new Error('Invalid credentials')
                     } else {
                         let u = {

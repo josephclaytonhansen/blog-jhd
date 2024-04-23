@@ -36,17 +36,10 @@ userSchema.methods.generateEmailVerifyToken = function() {
 }
 
 userSchema.pre('save', function(next) {
-    if (this.password) {
+    if (this.isModified('password')) {
         this.password = this.encryptPassword(this.password)
     }
     next()
-})
-
-userSchema.pre('validate', function(next) {
-    if (this.password) {
-        this.password = this.encryptPassword(this.password)
-        next()
-    }
 })
 
 const User = mongoose.model("User", userSchema)

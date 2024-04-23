@@ -33,8 +33,6 @@ const transporter = nodemailer.createTransport({
     },
   })
 
-const startUpTime = new Date().getTime()
-let requestCount = 0
 const requests = []
 const removedUsers = []
 
@@ -83,7 +81,6 @@ const limiter = rate_limit({
 app.use(limiter)
 
 app.use((req, res, next) => {
-    requestCount++
     res.setHeader('Referrer-Policy', 'no-referrer')
     requests.push({
         url: req.originalUrl,
@@ -98,22 +95,6 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
-})
-
-app.get('/health', (req, res) => {
-    let r = {
-        "database": db.readyState === 1 ? "connected" : "disconnected",
-        "server": "running",
-        "uptime": (new Date().getTime() - startUpTime) / 1000 /60,
-        "secure": req.secure,
-        "ip": req.ip,
-        "request count": requestCount,
-        "authenticated": req.isAuthenticated(),
-        "user": req.user,
-        "host": req.headers.host,
-        "requests": requests,
-    }
-    res.send(r)
 })
 
 app.get('/requests', (req, res) => {
@@ -138,7 +119,7 @@ app.use('/comment', commentRoutes(transporter))
 
 app.use((err, req, res, next) => {
     console.error(err)
-    res.status(500).send('An error occurred')
+    res.status(500).send('An error occurred: ' + err.message)
 })
 
 cron.schedule('0 0 * * 0', async () => {

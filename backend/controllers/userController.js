@@ -113,6 +113,7 @@ const verifyEmailUser = asyncHandler(async (req, res) => {
     if (user) {
         user.role = 'user'
         user.verifiedEmail = true
+        user.emailVerifyToken = ''
         await user.save()
         res.status(200).send('Email verified')
     } else {
@@ -121,6 +122,10 @@ const verifyEmailUser = asyncHandler(async (req, res) => {
 })
 
 const editUser = asyncHandler(async (req, res) => {
+    if (!req.user){
+        res.status(401)
+        throw new Error('You must be logged in to edit a user.')
+    } 
     const user = await User.findById(req.params.id)
     if (user) {
         if (user.role !== 'unverified-user' && (req.user._id === user._id || req.user.role === 'admin')) {
@@ -208,8 +213,16 @@ const randomString = (length) => {
 }
 
 const anonymizeUser = asyncHandler(async (req, res) => {
+    if (!req.user){
+        res.status(401)
+        throw new Error('You must be logged in to anonymize a user.')
+    } else if (req.user.role !== 'admin') {
+        res.status(401)
+        throw new Error('You must be an admin to anonymize a user.')
+    }
     const user = await User.findById(req.params.id)
     if (user) {
+        try {
         if (req.user._id === user._id || req.user.role === 'admin') {
             user.email = randomString(10) + '@' + randomString(5) + '.' + randomString(3)
             user.displayName = 'anon' + randomString(10)
@@ -223,7 +236,12 @@ const anonymizeUser = asyncHandler(async (req, res) => {
             user.password = randomString(10)
             await user.save()
             res.json(user)
+        }} catch (error) {
+            throw new Error(error.message)
         }
+    } else {
+        res.status(404)
+        throw new Error('User not found')
     }
 })
 
@@ -254,10 +272,29 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    if (!req.isAuthenticated()) {
-        return res.status(403).send('Not authorized')
-    }
+
     const users = await User.find({})
+    if (!req.user){
+        for (let i = 0; i < users.length; i++) {
+            users[i].emailVerifyToken = ""
+            users[i].lastIp = ""
+            users[i].registeredIp = ""
+            users[i].lastLogin = ""
+            users[i].lastEdit = ""
+            users[i].role = ""
+        
+        }
+    } else {
+    for (let i = 0; i < users.length; i++) {
+        if (req.user._id !== users[i]._id && req.user.role !== 'admin') {
+            users[i].emailVerifyToken = ""
+            users[i].lastIp = ""
+            users[i].registeredIp = ""
+            users[i].lastLogin = ""
+            users[i].lastEdit = ""
+            users[i].role = ""
+        }
+    }} 
     res.json(users)
 })
 

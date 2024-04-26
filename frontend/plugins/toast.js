@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 
@@ -11,4 +10,6 @@ const options = {
     maxToasts: 3
 }
 
-Vue.use(Toast, options)
+export default ({ app }, inject) => {
+  app.use(Toast, options);
+}

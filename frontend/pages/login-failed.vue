@@ -1,9 +1,6 @@
 <script setup lang="ts">
-
-
 </script>
 
 <template>
-  <NuxtPage/>
-
+    Login failed
 </template>

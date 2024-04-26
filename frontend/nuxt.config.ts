@@ -6,5 +6,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
   ],
+  router: {
+    middleware: ['beforeEach'],
+  },
   plugins: ['~/plugins/toast.js'],
 })

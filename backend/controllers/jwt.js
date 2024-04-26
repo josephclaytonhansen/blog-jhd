@@ -5,7 +5,7 @@ dotenv.config()
 const secret = process.env.JWT_SECRET
 
 export const createToken = (user) => {
-    return jwt.sign({ email: user.email }, secret, { expiresIn: '30m' })
+    return jwt.sign({ email: user.email }, secret, { expiresIn: '120m' })
 }
 
 export const verifyToken = (token) => {

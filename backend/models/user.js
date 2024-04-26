@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
     posts: Array,
     comments: Array,
     verifiedEmail: Boolean,
-    emailVerifyToken: String
+    emailVerifyToken: String,
+    jti: String,
 })
 
 userSchema.methods.encryptPassword = function( pwd ) {

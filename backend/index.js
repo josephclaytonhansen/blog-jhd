@@ -20,6 +20,8 @@ import eventRoutes from './routes/eventRoutes.js'
 import articleRoutes from './routes/articleRoutes.js'
 import commentRoutes from './routes/commentRoutes.js'
 
+import jwt from 'jsonwebtoken'
+
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
     port: 465,
@@ -45,13 +47,37 @@ app.use(express.urlencoded({
 
 // TODO: Add middleware to get nuxt-auth session data and set it to req.user
 
+dotenv.config()
+
+app.use(express.json())
+app.use(express.urlencoded({
+    extended: false
+}))
+
+
+async function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    if (authHeader) {
+        let json = JSON.parse(authHeader)
+        if (json.jti && json.jti === json.localStorage && json.email) {
+            req.user = await User.findOne({email: {$eq: json.email}})
+            next()
+        } else {
+            return res.sendStatus(403) // Forbidden
+        }
+    } else {
+        next()
+    }
+}
+app.use(authenticateToken)
+
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
 
 
 app.use(passport.initialize())
 
 const frontendUrls = process.env.FRONTEND_URLS.split(',')
-app.use(cors({origin: frontendUrls}))
+app.use(cors({origin: frontendUrls, credentials: true}))
 
 passport.serializeUser(async function (user, done) {
     done(null, user.id)
@@ -63,12 +89,6 @@ passport.deserializeUser(function (id, done) {
     })
 })
 
-dotenv.config()
-
-app.use(express.json())
-app.use(express.urlencoded({
-    extended: false
-}))
 
 const limiter = rate_limit({
     windowMs: 15 * 60 * 1000,

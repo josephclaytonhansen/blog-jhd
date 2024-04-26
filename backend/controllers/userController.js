@@ -32,7 +32,7 @@ const verifyTokenUser = asyncHandler(async (req, res, next) => {
     let decode = verifyToken(token)
     let user_json = JSON.parse(user)
     if (decode.email === user_json.user.email) {
-        if (decode.exp - Date.now() / 1000 < 60 * 30) {
+        if (decode.exp - Date.now() / 1000 < 60 * 120) {
             //verify JWT signature 
             let signature = decode.signature
             let auth_secret = process.env.JWT_SECRET
@@ -52,6 +52,75 @@ const verifyTokenUser = asyncHandler(async (req, res, next) => {
         throw new Error('Invalid credentials')
     }
 })
+
+const isAdminUser = asyncHandler(async (req, res) => {
+    const token = req.body.token || req.query.token
+    const user = req.body.user || req.query.user
+    let decode = verifyToken(token)
+    let user_json = JSON.parse(user)
+    if (decode.email === user_json.user.email) {
+        if (decode.exp - Date.now() / 1000 < 60 * 120) {
+            let signature = decode.signature
+            let auth_secret = process.env.JWT_SECRET
+            let signature_check = jwt.verify(token, auth_secret)
+            if (signature_check.signature === signature) {
+                if (user_json.user.role === 'admin') {
+                    res.status(200)
+                    res.json({
+                        message: 'user is admin'
+                    })
+                } else {
+                    res.status(401)
+                    throw new Error('role failed')
+                }
+            } else {
+                res.status(401)
+                throw new Error('role failed')
+            }
+        } else {
+            res.status(401)
+            throw new Error('token expired')
+        }
+    } else {
+        res.status(401)
+        throw new Error('role failed')
+    }
+})
+
+const isVerifiedUser = asyncHandler(async (req, res) => {
+    const token = req.body.token || req.query.token
+    const user = req.body.user || req.query.user
+    let decode = verifyToken(token)
+    let user_json = JSON.parse(user)
+    if (decode.email === user_json.user.email) {
+        if (decode.exp - Date.now() / 1000 < 60 * 120) {
+            let signature = decode.signature
+            let auth_secret = process.env.JWT_SECRET
+            let signature_check = jwt.verify(token, auth_secret)
+            if (signature_check.signature === signature) {
+                if (user_json.user.verifiedEmail === true) {
+                    res.status(200)
+                    res.json({
+                        message: 'user is verified'
+                    })
+                } else {
+                    res.status(401)
+                    throw new Error('role failed')
+                }
+            } else {
+                res.status(401)
+                throw new Error('role failed')
+            }
+        } else {
+            res.status(401)
+            throw new Error('token expired')
+        }
+    } else {
+        res.status(401)
+        throw new Error('role failed')
+    }
+})
+
 
 const createUser = asyncHandler(async (req, res) => {
     let existingUser = await User.findOne({
@@ -87,6 +156,7 @@ const createUser = asyncHandler(async (req, res) => {
         comments: [],
         registeredIp: req.ip,
         lastIp: req.ip,
+        jti: req.body.jti,
     })
     
     user.emailVerifyToken = user.generateEmailVerifyToken()
@@ -140,6 +210,7 @@ const editUser = asyncHandler(async (req, res) => {
             user.lastEdit = new Date()
             user.posts = req.body.posts || user.posts
             user.comments = req.body.comments || user.comments
+            user.jti = req.body.jti || user.jti
 
             if (req.user.role === 'admin') {
                 user.role = req.body.role || user.role
@@ -347,6 +418,8 @@ const getUserByEmail = asyncHandler(async (req, res) => {
 export {
     userLoginByEmail,
     verifyTokenUser,
+    isAdminUser,
+    isVerifiedUser,
     createUser,
     editUser,
     deleteUser,

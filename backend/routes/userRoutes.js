@@ -12,7 +12,9 @@ import {
     getUserByDisplayName,
     getUserById,
     getUserByEmail,
-    getUsers
+    getUsers,
+    isAdminUser,
+    isVerifiedUser
 } from '../controllers/userController.js'
 
 const router = express.Router()
@@ -21,6 +23,8 @@ export default (transporter) => {
     router.get('/', getUsers)
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
+    router.post('/isadmin', isAdminUser)
+    router.post('/isverified', isVerifiedUser)
     router.post('/create', async (req, res) => {
         try {
             let user = await createUser(req)

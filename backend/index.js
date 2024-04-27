@@ -64,8 +64,6 @@ app.use(express.urlencoded({
     extended: false
 }))
 
-// TODO: Add middleware to get nuxt-auth session data and set it to req.user
-
 dotenv.config()
 
 app.use(express.json())
@@ -73,11 +71,6 @@ app.use(express.urlencoded({
     extended: false
 }))
 
-
-async function authenticateToken(req, res, next) {
-    next()
-}
-app.use(authenticateToken)
 
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
 

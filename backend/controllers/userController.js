@@ -18,7 +18,7 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
         let auth_token = createToken(user)
         res.json({
             auth_token: auth_token,
-            email: user.email
+            user: user
         })
     } else {
         res.status(401)

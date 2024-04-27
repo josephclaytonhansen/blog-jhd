@@ -41,6 +41,25 @@ const removedUsers = []
 const app = express()
 app.disable('x-powered-by')
 
+const frontendUrls = process.env.FRONTEND_URLS.split(',')
+
+app.use((req, res, next) => {
+    if (req.path.startsWith('/user/verifyemail')) {
+        cors({origin: true, credentials: true})(req, res, next);
+    } else {
+        cors({
+            origin: function (origin, callback) {
+                if (frontendUrls.indexOf(origin) !== -1) {
+                    callback(null, true)
+                } else {
+                    callback(new Error('Not allowed by CORS'))
+                }
+            },
+            credentials: true
+        })(req, res, next)
+    }
+})
+
 app.use(express.urlencoded({
     extended: false
 }))
@@ -56,18 +75,7 @@ app.use(express.urlencoded({
 
 
 async function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    if (authHeader) {
-        let json = JSON.parse(authHeader)
-        if (json.jti && json.jti === json.localStorage && json.email) {
-            req.user = await User.findOne({email: {$eq: json.email}})
-            next()
-        } else {
-            return res.sendStatus(403) // Forbidden
-        }
-    } else {
-        next()
-    }
+    next()
 }
 app.use(authenticateToken)
 
@@ -75,9 +83,6 @@ app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
 
 
 app.use(passport.initialize())
-
-const frontendUrls = process.env.FRONTEND_URLS.split(',')
-app.use(cors({origin: frontendUrls, credentials: true}))
 
 passport.serializeUser(async function (user, done) {
     done(null, user.id)

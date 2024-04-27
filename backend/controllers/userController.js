@@ -156,7 +156,7 @@ const createUser = asyncHandler(async (req, res) => {
         comments: [],
         registeredIp: req.ip,
         lastIp: req.ip,
-        jti: req.body.jti,
+        verifiedEmail: false
     })
     
     user.emailVerifyToken = user.generateEmailVerifyToken()

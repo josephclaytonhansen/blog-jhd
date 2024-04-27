@@ -8,6 +8,7 @@ const userStore = defineStore('user', {
         async login(data) {
             this.user = data.user
             localStorage.setItem('token', data.auth_token)
+
         },
         async logout() {
             this.user = null

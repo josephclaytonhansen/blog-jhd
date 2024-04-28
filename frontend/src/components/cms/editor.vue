@@ -73,7 +73,7 @@ export default {
   try {
     let id = props.blogId
     let date = new Date().toISOString()
-    let response = await axios.put('http/localhost:3720/blog/' + id, {
+    let response = await axios.put('http/localhost:3720/blog/edit/' + id, {
       username: props.username,
       password: props.password,
       content: content.value,

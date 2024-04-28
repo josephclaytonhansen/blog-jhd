@@ -1,6 +1,5 @@
 <script setup>
 import {
-    Braces,
     CalendarDays,
     PenLine,
     Users,
@@ -8,81 +7,108 @@ import {
     Newspaper,
     Tags,
     MonitorSmartphone,
-    Smartphone,
-    Monitor,
+    Server,
     UserCog,
-    Home,
+    UserX,
     LineChart,
 } from 'lucide-vue-next'
 
+import { ref } from 'vue'
+
+const activeComponent = ref("preview")
+
+import { useRouter } from 'vue-router'
+
+import PreviewC from './cms/preview.vue'
+import PostsC from './cms/posts.vue'
+import PagesC from './cms/pages.vue'
+import ArticlesC from './cms/articles.vue'
+import UsersC from './cms/users.vue'
+import TagsC from './cms/tags.vue'
+import StylesC from './cms/styles.vue'
+import ProfileC from './cms/profile.vue'
+import AnalyticsC from './cms/analytics.vue'
+import ServerC from './cms/server.vue'
+
+const router = useRouter()
+
 const sidebarButtons = [
 {
-        icon: Home,
-        text: 'Home',
-        link: '/cms'
+        icon: MonitorSmartphone,
+        text: 'Preview',
+        component: PreviewC
     },
     {
         icon: CalendarDays,
-        text: 'Blog',
-        link: '/cms/blog'
+        text: 'Posts',
+        component: PostsC
     },
     {
         icon: PenLine,
         text: 'Pages',
-        link: '/cms/pages'
+        component: PagesC
     },
     {
         icon: Newspaper,
         text: 'Articles',
-        link: '/cms/articles'
+        component: ArticlesC
     },
     {
         icon: Users,
         text: 'Users',
-        link: '/cms/users'
-    },
-    {
-        icon: SwatchBook,
-        text: 'Categories',
-        link: '/cms/categories'
+        component: UsersC
     },
     {
         icon: Tags,
         text: 'Tags',
-        link: '/cms/tags'
+        component: TagsC
     },
     {
-        icon: MonitorSmartphone,
-        text: 'Responsive',
-        link: '/cms/responsive'
-    },
-    {
-        icon: Braces,
-        text: 'CSS',
-        link: '/cms/css'
+        icon: SwatchBook,
+        text: 'Styles',
+        component: StylesC
     },
     {
         icon: UserCog,
         text: 'Profile',
-        link: '/cms/profile'
+        component: ProfileC
     },
     {
         icon: LineChart,
         text: 'Analytics',
-        link: '/cms/analytics'
+        component: AnalyticsC
+    },
+    {
+        icon: Server,
+        text: 'Server',
+        component: ServerC
+    },
+    {
+        icon: UserX,
+        text: 'Logout',
+        component: 'logout'
     },
 ]
+
+const updateActiveComponent = (component) => {
+    activeComponent.value = component
+    if (component == 'logout') {
+        router.push('/logout')
+    }
+}
 </script>
 
 <template>
     <div class = "w-full h-full overflow-hidden flex flex-row min-h-[100vh]">
         <div id="sidebar" class = "h-full min-h-[100vh] overflow-hidden bg-slate-800 flex flex-col items-start justify-center">
-            <div v-for="button in sidebarButtons" class = "text-slate-400 hover:text-white flex flex-row items-center justify-start h-12 px-8 lg:py-8 xl:py-10 md:py-6 sm:py-10 py-10 cursor-pointer transition-all hover:bg-slate-700 w-full">
-                <component :is="button.icon" class = "w-6 h-6 mr-3 "/>
-                <router-link :to="button.link" class = "">{{ button.text }}</router-link>
+            <div v-for="button in sidebarButtons" class = "text-slate-400 flex flex-row items-center justify-start h-12 px-8 lg:py-8 xl:py-10 md:py-6 sm:py-10 py-10 cursor-pointer transition-all hover:bg-slate-700 w-full duration-300" :class="activeComponent == button.component ? 'bg-slate-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
+                <component :is="button.icon" class = "w-6 h-6 mr-3 " />
+                <span class = "hidden sm:hidden md:block">{{ button.text }}</span>
             </div>
                 
         </div>
-        <div id="center" class = "grow h-full min-h-[100vh] overflow-hidden bg-slate-900"></div>
+        <div id="center" class = "grow h-full min-h-[100vh] overflow-hidden bg-slate-900">
+            <component :is="activeComponent" />
+        </div>
     </div>
 </template>

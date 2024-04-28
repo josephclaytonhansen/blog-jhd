@@ -19,8 +19,8 @@ import blogRoutes from './routes/blogRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
 import articleRoutes from './routes/articleRoutes.js'
 import commentRoutes from './routes/commentRoutes.js'
+import tagRoutes from './routes/tagRoutes.js'
 
-import jwt from 'jsonwebtoken'
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -134,6 +134,7 @@ app.use('/blog', blogRoutes)
 app.use('/event', eventRoutes)
 app.use('/article', articleRoutes)
 app.use('/comment', commentRoutes(transporter))
+app.use('/tag', tagRoutes)
 
 app.use((err, req, res, next) => {
     console.error(err)

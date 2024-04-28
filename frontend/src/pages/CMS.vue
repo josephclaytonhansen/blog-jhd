@@ -13,7 +13,7 @@ import {
     LineChart,
 } from 'lucide-vue-next'
 
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const activeComponent = ref("preview")
 
@@ -96,13 +96,17 @@ const updateActiveComponent = (component) => {
         router.push('/logout')
     }
 }
+
+onMounted(() => {
+    activeComponent.value = PreviewC
+})
 </script>
 
 <template>
     <div class = "w-full h-full overflow-hidden flex flex-row min-h-[100vh]">
         <div id="sidebar" class = "h-full min-h-[100vh] overflow-hidden bg-slate-800 flex flex-col items-start justify-center">
             <div v-for="button in sidebarButtons" class = "text-slate-400 flex flex-row items-center justify-start h-12 px-8 lg:py-8 xl:py-10 md:py-6 sm:py-10 py-10 cursor-pointer transition-all hover:bg-slate-700 w-full duration-300" :class="activeComponent == button.component ? 'bg-slate-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
-                <component :is="button.icon" class = "w-6 h-6 mr-3 " />
+                <component :is="button.icon" class = "w-6 h-6 md:mr-3 " />
                 <span class = "hidden sm:hidden md:block">{{ button.text }}</span>
             </div>
                 

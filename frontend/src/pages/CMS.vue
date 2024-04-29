@@ -92,26 +92,96 @@ const sidebarButtons = [
 
 const updateActiveComponent = (component) => {
     activeComponent.value = component
+    switch (component) {
+        case PreviewC:
+            localStorage.setItem('activeComponent', 'preview')
+            break
+        case PostsC:
+            localStorage.setItem('activeComponent', 'posts')
+            break
+        case PagesC:
+            localStorage.setItem('activeComponent', 'pages')
+            break
+        case ArticlesC:
+            localStorage.setItem('activeComponent', 'articles')
+            break
+        case UsersC:
+            localStorage.setItem('activeComponent', 'users')
+            break
+        case TagsC:
+            localStorage.setItem('activeComponent', 'tags')
+            break
+        case StylesC:
+            localStorage.setItem('activeComponent', 'styles')
+            break
+        case ProfileC:
+            localStorage.setItem('activeComponent', 'profile')
+            break
+        case AnalyticsC:
+            localStorage.setItem('activeComponent', 'analytics')
+            break
+        case ServerC:
+            localStorage.setItem('activeComponent', 'server')
+            break
+    }
+    localStorage.setItem('activeComponent', componentName)
     if (component == 'logout') {
         router.push('/logout')
     }
 }
 
 onMounted(() => {
-    activeComponent.value = PreviewC
+    let localActiveComponent = localStorage.getItem('activeComponent')
+    if (localActiveComponent) {
+        switch (localActiveComponent) {
+            case 'preview':
+                activeComponent.value = PreviewC
+                break
+            case 'posts':
+                activeComponent.value = PostsC
+                break
+            case 'pages':
+                activeComponent.value = PagesC
+                break
+            case 'articles':
+                activeComponent.value = ArticlesC
+                break
+            case 'users':
+                activeComponent.value = UsersC
+                break
+            case 'tags':
+                activeComponent.value = TagsC
+                break
+            case 'styles':
+                activeComponent.value = StylesC
+                break
+            case 'profile':
+                activeComponent.value = ProfileC
+                break
+            case 'analytics':
+                activeComponent.value = AnalyticsC
+                break
+            case 'server':
+                activeComponent.value = ServerC
+                break
+        }
+    } else {
+        activeComponent.value = PreviewC
+        localStorage.setItem('activeComponent', PreviewC)
+    }
 })
 </script>
 
 <template>
     <div class = "w-full h-full overflow-hidden flex flex-row min-h-[100vh]">
         <div id="sidebar" class = "h-full min-h-[100vh] overflow-hidden bg-slate-800 flex flex-col items-start justify-center">
-            <div v-for="button in sidebarButtons" class = "text-slate-400 flex flex-row items-center justify-start h-12 px-8 lg:py-8 xl:py-10 md:py-6 sm:py-10 py-10 cursor-pointer transition-all hover:bg-slate-700 w-full duration-300" :class="activeComponent == button.component ? 'bg-slate-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
-                <component :is="button.icon" class = "w-6 h-6 md:mr-3 " />
+            <div v-for="button in sidebarButtons" class = "text-slate-400 flex flex-row items-center justify-start h-12 px-1 py-0 sm:px-4 lg:py-8 xl:py-10 md:py-6 sm:py-10 cursor-pointer transition-all hover:bg-slate-700 w-full duration-300" :class="activeComponent == button.component ? 'bg-slate-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
+                <component :is="button.icon" class = "w-10 h-10 md:w-7 min-w-4 min-h-4 md:min-w-7 md:min-h-7 lg:w-5 md:mr-3" />
                 <span class = "hidden sm:hidden md:block">{{ button.text }}</span>
             </div>
                 
         </div>
-        <div id="center" class = "grow h-full min-h-[100vh] overflow-hidden bg-slate-900">
+        <div id="center" class = "grow h-full min-h-[100vh] overflow-auto bg-slate-900">
             <component :is="activeComponent" />
         </div>
     </div>

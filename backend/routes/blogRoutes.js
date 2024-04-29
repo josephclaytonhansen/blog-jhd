@@ -12,7 +12,9 @@ import {getBlogs,
     addCommentToBlog,
     deleteCommentFromBlog,
     getBlogById,
-    getBlogsByTag
+    getBlogsByTag,
+    unpublishBlog,
+    publishBlog,
 } from '../controllers/blogController.js'
 
 const router = express.Router()
@@ -30,5 +32,7 @@ router.put('/edit/:id', editBlog)
 router.delete('/delete/:id', deleteBlog)
 router.put('/addcomment/:id', addCommentToBlog)
 router.put('/deletecomment/:id', deleteCommentFromBlog)
+router.post('/unpublish/:id', unpublishBlog)
+router.post('/publish/:id', publishBlog)
 
 export default router

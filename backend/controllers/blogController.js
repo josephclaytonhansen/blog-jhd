@@ -152,6 +152,40 @@ const getBlogsByTag = asyncHandler(async (req, res) => {
     res.json(blogs)
 })
 
+const publishBlog = asyncHandler(async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(403).send('Not authorized')
+    }
+    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+        return res.status(403).send('Not authorized')
+    }
+    const blog = await Blog.findById(req.params.id)
+    if (blog) {
+        blog.status = 'published'
+        await blog.save()
+        res.json(blog)
+    } else {
+        res.status(404).send('Blog not found')
+    }
+})
+
+const unpublishBlog = asyncHandler(async (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.status(403).send('Not authorized')
+    }
+    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+        return res.status(403).send('Not authorized')
+    }
+    const blog = await Blog.findById(req.params.id)
+    if (blog) {
+        blog.status = 'draft'
+        await blog.save()
+        res.json(blog)
+    } else {
+        res.status(404).send('Blog not found')
+    }
+})
+
 export {
     getBlogs,
     getBlogsByCategory,
@@ -165,5 +199,7 @@ export {
     addCommentToBlog,
     deleteCommentFromBlog,
     getBlogById,
-    getBlogsByTag
+    getBlogsByTag,
+    publishBlog,
+    unpublishBlog,
 }

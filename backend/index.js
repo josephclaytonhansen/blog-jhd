@@ -1,5 +1,6 @@
 import db from './mongo.js'
 import User from './models/user.js'
+import Blog from './models/blog.js'
 
 import express from 'express'
 
@@ -95,8 +96,9 @@ const limiter = rate_limit({
     legacyHeaders: false,
 })
 
-
+if (process.env.NODE_ENV === 'production') {
 app.use(limiter)
+}
 
 app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'no-referrer')

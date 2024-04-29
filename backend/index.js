@@ -61,6 +61,8 @@ app.use((req, res, next) => {
     }
 })
 
+
+
 app.use(express.urlencoded({
     extended: false
 }))
@@ -162,6 +164,7 @@ cron.schedule('0 0 1 * *', async () => {
 
     })
 })
+
 
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)

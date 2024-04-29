@@ -16,7 +16,25 @@ export {pinia}
 
 import {userStore} from './userStore'
 
-const toastOptions = {}
+const toastOptions = {
+    position: "top-right",
+    timeout: 3000,
+    closeOnClick: false,
+    pauseOnFocusLoss: false,
+    pauseOnHover: true,
+    draggable: true,
+    draggablePercent: 0.6,
+    showCloseButtonOnHover: false,
+    hideProgressBar: false,
+    closeButton: "button",
+    icon: true,
+    rtl: false,
+    shadow: false,
+    maxToasts: 3,
+    transition: "Vue-Toastification__bounce",
+    newestOnTop: true,
+    className: 'toast',
+}
 
 const app = createApp(App)
 

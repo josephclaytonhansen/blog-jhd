@@ -12,8 +12,9 @@ const posts = ref([])
 
 const getPosts = async () => {
   const response = await fetch('http://localhost:3720/blog/')
-  if (!response.ok) {
-    throw new Error('Network response was not ok.')
+  if (response.status !== 200) {
+    toast.error('Network error')
+    throw new Error('Network error- could not get posts')
   }
   const data = await response.json()
   return data
@@ -22,7 +23,13 @@ const getPosts = async () => {
 onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
+    
     posts.value = await getPosts()
+    // TODO: add post caching to reduce server load
+    
+  } else {
+    toast.info('Your session has expired. Please log in.')
+    router.push('/login')
   }
   console.log(posts.value)
 })
@@ -30,7 +37,7 @@ onMounted(async () => {
 import {
     Eye,
     Trash,
-    Check,
+    Send,
     CheckCheck,
     Clock,
     Pencil,
@@ -46,19 +53,20 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const viewPost = (id) => {
-    router.push('/cms/posts/' + id)
+
 }
 
 const editPost = (id) => {
-    router.push('/cms/posts/' + id + '/edit')
+
 }
 
 const deletePost = async (id) => {
-    let url = 'http://localhost:3720/blog/' + id
+    let url = 'http://localhost:3720/blog/delete/' + id
     let config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
         },
         withCredentials: true
     }
@@ -66,21 +74,31 @@ const deletePost = async (id) => {
         await fetch(url, {
             method: 'DELETE',
             headers: config.headers,
-            credentials: 'include'
+            credentials: 'include',
+        }).then(async (response) => {
+            if (response.status !== 200) {
+                toast.error('Error deleting post')
+                posts.value = getPosts()
+                throw new Error('Network error- could not delete post')
+            }
+            toast.success('Post deleted')
+            posts.value = await getPosts()
+        }).catch((error) => {
+            toast.error(error.message || error.error || 'Error deleting post')
         })
-        toast.success('Post deleted')
-        posts.value = getPosts()
+        
     } catch (error) {
         toast.error(error.message || error.error || 'Error deleting post')
     }
 }
 
 const publishPost = async (id) => {
-    let url = 'http://localhost:3720/blog/publish' + id
+    let url = 'http://localhost:3720/blog/publish/' + id
     let config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
         },
         withCredentials: true
     }
@@ -89,12 +107,22 @@ const publishPost = async (id) => {
             method: 'POST',
             headers: config.headers,
             credentials: 'include'
+        }).then(async (response) => {
+            if (response.status !== 200) {
+                throw new Error('Network error- could not publish post')
+            }
+            toast.success('Post published')
+            posts.value = await getPosts()
+        }).catch(async (error) => {
+            toast.error(error.message || error.error || 'Error publishing post')
         })
-        toast.success('Post published')
-        posts.value = getPosts()
     } catch (error) {
         toast.error(error.message || error.error || 'Error publishing post')
     }
+}
+
+const newPost = () => {
+    router.push('/cms/posts/new')
 }
 
 const unpublishPost = async (id) => {
@@ -103,6 +131,7 @@ const unpublishPost = async (id) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
         },
         withCredentials: true
     }
@@ -111,9 +140,15 @@ const unpublishPost = async (id) => {
             method: 'POST',
             headers: config.headers,
             credentials: 'include'
+        }).then(async (response) => {
+            if (response.status !== 200) {
+                throw new Error('Network error- could not unpublish post')
+            }
+            toast.success('Post unpublished')
+            posts.value = await getPosts()
+        }).catch((error) => {
+            toast.error(error.message || error.error || 'Error unpublishing post')
         })
-        toast.success('Post unpublished')
-        posts.value = getPosts()
     } catch (error) {
         toast.error(error.message || error.error || 'Error unpublishing post')
     }
@@ -122,34 +157,34 @@ const unpublishPost = async (id) => {
 </script>
 
 <template>
-    <div class="p-3 rounded-xl">
+    <div class="p-3">
         <table class='w-full text-slate-400 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
             <colgroup>
-                <col style="width: 4%"/>
-                <col style="width: 4%"/>
+                <col style="width: 3%"/>
+                <col style="width: 3%"/>
                 <col style="width: 25%"/>
                 <col style="width: 14%"/>
-                <col style="width: 14%"/>
+                <col style="width: 16%"/>
                 <col style="width: 14%"/>
                 <col style="width: 8%"/>
                 <col style="width: 5%"/>
                 <col style="width: 7%"/>
             </colgroup>
-            <thead class="bg-slate-700 text-center">
+            <thead class="bg-slate-700 text-center uppercase">
                 <tr>
                     <th class="p-3"><div class=  "flex items-center justify-center w-8 h-8"><Eye/></div></th>
-                    <th class=" p-3"><div class = "flex items-center justify-center  w-8 h-8"><MessageCircleMore/></div></th>
-                    <th class=" p-3">Title</th>
-                    <th class=" p-3">Author</th>
+                    <th class=" p-3"><div class = "flex items-center justify-center w-8 h-8"><MessageCircleMore/></div></th>
+                    <th class="font-normal p-3">Title</th>
+                    <th class="font-normal p-3">Author</th>
                     <th class="hidden sm:table-cell p-3"><div class = "flex items-center justify-center m-auto w-8 h-8"><Router/></div></th>
                     <th class="hidden sm:table-cell p-3"><div class = "flex items-center justify-center m-auto w-8 h-8"><Tags/></div></th>
-                    <th class="hidden sm:table-cell p-3">Category</th>
-                    <th class=" p-3">Status</th>
-                    <th class="p-3">Actions</th>
+                    <th class="hidden sm:table-cell p-3 font-normal">Category</th>
+                    <th class="font-normal p-3">Status</th>
+                    <th class="font-normal p-3">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="post in posts" :key="post._id" class = "text-center">
+                <tr v-for="post in posts" :key="post._id" class = "text-center bg-slate-800">
                     <td class="py-2 border-b-slate-800 border-b-2 text-center">{{post.views}}</td>
                     <td class = "border-b-slate-800 border-b-2 text-center">{{ post.comments.length }}</td>
                     <td class="cursor-pointer hover:text-white transition-all duration-300 border-b-slate-800 border-b-2 text-center"><a :href="post.site + '/' + post.slug">{{post.title}}</a></td>
@@ -164,8 +199,8 @@ const unpublishPost = async (id) => {
                         <div v-else-if="post.status == 'scheduled'">
                             <Clock />
                         </div>
-                        <div v-else @click="publishPost(post._id)" class="cursor-pointer hover:text-white transition-all duration-300">
-                            <Check  />
+                        <div v-else @click="publishPost(post._id)" class="cursor-pointer hover:text-white transition-all duration-300 flex items-center justify-center">
+                            <Send  />
                         </div>
                     </td>
                     <td class=" border-b-slate-800 border-b-2">
@@ -178,6 +213,8 @@ const unpublishPost = async (id) => {
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div @click="newPost" class = "fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 cursor-pointer bg-cyan-600 px-5 py-2 rounded-lg shadow-md shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300">New post
     </div>
 </template>
 

@@ -17,15 +17,17 @@ import {
     isVerifiedUser
 } from '../controllers/userController.js'
 
+import authenticateToken from '../middleware/authenticateToken.js'
+
 const router = express.Router()
 
 export default (transporter) => {
-    router.get('/', getUsers)
+    router.get('/', authenticateToken, getUsers)
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
     router.post('/isadmin', isAdminUser)
     router.post('/isverified', isVerifiedUser)
-    router.post('/create', async (req, res) => {
+    router.post('/create', authenticateToken, async (req, res) => {
         try {
             let user = await createUser(req)
             let token = user.emailVerifyToken
@@ -60,14 +62,14 @@ export default (transporter) => {
             res.status(500).json({message: error.message})
         }
     })
-    router.put('/edit/:id', editUser)
-    router.put('/addcomment/:id', addToUserComments)
-    router.put('/addpost/:id', addToUserPosts)
-    router.delete('/delete/:id', deleteUser)
-    router.put('/anonymize/:id', anonymizeUser)
+    router.put('/edit/:id', authenticateToken, editUser)
+    router.put('/addcomment/:id', authenticateToken, addToUserComments)
+    router.put('/addpost/:id', authenticateToken, addToUserPosts)
+    router.delete('/delete/:id', authenticateToken, deleteUser)
+    router.put('/anonymize/:id', authenticateToken, anonymizeUser)
     router.get('/verifyemail', verifyEmailUser)
     router.get('/user/:displayName', getUserByDisplayName)
-    router.get('/id/:id', getUserById)
+    router.get('/id/:id', authenticateToken, getUserById)
     router.get('/email/:email', getUserByEmail)
 
     return router

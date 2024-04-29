@@ -108,7 +108,7 @@ const deleteBlog = asyncHandler(async (req, res) => {
     }
     const blog = await Blog.findById(req.params.id)
     if (blog) {
-        await blog.remove()
+        await Blog.deleteOne({ _id: req.params.id })
         res.json({ message: 'Blog removed' })
     } else {
         res.status(404).send('Blog not found')

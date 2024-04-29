@@ -343,8 +343,10 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
+    console.log(req.user)
 
     const users = await User.find({})
+
     if (!req.user){
         for (let i = 0; i < users.length; i++) {
             users[i].emailVerifyToken = ""

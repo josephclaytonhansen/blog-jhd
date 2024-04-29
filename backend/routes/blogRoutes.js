@@ -1,5 +1,7 @@
 import express from 'express'
 
+import authenticateToken from '../middleware/authenticateToken.js'
+
 import {getBlogs,
     getBlogsByCategory,
     getBlogsByAuthor,
@@ -27,12 +29,12 @@ router.get('/by/:author', getBlogsByAuthor)
 router.post('/status', getBlogsByStatus)
 router.post('/date', getBlogsByDate)
 router.get('/slug/:slug', getBlogBySlug)
-router.post('/create', createBlog)
-router.put('/edit/:id', editBlog)
-router.delete('/delete/:id', deleteBlog)
-router.put('/addcomment/:id', addCommentToBlog)
-router.put('/deletecomment/:id', deleteCommentFromBlog)
-router.post('/unpublish/:id', unpublishBlog)
-router.post('/publish/:id', publishBlog)
+router.post('/create', authenticateToken, createBlog)
+router.put('/edit/:id', authenticateToken, editBlog)
+router.delete('/delete/:id', authenticateToken, deleteBlog)
+router.put('/addcomment/:id', authenticateToken, addCommentToBlog)
+router.put('/deletecomment/:id', authenticateToken, deleteCommentFromBlog)
+router.post('/unpublish/:id', authenticateToken, unpublishBlog)
+router.post('/publish/:id', authenticateToken, publishBlog)
 
 export default router

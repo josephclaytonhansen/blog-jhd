@@ -15,7 +15,7 @@ import {
 
 import { onMounted, ref } from 'vue'
 
-const activeComponent = ref("preview")
+const activeComponent = ref(PreviewC)
 
 import { useRouter } from 'vue-router'
 
@@ -90,6 +90,45 @@ const sidebarButtons = [
     },
 ]
 
+const compToString = (component) => {
+    switch (component) {
+        case PreviewC:
+            return 'preview'
+            break
+        case PostsC:
+            return 'posts'
+            break
+        case PagesC:
+            return 'pages'
+            break
+        case ArticlesC:
+            return 'articles'
+            break
+        case UsersC:
+            return 'users'
+            break
+        case TagsC:
+            return 'tags'
+            break
+        case StylesC:
+            return 'styles'
+            break
+        case ProfileC:
+            return 'profile'
+            break
+        case AnalyticsC:
+            return 'analytics'
+            break
+        case ServerC:
+            return 'server'
+            break
+    }
+}
+
+const stringCheck = (string) => {
+    return localStorage.getItem('activeComponent') === string
+}
+
 const updateActiveComponent = (component) => {
     activeComponent.value = component
     switch (component) {
@@ -124,7 +163,6 @@ const updateActiveComponent = (component) => {
             localStorage.setItem('activeComponent', 'server')
             break
     }
-    localStorage.setItem('activeComponent', componentName)
     if (component == 'logout') {
         router.push('/logout')
     }
@@ -175,7 +213,7 @@ onMounted(() => {
 <template>
     <div class = "w-full h-full overflow-hidden flex flex-row min-h-[100vh]">
         <div id="sidebar" class = "h-full min-h-[100vh] overflow-hidden bg-slate-800 flex flex-col items-start justify-center">
-            <div v-for="button in sidebarButtons" class = "text-slate-400 flex flex-row items-center justify-start h-12 px-1 py-0 sm:px-4 lg:py-8 xl:py-10 md:py-6 sm:py-10 cursor-pointer transition-all hover:bg-slate-700 w-full duration-300" :class="activeComponent == button.component ? 'bg-slate-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
+            <div v-for="button in sidebarButtons" class = "text-slate-400 flex flex-row items-center justify-start h-12 px-1 py-0 sm:px-4 lg:py-8 xl:py-10 md:py-6 sm:py-10 cursor-pointer transition-all hover:bg-slate-700 w-full duration-300" :class="stringCheck(compToString(button.component)) ? 'bg-slate-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
                 <component :is="button.icon" class = "w-10 h-10 md:w-7 min-w-4 min-h-4 md:min-w-7 md:min-h-7 lg:w-5 md:mr-3" />
                 <span class = "hidden sm:hidden md:block">{{ button.text }}</span>
             </div>

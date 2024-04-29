@@ -55,7 +55,10 @@
         PenLine,
         Mail,
         MailCheck,
+        Newspaper,
         MailWarning,
+        VenetianMask,
+        Router
     } from 'lucide-vue-next'
 
     import { useToast } from "vue-toastification"
@@ -79,6 +82,21 @@
         {key: 'Anonymized Users', icon: UserMinus, users: anonymizedUsers, class: "shrink"},
     ])
 
+    const isIpUnique = (users) => {
+        let ipList = []
+        let duplicateIps = []
+        users.forEach(user => {
+            if (ipList.includes(user.registeredIp)){
+                duplicateIps.push(user.registeredIp)
+            } else {
+                ipList.push(user.registeredIp)
+            }
+        })
+        return duplicateIps
+    }
+
+    const duplicateIps = computed(() => isIpUnique(users.value))
+
 
 
 </script>
@@ -90,21 +108,30 @@
                 <component :is="group.icon"/><h2 class = "text-xl">{{group.key}}</h2>
             </div>
             <hr class = " border-slate-700 border-2 mb-3"/>
-            <div>
+            <div class = 'flex flex-row justify-between flex-wrap gap-3'>
                 <div v-for = "user in group.users">
-                    <div class = "flex items-center gap-6 flex-wrap">
-                        <div class = "flex items-center gap-3 shrink">
-                            <PenLine/><h3>{{user.displayName}}</h3>
+                    <div class = "flex items-center gap-3">
+                        <div class = "flex items-center gap-1 shrink">
+                            <h3>{{user.displayName}}</h3>
                         </div>
-                        <MailCheck v-if = "user.verifiedEmail"/>
-                        <MailWarning v-else/>
-                        <div class = "flex items-center gap-3 shrink">
+                        <MailCheck v-if = "user.verifiedEmail" class="text-emerald-500"/>
+                        <MailWarning v-else class="text-amber-500"/>
+
+                            <Router :class="duplicateIps.indexOf(user.registeredIp) === -1? 'text-emerald-500':'text-amber-500'"/>
+
+                        <div class = "flex items-center gap-1 shrink">
                             <MessageCircleMore/><h3>{{user.comments.length}}</h3>
                         </div>
-                        <div class = "flex items-center gap-3 shrink">
-                            <MessageCircleMore/><h3>{{user.comments.length}}</h3>
+                        <div class = "flex items-center gap-1 shrink">
+                            <Newspaper/><h3>{{user.posts.length}}</h3>
                         </div>
-                        <Cog/>
+                        <button class="cursor-pointer bg-cyan-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300">
+                            <Cog/>
+                        </button>
+                        
+                        <button class="cursor-pointer bg-orange-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-orange-600 hover:scale-105 transition-all duration-300">
+                            <VenetianMask/>
+                        </button>
                     </div>
                     
                 </div>

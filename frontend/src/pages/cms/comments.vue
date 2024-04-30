@@ -19,7 +19,7 @@
         },
         withCredentials: true
     }
-        const response = await fetch('http://localhost:3720/comment/', {
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/comment/`, {
             method: 'GET',
             headers: config.headers,
             credentials: 'include'
@@ -33,7 +33,7 @@
     }
 
     const flagComment = async (id) => {
-        let url = 'http://localhost:3720/comment/flag/' + id
+        let url = `${process.env.VUE_APP_SERVER_URL}/comment/flag/` + id
         let config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -62,7 +62,7 @@
     }
 
     const deleteComment = async (id) => {
-        let url = 'http://localhost:3720/comment/delete/' + id
+        let url = `${process.env.VUE_APP_SERVER_URL}/comment/delete/` + id
         let config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -93,7 +93,7 @@
     }
 
     const unflagComment = async (id) => {
-        let url = 'http://localhost:3720/comment/unflag/' + id
+        let url = `${process.env.VUE_APP_SERVER_URL}/comment/unflag/` + id
         let config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

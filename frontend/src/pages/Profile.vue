@@ -8,7 +8,7 @@ const thisUser = ref({})
 const getUserFromUrlParams = async () => {
     let user_id = router.currentRoute.value.params.id
     if (user_id) {
-        let url = 'http://localhost:3720/user/id/' + user_id
+        let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + user_id
         let config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -39,7 +39,7 @@ const getUserFromUrlParams = async () => {
     } else {
         let user_displayName = router.currentRoute.value.params.displayName
         if (user_displayName) {
-            let url = `http://localhost:3720/user/displayname/${encodeURIComponent(user_displayName)}`
+            let url = `${process.env.VUE_APP_SERVER_URL}/user/displayname/${encodeURIComponent(user_displayName)}`
             let config = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

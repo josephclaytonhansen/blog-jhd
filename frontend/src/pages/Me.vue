@@ -19,7 +19,7 @@ onMounted( async() => {
     let user = JSON.parse(localStorage.getItem('user')).user
     let user_id = user._id
     if (user_id) {
-        let url = 'http://localhost:3720/user/id/' + user_id
+        let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + user_id
         let config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

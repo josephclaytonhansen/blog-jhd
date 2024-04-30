@@ -33,7 +33,8 @@ const toastOptions = {
     maxToasts: 3,
     transition: "Vue-Toastification__bounce",
     newestOnTop: true,
-    className: 'toast',
+    toastClassName: 'toast',
+    bodyClassName: ['toast'],
 }
 
 const app = createApp(App)

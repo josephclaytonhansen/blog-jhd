@@ -1,15 +1,20 @@
 <script setup>
     import { onMounted, ref } from 'vue'
     const posts = ref([])
+
+    import {useRouter} from 'vue-router'
+    const router = useRouter()
+
+    const site = window.location.protocol + '//' + window.location.host
     
     const getPosts = async () => {
-        const response = await fetch('http://localhost:3720/blog/')
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
         if (!response.ok) {
             toast.error('Network error- could not get posts')
             throw new Error('Network response was not ok.')
         }
         const data = await response.json()
-        return data
+        return filterPostsToSite(data)
     }
     onMounted(async () => {
         if (localStorage.getItem('posts')) {
@@ -24,6 +29,10 @@
         localStorage.setItem('posts', JSON.stringify(posts.value))
     }
     })
+
+    const filterPostsToSite = (posts) => {
+        return posts.filter(post => post.site === site)
+    }
 </script>
 
 <template>

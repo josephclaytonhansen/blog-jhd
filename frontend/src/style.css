@@ -1,10 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Anaheim&family=Cairo:wght@200..1000&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Maitree:wght@200;300;400;500;600;700&family=Martel:wght@200;300;400;600;700;800;900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Slabo+13px&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+* {
+  @apply accent-cyan-500;
+  @apply selection:bg-cyan-700 selection:text-white;
+}
+
+@media print {
+  body{
+    margin: 1rem;
+    line-break: anywhere;
+    word-break: break-word;
+    page-break-inside: avoid;
+    hyphens: auto;
+  }
+  * {
+    color: black;
+    background-color:white;
+    padding: 0;
+  }
+  a {
+    text-decoration: underline;
+  }
+  form, input, button, textarea, select, option, #sidebar, .sidebar, header, footer {
+    display: none;
+  }
+
+  body *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: 12px;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+}
+
+@media print and (color: 0) {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    filter: grayscale(100%);
+  }
+}
 * {
   margin: 0;
   line-height: calc(1em + 0.5rem);
@@ -13,6 +54,42 @@
 body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+@media screen and (max-width: 640px) {
+  body {
+    overflow-x: auto;
+  }
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.00ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media screen and (prefers-contrast: more) {
+  html {
+    filter: invert(100%) saturate(180%);
+  }
+}
+
+@media screen and (prefers-contrast: less) {
+  html {
+    filter: grayscale(100%);
+  }
+}
+
+@media screen and (prefers-color-scheme: light) {
+  html {
+    filter: invert(95%) hue-rotate(170deg) brightness(115%);
+  }
+  img, picture{
+    filter: invert(95%) hue-rotate(170deg) brightness(86%);
+  }
 }
 
 img,
@@ -77,4 +154,141 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.hd-img-container {
+  position: relative;
+}
+
+.hd-img-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 56.25%;
+}
+
+.hd-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.twosquare-img-container {
+  position: relative;
+}
+
+.twosquare-img-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 50%;
+}
+
+.twosquare-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.threesquare-img-container {
+  position: relative;
+}
+
+.threesquare-img-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 33.3333%;
+}
+
+.threesquare-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.foursquare-img-container {
+  position: relative;
+}
+
+.foursquare-img-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 25%;
+}
+
+.foursquare-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fivesquare-img-container {
+  position: relative;
+}
+
+.fivesquare-img-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 20%;
+}
+
+.fivesquare-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+.Vue-Toastification__progress-bar{
+  @apply rounded-full;
+  @apply top-0;
+}
+
+.Vue-Toastification__toast--success.toast {
+  @apply bg-slate-800;
+  @apply border-emerald-500;
+  @apply text-emerald-500;
+  @apply border-2;
+}
+
+.Vue-Toastification__toast--success .Vue-Toastification__progress-bar {
+  @apply bg-emerald-500;
+}
+
+.Vue-Toastification__toast--error.toast {
+  @apply bg-slate-800;
+  @apply border-rose-500;
+  @apply text-rose-500;
+  @apply border-2;
+}
+
+.Vue-Toastification__toast--error .Vue-Toastification__progress-bar {
+  @apply bg-rose-500;
+
+}
+
+.Vue-Toastification__toast--warning.toast {
+  @apply bg-slate-800;
+  @apply border-amber-500;
+  @apply text-amber-500;
+  @apply border-2;
+}
+
+.Vue-Toastification__toast--info.toast {
+  @apply bg-slate-800;
+  @apply border-sky-500;
+  @apply text-sky-500;
+  @apply border-2;
+}
+
+.Vue-Toastification__toast--info .Vue-Toastification__progress-bar {
+  @apply bg-sky-500;
+}
+
+.Vue-Toastification__toast-body.toast {
+  @apply self-center font-sans text-base font-normal leading-relaxed;
 }

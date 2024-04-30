@@ -20,7 +20,7 @@
         },
         withCredentials: true
     }
-        const response = await fetch('http://localhost:3720/user', {
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/user`, {
             method: 'GET',
             headers: config.headers,
             credentials: 'include',
@@ -160,7 +160,7 @@
         },
         withCredentials: true
     }
-        const response = await fetch('http://localhost:3720/user/edit/' + id, {
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/user/edit/` + id, {
             method: 'PUT',
             headers: config.headers,
             credentials: 'include',
@@ -214,7 +214,7 @@
         },
         withCredentials: true
     }
-        const response = await fetch('http://localhost:3720/user/mail/' + email, {
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}user/mail/` + email, {
             method: 'POST',
             headers: config.headers,
             credentials: 'include',
@@ -240,9 +240,9 @@
     
     <div class = "p-5 text-slate-300 flex gap-4 justify-center w-full flex-wrap">
         <div class = "flex gap-3 items-start mt-3 w-full">
-            <textarea class = "h-[40px] bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900 grow" v-model = "emailMessage" placeholder = "Message"></textarea>
-            <input type = "text" v-model = "emailSubject" class = "grow bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Subject"/>
-            <input type = "text" v-model = "inviteUserEmail" class = " bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
+            <textarea class = "accent-cyan-500 h-[40px] bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900 grow" v-model = "emailMessage" placeholder = "Message"></textarea>
+            <input type = "text" v-model = "emailSubject" class = "accent-cyan-500 grow bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Subject"/>
+            <input type = "text" v-model = "inviteUserEmail" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
             <button class="cursor-pointer bg-slate-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-slate-700 hover:scale-105 transition-all duration-300" @click="mailUser(inviteUserEmail)">
                 <Mail/>
             </button>
@@ -291,12 +291,12 @@
             <h2 class = "text-xl mb-2">Edit User</h2>
 
                 <form class = 'flex flex-row justify-between items-end flex-wrap gap-3' @prevent.submit = "updateUser(active_user._id)">
-                    <input type = "text" v-model = "active_user.displayName" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Display Name"/>
-                    <input type = "text" v-model = "active_user.email" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
-                    <input type = "text" v-model = "active_user.website" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Website"/>
-                    <input type = "text" v-model = "active_user.picture" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Avatar"/>
-                    <input type = "text" v-model = "active_user.shortBio" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Short Bio"/>
-                    <input type = "text" v-model = "active_user.longBio" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Long Bio"/>
+                    <input type = "text" v-model = "active_user.displayName" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Display Name"/>
+                    <input type = "text" v-model = "active_user.email" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
+                    <input type = "text" v-model = "active_user.website" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Website"/>
+                    <input type = "text" v-model = "active_user.picture" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Avatar"/>
+                    <input type = "text" v-model = "active_user.shortBio" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Short Bio"/>
+                    <input type = "text" v-model = "active_user.longBio" class = "accent-cyan-500 bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Long Bio"/>
                     <h3 class = "flex gap-4 items-center bg-slate-700  text-slate-300 px-2 py-2 rounded-lg">Role: {{ active_user.role }}</h3>
                     <div class = "flex gap-4 items-center px-2 bg-slate-700 rounded-lg">
                         <Router/>

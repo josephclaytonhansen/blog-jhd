@@ -1,5 +1,6 @@
 import db from './mongo.js'
 import User from './models/user.js'
+import Tag from './models/tag.js'
 
 import express from 'express'
 
@@ -19,6 +20,7 @@ import blogRoutes from './routes/blogRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
 import commentRoutes from './routes/commentRoutes.js'
 import tagRoutes from './routes/tagRoutes.js'
+import categoryRoutes from './routes/categoryRoutes.js'
 
 
 const transporter = nodemailer.createTransport({
@@ -136,6 +138,7 @@ app.use('/blog', blogRoutes)
 app.use('/event', eventRoutes)
 app.use('/comment', commentRoutes(transporter))
 app.use('/tag', tagRoutes)
+app.use('/category', categoryRoutes)
 
 app.use((err, req, res, next) => {
     console.error(err)

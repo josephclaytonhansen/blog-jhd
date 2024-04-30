@@ -1,6 +1,7 @@
 import db from './mongo.js'
 import User from './models/user.js'
 import Tag from './models/tag.js'
+import Comment from './models/comment.js'
 
 import express from 'express'
 

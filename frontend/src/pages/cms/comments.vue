@@ -5,10 +5,48 @@
     import { onMounted, ref, computed } from 'vue'
 
     const loggedInStatus = ref(false)
+    import { useToast } from "vue-toastification"
+    const toast = useToast()
+
+    import { useRouter } from 'vue-router'
+    const router = useRouter()
 
     const store = userStore(pinia)
 
+    import {
+        Flag,
+        FlagOff,
+        Trash,
+        Eye,
+        MessageCircleReply,
+        EyeOff,
+    } from 'lucide-vue-next'
+
     const comments = ref([])
+    const users = ref([])
+    const blogPosts = ref({})
+
+    const getUsers = async () => {
+        let config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
+        },
+        withCredentials: true
+    }
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/user`, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include',
+        })
+        if (response.status !== 200) {
+            toast.error('Network error')
+            throw new Error('Network error- could not get users')
+        }
+        const data = await response.json()
+        return data
+    }
 
     const getComments = async () => {
         let config = {
@@ -124,24 +162,80 @@
     onMounted(async () => {
         store.user ? loggedInStatus.value = true : loggedInStatus.value = false
         if (loggedInStatus.value){
-            if (localStorage.getItem('comments')) {
-                comments.value = JSON.parse(localStorage.getItem('comments'))
-                let temp = await getComments()
-                if (JSON.stringify(comments.value) !== JSON.stringify(temp)) {
-                    comments.value = temp
-                    localStorage.setItem('comments', JSON.stringify(comments.value))
-                }
-            } else {
-                comments.value = await getComments()
-                localStorage.setItem('comments', JSON.stringify(comments.value))
-            }
+            comments.value = await getComments()
+            users.value = await getUsers()
+            blogPosts.value = await getBlogPosts()
         } else {
             toast.info('Your session has expired. Please log in.')
             router.push('/login')
         }
     })
+
+    const findCommentUser = (id) => {
+        let user = users.value.find(user => user._id === id)
+        return user ? user.displayName : 'Unknown'
+    }
+
+    const getBlogPosts = async () => {
+        let config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
+        },
+        withCredentials: true
+    }
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include'
+        })
+        if (response.status !== 200) {
+            toast.error('Network error')
+            throw new Error('Network error- could not get blog posts')
+        }
+        const data = await response.json()
+        return data
+    }
+    const findBlogPostTitle = (id) => {
+        let post = blogPosts.value.find(post => post._id === id)
+        return post ? post.title : 'Unknown'
+    }
+
+    const getBlogPostSlug = (id) => {
+        let post = blogPosts.value.find(post => post._id === id)
+        return post ? post.slug : ''
+    }
+
 </script>
 
 <template>
+    <div class = "p-1 md:p-8 flex gap-4 flex-wrap">
+        <div class = "min-w-[30%] grow" v-for="comment in comments">
+            <div class = "bg-slate-800 text-slate-200 8 m-w-[500px] w-full h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4">
+                <p class = "italic">{{comment.content}}</p>
+                <p >Posted by: {{findCommentUser(comment.user)}}</p>
+                <p >Posted on: <router-link :to="'/blog/' + getBlogPostSlug(comment.blogPost)">{{findBlogPostTitle(comment.blogPost)}}</router-link></p>
+                <div class = "flex gap-7 mt-2 items-center justify-between w-full">
+                    <div class = "flex gap-2 items-center">
+                    <button v-if="!comment.flagged" @click="flagComment(comment.id)" class = "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        <Flag />
+                    </button>
+                    <button v-else @click="unflagComment(comment.id)" class = "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        <FlagOff />
+                    </button>
+                    <button @click="deleteComment(comment.id)" class = "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        <Trash />
+                    </button>
+                    <Eye v-if = "!comment.visible"/>
+                    <EyeOff v-else/>
+                </div>
+                    <div class = "flex gap-2">
+                        <MessageCircleReply/><span>{{comment.replies?.length? comment.replies.length : '0'}}</span>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
     
 </template>

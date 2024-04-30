@@ -21,4 +21,30 @@ const authenticateToken = (req, res, next) => {
     })
   }
 
-  export default authenticateToken
+  const lightAuthToken = (req, res, next) => {
+    console.log('lightAuthToken')
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (!token) {
+        next()
+    } else {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+            if (err) {
+                console.log(err)
+                next()
+            } else {
+                try {
+                    req.user = await User.findOne({email: user.email})
+                    console.log(req.user)
+                    next()
+                } catch (err) {
+                    console.log(err)
+                    next()
+                }
+            }
+        })
+    }
+}
+
+  export {authenticateToken, lightAuthToken}

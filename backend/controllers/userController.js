@@ -87,6 +87,40 @@ const isAdminUser = asyncHandler(async (req, res) => {
     }
 })
 
+const isAuthorUser = asyncHandler(async (req, res) => {
+    const token = req.body.token || req.query.token
+    const user = req.body.user || req.query.user
+    let decode = verifyToken(token)
+    let user_json = JSON.parse(user)
+    if (decode.email === user_json.user.email) {
+        if (decode.exp - Date.now() / 1000 < 60 * 120) {
+            let signature = decode.signature
+            let auth_secret = process.env.JWT_SECRET
+            let signature_check = jwt.verify(token, auth_secret)
+            if (signature_check.signature === signature) {
+                if (user_json.user.role === 'author') {
+                    res.status(200)
+                    res.json({
+                        message: 'user is author'
+                    })
+                } else {
+                    res.status(401)
+                    throw new Error('role failed')
+                }
+            } else {
+                res.status(401)
+                throw new Error('role failed')
+            }
+        } else {
+            res.status(401)
+            throw new Error('token expired')
+        }
+    } else {
+        res.status(401)
+        throw new Error('role failed')
+    }
+})
+
 const isVerifiedUser = asyncHandler(async (req, res) => {
     const token = req.body.token || req.query.token
     const user = req.body.user || req.query.user
@@ -198,7 +232,7 @@ const editUser = asyncHandler(async (req, res) => {
     } 
     const user = await User.findById(req.params.id)
     if (user) {
-        if (user.role !== 'unverified-user' && (req.user._id === user._id || req.user.role === 'admin')) {
+        if ((user.role !== 'unverified-user' && req.user._id === user._id) || req.user.role === 'admin') {
             user.email = req.body.email || user.email
             user.password = req.body.password || user.password
             user.displayName = req.body.displayName || user.displayName
@@ -210,7 +244,6 @@ const editUser = asyncHandler(async (req, res) => {
             user.lastEdit = new Date()
             user.posts = req.body.posts || user.posts
             user.comments = req.body.comments || user.comments
-            user.jti = req.body.jti || user.jti
 
             if (req.user.role === 'admin') {
                 user.role = req.body.role || user.role
@@ -321,13 +354,15 @@ const anonymizeUser = asyncHandler(async (req, res) => {
 })
 
 const getUserByDisplayName = asyncHandler(async (req, res) => {
+    const displayName = req.params.displayName.replace(/-/g, ' ');
     const user = await User.findOne({
         displayName: {
-            $eq: req.params.displayName
+            $regex: new RegExp(`^${displayName}$`, 'i')
         }
     })
     if (user) {
         if (req.user._id === user._id || req.user.role === 'admin') {
+            console.log(user)
             res.json(user)
         } else {
             res.json({
@@ -378,20 +413,23 @@ const getUsers = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
-        if (req.user._id === user._id || req.user.role === 'admin') {
-            res.json(user)
-        } else {
-            res.json({
-                displayName: user.displayName,
-                picture: user.picture,
-                shortBio: user.shortBio,
-                longBio: user.longBio,
-                displayEmail: user.displayEmail,
-                website: user.website,
-                posts: user.posts,
-                comments: user.comments
-            })
+        console.log(user)
+        let response = {
+            displayName: user.displayName,
+            picture: user.picture,
+            shortBio: user.shortBio,
+            longBio: user.longBio,
+            displayEmail: user.displayEmail,
+            website: user.website,
+            posts: user.posts,
+            comments: user.comments
         }
+        if (req.user && (req.user._id === user._id || req.user.role === 'admin')) {
+            response = user
+        }
+        res.json(response)
+    } else {
+        res.status(404).json({ message: 'User not found' })
     }
 })
 
@@ -426,6 +464,7 @@ export {
     verifyTokenUser,
     isAdminUser,
     isVerifiedUser,
+    isAuthorUser,
     createUser,
     editUser,
     deleteUser,

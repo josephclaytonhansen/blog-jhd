@@ -21,11 +21,8 @@ import PreviewC from './cms/preview.vue'
 import PostsC from './cms/posts.vue'
 import PagesC from './cms/pages.vue'
 
-import UsersC from './cms/users.vue'
 import TagsC from './cms/tags.vue'
-import StylesC from './cms/styles.vue'
 
-import AnalyticsC from './cms/analytics.vue'
 import CommentsC from './cms/comments.vue'
 
 const router = useRouter()
@@ -47,24 +44,9 @@ const sidebarButtons = [
         component: PagesC
     },
     {
-        icon: Users,
-        text: 'Users',
-        component: UsersC
-    },
-    {
         icon: Tags,
         text: 'Tags',
         component: TagsC
-    },
-    {
-        icon: SwatchBook,
-        text: 'Styles',
-        component: StylesC
-    },
-    {
-        icon: LineChart,
-        text: 'Analytics',
-        component: AnalyticsC
     },
     {
         icon: MessageCircleMore,
@@ -89,18 +71,11 @@ const compToString = (component) => {
         case PagesC:
             return 'pages'
             break
-        case UsersC:
-            return 'users'
-            break
+
         case TagsC:
             return 'tags'
             break
-        case StylesC:
-            return 'styles'
-            break
-        case AnalyticsC:
-            return 'analytics'
-            break
+
         case CommentsC:
             return 'comments'
             break
@@ -123,18 +98,11 @@ const updateActiveComponent = (component) => {
         case PagesC:
             localStorage.setItem('activeComponent', 'pages')
             break
-        case UsersC:
-            localStorage.setItem('activeComponent', 'users')
-            break
+
         case TagsC:
             localStorage.setItem('activeComponent', 'tags')
             break
-        case StylesC:
-            localStorage.setItem('activeComponent', 'styles')
-            break
-        case AnalyticsC:
-            localStorage.setItem('activeComponent', 'analytics')
-            break
+
         case CommentsC:
             localStorage.setItem('activeComponent', 'comments')
             break
@@ -157,18 +125,12 @@ onMounted(() => {
             case 'pages':
                 activeComponent.value = PagesC
                 break
-            case 'users':
-                activeComponent.value = UsersC
-                break
+
             case 'tags':
                 activeComponent.value = TagsC
                 break
-            case 'styles':
-                activeComponent.value = StylesC
-                break
-            case 'analytics':
-                activeComponent.value = AnalyticsC
-                break
+
+
             case 'comments':
                 activeComponent.value = CommentsC
                 break

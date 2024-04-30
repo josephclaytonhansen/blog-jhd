@@ -14,6 +14,7 @@ const blogSchema = new mongoose.Schema({
     metaDescription: String,
     metaKeywords: String,
     excerpt: String,
+    metaOpenGraph: Object,
     author: String,
     comments: Array,
     site: String,

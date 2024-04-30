@@ -24,14 +24,24 @@ onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
     
-    posts.value = await getPosts()
-    // TODO: add post caching to reduce server load
+
+        if (localStorage.getItem('posts')) {
+        posts.value = JSON.parse(localStorage.getItem('posts'))
+        let temp = await getPosts()
+        if (JSON.stringify(posts.value) !== JSON.stringify(temp)) {
+            posts.value = temp
+            localStorage.setItem('posts', JSON.stringify(posts.value))
+        }
+    } else {
+        posts.value = await getPosts()
+        localStorage.setItem('posts', JSON.stringify(posts.value))
+    }
+
     
   } else {
     toast.info('Your session has expired. Please log in.')
     router.push('/login')
   }
-  console.log(posts.value)
 })
 
 import {

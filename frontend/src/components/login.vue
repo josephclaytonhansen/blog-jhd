@@ -122,19 +122,21 @@ const showLogin = () => {
 </script>
 
 <template>
-    <div class= "bg-slate-800 text-slate-200 p-8 m-w-[500px] w-1/3 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
+    <div class= "bg-slate-800 text-slate-200 p-8 m-w-[500px] w-1/2 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
         <h1 class = "text-4xl mb-5 text-center border-b-2 border-b-slate-700 pb-4" v-if="!isRegistering">Login</h1>
         <h1 class = "text-4xl mb-5 text-center border-b-2 border-b-slate-700 pb-4" v-if="isRegistering">Register</h1>
         <form @submit.prevent="isRegistering ? registerUser() : attemptLogin()">
             <div class = "flex w-full gap-3 mb-3 flex-wrap">
                 <input title = "Your email address- this will not be visible publicly" class = "grow rounded p-2 text-slate-800 active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" type="text" v-model="username" placeholder="Email">
-                <input title = "A secure password" class = "grow rounded p-2 text-slate-800 active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" type="password" v-model="password" placeholder="Password">
+                <input title = "A secure password" class = "grow rounded p-2 text-slate-800 active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" type="password" v-model="password" placeholder="Password  (at least 12 characters)">
                 <input title = "The name or username that will be publicly visible" class = "grow rounded p-2 text-slate-800 active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" v-if="isRegistering" type="text" v-model="displayName" placeholder="Display Name">
                 <button class="cursor-pointer bg-cyan-600 px-5 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300 grow" type="submit">{{ isRegistering ? 'Sign up' : 'Login' }}</button>
             </div>
             
             <p class="text-sm italic text-slate-400" v-if="!isRegistering">Don't have an account? <button class="hover:text-white transition-all duration-300" @click="showRegister">Sign up</button></p>
             <p class="text-sm italic text-slate-400" v-if="isRegistering">Already have an account? <button class="hover:text-white transition-all duration-300" @click="showLogin">Login</button></p>
+            <hr class="border-slate-700 my-5"/>
+            <p class="text-sm text-normal text-slate-500">Your login for hansenstudio.art and blog.josephhansen.dev are the same. If you have an account on one, your credentials will work on both.</p>
         </form>
     </div>
 </template>

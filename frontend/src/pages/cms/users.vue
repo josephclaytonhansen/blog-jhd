@@ -38,7 +38,17 @@
         store.user ? loggedInStatus.value = true : loggedInStatus.value = false
         if (loggedInStatus.value){
 
-            users.value = await getUsers()
+            if (localStorage.getItem('users')) {
+                users.value = JSON.parse(localStorage.getItem('users'))
+                let temp = await getUsers()
+                if (JSON.stringify(users.value) !== JSON.stringify(temp)) {
+                    users.value = temp
+                    localStorage.setItem('users', JSON.stringify(users.value))
+                }
+            } else {
+                users.value = await getUsers()
+                localStorage.setItem('users', JSON.stringify(users.value))
+            }
         } else {
             toast.info('Your session has expired. Please log in.')
             router.push('/login')
@@ -47,6 +57,8 @@
 
     import {
         ShieldCheck,
+        Save,
+        ShieldMinus,
         MessageCircleMore,
         Cog,
         UserX,
@@ -58,10 +70,13 @@
         Mail,
         MailCheck,
         Newspaper,
+        BookUser,
+        BookX,
         MailWarning,
         Trash,
         VenetianMask,
-        Router
+        Router,
+        Flag
     } from 'lucide-vue-next'
 
     import { useToast } from "vue-toastification"
@@ -127,8 +142,13 @@
     const active_user = ref({})
 
     const editUser = (id) => {
+         if (active_user.value._id !== id) {
         active_user.value = users.value.find(user => user._id === id)
-        document.getElementById('current-user-edit').scrollIntoView({behavior: "smooth"})
+        inviteUserEmail.value = active_user.value.email
+        document.getElementById('current-user-edit').scrollIntoView({behavior: "smooth"})}
+        else {
+            active_user.value = {}
+        }
     }
 
     const updateUser = async (id) => {
@@ -154,6 +174,31 @@
             toast.success("User updated")
         })
         users.value = await getUsers()
+    }
+
+    const promoteUser = async (id) => {
+        active_user.value.role = 'admin'
+        updateUser(id)
+    }
+
+    const demoteUser = async (id) => {
+        active_user.value.role = 'verified-user'
+        updateUser(id)
+    }
+
+    const promoteUserToAuthor = async (id) => {
+        active_user.value.role = 'author'
+        updateUser(id)
+    }
+
+    const demoteUserToVerified = async (id) => {
+        active_user.value.role = 'verified-user'
+        updateUser(id)
+    }
+
+    const deselectUser = (id) => {
+        active_user.value = {}
+        inviteUserEmail.value = ''
     }
 
     const inviteUserEmail = ref('')
@@ -184,11 +229,24 @@
         })
     }
 
+    const filterFlaggedComments = (user) => {
+        return user.comments.filter(comment => comment.flagged === true)
+    }
+
 
 </script>
 
 <template>
+    
     <div class = "p-5 text-slate-300 flex gap-4 justify-center w-full flex-wrap">
+        <div class = "flex gap-3 items-start mt-3 w-full">
+            <textarea class = "h-[40px] bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900 grow" v-model = "emailMessage" placeholder = "Message"></textarea>
+            <input type = "text" v-model = "emailSubject" class = "grow bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Subject"/>
+            <input type = "text" v-model = "inviteUserEmail" class = " bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
+            <button class="cursor-pointer bg-slate-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-slate-700 hover:scale-105 transition-all duration-300" @click="mailUser(inviteUserEmail)">
+                <Mail/>
+            </button>
+        </div>
         <section v-for = "group in groups" :key = "group.key" class = "p-3 my-4 bg-slate-800 rounded-lg" :class="group.class">
             <div class = "flex items-center gap-4 px-2 py-1">
                 <component :is="group.icon"/><h2 class = "text-xl">{{group.key}}</h2>
@@ -198,10 +256,13 @@
                 <div v-for = "user in group.users">
                     <div class = "flex items-center gap-3">
                         <div class = "flex items-center gap-1 shrink">
-                            <h3>{{user.displayName}}</h3>
+                            <div v-if = "user.picture.length > 0" class = "w-10 h-10 rounded-full overflow-hidden">
+                                <img :src="user.picture" alt="avatar" class = "w-full h-full object-cover"/>
+                            </div>
+                            <router-link class = " hover:text-cyan-500 transition-all duration-300" :to = "`/profile/${user.displayName.replace(/ /g, '-')}`"><h3>{{user.displayName}}</h3></router-link>
                         </div>
-                        <MailCheck v-if = "user.verifiedEmail" class="text-emerald-500"/>
-                        <MailWarning v-else class="text-amber-500"/>
+                        <MailCheck v-if = "user.verifiedEmail || user.role === 'verified-user'" class="text-emerald-500"/>
+                        <MailWarning v-else-if = "!user.displayName.startsWith('anon')" class="text-amber-500"/>
 
                             <Router :class="duplicateIps.indexOf(user.registeredIp) === -1? 'text-emerald-500':'text-amber-500'"/>
 
@@ -209,15 +270,15 @@
                             <MessageCircleMore/><h3>{{user.comments.length}}</h3>
                         </div>
                         <div class = "flex items-center gap-1 shrink">
-                            <Newspaper/><h3>{{user.posts.length}}</h3>
+                            <Flag :class="filterFlaggedComments(user).length > 0 ? 'text-red-500' : ''"/><h3>{{filterFlaggedComments(user).length}}</h3>
+                        </div>
+                        <div class = "flex items-center gap-1 shrink" v-if = "user.role == 'admin' || user.role == 'author'">
+                            <Newspaper /><h3>{{user.posts.length}}</h3>
                         </div>
                         <button class="cursor-pointer bg-cyan-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300">
                             <Cog @click="editUser(user._id)"/>
                         </button>
-                        
-                        <button class="cursor-pointer bg-orange-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-orange-600 hover:scale-105 transition-all duration-300">
-                            <VenetianMask @click="anonymizeUser(user._id)"/>
-                        </button>
+        
                     </div>
                     
                 </div>
@@ -226,17 +287,14 @@
         </section>
     </div>
     <div class = "p-5">
-        <div id = "current-user-edit" class = " p-5 text-slate-300 bg-slate-800 rounded-lg">
-            <h2 class = "text-xl">Edit User</h2>
+        <div id = "current-user-edit" class = " p-5 text-slate-300 bg-slate-800 rounded-lg transition-all duration-300" :class="active_user._id ? 'opacity-100' : 'opacity-0'">
+            <h2 class = "text-xl mb-2">Edit User</h2>
 
                 <form class = 'flex flex-row justify-between items-end flex-wrap gap-3' @prevent.submit = "updateUser(active_user._id)">
                     <input type = "text" v-model = "active_user.displayName" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Display Name"/>
                     <input type = "text" v-model = "active_user.email" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
                     <input type = "text" v-model = "active_user.website" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Website"/>
-                    <div class = "flex flex-col">
-                        <label for = "picture">Profile picture</label>
-                        <input type="file" name = "picture" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Profile Picture"/>
-                    </div>
+                    <input type = "text" v-model = "active_user.picture" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Avatar"/>
                     <input type = "text" v-model = "active_user.shortBio" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Short Bio"/>
                     <input type = "text" v-model = "active_user.longBio" class = "bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Long Bio"/>
                     <h3 class = "flex gap-4 items-center bg-slate-700  text-slate-300 px-2 py-2 rounded-lg">Role: {{ active_user.role }}</h3>
@@ -279,23 +337,38 @@
 
                     <div class = "flex gap-3">
                         <button class="cursor-pointer bg-cyan-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300 mt-3" @click="updateUser(active_user._id)">
-                            Update user
-                        </button>                        <button class="cursor-pointer bg-orange-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-orange-600 hover:scale-105 transition-all duration-300 mt-3" @click="anonymizeUser(active_user._id)">
-                            <VenetianMask/>
+                            <Save/>
                         </button>
+                        <button v-if = "active_user.role === 'verified-user' && active_user.role !== 'admin'" class="cursor-pointer bg-green-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUserToAuthor(active_user._id)">
+                            <BookUser/>
+                        </button>
+                        <button v-else-if = "active_user.role === 'author'" class="cursor-pointer bg-red-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUserToVerified(active_user._id)">
+                            <BookX/>
+                        </button>
+                        
+                        <button v-if = "active_user.role === 'admin'" class="cursor-pointer bg-red-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUser(active_user._id)">
+                            <ShieldMinus/>
+                        </button>
+                        <button v-else-if ="active_user.role === 'author'" class="cursor-pointer bg-green-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUser(active_user._id)">
+                            <ShieldCheck/>
+                        </button>
+                        <div class = "w-[1px] h-[40px] mt-[12px] mx-1 border-r-2 border-slate-700"></div>
+                        
+                        <button v-if = "active_user.role !== 'admin'" class="cursor-pointer bg-orange-500 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-orange-600 hover:scale-105 transition-all duration-300 mt-3" @click="anonymizeUser(active_user._id)">
+                        <VenetianMask/>
+                        </button>
+                        <div class = "w-[1px] h-[40px] mt-[12px] mx-1 border-r-2 border-slate-700"  v-if = "active_user.role !== 'admin'"></div>
+                        <button class="cursor-pointer bg-cyan-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300 mt-3" @click="deselectUser(active_user._id)">
+                            <UserX/>
+                        </button>
+                        
+                        
                     </div>
                     
 
         </div>
 
-        <div class = "flex gap-3 items-start mt-3 w-full">
-            <textarea class = "h-[40px] bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900 grow" v-model = "emailMessage" placeholder = "Message"/>
-            <input type = "text" v-model = "emailSubject" class = "grow bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Subject"/>
-            <input type = "text" v-model = "inviteUserEmail" class = " bg-slate-700 text-slate-300 px-2 py-2 rounded shadow-slate-900" placeholder = "Email"/>
-            <button class="cursor-pointer bg-slate-600 px-2 py-2 rounded shadow-slate-900 text-slate-200 hover:bg-slate-700 hover:scale-105 transition-all duration-300" @click="mailUser(inviteUserEmail)">
-                <Mail/>
-            </button>
-        </div>
+        
 
 
     </div>

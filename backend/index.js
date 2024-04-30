@@ -1,6 +1,5 @@
 import db from './mongo.js'
 import User from './models/user.js'
-import Blog from './models/blog.js'
 
 import express from 'express'
 
@@ -18,7 +17,6 @@ import cookieParser from 'cookie-parser'
 import userRoutes from './routes/userRoutes.js'
 import blogRoutes from './routes/blogRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
-import articleRoutes from './routes/articleRoutes.js'
 import commentRoutes from './routes/commentRoutes.js'
 import tagRoutes from './routes/tagRoutes.js'
 
@@ -136,7 +134,6 @@ app.get('/removed-users', (req, res) => {
 app.use('/user', userRoutes(transporter))
 app.use('/blog', blogRoutes)
 app.use('/event', eventRoutes)
-app.use('/article', articleRoutes)
 app.use('/comment', commentRoutes(transporter))
 app.use('/tag', tagRoutes)
 

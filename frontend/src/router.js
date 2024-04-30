@@ -4,9 +4,13 @@ import axios from 'axios'
 const routes = [
     { path: '/', component: () => import('./pages/Home.vue') },  
     { path: '/login', component: () => import('./pages/Login.vue') },
-    { path: '/register', component: () => import('./pages/Register.vue') },
+    { path: '/register', component: () => import('./pages/Login.vue') },
     { path: '/cms', component: () => import('./pages/CMS.vue') },
-    { path: '/profile', component: () => import('./pages/Profile.vue') },
+    { path: '/author', component: () => import('./pages/Author.vue') },
+    { path: '/me', component: () => import('./pages/Me.vue') },
+    { path: '/profile/id/:id', component: () => import('./pages/Profile.vue') },
+    { path: '/profile/:displayName', component: () => import('./pages/Profile.vue') },
+    { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
     //add routes here
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]
@@ -17,8 +21,9 @@ const router = createRouter({
 })
 
 const lockedRoutes = [
-  { path: '/cms', redirect: '/', role: 'admin' },
-  { path: '/me', redirect: '/login', role: 'user' }
+  { path: '/cms', redirect: '/author', roles: ['admin'] },
+  { path: '/me', redirect: '/login', roles: ['user'] },
+  { path: '/author', redirect: '/login', roles: ['author', 'admin'] },
 ]
 
 router.beforeEach(async (to, from, next) => {
@@ -49,18 +54,26 @@ router.beforeEach(async (to, from, next) => {
 
           next(lockedRoute.redirect)
         } else {
-          if (lockedRoute.role === 'admin') {
+
+          if (lockedRoute.roles.includes('admin')) {
             url = 'http://localhost:3720/user/isadmin'
             response = await axios.post(url, params, config)
             if (response.status !== 200) {
-
-              next(lockedRoute.redirect)
+                next(lockedRoute.redirect)
             } else {
-              next()
+                next()
             }
-          } else {
+        } else if (lockedRoute.roles.includes('author')) {
+            url = 'http://localhost:3720/user/isauthor'
+            response = await axios.post(url, params, config)
+            if (response.status !== 200) {
+                next(lockedRoute.redirect)
+            } else {
+                next()
+            }
+        } else {
             next()
-          }
+        }
         }
       } catch (err) {
 

@@ -2,11 +2,22 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
 const thisUser = ref({})
 
-const getUserFromUrlParams = async () => {
-    let user_id = router.currentRoute.value.params.id
+import {
+    PenLine,
+    AsteriskSquare,
+    Check,
+    X,
+    Eye,
+    Pen,
+    Home,
+    
+} from 'lucide-vue-next'
+
+onMounted( async() => {
+    let user = JSON.parse(localStorage.getItem('user')).user
+    let user_id = user._id
     if (user_id) {
         let url = 'http://localhost:3720/user/id/' + user_id
         let config = {
@@ -27,7 +38,6 @@ const getUserFromUrlParams = async () => {
                     throw new Error('Network error- could not get user')
                 }
                 thisUser.value = await response.json()
-                console.log(thisUser.value)
             }).catch((error) => {
                 throw new Error(error.message || error.error || 'Error getting user')
                 router.push('/login')
@@ -37,68 +47,28 @@ const getUserFromUrlParams = async () => {
             router.push('/login')
         }
     } else {
-        let user_displayName = router.currentRoute.value.params.displayName
-        if (user_displayName) {
-            let url = `http://localhost:3720/user/displayname/${encodeURIComponent(user_displayName)}`
-            let config = {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.token,
-                },
-                withCredentials: true
-            }
-            try {
-                await fetch(url, {
-                    method: 'GET',
-                    headers: config.headers,
-                    credentials: 'include',
-                }).then(async (response) => {
-                    if (response.status !== 200) {
-                        throw new Error('Network error- could not get user')
-                    }
-                    thisUser.value = await response.json()
-                    console.log(thisUser.value)
-                }).catch((error) => {
-                    throw new Error(error.message || error.error || 'Error getting user')
-                    router.push('/login')
-                })
-            } catch (error) {
-                throw new Error(error.message || error.error || 'Error getting user')
-                router.push('/login')
-            }
-        } else {
-            router.push('/login')
-        }
+        router.push('/login')
     }
-}
-
-onMounted( async() => {
-    await getUserFromUrlParams()
 })
-
-import {
-    Eye,
-    Home,
-    
-} from 'lucide-vue-next'
-
 </script>
 
 <template>
     <div class = "flex bg-slate-900 h-[100vh] overflow-hidden w-full p-3 lg:p-0">
         <div class= "bg-slate-800 text-slate-200 p-8 m-w-[500px] w-full lg:w-1/2 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
-            <h1 class="text-4xl font-normal text-left">Profile</h1>
+            <h1 class="text-4xl font-normal text-left">Profile<PenLine class="ml-2 h-full w-auto text-cyan-500 hover:cursor-pointer hover:text-cyan-300 transition-all duration-300 inline-block"/></h1>
             <hr class="border-slate-700 my-4">
             <div class="flex flex-row items-stretch gap-12 justify-start h-auto flex-wrap">
                 <div class = "flex items-center gap-2 shrink flex-wrap max-w-[50%]">
-                    <div class = "w-20 h-20 rounded-full overflow-hidden ring-4 mr-2 ring-cyan-600 square-img-container transition-all duration-300">
+                    <div class = "w-20 h-20 rounded-full overflow-hidden ring-4 mr-2 ring-cyan-500 hover:cursor-pointer hover:ring-cyan-300 square-img-container transition-all duration-300">
                         <img :src="thisUser.picture" alt="avatar" class = "square-img "/>
                     </div>
                     <div class = "max-w-[100%] flex flex-col gap-2 border-r-2 pr-5 border-slate-700">
                         <h3 class = "text-2xl">{{thisUser.displayName}}</h3>
                         <h4 class="text-md italic text-slate-300">{{thisUser.shortBio}}</h4>
-
+                        <h5 class="text-md italic text-slate-400">{{thisUser.email}}
+                            <Check v-if="thisUser.verifiedEmail" class="h-4 w-4 text-green-500 inline-block"/>
+                            <X v-else class="h-4 w-4 text-red-500 inline-block"/>
+                        </h5>
                         <h5 class="text-md italic text-slate-400">{{thisUser.website}}</h5>
                     </div>
                 </div>
@@ -116,7 +86,7 @@ import {
                             <h4 class="text-lg">{{post.title}}</h4>
                             <div class = "flex items-center gap-2 justify-start h-auto flex-wrap">
                                 <div><Eye/><p class = "text-md text-slate-300">{{post.views}}</p></div>
-
+                                <PenLine/>
                             </div>
                         </div>
                     </div>
@@ -131,11 +101,15 @@ import {
                         <div v-for="comment in thisUser.comments" class="flex flex-col gap-2">
                             <h4 class="text-lg">{{comment.text}}</h4>
                             <div class = "flex items-center gap-2 justify-start h-auto flex-wrap">
-                                
+                                <PenLine/>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class = "fixed bottom-0 right-0 p-4">
+                <AsteriskSquare class="h-8 w-8 text-slate-300 hover:cursor-pointer hover:text-cyan-300 transition-all duration-300"/>
             </div>
             
         </div>

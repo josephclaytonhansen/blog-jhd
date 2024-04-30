@@ -1,6 +1,7 @@
 <script setup>
     import { onMounted, ref } from 'vue'
     const posts = ref([])
+    
     const getPosts = async () => {
         const response = await fetch('http://localhost:3720/blog/')
         if (!response.ok) {
@@ -11,7 +12,17 @@
         return data
     }
     onMounted(async () => {
+        if (localStorage.getItem('posts')) {
+        posts.value = JSON.parse(localStorage.getItem('posts'))
+        let temp = await getPosts()
+        if (JSON.stringify(posts.value) !== JSON.stringify(temp)) {
+            posts.value = temp
+            localStorage.setItem('posts', JSON.stringify(posts.value))
+        }
+    } else {
         posts.value = await getPosts()
+        localStorage.setItem('posts', JSON.stringify(posts.value))
+    }
     })
 </script>
 

@@ -14,10 +14,11 @@ import {
     getUserByEmail,
     getUsers,
     isAdminUser,
-    isVerifiedUser
+    isVerifiedUser,
+    isAuthorUser
 } from '../controllers/userController.js'
 
-import authenticateToken from '../middleware/authenticateToken.js'
+import {authenticateToken, lightAuthToken} from '../middleware/authenticateToken.js'
 
 const router = express.Router()
 
@@ -26,6 +27,7 @@ export default (transporter) => {
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
     router.post('/isadmin', isAdminUser)
+    router.post('/isauthor', isAuthorUser)
     router.post('/isverified', isVerifiedUser)
     router.post('/create', async (req, res) => {
         try {
@@ -68,8 +70,8 @@ export default (transporter) => {
     router.delete('/delete/:id', authenticateToken, deleteUser)
     router.put('/anonymize/:id', authenticateToken, anonymizeUser)
     router.get('/verifyemail', verifyEmailUser)
-    router.get('/user/:displayName', getUserByDisplayName)
-    router.get('/id/:id', authenticateToken, getUserById)
+    router.get('/displayname/:displayName', lightAuthToken, getUserByDisplayName)
+    router.get('/id/:id', lightAuthToken, getUserById)
     router.get('/email/:email', getUserByEmail)
 
     return router

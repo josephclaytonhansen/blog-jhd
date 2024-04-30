@@ -34,11 +34,15 @@ const getBlogsByDate = asyncHandler(async (req, res) => {
 })
 const getBlogBySlug = asyncHandler(async (req, res) => {
     const blog = await Blog.findOne({ slug: {$eq:req.params.slug} })
+    blog.views = blog.views + 1
+    await blog.save()
     res.json(blog)
 })
 
 const getBlogById = asyncHandler(async (req, res) => {
     const blog = await Blog.findById(req.params.id)
+    blog.views = blog.views + 1
+    await blog.save()
     if (blog) {
         res.json(blog)
     } else {
@@ -50,7 +54,7 @@ const createBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
     const blog = new Blog({
@@ -64,6 +68,7 @@ const createBlog = asyncHandler(async (req, res) => {
         metaTitle: req.body.metaTitle,
         metaDescription: req.body.metaDescription,
         metaKeywords: req.body.metaKeywords,
+        metaOpenGraph: req.body.metaOpenGraph,
         excerpt: req.body.excerpt,
         author: req.user.displayName,
         comments: [],
@@ -76,7 +81,7 @@ const editBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
     const blog = await Blog.findById(req.params.id)
@@ -91,6 +96,7 @@ const editBlog = asyncHandler(async (req, res) => {
         blog.metaTitle = req.body.metaTitle || blog.metaTitle
         blog.metaDescription = req.body.metaDescription || blog.metaDescription
         blog.metaKeywords = req.body.metaKeywords || blog.metaKeywords
+        blog.metaOpenGraph = req.body.metaOpenGraph || blog.metaOpenGraph
         blog.excerpt = req.body.excerpt || blog.excerpt
         blog.site = req.body.site || blog.site
         await blog.save()
@@ -103,7 +109,7 @@ const deleteBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
     const blog = await Blog.findById(req.params.id)
@@ -118,7 +124,7 @@ const addCommentToBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (req.user.role === 'unverified-user') {
         return res.status(403).send('Not authorized')
     }
     const blog = await Blog.findById(req.params.id)
@@ -134,7 +140,7 @@ const deleteCommentFromBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
     const blog = await Blog.findById(req.params.id)
@@ -156,7 +162,7 @@ const publishBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
     const blog = await Blog.findById(req.params.id)
@@ -173,7 +179,7 @@ const unpublishBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
     }
-    if (req.user.role === 'user' || req.user.role === 'unverified-user') {
+    if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
     const blog = await Blog.findById(req.params.id)

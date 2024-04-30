@@ -247,8 +247,8 @@
                     </div>
                     <div class = "flex gap-4 items-center px-2 bg-slate-700 rounded-lg">
                         <Clock/>
-                        <h3 class = " text-slate-300 px-2 py-2 rounded shadow-slate-900">Last login: {{ active_user.lastLogin }}</h3>
-                        <h3 class = " text-slate-300 px-2 py-2 rounded shadow-slate-900">Last edit: {{ active_user.lastEdit }}</h3>
+                        <h3 class = " text-slate-300 px-2 py-2 rounded shadow-slate-900">Last login: {{ new Date(active_user.lastLogin).toLocaleString() }}</h3>
+                        <h3 class = " text-slate-300 px-2 py-2 rounded shadow-slate-900">Last edit: {{ new Date(active_user.lastEdit).toLocaleString() }}</h3>
                     </div>
 
                 </form>

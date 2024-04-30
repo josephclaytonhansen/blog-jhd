@@ -293,6 +293,10 @@ const anonymizeUser = asyncHandler(async (req, res) => {
     }
     const user = await User.findById(req.params.id)
     if (user) {
+        if (user.role == "admin"){
+            res.status(403)
+            throw new Error('Admin users cannot be anonymized')
+        }
         try {
         if (req.user._id === user._id || req.user.role === 'admin') {
             user.email = randomString(10) + '@' + randomString(5) + '.' + randomString(3)

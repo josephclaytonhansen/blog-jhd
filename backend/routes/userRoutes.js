@@ -27,7 +27,7 @@ export default (transporter) => {
     router.post('/verify', verifyTokenUser)
     router.post('/isadmin', isAdminUser)
     router.post('/isverified', isVerifiedUser)
-    router.post('/create', authenticateToken, async (req, res) => {
+    router.post('/create', async (req, res) => {
         try {
             let user = await createUser(req)
             let token = user.emailVerifyToken

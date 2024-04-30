@@ -47,7 +47,7 @@ const styleSchema = new mongoose.Schema({
     backgroundGradient: Boolean,
     backgroundGradientColor: String,
     backgroundGradientDirection: String,
-    backgroundGradientSize: String,,
+    backgroundGradientSize: String,
 
     blogSidebar: Boolean,
     articleSidebar: Boolean,

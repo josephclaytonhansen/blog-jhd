@@ -15,6 +15,7 @@ pinia.use(piniaPluginPersistedState)
 export {pinia}
 
 import {userStore} from './userStore'
+import { createHead } from '@vueuse/head'
 
 const toastOptions = {
     position: "top-right",
@@ -38,11 +39,13 @@ const toastOptions = {
 }
 
 const app = createApp(App)
+app.use(createHead())
 
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 
 app.use(Toast, toastOptions)
+
 app.use(pinia)
 app.use(router)
 app.mount('#app')

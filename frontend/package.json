@@ -12,6 +12,7 @@
   "dependencies": {
     "@octokit/rest": "^20.1.0",
     "@vueup/vue-quill": "^1.2.0",
+    "@vueuse/head": "^2.0.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",

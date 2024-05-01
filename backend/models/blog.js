@@ -18,6 +18,7 @@ const blogSchema = new mongoose.Schema({
     author: String,
     comments: Array,
     site: String,
+    subDirectory: String,
     views: Number
 })
 

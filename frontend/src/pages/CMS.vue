@@ -9,6 +9,7 @@ import {
     MessageCircleMore,
     UserX,
     LineChart,
+    Cog,
 } from 'lucide-vue-next'
 
 import { onMounted, ref } from 'vue'
@@ -27,6 +28,8 @@ import StylesC from './cms/styles.vue'
 
 import AnalyticsC from './cms/analytics.vue'
 import CommentsC from './cms/comments.vue'
+
+import SettingsC from './cms/settings.vue'
 
 const router = useRouter()
 
@@ -72,6 +75,11 @@ const sidebarButtons = [
         component: CommentsC
     },
     {
+        icon: Cog,
+        text: 'Settings',
+        component: SettingsC
+    },
+    {
         icon: UserX,
         text: 'Logout',
         component: 'logout'
@@ -103,6 +111,9 @@ const compToString = (component) => {
             break
         case CommentsC:
             return 'comments'
+            break
+        case SettingsC:
+            return 'settings'
             break
     }
 }
@@ -138,6 +149,9 @@ const updateActiveComponent = (component) => {
         case CommentsC:
             localStorage.setItem('activeComponent', 'comments')
             break
+        case SettingsC:
+            localStorage.setItem('activeComponent', 'settings')
+            break
     }
     if (component == 'logout') {
         router.push('/logout')
@@ -171,6 +185,9 @@ onMounted(() => {
                 break
             case 'comments':
                 activeComponent.value = CommentsC
+                break
+            case 'settings':
+                activeComponent.value = SettingsC
                 break
         }
     } else {

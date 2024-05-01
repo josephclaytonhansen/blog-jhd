@@ -1,12 +1,28 @@
 <script setup>
-const site = window.location.protocol + '//' + window.location.host
-import JhdHome from './blog.josephhansen.dev/Home.vue'
-import HsaHome from './hansenstudios.art/Home.vue'
+import { ref, onMounted } from 'vue'
+
+const site = window.location.hostname
+const components = ref({})
+const prefixes = ref([])
+
+const props = defineProps({thisPageComponentName: {type: String,}})
+
+onMounted(async () => {
+    prefixes.value = process.env.VUE_APP_FRONTEND_PREFIXES
+
+    for (let i = 0; i < prefixes.value.length; i++) {
+        let prefix = prefixes.value[i]
+        let componentName = `${prefix}_${props.thisPageComponentName}`
+        let importPath = `./${prefix}/${props.thisPageComponentName}.vue`
+        console.log(importPath)
+
+        components.value[componentName] = (await import(/* @vite-ignore */ importPath)).default
+    }
+})
 </script>
 
 <template>
     <div>
-        <JhdHome v-if="site === 'https://blog.josephhansen.dev'"/>
-        <HsaHome v-else-if="site === 'https://hansenstudios.art'"/>
+        <component :is="components[`${site}_${thisPageComponentName}`]"></component>
     </div>
 </template>

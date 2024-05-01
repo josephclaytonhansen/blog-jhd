@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 
 const routes = [
-    { path: '/', component: () => import('./pages/Home.vue') },  
+    { path: '/', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home'} },  
     { path: '/login', component: () => import('./pages/Login.vue') },
     { path: '/register', component: () => import('./pages/Login.vue') },
     { path: '/cms', component: () => import('./pages/CMS.vue') },
@@ -11,6 +11,7 @@ const routes = [
     { path: '/profile/id/:id', component: () => import('./pages/Profile.vue') },
     { path: '/profile/:displayName', component: () => import('./pages/Profile.vue') },
     { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
+    {path: '/seabasstest', component: () => import('./pages/SeabassTest.vue')},
     //add routes here
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]

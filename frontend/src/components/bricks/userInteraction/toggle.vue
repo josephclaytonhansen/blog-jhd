@@ -9,8 +9,8 @@ const props = defineProps({
     width: String,
     height: String,
     ringColor: String,
-    onColor: String,
-    offColor: String,
+    onColor: {String, default: 'cyan-500'},
+    offColor: {String, default: 'slate-700'},
     ringHoverColor: String,
 })
 

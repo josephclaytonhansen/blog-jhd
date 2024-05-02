@@ -10,6 +10,7 @@
     "buildbot": "cross-env NODE_ENV=production vite build && node commit.js"
   },
   "dependencies": {
+    "@lucide/lab": "^0.1.1",
     "@octokit/rest": "^20.1.0",
     "@vueuse/head": "^2.0.0",
     "autoprefixer": "^10.4.19",

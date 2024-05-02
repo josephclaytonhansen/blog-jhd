@@ -66,8 +66,37 @@ onMounted(async () => {
         {name: "Playfair Display", font: 'font-PlayfairDisplay'},
     ])
 
+    const colorOptions = ref([
+        'slate',
+        'gray',
+        'zinc',
+        'neutral',
+        'stone',
+        'red',
+        'orange',
+        'amber',
+        'yellow',
+        'lime',
+        'green',
+        'emerald',
+        'teal',
+        'cyan',
+        'sky',
+        'blue',
+        'indigo',
+        'violet',
+        'purple',
+        'fuchsia',
+        'pink',
+        'rose',
+
+    ])
+
     const currentSelectedSansFont = ref(fontSansOptions.value[0])
     const currentSelectedSerifFont = ref(fontSerifOptions.value[0])
+
+    const currentSelectedAccentColor = ref(colorOptions.value[13])
+    const currentSelectedBackDropColor = ref(colorOptions.value[0])
 
     const serifBodyText = ref(false)
     const serifHeaderText = ref(false)
@@ -80,7 +109,7 @@ onMounted(async () => {
 
 <template>
     <div class="p-8 flex flex-wrap gap-4">
-        <div class="p-8 bg-backdrop-800 rounded shrink max-w-full md:max-w-[48%]">
+        <div class="p-8 bg-backdrop-800 rounded shrink max-w-full md:max-w-[48%] transition-all duration-300">
             <h2 class= "text-2xl text-backdrop-200 pb-4">Current Sites</h2>
             <p class="text-backdrop-300 pb-2">
                 <details>

@@ -44,7 +44,7 @@ router.beforeEach(async (to, from, next) => {
           'Access-Control-Allow-Origin': '*'
         }
       };
-      let url = 'http://localhost:3720/user/verify'
+      let url = `${process.env.VUE_APP_SERVER_URL}/user/verify`
       let params = {
         token: token,
         user: user
@@ -57,7 +57,7 @@ router.beforeEach(async (to, from, next) => {
         } else {
 
           if (lockedRoute.roles.includes('admin')) {
-            url = 'http://localhost:3720/user/isadmin'
+            url = `${process.env.VUE_APP_SERVER_URL}/user/isadmin`
             response = await axios.post(url, params, config)
             if (response.status !== 200) {
                 next(lockedRoute.redirect)
@@ -65,7 +65,7 @@ router.beforeEach(async (to, from, next) => {
                 next()
             }
         } else if (lockedRoute.roles.includes('author')) {
-            url = 'http://localhost:3720/user/isauthor'
+            url = `${process.env.VUE_APP_SERVER_URL}/user/isauthor`
             response = await axios.post(url, params, config)
             if (response.status !== 200) {
                 next(lockedRoute.redirect)

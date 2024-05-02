@@ -124,7 +124,7 @@
         },
         withCredentials: true
     }
-        const response = await fetch('http://localhost:3720/user/anonymize/' + id, {
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/user/anonymize/` + id, {
             method: 'PUT',
             headers: config.headers,
             credentials: 'include',

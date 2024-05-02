@@ -40,7 +40,7 @@ const attemptLogin = () => {
             },
             withCredentials: true
         }
-    let url = 'http://localhost:3720/user/login'
+    let url = `${process.env.VUE_APP_SERVER_URL}/user/login`
     try{
     axios.post(url, params, config)
     .then((response) => {
@@ -95,7 +95,7 @@ const registerUser = () => {
         },
         withCredentials: true
     }
-    let url = 'http://localhost:3720/user/create'
+    let url = `${process.env.VUE_APP_SERVER_URL}/user/create`
     axios.post(url, {
         email: username.value,
         password: password.value,

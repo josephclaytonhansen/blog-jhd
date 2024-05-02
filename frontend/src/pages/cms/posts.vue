@@ -11,7 +11,7 @@ const store = userStore(pinia)
 const posts = ref([])
 
 const getPosts = async () => {
-  const response = await fetch('http://localhost:3720/blog/')
+  const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
   if (response.status !== 200) {
     toast.error('Network error')
     throw new Error('Network error- could not get posts')
@@ -71,7 +71,7 @@ const editPost = (id) => {
 }
 
 const deletePost = async (id) => {
-    let url = 'http://localhost:3720/blog/delete/' + id
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/delete/` + id
     let config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -103,7 +103,7 @@ const deletePost = async (id) => {
 }
 
 const publishPost = async (id) => {
-    let url = 'http://localhost:3720/blog/publish/' + id
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/publish/` + id
     let config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -136,7 +136,7 @@ const newPost = () => {
 }
 
 const unpublishPost = async (id) => {
-    let url = 'http://localhost:3720/blog/unpublish/' + id
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/unpublish/` + id
     let config = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

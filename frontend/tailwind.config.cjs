@@ -29,10 +29,11 @@ module.exports = {
           'backdrop': colors[process.env.BACKDROP_COLOR] || colors.slate,
         },
         fontFamily: {
-          'sans': [process.env.FONT_FAMILY || 'sans-serif'],
-          'Fira Sans': ['Fira Sans', 'sans-serif'],
+          'sans': [process.env.FONT_SANS || 'sans-serif'],
+          'serif': [process.env.FONT_SERIF || 'serif'],
+          'FiraSans': ['Fira Sans', 'sans-serif'],
           'Lora': ['Lora', 'serif'],
-          'Slabo': ['Slabo 13px', 'sans-serif'],
+          'Slabo': ['Slabo 13px', 'serif'],
           'MerriweatherSans': ['Merriweather Sans', 'sans-serif'],
           'Cairo': ['Cairo', 'sans-serif'],
           'Martel': ['Martel', 'serif'],
@@ -40,6 +41,18 @@ module.exports = {
           'Anaheim': ['Anaheim', 'sans-serif'],
           'Maitree': ['Maitree', 'serif'],
           'Prompt': ['Prompt', 'sans-serif'],
+          'CoromantGaramond': ['Cormorant Garamond', 'serif'],
+          'LibreBaskerville': ['Libre Baskerville', 'serif'],
+          'Glegoo': ['Glegoo', 'serif'],
+          'Graduate': ['Graduate', 'serif'],
+          'Besley': ['Besley', 'serif'],
+          'Comfortaa': ['Comfortaa', 'sans-serif'],
+          'Poppins': ['Poppins', 'sans-serif'],
+          'Lato': ['Lato', 'sans-serif'],
+          'Montserrat': ['Montserrat', 'sans-serif'],
+          'CrimsonText': ['Crimson Text', 'serif'],
+          'PlayfairDisplay': ['Playfair Display', 'serif'],
+          'NunitoSans': ['Nunito Sans', 'sans-serif'],
         },
         borderRadius: process.env.ROUNDED === 'false' ? {
           'none': '0',
@@ -54,5 +67,7 @@ module.exports = {
     variants: {
       extend: {},
     },
-    plugins: [],
+    plugins: [
+      require('@tailwindcss/typography'),
+    ],
   }

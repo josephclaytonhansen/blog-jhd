@@ -3,7 +3,11 @@ import { ref, onMounted, computed } from 'vue'
 const status = ref(false)
 const toggle = () => {
     status.value = !status.value
+    emit('update:modelValue', status.value)
 }
+
+const emit = defineEmits(['update:modelValue'])
+
 const props = defineProps({
     value: Boolean,
     width: String,
@@ -32,9 +36,6 @@ let computedClass = computed(() => {
     ]
 })
 
-onMounted(() => {
-    status.value = props.value
-})
 </script>
 
 <template>

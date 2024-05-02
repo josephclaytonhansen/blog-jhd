@@ -22,6 +22,9 @@ import {authenticateToken, lightAuthToken} from '../middleware/authenticateToken
 
 const router = express.Router()
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 export default (transporter) => {
     router.get('/', authenticateToken, getUsers)
     router.post('/login', userLoginByEmail)
@@ -33,9 +36,8 @@ export default (transporter) => {
         try {
             let user = await createUser(req)
             let token = user.emailVerifyToken
-            // TODO: Update localhost to production domain
             let text =  'Please verify your email by clicking the following link: <a href = "' 
-            + 'http://localhost:3720/user/verifyemail?token=' + token 
+            + `${process.env.VUE_APP_SERVER_URL}/user/verifyemail?token=` + token 
             + '&email=' + encodeURIComponent(user.email)
             + '">Verify Email</a>\nIf you did not create an account on hansenstudios.art or blog.josephhansen.dev, please ignore this email.'
             + '\n\nThis is an automated message, do not reply.'

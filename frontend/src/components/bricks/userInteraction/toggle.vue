@@ -35,6 +35,8 @@ onMounted(() => {
 </script>
 
 <template>
+    <span class = "bg-cyan-100"></span><span class = "bg-cyan-200"></span><span class = "bg-cyan-300"></span>
+    <span class = "bg-cyan-400"></span><span class = "bg-cyan-500"></span><span class = "bg-cyan-600"></span>
      <div @click="toggle" :class="{...computedClass, [`hover:ring-${props.ringHoverColor}`]: true}">
         <div class = "relative w-1/2 cursor-pointer transition-all duration-300 rounded-full h-full bg-slate-300" :class="status ? 'left-1/2' : 'left-0'"></div>
     </div>

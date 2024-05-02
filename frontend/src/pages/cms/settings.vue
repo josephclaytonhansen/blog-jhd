@@ -3,6 +3,8 @@ import {onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 
+import Toggle from '@/components/bricks/userInteraction/toggle.vue'
+
 import {Check, X, Wifi} from 'lucide-vue-next'
 
 const prefixes = ref([])
@@ -72,7 +74,11 @@ onMounted(async () => {
                 <hr class = "border-slate-700 mt-2"/>
             </p>
         </div>
-        
+
+        <div class = "p-8 bg-slate-800 rounded shrink max-w-full md:max-w-[48%]">
+            <Toggle :value="false" :width="8" :ringColor="'cyan-600'" :ringHoverColor="'cyan-300'"/>
+        </div>
+            
 
     </div>
     

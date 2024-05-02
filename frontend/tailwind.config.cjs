@@ -1,5 +1,13 @@
 module.exports = {
     content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'], 
+    options: {
+      safelist: [
+        'bg-cyan-400',
+        'bg-cyan-500',
+        'bg-cyan-600',
+        'bg-cyan-700',
+      ],
+    },
     theme: {
       extend: {
         fontFamily: {

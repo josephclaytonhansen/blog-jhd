@@ -1,0 +1,6 @@
+{
+  "name": "blog-jhd",
+  "scripts": {
+    "buildbot": "cd backend && npm run buildbot"
+  }
+}

@@ -86,36 +86,36 @@ import {
 </script>
 
 <template>
-    <div class = "flex bg-slate-900 h-[100vh] overflow-hidden w-full p-3 lg:p-0">
-        <div class= "bg-slate-800 text-slate-200 p-8 m-w-[500px] w-full lg:w-1/2 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
+    <div class="flex bg-backdrop-900 h-[100vh] overflow-hidden w-full p-3 lg:p-0">
+        <div class= "bg-backdrop-800 text-backdrop-200 p-8 m-w-[500px] w-full lg:w-1/2 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
             <h1 class="text-4xl font-normal text-left">Profile</h1>
-            <hr class="border-slate-700 my-4">
+            <hr class="border-backdrop-700 my-4">
             <div class="flex flex-row items-stretch gap-12 justify-start h-auto flex-wrap">
-                <div class = "flex items-center gap-2 shrink flex-wrap max-w-[50%]">
-                    <div class = "w-20 h-20 rounded-full overflow-hidden ring-4 mr-2 ring-cyan-600 square-img-container transition-all duration-300">
-                        <img :src="thisUser.picture" alt="avatar" class = "square-img "/>
+                <div class="flex items-center gap-2 shrink flex-wrap max-w-[50%]">
+                    <div class="w-20 h-20 rounded-full overflow-hidden ring-4 mr-2 ring-cyan-600 square-img-container transition-all duration-300">
+                        <img :src="thisUser.picture" alt="avatar" class="square-img "/>
                     </div>
-                    <div class = "max-w-[100%] flex flex-col gap-2 border-r-2 pr-5 border-slate-700">
-                        <h3 class = "text-2xl">{{thisUser.displayName}}</h3>
-                        <h4 class="text-md italic text-slate-300">{{thisUser.shortBio}}</h4>
+                    <div class="max-w-[100%] flex flex-col gap-2 border-r-2 pr-5 border-backdrop-700">
+                        <h3 class="text-2xl">{{thisUser.displayName}}</h3>
+                        <h4 class="text-md italic text-backdrop-300">{{thisUser.shortBio}}</h4>
 
-                        <h5 class="text-md italic text-slate-400">{{thisUser.website}}</h5>
+                        <h5 class="text-md italic text-backdrop-400">{{thisUser.website}}</h5>
                     </div>
                 </div>
                 <div class="flex flex-row items-start justify-start grow">
-                    <p class="text-lg text-slate-300">{{thisUser.longBio}}</p>
+                    <p class="text-lg text-backdrop-300">{{thisUser.longBio}}</p>
                 </div>
             </div>
 
-            <hr class="border-slate-700 my-4">
+            <hr class="border-backdrop-700 my-4">
             <div class="flex flex-row items-center gap-4 justify-start h-auto flex-wrap">
                 <div class="flex flex-col gap-2">
                     <h3 class="text-2xl">Posts</h3>
                     <div class="flex flex-row items-center gap-2 justify-start h-auto flex-wrap">
                         <div v-for="post in thisUser.posts" class="flex flex-col gap-2">
                             <h4 class="text-lg">{{post.title}}</h4>
-                            <div class = "flex items-center gap-2 justify-start h-auto flex-wrap">
-                                <div><Eye/><p class = "text-md text-slate-300">{{post.views}}</p></div>
+                            <div class="flex items-center gap-2 justify-start h-auto flex-wrap">
+                                <div><Eye/><p class="text-md text-backdrop-300">{{post.views}}</p></div>
 
                             </div>
                         </div>
@@ -123,14 +123,14 @@ import {
                 </div>
             </div>
 
-            <hr class="border-slate-700 my-4">
+            <hr class="border-backdrop-700 my-4">
             <div class="flex flex-row items-center gap-4 justify-start h-auto flex-wrap">
                 <div class="flex flex-col gap-2">
                     <h3 class="text-2xl">Comments</h3>
                     <div class="flex flex-row items-center gap-2 justify-start h-auto flex-wrap">
                         <div v-for="comment in thisUser.comments" class="flex flex-col gap-2">
                             <h4 class="text-lg">{{comment.text}}</h4>
-                            <div class = "flex items-center gap-2 justify-start h-auto flex-wrap">
+                            <div class="flex items-center gap-2 justify-start h-auto flex-wrap">
                                 
                             </div>
                         </div>
@@ -139,8 +139,8 @@ import {
             </div>
             
         </div>
-        <div class = "fixed top-0 left-0 p-4" @click="router.push('/')">
-            <Home class="w-10 h-10 cursor-pointer bg-cyan-600 p-2 rounded-lg shadow-md shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300"/>
+        <div class="fixed top-0 left-0 p-4" @click="router.push('/')">
+            <Home class="w-10 h-10 cursor-pointer bg-cyan-600 p-2 rounded-lg shadow-md shadow-backdrop-900 text-backdrop-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300"/>
         </div>
     </div>
 </template>

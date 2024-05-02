@@ -41,42 +41,42 @@ onMounted(async () => {
 
 
 <template>
-    <div class = "p-8 flex flex-wrap gap-4">
-        <div class = "p-8 bg-slate-800 rounded shrink max-w-full md:max-w-[48%]">
-            <h2 class= "text-2xl text-slate-200 pb-4">Current Sites</h2>
-            <p class = "text-slate-300 pb-2">
+    <div class="p-8 flex flex-wrap gap-4">
+        <div class="p-8 bg-backdrop-800 rounded shrink max-w-full md:max-w-[48%]">
+            <h2 class= "text-2xl text-backdrop-200 pb-4">Current Sites</h2>
+            <p class="text-backdrop-300 pb-2">
                 <details>
                     <summary>Info</summary>
                     Seabass makes it simple to manage multiple sites from one dashboard. If you want to add or remove a site, you'll need to do so from the Seabass server terminal.<br/><br/> Note that a Seabass failure doesn't necessarily mean that Seabass is offline. This may be a CORS issue- make sure that the site is configured to allow connections from this Seabass dashboard URL. 
 
                 </details>
             </p>
-            <ul class = "text-slate-300">
-                <li v-for="prefix in prefixes" :key="prefix" class = "text-slate-300 flex gap-3">
-                <div v-if="testResults[prefix] && testResults[prefix][0]"><Wifi class = "inline-block w-6 h-6 text-green-500"/></div>
-                <div v-else><Wifi class = "inline-block w-6 h-6 text-red-500"/></div>
-                <div v-if="testResults[prefix] && testResults[prefix][1]"><Check  class = "inline-block w-6 h-6 text-green-500" /></div>
-                <div v-else><X class = "inline-block w-6 h-6 text-red-500" /></div>
+            <ul class="text-backdrop-300">
+                <li v-for="prefix in prefixes" :key="prefix" class="text-backdrop-300 flex gap-3">
+                <div v-if="testResults[prefix] && testResults[prefix][0]"><Wifi class="inline-block w-6 h-6 text-green-500"/></div>
+                <div v-else><Wifi class="inline-block w-6 h-6 text-red-500"/></div>
+                <div v-if="testResults[prefix] && testResults[prefix][1]"><Check  class="inline-block w-6 h-6 text-green-500" /></div>
+                <div v-else><X class="inline-block w-6 h-6 text-red-500" /></div>
                 {{prefix}}
                 </li>
             </ul>
-            <p class = "text-slate-500 text-sm pt-4 italic">
-                <hr class = "border-slate-700 my-2"/>
-                <div class = "flex gap-3">
-                    <Wifi class = "inline-block w-6 h-6 text-green-500 pr-1"/>Connection successful<br/>
-                    <Wifi class = "inline-block w-6 h-6 text-red-500 pr-1"/>Connection failed<br/>
+            <p class="text-backdrop-500 text-sm pt-4 italic">
+                <hr class="border-backdrop-700 my-2"/>
+                <div class="flex gap-3">
+                    <Wifi class="inline-block w-6 h-6 text-green-500 pr-1"/>Connection successful<br/>
+                    <Wifi class="inline-block w-6 h-6 text-red-500 pr-1"/>Connection failed<br/>
                 </div>
-                <hr class = "border-slate-700 my-2"/>
-                <div class = "flex gap-3">
-                    <Check class = "inline-block w-6 h-6 text-green-500 pr-1"/>Seabass check successful<br/>
-                    <X class = "inline-block w-6 h-6 text-red-500 pr-1"/>Seabass check failed<br/>
+                <hr class="border-backdrop-700 my-2"/>
+                <div class="flex gap-3">
+                    <Check class="inline-block w-6 h-6 text-green-500 pr-1"/>Seabass check successful<br/>
+                    <X class="inline-block w-6 h-6 text-red-500 pr-1"/>Seabass check failed<br/>
                 </div>
-                <hr class = "border-slate-700 mt-2"/>
+                <hr class="border-backdrop-700 mt-2"/>
             </p>
         </div>
 
-        <div class = "p-8 bg-slate-800 rounded shrink max-w-full md:max-w-[48%]">
-            <Toggle :value="false" :width="8" :ringColor="'cyan-600'" :ringHoverColor="'cyan-400'"/>
+        <div class="p-8 bg-backdrop-800 rounded shrink max-w-full md:max-w-[48%]">
+            <Toggle :width="8" :ringClass="'ring-accent-600 hover:ring-accent-500 ring-0 hover:ring-4'"/>
         </div>
             
 

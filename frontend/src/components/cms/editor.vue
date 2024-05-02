@@ -127,7 +127,7 @@ const createCategory =  () => {
 
   <div class="container-fluid">
     <div class="row align-items-center justify-content-between py-3">
-      <div class = "row col-auto align-items-center ">
+      <div class="row col-auto align-items-center ">
       <div class="col-auto">
         <button class="btn btn-warning" @click="updateCurrentComponent('dashboard')">Back <ListTree/></button>
       </div>
@@ -151,8 +151,8 @@ const createCategory =  () => {
       </div>
       
 
-      <div class = "col-auto">
-        <div class = "dropdown" id = "status">
+      <div class="col-auto">
+        <div class="dropdown" id = "status">
           <button class="btn btn-info dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             <CalendarClock v-if="currentStatus === 'scheduled'"/>
                 <Check v-if="currentStatus === 'published'"/>
@@ -169,17 +169,17 @@ const createCategory =  () => {
         </div>
       </div>
 
-      <div class = "col-auto" v-if="currentStatus == 'scheduled'">
-        <input type="date" class = "text-bg-info" v-model="scheduledDate">
+      <div class="col-auto" v-if="currentStatus == 'scheduled'">
+        <input type="date" class="text-bg-info" v-model="scheduledDate">
       </div>
 
-      <div class = "col-auto">
+      <div class="col-auto">
         <button class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#metadataModal"><Info/>Metadata</button>
       </div>
 
     </div>
 
-    <div class = "row col-auto align-items-center ">
+    <div class="row col-auto align-items-center ">
       <div class="col-auto">
         <button class="btn btn-dark" @click="saveBlog"><Save/></button>
       </div>

@@ -168,7 +168,7 @@ const unpublishPost = async (id) => {
 
 <template>
     <div class="p-3">
-        <table class='w-full text-slate-400 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
+        <table class='w-full text-backdrop-400 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -tranbackdrop-x-[21%] sm:-tranbackdrop-x-[10%] md:tranbackdrop-x-0 -tranbackdrop-y-4 sm:tranbackdrop-y-0'>
             <colgroup>
                 <col style="width: 3%"/>
                 <col style="width: 3%"/>
@@ -180,29 +180,29 @@ const unpublishPost = async (id) => {
                 <col style="width: 5%"/>
                 <col style="width: 7%"/>
             </colgroup>
-            <thead class="bg-slate-700 text-center uppercase">
+            <thead class="bg-backdrop-700 text-center uppercase">
                 <tr>
                     <th class="p-3"><div class=  "flex items-center justify-center w-8 h-8"><Eye/></div></th>
-                    <th class=" p-3"><div class = "flex items-center justify-center w-8 h-8"><MessageCircleMore/></div></th>
+                    <th class=" p-3"><div class="flex items-center justify-center w-8 h-8"><MessageCircleMore/></div></th>
                     <th class="font-normal p-3">Title</th>
                     <th class="font-normal p-3">Author</th>
-                    <th class="hidden sm:table-cell p-3"><div class = "flex items-center justify-center m-auto w-8 h-8"><Router/></div></th>
-                    <th class="hidden sm:table-cell p-3"><div class = "flex items-center justify-center m-auto w-8 h-8"><Tags/></div></th>
+                    <th class="hidden sm:table-cell p-3"><div class="flex items-center justify-center m-auto w-8 h-8"><Router/></div></th>
+                    <th class="hidden sm:table-cell p-3"><div class="flex items-center justify-center m-auto w-8 h-8"><Tags/></div></th>
                     <th class="hidden sm:table-cell p-3 font-normal">Category</th>
                     <th class="font-normal p-3">Status</th>
                     <th class="font-normal p-3">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="post in posts" :key="post._id" class = "text-center bg-slate-800">
-                    <td class="py-2 border-b-slate-800 border-b-2 text-center">{{post.views}}</td>
-                    <td class = "border-b-slate-800 border-b-2 text-center">{{ post.comments.length }}</td>
-                    <td class="cursor-pointer hover:text-white transition-all duration-300 border-b-slate-800 border-b-2 text-center"><a :href="post.site + '/' + post.slug">{{post.title}}</a></td>
-                    <td class = "border-b-slate-800 border-b-2 text-center">{{post.author}}</td>
-                    <td class="hidden sm:table-cell border-b-slate-800 border-b-2 text-center">{{post.site}}</td>
-                    <td class="hidden sm:table-cell border-b-slate-800 border-b-2 text-center">{{post.tags.join(', ')}}</td>
-                    <td class="hidden sm:table-cell border-b-slate-800 border-b-2 text-center">{{post.category}}</td>
-                    <td class=" border-b-slate-800 border-b-2 text-center">
+                <tr v-for="post in posts" :key="post._id" class="text-center bg-backdrop-800">
+                    <td class="py-2 border-b-backdrop-800 border-b-2 text-center">{{post.views}}</td>
+                    <td class="border-b-backdrop-800 border-b-2 text-center">{{ post.comments.length }}</td>
+                    <td class="cursor-pointer hover:text-white transition-all duration-300 border-b-backdrop-800 border-b-2 text-center"><a :href="post.site + '/' + post.slug">{{post.title}}</a></td>
+                    <td class="border-b-backdrop-800 border-b-2 text-center">{{post.author}}</td>
+                    <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.site}}</td>
+                    <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.tags.join(', ')}}</td>
+                    <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.category}}</td>
+                    <td class=" border-b-backdrop-800 border-b-2 text-center">
                         <div v-if="post.status == 'published'" class="cursor-pointer hover:text-white transition-all duration-300 flex items-center justify-center" @click="unpublishPost(post._id)">
                             <CheckCheck  />
                         </div>
@@ -213,7 +213,7 @@ const unpublishPost = async (id) => {
                             <Send  />
                         </div>
                     </td>
-                    <td class=" border-b-slate-800 border-b-2">
+                    <td class=" border-b-backdrop-800 border-b-2">
                         <div class='flex justify-center items-center m-auto'>
                             <div class='cursor-pointer hover:text-white transition-all duration-300' @click="viewPost(post._id)"><Eye /></div>
                             <div class='cursor-pointer hover:text-white transition-all duration-300 px-2' @click="editPost(post._id)"><Pencil /></div>
@@ -224,7 +224,7 @@ const unpublishPost = async (id) => {
             </tbody>
         </table>
     </div>
-    <div @click="newPost" class = "fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 cursor-pointer bg-cyan-600 px-5 py-2 rounded-lg shadow-md shadow-slate-900 text-slate-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300">New post
+    <div @click="newPost" class="fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 cursor-pointer bg-cyan-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-backdrop-200 hover:bg-cyan-700 hover:scale-105 transition-all duration-300">New post
     </div>
 </template>
 

@@ -14,14 +14,12 @@ const testConnection = async (site) => {
     let titleCorrect = false
 
     try {
-        let response = await axios.get(`${protocol.value}${site}/seabasstest`)
+        let response = await axios.get(`${protocol.value}${site}/Seabasstest`)
         connectionSuccessful = true
         let data = response.data
-        titleCorrect = data.includes('<title>SEABASS Test</title>')
+        titleCorrect = data.includes('<title>Seabass Test</title>')
     } catch (error) {
         if (!error.response) {
-            // The request was made but no response was received
-            // This is likely due to a network error (like a CORS error)
             connectionSuccessful = true
             titleCorrect = false
         }
@@ -42,10 +40,14 @@ onMounted(async () => {
 
 <template>
     <div class = "p-8 flex flex-wrap gap-4">
-        <div class = "p-8 bg-slate-800 rounded w-auto max-w-full md:max-w-[48%]">
+        <div class = "p-8 bg-slate-800 rounded shrink max-w-full md:max-w-[48%]">
             <h2 class= "text-2xl text-slate-200 pb-4">Current Sites</h2>
             <p class = "text-slate-300 pb-2">
-                This SEABASS dashboard is currently connected to the following sites:
+                <details>
+                    <summary>Info</summary>
+                    Seabass makes it simple to manage multiple sites from one dashboard. If you want to add or remove a site, you'll need to do so from the Seabass server terminal.<br/><br/> Note that a Seabass failure doesn't necessarily mean that Seabass is offline. This may be a CORS issue- make sure that the site is configured to allow connections from this Seabass dashboard URL. 
+
+                </details>
             </p>
             <ul class = "text-slate-300">
                 <li v-for="prefix in prefixes" :key="prefix" class = "text-slate-300 flex gap-3">
@@ -56,9 +58,18 @@ onMounted(async () => {
                 {{prefix}}
                 </li>
             </ul>
-            <p class = "text-slate-500 text-sm pt-4">
-                SEABASS makes it simple to manage multiple sites from one dashboard. If you want to add or remove a site, you'll need to edit your .env file or contact your administrator if you don't have server access.<br/><br/>
-                Note that a connection failure doesn't necessarily mean that the site is offline, just that the SEABASS dashboard can't connect to it. This may be a CORS issue- make sure that the site is configured to allow connections from the SEABASS dashboard URL. 
+            <p class = "text-slate-500 text-sm pt-4 italic">
+                <hr class = "border-slate-700 my-2"/>
+                <div class = "flex gap-3">
+                    <Wifi class = "inline-block w-6 h-6 text-green-500 pr-1"/>Connection successful<br/>
+                    <Wifi class = "inline-block w-6 h-6 text-red-500 pr-1"/>Connection failed<br/>
+                </div>
+                <hr class = "border-slate-700 my-2"/>
+                <div class = "flex gap-3">
+                    <Check class = "inline-block w-6 h-6 text-green-500 pr-1"/>Seabass check successful<br/>
+                    <X class = "inline-block w-6 h-6 text-red-500 pr-1"/>Seabass check failed<br/>
+                </div>
+                <hr class = "border-slate-700 mt-2"/>
             </p>
         </div>
         

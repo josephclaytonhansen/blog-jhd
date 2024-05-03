@@ -256,8 +256,8 @@
                 <div v-for = "user in group.users">
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-1 shrink">
-                            <div v-if = "user.picture.length > 0" class="w-10 h-10 rounded-full overflow-hidden">
-                                <img :src="user.picture" alt="avatar" class="w-full h-full object-cover"/>
+                            <div v-if = "user.picture.length > 0" class="w-10 h-10 rounded-full overflow-hidden avatar">
+                                <img :src="user.picture" alt="avatar" class="w-full h-full object-cover avatar"/>
                             </div>
                             <router-link class=" hover:text-accent-500 transition-all duration-300" :to = "`/profile/${user.displayName.replace(/ /g, '-')}`"><h3>{{user.displayName}}</h3></router-link>
                         </div>

@@ -109,6 +109,8 @@ onMounted(async () => {
     const serifHeaderText = ref(false)
     const uppercaseHeader1and2 = ref(false)
 
+    const roundAvatars = ref(false)
+
     const currentSiteSettings = ref('')
     const allSites = process.env.VUE_APP_FRONTEND_PREFIXES
 
@@ -121,6 +123,8 @@ onMounted(async () => {
         'SERIF_BODY_TEXT': false,
         'SERIF_HEADER_TEXT': false,
         'UPPERCASE_HEADERS': false,
+        'ROUNDED': 'rounded',
+        'ROUND_AVATARS': false,
 
     })
 
@@ -132,7 +136,7 @@ onMounted(async () => {
 
     const currentRounded = ref('rounded')
 
-    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded]) => {
+    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded, roundAvatars], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded, newRoundAvatars]) => {
         buildScript.value = {
             'THEME': newTheme,
             'FONT_SANS': newSansFont.name,
@@ -143,6 +147,7 @@ onMounted(async () => {
             'SERIF_HEADER_TEXT': newSerifHeaderText,
             'UPPERCASE_HEADERS': newUppercaseHeader1and2,
             'ROUNDED': newRounded,
+            'ROUND_AVATARS': newRoundAvatars.valueOf(),
         }
     })
 
@@ -201,7 +206,7 @@ onMounted(async () => {
                 <hr class="border-backdrop-1 mt-2"/>
             </p>
             <h2 class= "text-2xl text-text-0 pb-4 pt-8">Select Site to Design</h2>
-            <p class = "text-sm italic text-text-2">Defaults do not reflect the current status of the site</p>
+            <p class = "text-sm italic text-text-2 pb-2">Defaults do not reflect the current status of the site</p>
             <div class="flex gap-4">
             <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
                 <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
@@ -245,11 +250,7 @@ onMounted(async () => {
             <h6 class="text-text-1 text-xl" :class = "!serifHeaderText ? currentSelectedSansFont.font: currentSelectedSerifFont.font">Sample mid-level heading</h6>
             <p class="text-text-1" :class = "!serifBodyText ? currentSelectedSansFont.font : currentSelectedSerifFont.font">This is a sample paragraph. It should be easy to read and not too overwhelming. The fonts should complement each other.<br/><br/><span>The <em>quick brown fox</em> jumped over the <b>lazy dog.</b></span></p>
             </div>
-            <hr class="border-backdrop-1 my-2 border-b-2"/>
 
-
-    
-        
         </div>
         <div class="p-8 bg-backdrop-2 rounded grow max-w-full lg:max-w-[31%]">
             <h2 class="text-2xl text-text-0 pb-4  ">Color Settings</h2>
@@ -292,7 +293,13 @@ onMounted(async () => {
             <select v-model="currentRounded" class="bg-backdrop-1 text-text-1 rounded p-2">
                 <option v-for="rounded in roundedOptions" :key="rounded" :value="rounded">{{rounded}}</option>
             </select>
+            
+
             <div :style="currentRounded === 'sharp' ? 'border-radius:0px' : (currentRounded === 'subtle' ? 'border-radius:7%;' : 'border-radius:25%')" class='w-8 h-8 ring-accent-500 ring-4'></div></div>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="roundAvatarsCheckbox" v-model="roundAvatars"/>
+                <label for="roundAvatarsCheckbox" class="text-text-1">Circular avatars</label>
+            </div>
         </div>
 
         

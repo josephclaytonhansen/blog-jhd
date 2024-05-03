@@ -14,6 +14,9 @@ h1, h2, h3, h4, h5, h6 {
 body {
   font-family: '${process.env.SERIF_BODY_TEXT === 'true' ? process.env.FONT_SERIF : process.env.FONT_SANS}';
 }
+
+${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem}' : ''};
+
 /* end automated */
 `
 

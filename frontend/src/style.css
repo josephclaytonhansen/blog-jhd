@@ -4,6 +4,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 :root {
@@ -32,12 +33,16 @@
       background-color: theme('colors.accent.700');
       color: white;
     }
+    scrollbar-color: theme('colors.accent.500') theme('colors.backdrop.800');
+    scrollbar-width: thin;
   }
 }
 
 *:active, *:focus, *:focus-within, *:focus-visible {
   outline: none;
 }
+
+input {accent-color: theme('colors.accent.500');}
 
 option:hover, option:checked{
   background-color: theme('colors.accent.700');
@@ -113,15 +118,6 @@ body {
 @media screen and (prefers-contrast: less) {
   html {
     filter: grayscale(100%);
-  }
-}
-
-@media screen and (prefers-color-scheme: light) {
-  html {
-    filter: invert(95%) hue-rotate(170deg) brightness(115%);
-  }
-  img, picture{
-    filter: invert(95%) hue-rotate(170deg) brightness(86%);
   }
 }
 
@@ -329,11 +325,6 @@ a {
   text-transform: uppercase;
 }
 
-
-
-
-
-
 /* automated */
 h1, h2 {
   text-transform: none;
@@ -345,7 +336,12 @@ h1, h2, h3, h4, h5, h6 {
 body {
   font-family: 'Fira Sans';
 }
+
+.avatar{border-radius:999rem};
+
 /* end automated */
+
+
 
 
 

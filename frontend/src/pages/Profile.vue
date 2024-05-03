@@ -93,7 +93,7 @@ import {
             <div class="flex flex-row items-stretch gap-12 justify-start h-auto flex-wrap">
                 <div class="flex items-center gap-2 shrink flex-wrap max-w-[50%]">
                     <div class="w-20 h-20 rounded-full overflow-hidden ring-4 mr-2 ring-accent-600 square-img-container transition-all duration-300">
-                        <img :src="thisUser.picture" alt="avatar" class="square-img "/>
+                        <img :src="thisUser.picture" alt="avatar" class="square-img avatar"/>
                     </div>
                     <div class="max-w-[100%] flex flex-col gap-2 border-r-2 pr-5 border-backdrop-1">
                         <h3 class="text-2xl">{{thisUser.displayName}}</h3>

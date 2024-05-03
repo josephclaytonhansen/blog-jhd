@@ -24,10 +24,10 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 const filePath = path.resolve(dirname, './src/style.css')
 const fileContent = fs.readFileSync(filePath, 'utf8')
 
-if (!fileContent.includes('/* automated */')) {
+if (!fileContent.includes('\n/* automated */')) {
   fs.appendFileSync(filePath, css)
 } else {
-  let startPoint = fileContent.indexOf('/* automated */')
+  let startPoint = fileContent.indexOf('\n/* automated */')
   let endPoint = fileContent.indexOf('/* end automated */') + '/* end automated */'.length
   fs.writeFileSync(filePath, fileContent.slice(0, startPoint) + css + fileContent.slice(endPoint))
 }

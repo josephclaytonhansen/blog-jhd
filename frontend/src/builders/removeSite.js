@@ -1,0 +1,1 @@
+//TODO: Set up npm-remove-site to remove a site from the frontend, delete the routes, and delete the pages subdirectory

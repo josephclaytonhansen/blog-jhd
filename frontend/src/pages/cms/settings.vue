@@ -158,6 +158,7 @@ onMounted(async () => {
     }
     script += `SITE="${currentSiteSettings.value}"`
     return script
+    //TODO: set up npm run preview, with the build script, and send it to the appropriate site
 })
 
 </script>

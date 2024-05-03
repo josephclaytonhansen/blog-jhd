@@ -1,8 +1,17 @@
 const mainPageOutput = `
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useHead } from '@vueuse/head'
 import Header from '../components/bricks/header.vue'
 import Footer from '../components/footer.vue'
+
+useHead({
+    title: '',
+    meta: [
+        {
+        }
+    ]
+})
 
 const site = window.location.hostname
 const components = ref({})
@@ -67,17 +76,28 @@ const pagesDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../
 const dirents = fs.readdirSync(pagesDir, { withFileTypes: true });
 const subDirectories = dirents.filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
 
-
 const createPages = () => {
     const title = process.argv[2];
+    let whichDirectory = []
+    if (!process.argv[3]) {
+        whichDirectory = subDirectories
+    }  else {
+    whichDirectory = JSON.parse(process.argv[3]);}
+    
+    for (let di in whichDirectory) {
+        if (!subDirectories.includes(whichDirectory[di])) {
+            console.error('Site not found- check your spelling, or run npm create-site.')
+            process.exit(1)
+        }
+    }
     if (!title) {
-        console.error('Please provide a title as a command line argument.')
+        console.error('Please provide a title for the new page.')
         process.exit(1)
     }
     createMainPage(title)
-    subDirectories.forEach(subDirectory => {
-        createSubDirectoryPage(subDirectory, title)
-    })
+    for (let di in whichDirectory) {
+        createSubDirectoryPage(whichDirectory[di], title)
+    }
 }
 
 createPages()

@@ -1,7 +1,17 @@
+
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useHead } from '@vueuse/head'
 import Header from '../components/bricks/header.vue'
 import Footer from '../components/footer.vue'
+
+useHead({
+    title: '',
+    meta: [
+        {
+        }
+    ]
+})
 
 const site = window.location.hostname
 const components = ref({})

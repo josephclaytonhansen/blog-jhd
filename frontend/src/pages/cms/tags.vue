@@ -255,19 +255,19 @@
     <div class="p-1 md:p-8 flex gap-8 flex-wrap scale-75 md:scale-100 ">
         <div class="flex flex-col gap-4 grow">
             <div class="flex flex-row gap-4 items-center justify-between">
-                <h1 class="text-2xl text-backdrop-400">Tags</h1>
+                <h1 class="text-2xl text-text-2">Tags</h1>
                 <div class = 'flex gap-2'>
-                <input v-model="newTagName" type="text" class="bg-backdrop-600 text-backdrop-200 px-2 py-2 rounded-md accent-cyan-500 " placeholder="New Tag Name">
-                <button @click="addTag" class="bg-backdrop-700 text-white p-2 rounded-md">Add
+                <input v-model="newTagName" type="text" class="bg-backdrop-0 text-text-0 px-2 py-2 rounded-md accent-cyan-500 " placeholder="New Tag Name">
+                <button @click="addTag" class="bg-backdrop-1 text-text-0 p-2 rounded-md">Add
                     Tag</button>
                 </div>
             </div>
             <table
-                class="grow text-backdrop-400 table-auto border-separate border-spacing-0">
+                class="grow text-text-2 table-auto border-separate border-spacing-0">
 
                 <tr v-for="tag in tags" :key="tag.id" class='flex'>
                     <td class="grow">
-                        <input v-model="tag.name" type="text" class = 'bg-backdrop-700 p-2 rounded-md grow w-full accent-cyan-500'>
+                        <input v-model="tag.name" type="text" class = 'bg-backdrop-1 p-2 rounded-md grow w-full accent-cyan-500'>
                     </td>
                     <td>
                         <button @click="viewTagPosts(tag._id)" class="p-2">
@@ -283,19 +283,19 @@
 
         <div class="flex flex-col gap-4 grow">
             <div class="flex flex-row gap-4 items-center justify-between">
-                <h1 class="text-2xl text-backdrop-400">Categories</h1>
+                <h1 class="text-2xl text-text-2">Categories</h1>
                 <div class="flex gap-2">
-                <input v-model="newCategoryName" type="text" class="bg-backdrop-600 text-backdrop-200 px-2 py-2 rounded-md accent-cyan-500" placeholder="Category name">
-                <button @click="addCategory" class="bg-backdrop-700 text-white p-2 rounded-md">Add
+                <input v-model="newCategoryName" type="text" class="bg-backdrop-0 text-text-0 px-2 py-2 rounded-md accent-cyan-500" placeholder="Category name">
+                <button @click="addCategory" class="bg-backdrop-1 text-text-0 p-2 rounded-md">Add
                     Category</button>
                 </div>
             </div>
             <table
-                class="grow text-backdrop-400 table-auto border-separate border-spacing-0 ">
+                class="grow text-text-2 table-auto border-separate border-spacing-0 ">
 
                 <tr v-for="category in categories" :key="category.id" class=' flex'>
                     <td class="grow">
-                        <input v-model="category.name" type="text" class = 'bg-backdrop-700 p-2 accent-cyan-500 rounded-md grow w-full'>
+                        <input v-model="category.name" type="text" class = 'bg-backdrop-1 p-2 accent-cyan-500 rounded-md grow w-full'>
                     </td>
                     
                     <td>

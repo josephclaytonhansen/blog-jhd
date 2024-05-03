@@ -14,7 +14,7 @@ const props = defineProps({
     height: String,
     ringClass: String,
     onColor: {String, default: 'accent-500'},
-    offColor: {String, default: 'backdrop-700'},
+    offColor: {String, default: 'backdrop-1'},
 })
 
 let bgColorClass = computed(() => `bg-${status.value ? props.onColor : props.offColor}`);

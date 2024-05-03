@@ -144,14 +144,14 @@ onMounted(() => {
 
 <template>
     <div class="w-full h-full overflow-hidden flex flex-row min-h-[100vh]">
-        <div id="sidebar" class="h-full min-h-[100vh] overflow-hidden bg-backdrop-800 flex flex-col items-start justify-center min-w-[30px] md:min-w-[150px]">
-            <div v-for="button in sidebarButtons" class="text-backdrop-400 flex flex-row items-center justify-start h-12 px-1 py-0 sm:px-4 lg:py-8 xl:py-10 md:py-6 sm:py-10 cursor-pointer transition-all hover:bg-backdrop-700 w-full duration-300" :class="stringCheck(compToString(button.component)) ? 'bg-backdrop-600 text-white' : ''"  @click="updateActiveComponent(button.component)">
+        <div id="sidebar" class="h-full min-h-[100vh] overflow-hidden bg-backdrop-2 flex flex-col items-start justify-center min-w-[30px] md:min-w-[150px]">
+            <div v-for="button in sidebarButtons" class="text-text-2 flex flex-row items-center justify-start h-12 px-1 py-0 sm:px-4 lg:py-8 xl:py-10 md:py-6 sm:py-10 cursor-pointer transition-all hover:bg-backdrop-1 w-full duration-300" :class="stringCheck(compToString(button.component)) ? 'bg-backdrop-0 text-text-0' : ''"  @click="updateActiveComponent(button.component)">
                 <component :is="button.icon" class="w-10 h-10 md:w-7 min-w-4 min-h-4 md:min-w-7 md:min-h-7 lg:w-5 md:mr-3" />
                 <span class="hidden sm:hidden md:block">{{ button.text }}</span>
             </div>
                 
         </div>
-        <div id="center" class="grow h-full min-h-[100vh] overflow-auto bg-backdrop-900">
+        <div id="center" class="grow h-full min-h-[100vh] overflow-auto bg-backdrop-3">
             <component :is="activeComponent" />
         </div>
     </div>

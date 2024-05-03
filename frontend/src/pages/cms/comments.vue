@@ -220,19 +220,19 @@
 
 <template>
     <div class="p-6">
-    <h2 class="text-3xl text-backdrop-200 px-8 -mb-4">Flagged Comments</h2>
+    <h2 class="text-3xl text-text-0 px-8 -mb-4">Flagged Comments</h2>
     <div class="p-1 md:p-8 flex gap-4 flex-wrap">
         <div class="min-w-[30%] grow" v-for="comment in filterFlaggedComments">
-            <div class="bg-backdrop-800 text-backdrop-200 8 m-w-[500px] w-auto h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4">
+            <div class="bg-backdrop-2 text-text-0 8 m-w-[500px] w-auto h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4">
                 <p class="italic">{{comment.content}}</p>
                 <p >Posted by: {{findCommentUser(comment.user)}}</p>
                 <p >Posted on: <a :href="getBlogPostSlug(comment.blogPost)" class= "text-cyan-500 hover:text-cyan-600 duration-300 transition-all">{{findBlogPostTitle(comment.blogPost)}}</a></p>
                 <div class="flex gap-7 mt-2 items-center justify-between w-full">
                     <div class="flex gap-2 items-center">
-                    <button @click="unflagComment(comment._id)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                    <button @click="unflagComment(comment._id)" class="bg-green-500 hover:bg-green-700 text-text-0 font-bold py-2 px-4 rounded">
                         <FlagOff />
                     </button>
-                    <button @click="deleteComment(comment._id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    <button @click="deleteComment(comment._id)" class="bg-red-500 hover:bg-red-700 text-text-0 font-bold py-2 px-4 rounded">
                         <Trash />
                     </button>
                     <Eye v-if = "!comment.visible"/>
@@ -245,13 +245,13 @@
             </div>
         </div>
     </div>
-    <h2 class="text-3xl text-backdrop-200 px-8 -mb-4">Comments By Post</h2>
+    <h2 class="text-3xl text-text-0 px-8 -mb-4">Comments By Post</h2>
     <div class="p-1 md:p-8 flex gap-4 flex-wrap">
         <div class="min-w-[30%] grow" v-for="post in blogPosts">
             <h3 class='text-cyan-500 hover:text-cyan-600 transition-all duration-300 text-xl pb-2'><a :href="post.site + post.subDirectory + post.slug">{{post.title}}</a></h3>
 
                 <div class="flex gap-4 flex-wrap">
-                    <div class="min-w-[30%] grow bg-backdrop-800 text-backdrop-200 8 m-w-[500px] w-auto h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4" v-for="comment in filterCommentsByBlogPost(post._id)">
+                    <div class="min-w-[30%] grow bg-backdrop-2 text-text-0 8 m-w-[500px] w-auto h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4" v-for="comment in filterCommentsByBlogPost(post._id)">
 
                         <div class="
                             flex gap-2 mt-2 items-center justify-between w-full
@@ -262,7 +262,7 @@
                             flex gap-2 mt-2 items-center justify-end w-full
                             ">
                             <MessageCircleReply/><span>{{comment.replies?.length? comment.replies.length : '0'}}</span>
-                            <Flag @click="flagComment(comment._id)" class="bg-red-500 hover:bg-red-700 cursor-pointer w- text-white font-bold p-2 rounded w-10 h-10"/>
+                            <Flag @click="flagComment(comment._id)" class="bg-red-500 hover:bg-red-700 cursor-pointer w- text-text-0 font-bold p-2 rounded w-10 h-10"/>
                         </div>
                         </div>
                         

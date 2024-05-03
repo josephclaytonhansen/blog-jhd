@@ -309,13 +309,13 @@ a {
 
 .Vue-Toastification__toast--info.toast {
   @apply bg-slate-800;
-  @apply border-sky-500;
-  @apply text-sky-500;
+  @apply border-accent-500;
+  @apply text-accent-500;
   @apply border-2;
 }
 
 .Vue-Toastification__toast--info .Vue-Toastification__progress-bar {
-  @apply bg-sky-500;
+  @apply bg-accent-500;
 }
 
 .Vue-Toastification__toast-body.toast {
@@ -340,6 +340,7 @@ body {
 
 
 /* end automated */
+
 
 
 

@@ -114,7 +114,7 @@ onMounted(async () => {
 
     const buildScript = ref({
         'THEME': 'dark',
-        'FONT_SANS ': 'Fira Sans',
+        'FONT_SANS': 'Fira Sans',
         'FONT_SERIF': 'Libre Baskerville',
         'ACCENT_COLOR': 'blue',
         'BACKDROP_COLOR': 'slate', 
@@ -124,7 +124,15 @@ onMounted(async () => {
 
     })
 
-    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2]) => {
+    const roundedOptions = ref([
+        'sharp',
+        'subtle',
+        'rounded',
+    ])
+
+    const currentRounded = ref('rounded')
+
+    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded]) => {
         buildScript.value = {
             'THEME': newTheme,
             'FONT_SANS': newSansFont.name,
@@ -134,6 +142,7 @@ onMounted(async () => {
             'SERIF_BODY_TEXT': newSerifBodyText,
             'SERIF_HEADER_TEXT': newSerifHeaderText,
             'UPPERCASE_HEADERS': newUppercaseHeader1and2,
+            'ROUNDED': newRounded,
         }
     })
 
@@ -151,17 +160,17 @@ onMounted(async () => {
 
 <template>
 
-    <div class="absolute z-50 right-2 bottom-2 p-2 gap-2 flex-wrap hidden lg:flex">
-        <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0"/></button>
-        <div class="text-text-0 flex gap-2 items-center"><code class = "text-[.5rem] bg-backdrop-1 p-2 rounded flex items-center gap-2"><Blocks class = "text-text-3"/>{{returnBuildScript}}
+    <div class="absolute z-50 right-2 bottom-2 p-2 gap-2 hidden lg:flex items-end">
+        <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/></button>
+        <div class="text-text-0 flex gap-2 items-center"><code class = "text-[.5rem] bg-backdrop-1 p-2 rounded flex items-center gap-2 max-w-[25vw]"><Blocks class = "text-text-3"/>{{returnBuildScript}}
 
         </code></div>
 
     </div>
 
-    <div class="p-8 flex flex-wrap gap-4 items-start">
+    <div class="p-8 flex flex-wrap gap-4 items-stretch">
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%] transition-all duration-300">
-            <h2 class= "text-2xl text-text-0 pb-4">Current Sites</h2>
+            <h2 class= "text-2xl text-text-0 pb-4  ">Current Sites</h2>
             <p class="text-text-1 pb-2">
                 <details>
                     <summary>Info</summary>
@@ -191,10 +200,18 @@ onMounted(async () => {
                 </div>
                 <hr class="border-backdrop-1 mt-2"/>
             </p>
+            <h2 class= "text-2xl text-text-0 pb-4 pt-8">Select Site to Design</h2>
+            <p class = "text-sm italic text-text-2">Defaults do not reflect the current status of the site</p>
+            <div class="flex gap-4">
+            <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
+                <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
+            </select>
+            
+        </div>
         </div>
 
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
-            <h2 class= "text-2xl text-text-0 pb-4">Font Settings</h2>
+            <h2 class= "text-2xl text-text-0 pb-4  ">Font Settings</h2>
             <hr class="border-backdrop-1 my-2 border-b-2"/>
             <h3 class="text-text-1 pb-2">Sans serif</h3>
             <select v-model="currentSelectedSansFont" class="bg-backdrop-1 text-text-1 rounded p-2">
@@ -229,21 +246,16 @@ onMounted(async () => {
             <p class="text-text-1" :class = "!serifBodyText ? currentSelectedSansFont.font : currentSelectedSerifFont.font">This is a sample paragraph. It should be easy to read and not too overwhelming. The fonts should complement each other.<br/><br/><span>The <em>quick brown fox</em> jumped over the <b>lazy dog.</b></span></p>
             </div>
             <hr class="border-backdrop-1 my-2 border-b-2"/>
-            <h3 class="text-text-1 pb-2 pt-4">Site</h3>
-            <div class="flex gap-4">
-            <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
-                <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
-            </select>
-        </div>
 
-        
+
+    
         
         </div>
         <div class="p-8 bg-backdrop-2 rounded grow max-w-full lg:max-w-[31%]">
-            <h2 class= "text-2xl text-text-0 pb-4">Color Settings</h2>
+            <h2 class="text-2xl text-text-0 pb-4  ">Color Settings</h2>
             <hr class="border-backdrop-1 my-2 border-b-2"/>
             <h3 class="text-text-1 pb-2">Accent Color</h3>
-            <div class = "flex gap-4">
+            <div class ="flex gap-4">
                 <select v-model="currentSelectedAccentColor" class="bg-backdrop-1 text-text-1 rounded p-2">
                 <option v-for="color in colorOptions" :key="color" :value="color">{{color}}</option>
             </select>
@@ -252,7 +264,7 @@ onMounted(async () => {
             
 
             <h3 class="text-text-1 pb-2 pt-4">Backdrop Color</h3>
-            <div class = "flex gap-4">
+            <div class ="flex gap-4">
             <select v-model="currentSelectedBackDropColor" class="bg-backdrop-1 text-text-1 rounded p-2">
                 <option v-for="color in colorOptions" :key="color" :value="color">{{color}}</option>
             </select>
@@ -271,21 +283,23 @@ onMounted(async () => {
                 <p class="text-text-1 pl-2">Light</p>
             </div>
             <p class="text-text-0 py-2">"Dark" means a dark background with light text. "Light" means a light background with dark text. Note that a user's  browser settings may override this.</p>
+            
+        </div>
 
-            <h3 class="text-text-1 pb-2 pt-4">Site</h3>
-
-            <div class="flex gap-4">
-            <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
-                <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
+        <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
+            <h2 class="text-2xl text-text-0 pb-4  ">Rounded Corners</h2>
+            <div class = "flex gap-4">
+            <select v-model="currentRounded" class="bg-backdrop-1 text-text-1 rounded p-2">
+                <option v-for="rounded in roundedOptions" :key="rounded" :value="rounded">{{rounded}}</option>
             </select>
-            
+            <div :style="currentRounded === 'sharp' ? 'border-radius:0px' : (currentRounded === 'subtle' ? 'border-radius:7%;' : 'border-radius:25%')" class='w-8 h-8 ring-accent-500 ring-4'></div></div>
         </div>
-            
-        </div>
+
+        
 
         <div class="  p-2 gap-2 flex-wrap flex lg:hidden">
         <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0"/> Send settings to site</button>
-        <div class="text-text-0 flex gap-2 items-center"><code class = "text-sm bg-backdrop-1 p-2 rounded flex items-center gap-2">{{returnBuildScript}}
+        <div class="text-text-0 flex gap-2 items-center h-min"><code class = "text-sm bg-backdrop-1 p-2 rounded flex items-center gap-2 h-min overflow-hidden">{{returnBuildScript}}
 
         </code></div>
 

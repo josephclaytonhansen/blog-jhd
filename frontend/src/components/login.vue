@@ -125,20 +125,20 @@ const showLogin = () => {
 
 <template>
     <div class= "bg-backdrop-2 text-text-0 p-8 m-w-[500px] w-1/2 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
-        <h1 class="text-4xl mb-5 text-center border-b-2 border-b-backdrop-700 pb-4" v-if="!isRegistering">Login to {{site}}</h1>
-        <h1 class="text-4xl mb-5 text-center border-b-2 border-b-backdrop-700 pb-4" v-if="isRegistering">Create an account on {{site}}</h1>
+        <h1 class="text-4xl mb-5 text-center border-b-2 border-b-backdrop-700 pb-4  " v-if="!isRegistering">Login to {{site}}</h1>
+        <h1 class="text-4xl mb-5 text-center border-b-2 border-b-backdrop-700 pb-4  " v-if="isRegistering">Create an account on {{site}}</h1>
         <form @submit.prevent="isRegistering ? registerUser() : attemptLogin()">
             <div class="flex w-full gap-3 mb-3 flex-wrap">
                 <input title = "Your email address- this will not be visible publicly" class="grow rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" type="text" v-model="username" placeholder="Email">
                 <input title = "A secure password" class="grow rounded p-2 bg-backdrop-1 text-text-0  active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" type="password" v-model="password" placeholder="Password  (at least 12 characters)">
                 <input title = "The name or username that will be publicly visible" class="grow rounded p-2 bg-backdrop-1 text-text-0  active:ring-2 active:ring-sky-300 caret-sky-600 focus:ring-3 focus:ring-sky-300 accent-sky-300" v-if="isRegistering" type="text" v-model="displayName" placeholder="Display Name">
-                <button class="cursor-pointer bg-cyan-600 px-5 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-cyan-700 hover:scale-105 transition-all duration-300 grow" type="submit">{{ isRegistering ? 'Sign up' : 'Login' }}</button>
+                <button class="cursor-pointer bg-accent-600 px-5 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 grow" type="submit">{{ isRegistering ? 'Sign up' : 'Login' }}</button>
             </div>
             
             <p class="text-sm italic text-text-2" v-if="!isRegistering">Don't have an account? <button class="hover:text-text-0 transition-all duration-300" @click="showRegister">Sign up</button></p>
             <p class="text-sm italic text-text-2" v-if="isRegistering">Already have an account? <button class="hover:text-text-0 transition-all duration-300" @click="showLogin">Login</button></p>
             <hr class="border-backdrop-1 my-5"/>
-            <p class="text-sm text-normal text-text-3">Your login for <a class="text-cyan-700" href = "https://hansenstudios.art">hansenstudios.art</a> and <a class="text-cyan-700" href = "https://blog.josephhansen.dev">blog.josephhansen.dev</a> are the same. If you have an account on one, your credentials will work on both.</p>
+            <p class="text-sm text-normal text-text-3">Your login for <a class="text-accent-700" href = "https://hansenstudios.art">hansenstudios.art</a> and <a class="text-accent-700" href = "https://blog.josephhansen.dev">blog.josephhansen.dev</a> are the same. If you have an account on one, your credentials will work on both.</p>
         </form>
     </div>
 </template>

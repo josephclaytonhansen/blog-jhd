@@ -37,9 +37,9 @@
 
 <template>
     <div>
-        <h1>Blog Feed</h1>
+        <h1 class=' '>Blog Feed</h1>
         <div v-for="post in posts" :key="post.id">
-            <h2>{{ post.title }}</h2>
+            <h2 class = " ">{{ post.title }}</h2>
         </div>
     </div>
 

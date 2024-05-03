@@ -224,7 +224,7 @@ const unpublishPost = async (id) => {
             </tbody>
         </table>
     </div>
-    <div @click="newPost" class="fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 cursor-pointer bg-cyan-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-cyan-700 hover:scale-105 transition-all duration-300">New post
+    <div @click="newPost" class="fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">New post
     </div>
 </template>
 

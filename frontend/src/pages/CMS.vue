@@ -97,7 +97,7 @@ const compToString = (component) => {
         case TagsC:
             return 'tags'
             break
-        case StylesC:
+        case SettingsC:
             return 'styles'
             break
         case AnalyticsC:
@@ -131,7 +131,7 @@ const updateActiveComponent = (component) => {
         case TagsC:
             localStorage.setItem('activeComponent', 'tags')
             break
-        case StylesC:
+        case SettingsC:
             localStorage.setItem('activeComponent', 'styles')
             break
         case AnalyticsC:
@@ -166,7 +166,7 @@ onMounted(() => {
                 activeComponent.value = TagsC
                 break
             case 'styles':
-                activeComponent.value = StylesC
+                activeComponent.value = SettingsC
                 break
             case 'analytics':
                 activeComponent.value = AnalyticsC

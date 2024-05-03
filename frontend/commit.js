@@ -70,7 +70,7 @@ import {
       const stat = fs.lstatSync(filename);
       if (stat.isDirectory()) {
         await fromDir(filename, filters, callback)
-      } else if (filters.some(filter => filename.indexOf(filter) >= 0) && !filename.endsWith('commit.js')) {
+      } else if (!filename.endsWith('commit.js')) {
         try {
           const data = fs.readFileSync(filename, "utf8");
   

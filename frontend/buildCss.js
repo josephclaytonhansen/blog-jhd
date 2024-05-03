@@ -15,7 +15,7 @@ body {
   font-family: '${process.env.SERIF_BODY_TEXT === 'true' ? process.env.FONT_SERIF : process.env.FONT_SANS}';
 }
 
-${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''};
+${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''}
 
 /* end automated */
 `

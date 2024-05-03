@@ -168,9 +168,9 @@ onMounted(async () => {
 
     <div class="fixed z-50 right-2 bottom-2 p-2 gap-2 hidden lg:flex items-end">
         <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/></button>
-        <div class="text-text-0 flex gap-2 items-center"><code class = "text-[.65rem] bg-backdrop-1 p-2 rounded flex items-center gap-2 max-w-[25vw]"><Blocks class = "text-text-3"/>{{returnBuildScript}}
+        <div class="text-text-0 flex gap-2 items-center"><p class = " bg-backdrop-1 p-2 rounded flex items-center gap-2 max-w-[25vw]"><Blocks class = "text-text-3"/>{{currentSiteSettings}}
 
-        </code></div>
+        </p></div>
 
     </div>
 
@@ -307,7 +307,7 @@ onMounted(async () => {
 
         <div class="  p-2 gap-2 flex-wrap flex lg:hidden">
         <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0"/> Send settings to site</button>
-        <div class="text-text-0 flex gap-2 items-center h-min"><code class = "text-sm bg-backdrop-1 p-2 rounded flex items-center gap-2 h-min overflow-hidden">{{returnBuildScript}}
+        <div class="text-text-0 flex gap-2 items-center h-min"><code class = "text-sm bg-backdrop-1 p-2 rounded flex items-center gap-2 h-min overflow-hidden">{{currentSiteSettings}}
 
         </code></div>
 

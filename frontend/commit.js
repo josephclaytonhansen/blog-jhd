@@ -77,7 +77,7 @@ import {
           const todos = parse(filename, data)
   
           for (const todo of todos) {
-            if (todo.tag === "TODO") {
+            if (todo.indexOf('TODO: ') !== -1) {
               const title = `TODO: ${todo.text}`;
   
               const existingIssue = issues.find(issue => issue.title === title && issue.state === 'open');

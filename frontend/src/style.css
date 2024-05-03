@@ -325,6 +325,9 @@ a {
   text-transform: uppercase;
 }
 
+
+
+
 /* automated */
 h1, h2 {
   text-transform: none;
@@ -337,9 +340,13 @@ body {
   font-family: 'Fira Sans';
 }
 
-.avatar{border-radius:999rem};
+.avatar{border-radius:999rem;}
+
 
 /* end automated */
+
+
+
 
 
 

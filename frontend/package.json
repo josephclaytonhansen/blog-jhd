@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node buildCss.js && vite",
+    "dev": "NODE_ENV=production node buildCss.js && vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "buildbot": "cross-env NODE_ENV=production vite build && node commit.js"
+    "preview": "NODE_ENV=production node buildCss.js && npm run build && vite preview",
+    "buildbot": "NODE_ENV=production node buildCss.js && node commit.js && npm run build && vite preview"
   },
   "dependencies": {
     "@lucide/lab": "^0.1.1",

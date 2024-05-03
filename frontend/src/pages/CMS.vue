@@ -24,7 +24,6 @@ import PagesC from './cms/pages.vue'
 
 import UsersC from './cms/users.vue'
 import TagsC from './cms/tags.vue'
-import StylesC from './cms/styles.vue'
 
 import AnalyticsC from './cms/analytics.vue'
 import CommentsC from './cms/comments.vue'
@@ -62,7 +61,7 @@ const sidebarButtons = [
     {
         icon: SwatchBook,
         text: 'Styles',
-        component: StylesC
+        component: SettingsC
     },
     {
         icon: LineChart,
@@ -73,11 +72,6 @@ const sidebarButtons = [
         icon: MessageCircleMore,
         text: 'Comments',
         component: CommentsC
-    },
-    {
-        icon: Cog,
-        text: 'Settings',
-        component: SettingsC
     },
     {
         icon: UserX,
@@ -111,9 +105,6 @@ const compToString = (component) => {
             break
         case CommentsC:
             return 'comments'
-            break
-        case SettingsC:
-            return 'settings'
             break
     }
 }
@@ -149,9 +140,6 @@ const updateActiveComponent = (component) => {
         case CommentsC:
             localStorage.setItem('activeComponent', 'comments')
             break
-        case SettingsC:
-            localStorage.setItem('activeComponent', 'settings')
-            break
     }
     if (component == 'logout') {
         router.push('/logout')
@@ -185,9 +173,6 @@ onMounted(() => {
                 break
             case 'comments':
                 activeComponent.value = CommentsC
-                break
-            case 'settings':
-                activeComponent.value = SettingsC
                 break
         }
     } else {

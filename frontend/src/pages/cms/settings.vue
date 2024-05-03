@@ -167,7 +167,7 @@ onMounted(async () => {
 
     <div class="fixed z-50 right-2 bottom-2 p-2 gap-2 hidden lg:flex items-end">
         <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/></button>
-        <div class="text-text-0 flex gap-2 items-center"><code class = "text-[.5rem] bg-backdrop-1 p-2 rounded flex items-center gap-2 max-w-[25vw]"><Blocks class = "text-text-3"/>{{returnBuildScript}}
+        <div class="text-text-0 flex gap-2 items-center"><code class = "text-[.65rem] bg-backdrop-1 p-2 rounded flex items-center gap-2 max-w-[25vw]"><Blocks class = "text-text-3"/>{{returnBuildScript}}
 
         </code></div>
 

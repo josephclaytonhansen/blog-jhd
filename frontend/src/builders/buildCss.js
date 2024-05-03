@@ -21,7 +21,7 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 `
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
-const filePath = path.resolve(dirname, './src/style.css')
+const filePath = path.resolve(dirname, '../style.css')
 const fileContent = fs.readFileSync(filePath, 'utf8')
 
 if (!fileContent.includes('\n/* automated */')) {

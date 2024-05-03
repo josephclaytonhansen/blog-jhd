@@ -12,7 +12,7 @@ const routes = [
     { path: '/profile/:displayName', component: () => import('./pages/Profile.vue') },
     { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
     {path: '/seabasstest', component: () => import('./pages/SeabassTest.vue')},
-    //add routes here
+    // automated
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]
 

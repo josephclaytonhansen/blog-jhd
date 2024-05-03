@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 
-//TODO: set up routes so that individual sites have different routes; change the contents of routes based on a "site" command line variable and the contents of the site's page directory. 
+// TODO: set up routes so that individual sites have different routes; change the contents of routes based on a "site" command line variable and the contents of the site's page directory. 
 const routes = [
     //all these routes are for all sites and the dashboard, leave them alone
     { path: '/', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home'} },  

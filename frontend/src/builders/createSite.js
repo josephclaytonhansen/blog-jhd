@@ -1,1 +1,1 @@
-//TODO: set up npm create-site to create a new site with a new router and new pages
+// TODO: set up npm create-site to create a new site with a new router and new pages

@@ -330,22 +330,24 @@ a {
 
 
 
+
 /* automated */
 h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'Nunito Sans';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'Nunito Sans';
 }
 
 .avatar{border-radius:999rem;}
 
 
 /* end automated */
+
 
 
 

@@ -42,26 +42,12 @@ const removedUsers = []
 
 const app = express()
 app.disable('x-powered-by')
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal'])
+
+var corsOptions = {    origin:['https://seabass.josephhansen.dev','seabass.josephhansen.dev','https://blog.josephhansen.dev','blog.josephhasen.dev','hansenstudios.art','https://hansenstudios.art'],   credentials:true, optionsSuccessStatus: 200,  }
+app.use(cors(corsOptions));
 
 const frontendUrls = process.env.FRONTEND_URLS.split(',')
-
-app.use((req, res, next) => {
-    if (req.path.startsWith('/user/verifyemail')) {
-        cors({origin: true, credentials: true})(req, res, next);
-    } else {
-        cors({
-            origin: function (origin, callback) {
-                if (frontendUrls.indexOf(origin) !== -1) {
-                    callback(null, true)
-                } else {
-                    callback(new Error('Not allowed by CORS'))
-                }
-            },
-            credentials: true
-        })(req, res, next)
-    }
-})
-
 
 
 app.use(express.urlencoded({

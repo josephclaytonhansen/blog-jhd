@@ -4,4 +4,3 @@
     "buildbot": "cd backend && npm run buildbot"
   }
 }
-// this is only used for running 'npm run buildbot' from root

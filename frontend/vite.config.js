@@ -8,20 +8,14 @@ dotenv.config()
 
 export default defineConfig({
   build: {
+    minify: 'terser',
     terserOptions: {
       compress: {
         warnings: false,
         drop_console: true,
       },
       output: {
-        comments: function(node, comment) {
-          var text = comment.value;
-          var type = comment.type;
-          if (type == "comment2") {
-            // multiline comment
-            return !/@license/i.test(text);
-          }
-        },
+        comments: false,
       beautify: false,
       },
 

@@ -42,6 +42,11 @@ export default {
 </script>
 `
 
+const subDirectoryPageOutput = `
+<script>
+</script>
+<template></template>`
+
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'

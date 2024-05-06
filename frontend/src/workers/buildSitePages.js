@@ -21,6 +21,15 @@ export default {
   },
   setup(props) {
     const loadedComponents = ref({})
+    if (props.header === undefined) {
+        props.header = true
+      }
+      if (props.footer === undefined) {
+        props.footer = true
+      }
+      if (props.thisPageComponentName === undefined) {
+        props.thisPageComponentName = 'NotFound'
+      }
     const site = window.location.hostname
     console.log(site, props.thisPageComponentName)
 

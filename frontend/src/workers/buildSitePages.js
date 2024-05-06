@@ -2,7 +2,7 @@ const mainPageOutput = (pageName) => `
 <template>
     <Header />
     <div>
-        <component :is="components[\`\${site}_\${props.thisPageComponentName}\`]"></component>
+        <component :is="components[\`\${site}_\${thisPageComponentName}\`]"></component>
     </div>
     <Footer />
 </template>
@@ -33,7 +33,8 @@ export default {
 
     return {
       components: loadedComponents,
-      site
+      site,
+      thisPageComponentName: props.thisPageComponentName
     }
   }
 }

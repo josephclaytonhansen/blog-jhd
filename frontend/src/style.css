@@ -329,16 +329,17 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
 
 
 /* end automated */
+
 
 
 

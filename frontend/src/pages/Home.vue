@@ -16,7 +16,7 @@ export default {
         // Wait for the component to be imported
         let component = await components[componentName]
 
-        // Use the imported component
+        // Use the component
         loadedComponents.value[componentName] = component.default
         console.log(loadedComponents.value[componentName])
       }
@@ -24,7 +24,8 @@ export default {
 
     return {
       components: loadedComponents,
-      site
+      site,
+      thisPageComponentName: props.thisPageComponentName
     }
   }
 }
@@ -33,6 +34,6 @@ export default {
 <template>
   <Header />
   <div>
-    <component :is="components[`${site}_${props.thisPageComponentName}`]"></component>
+    <component :is="components[`${site}_${thisPageComponentName}`]"></component>
 </div>
 </template>

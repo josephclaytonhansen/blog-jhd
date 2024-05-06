@@ -7,6 +7,20 @@ import path from 'path'
 dotenv.config()
 
 export default defineConfig({
+  build: {
+    terserOptions: {
+      compress: {
+        warnings: false,
+        drop_console: true,
+      },
+      output: {
+      comments: false,
+      beautify: false,
+      
+      },
+
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, '/src')

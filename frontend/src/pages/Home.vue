@@ -20,11 +20,13 @@ export default {
         // Use the component
         loadedComponents.value[componentName] = component.default
 
+
         // Register the component locally
         this.components[componentName] = component.default
+
+        console.log(loadedComponents.value[componentName])
+
       }
-      console.log(Object.keys(components))
-      console.log(components[`${site}${props.thisPageComponentName}`])
     })
 
     return {
@@ -36,9 +38,11 @@ export default {
 }
 </script>
 
+
 <template>
   <Header />
   <div>
     <component :is="`${site}${thisPageComponentName}`"></component>
   </div>
 </template>
+

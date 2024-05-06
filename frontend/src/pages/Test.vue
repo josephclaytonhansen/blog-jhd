@@ -1,6 +1,15 @@
+
+<template>
+    <Header />
+    <div>
+        <component :is="components[`${site}_${thisPageComponentName}`]"></component>
+    </div>
+    <Footer />
+</template>
+
 <script>
 import { ref, onMounted } from 'vue'
-import components from './HomeComponents.ts'
+import components from './TestComponents.ts'
 
 export default {
   props: {
@@ -14,7 +23,7 @@ export default {
         // Wait for the component to be imported
         let component = await components[componentName]
 
-        // Use the imported component
+        // Use the component
         loadedComponents.value[componentName] = component.default
       }
     })
@@ -26,11 +35,3 @@ export default {
   }
 }
 </script>
-
-<template>
-  <Header />
-  <div>
-    <component :is="components[`${site}_${thisPageComponentName}`]"></component>
-  </div>
-  <Footer />
-</template>

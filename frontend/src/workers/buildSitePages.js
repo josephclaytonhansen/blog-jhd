@@ -1,38 +1,4 @@
-const mainPageOutput = `
-<script setup>
-import { ref, onMounted } from 'vue'
-import { useHead } from '@vueuse/head'
-import Header from '../components/bricks/header.vue'
-import Footer from '../components/footer.vue'
-
-useHead({
-    title: '',
-    meta: [
-        {
-        }
-    ]
-})
-
-const site = window.location.hostname
-const components = ref({})
-const prefixes = ref([])
-
-const props = defineProps({thisPageComponentName: {type: String,}})
-
-onMounted(async () => {
-    prefixes.value = process.env.VUE_APP_FRONTEND_PREFIXES
-
-    for (let i = 0; i < prefixes.value.length; i++) {
-        let prefix = prefixes.value[i]
-        let componentName = \`\${prefix}_\${props.thisPageComponentName}\`
-        let importPath = \`./\${prefix}/\${props.thisPageComponentName}.vue\`
-        console.log(importPath)
-
-        components.value[componentName] = (await import(/* @vite-ignore */ importPath)).default
-    }
-})
-</script>
-
+const mainPageOutput = (pageName) => `
 <template>
     <Header />
     <div>
@@ -40,6 +6,35 @@ onMounted(async () => {
     </div>
     <Footer />
 </template>
+
+<script>
+import { ref, onMounted } from 'vue'
+import components from './${pageName}Components.ts'
+
+export default {
+  props: {
+    thisPageComponentName: String
+  },
+  setup(props) {
+    const loadedComponents = ref({})
+
+    onMounted(async () => {
+      for (let componentName in components) {
+        // Wait for the component to be imported
+        let component = await components[componentName]
+
+        // Use the component
+        loadedComponents.value[componentName] = component.default
+      }
+    })
+
+    return {
+      components: loadedComponents,
+      site: window.location.hostname.split('.')[0]
+    }
+  }
+}
+</script>
 `
 
 const subDirectoryPageOutput = `
@@ -52,24 +47,33 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-const createMainPage = (title) => {
-    const dirname = path.dirname(fileURLToPath(import.meta.url))
-    const filePath = path.resolve(dirname, `../pages/${title}.vue`)
-    if (fs.existsSync(filePath)) {
-        return
-    } else {
-        fs.writeFileSync(filePath, mainPageOutput)
-    }
+function createMainPage(title) {
+    const output = mainPageOutput(title);
+    fs.writeFile(path.join(pagesDir, `${title}.vue`), output, (err) => {
+        if (err) throw err;
+    });
+
+    const componentsOutput = `
+let prefixes = process.env.VUE_APP_FRONTEND_PREFIXES.split;
+
+let components = {};
+
+for (let prefix of prefixes) {
+    components[\`\${prefix}${title}\`] = import('./' + prefix + '/${title}.vue');
 }
 
-const createSubDirectoryPage = (subDirectory, title) => {
-    const dirname = path.dirname(fileURLToPath(import.meta.url))
-    const filePath = path.resolve(dirname, `../pages/${subDirectory}/${title}.vue`)
-    if (fs.existsSync(filePath)) {
-        return
-    } else {
-        fs.writeFileSync(filePath, subDirectoryPageOutput)
-    }
+export default components;
+`;
+    fs.writeFile(path.join(pagesDir, `${title}Components.ts`), componentsOutput, (err) => {
+        if (err) throw err;
+    });
+}
+
+function createSubDirectoryPage(directory, title) {
+    const output = subDirectoryPageOutput;
+    fs.writeFile(path.join(pagesDir, directory, `${title}.vue`), output, (err) => {
+        if (err) throw err;
+    });
 }
 
 const pagesDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../pages/');

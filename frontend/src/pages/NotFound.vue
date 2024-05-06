@@ -16,6 +16,9 @@ export default {
     thisPageComponentName: String
   },
   setup(props) {
+    if (props.thisPageComponentName === undefined) {
+      props.thisPageComponentName = 'NotFound'
+    }
     const loadedComponents = ref({})
     const site = window.location.hostname
     console.log(site, props.thisPageComponentName)

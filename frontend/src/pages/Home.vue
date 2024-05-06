@@ -18,8 +18,9 @@ export default {
 
         // Use the component
         loadedComponents.value[componentName] = component.default
-        console.log(loadedComponents.value[componentName])
       }
+      console.log(Object.keys(components))
+      console.log(components[`${site}${props.thisPageComponentName}`])
     })
 
     return {

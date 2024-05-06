@@ -68,8 +68,23 @@ import { fileURLToPath } from 'url'
 
 function createMainPage(title) {
     const dirname = path.dirname(fileURLToPath(import.meta.url))
-    const pagesDirs = JSON.parse(process.argv[3])
+    let pagesDirs = []
 
+    if (!process.argv[3]) {
+        const pagesDir = path.resolve(dirname, '../pages/')
+        const dirents = fs.readdirSync(pagesDir, { withFileTypes: true });
+        pagesDirs = dirents.filter(dirent => dirent.isDirectory() && dirent.name !== 'cms').map(dirent => dirent.name);
+    } else {
+        pagesDirs = JSON.parse(process.argv[3])
+    }
+
+    // Create Test.vue in the /pages directory
+    const mainPageContent = mainPageOutput(title);
+    fs.writeFile(path.join(dirname, '../pages', `${title}.vue`), mainPageContent, (err) => {
+        if (err) throw err
+    });
+
+    // Create Test.vue in the subdirectories of the /pages directory
     for (const pagesDir of pagesDirs) {
         const fullPath = path.resolve(dirname, '../pages', pagesDir)
         const files = fs.readdirSync(fullPath)
@@ -80,13 +95,12 @@ function createMainPage(title) {
             console.log(`A file with the title ${title} already exists in ${pagesDir}.`)
             process.exit(1)
         } 
-    }
-    
-    const output = mainPageOutput(title);
-    fs.writeFile(path.join(pagesDir, `${title}.vue`), output, (err) => {
-        if (err) throw err;
-    });
 
+        const output = subDirectoryPageOutput
+        fs.writeFile(path.join(fullPath, `${title}.vue`), output, (err) => {
+            if (err) throw err
+        })
+    }
     const componentsOutput = `
     let prefixes = process.env.VUE_APP_FRONTEND_PREFIXES;
     
@@ -101,6 +115,7 @@ function createMainPage(title) {
     fs.writeFile(path.join(pagesDir, `${title}Components.ts`), componentsOutput, (err) => {
         if (err) throw err;
     });
+
 }
 function createSubDirectoryPage(directory, title) {
     const output = subDirectoryPageOutput;

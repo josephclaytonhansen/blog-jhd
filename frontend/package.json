@@ -9,7 +9,8 @@
     "preview": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build && vite preview",
     "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && node commit.js && npm run build",
     "create-site-page": "node ./src/workers/buildSitePages.js",
-    "remove-site-page": "node ./src/workers/removeSite.js"
+    "remove-site": "node ./src/workers/removeSite.js",
+    "remove-site-page": "node ./src/workers/removeSitePages.js"
   },
   "dependencies": {
     "@lucide/lab": "^0.1.1",

@@ -1,5 +1,3 @@
-// TODO: Set up npm-remove-site to delete routes
-
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'

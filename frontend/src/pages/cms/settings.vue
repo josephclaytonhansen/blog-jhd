@@ -16,15 +16,20 @@ const testConnection = async (site) => {
     let titleCorrect = false
 
     try {
-        let response = await axios.get(`${protocol.value}${site}/Seabasstest`)
-        connectionSuccessful = true
-        let data = response.data
-        titleCorrect = data.includes('<title>Seabass Test</title>')
+        connectionSuccessful = await axios.get(`${protocol.value}${site}/`).then(response => {
+            return response.status === 200
+        }).catch(error => {
+            return false
+        })
+        titleCorrect = await axios.get(`${protocol.value}${site}/seabasstest`).then(response => {
+            return response.status === 200
+        }).catch(error => {
+            return false
+        })
     } catch (error) {
-        if (!error.response) {
-            connectionSuccessful = true
-            titleCorrect = false
-        }
+        console.error(error)
+        connectionSuccessful = false
+        titleCorrect = false
     }
 
     return [connectionSuccessful, titleCorrect]

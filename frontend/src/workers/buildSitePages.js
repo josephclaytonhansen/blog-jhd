@@ -58,21 +58,20 @@ function createMainPage(title) {
     });
 
     const componentsOutput = `
-let prefixes = process.env.VUE_APP_FRONTEND_PREFIXES;
-
-let components = {};
-
-for (let prefix of prefixes) {
-    components[\`\${prefix}${title}\`] = import('./' + prefix + '/${title}.vue');
-}
-
-export default components;
-`;
+    let prefixes = process.env.VUE_APP_FRONTEND_PREFIXES;
+    
+    let components = {};
+    
+    for (let prefix of prefixes) {
+        components[\`\${prefix}${title}\`] = import(\`./\${prefix}/${title}.vue\`);
+    }
+    
+    export default components;
+    `;
     fs.writeFile(path.join(pagesDir, `${title}Components.ts`), componentsOutput, (err) => {
         if (err) throw err;
     });
 }
-
 function createSubDirectoryPage(directory, title) {
     const output = subDirectoryPageOutput;
     fs.writeFile(path.join(pagesDir, directory, `${title}.vue`), output, (err) => {

@@ -28,7 +28,7 @@ function removeSitePage() {
     const routerPath = path.join(dirname, '../router.js')
     let routerContent = fs.readFileSync(routerPath, 'utf8')
 
-    let sanitizedTitle = title.replace(/[^a-zA-Z0-9._-]/g, '');
+    let sanitizedTitle = title.replace(/[^a-zA-Z0-9._-]/g, '').replace(/\.{2,}/g, '.')
 
     const routeRegex = new RegExp(`{\\s*path:\\s*'/${sanitizedTitle}',\\s*component:\\s*\\(\\)\\s*=>\\s*import\\(\\s*'\\.\\/pages\\/${sanitizedTitle}\\.vue'\\s*\\),\\s*props\\s*:\\s*\\{\\s*thisPageComponentName:\\s*'${sanitizedTitle}',\\s*header:\\s*true,\\s*footer:\\s*true\\s*\\}\\s*},?`, 'g')
     routerContent = routerContent.replace(routeRegex, '')

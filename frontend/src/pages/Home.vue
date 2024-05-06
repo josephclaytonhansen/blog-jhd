@@ -6,6 +6,7 @@ export default {
   props: {
     thisPageComponentName: String
   },
+  components: {}, // Register components locally
   setup(props) {
     const loadedComponents = ref({})
     const site = window.location.hostname
@@ -13,8 +14,14 @@ export default {
 
     onMounted(async () => {
       for (let componentName in components) {
+        // Wait for the component to be imported
         let component = await components[componentName]
+
+        // Use the component
         loadedComponents.value[componentName] = component.default
+
+        // Register the component locally
+        this.components[componentName] = component.default
       }
       console.log(Object.keys(components))
       console.log(components[`${site}${props.thisPageComponentName}`])
@@ -32,6 +39,6 @@ export default {
 <template>
   <Header />
   <div>
-    <component :is="components[`${site}${thisPageComponentName}`]"></component>
-</div>
+    <component :is="`${site}${thisPageComponentName}`"></component>
+  </div>
 </template>

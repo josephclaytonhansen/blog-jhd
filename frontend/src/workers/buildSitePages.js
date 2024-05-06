@@ -67,6 +67,21 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 function createMainPage(title) {
+    const dirname = path.dirname(fileURLToPath(import.meta.url))
+    const pagesDirs = JSON.parse(process.argv[3])
+
+    for (const pagesDir of pagesDirs) {
+        const fullPath = path.resolve(dirname, '../pages', pagesDir)
+        const files = fs.readdirSync(fullPath)
+        const titleLower = `${title}.vue`.toLowerCase()
+        const hasFile = files.some(file => file.toLowerCase() === titleLower)
+
+        if (hasFile) {
+            console.log(`A file with the title ${title} already exists in ${pagesDir}.`)
+            process.exit(1)
+        } 
+    }
+    
     const output = mainPageOutput(title);
     fs.writeFile(path.join(pagesDir, `${title}.vue`), output, (err) => {
         if (err) throw err;
@@ -92,6 +107,25 @@ function createSubDirectoryPage(directory, title) {
     fs.writeFile(path.join(pagesDir, directory, `${title}.vue`), output, (err) => {
         if (err) throw err;
     });
+}
+
+function updateRouterFile(pageName) {
+    const dirname = path.dirname(fileURLToPath(import.meta.url))
+    const routerFilePath = path.resolve(dirname, '../router.js')
+    let routerFileContent = fs.readFileSync(routerFilePath, 'utf8')
+
+    const newRoute = `{ path: '/${pageName}', component: () => import('./pages/${pageName}.vue'), props : {thisPageComponentName: '${pageName}', header: ${process.argv[4] !== 'no-header'}, footer: ${process.argv[5] !== 'no-footer'}} },`
+
+    const automatedRoutesMatch = routerFileContent.match(/\/\/ automated([\s\S]*?)\/\/end automated/)
+    let automatedRoutes = automatedRoutesMatch ? automatedRoutesMatch[1] : ''
+
+    const routePathAndComponent = `{ path: '/${pageName}', component: () => import('./pages/${pageName}.vue')`
+
+    if (!automatedRoutes.includes(routePathAndComponent)) {
+        automatedRoutes += `${newRoute}\n`
+        routerFileContent = routerFileContent.replace(/\/\/ automated([\s\S]*?)\/\/end automated/, `// automated${automatedRoutes}//end automated`)
+        fs.writeFileSync(routerFilePath, routerFileContent)
+    }
 }
 
 const pagesDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../pages/');
@@ -120,6 +154,7 @@ const createPages = () => {
     for (let di in whichDirectory) {
         createSubDirectoryPage(whichDirectory[di], title)
     }
+    updateRouterFile(title)
 }
 
 createPages()

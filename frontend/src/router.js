@@ -16,7 +16,7 @@ const routes = [
     {path: '/seabasstest', component: () => import('./pages/SeabassTest.vue')},
     //end required routes
     // automated
-    //end automated
+//end automated
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]
 
@@ -27,7 +27,7 @@ const router = createRouter({
 
 const lockedRoutes = [
   { path: '/cms', redirect: '/author', roles: ['admin'] },
-  { path: '/me', redirect: '/login', roles: ['user'] },
+  { path: '/me', redirect: '/login', roles: ['user', 'admin', 'author'] },
   { path: '/author', redirect: '/login', roles: ['author', 'admin'] },
 ]
 

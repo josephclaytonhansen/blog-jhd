@@ -2,7 +2,7 @@ const mainPageOutput = (pageName) => `
 <template>
     <Header />
     <div>
-        <component :is="components[\`\${site}_\${thisPageComponentName}\`]"></component>
+        <component :is="components[\`\${site}_\${props.thisPageComponentName}\`]"></component>
     </div>
     <Footer />
 </template>
@@ -17,6 +17,8 @@ export default {
   },
   setup(props) {
     const loadedComponents = ref({})
+    const site = window.location.hostname.split('.')[0]
+    console.log(site, props.thisPageComponentName)
 
     onMounted(async () => {
       for (let componentName in components) {
@@ -25,12 +27,13 @@ export default {
 
         // Use the component
         loadedComponents.value[componentName] = component.default
+        console.log(loadedComponents.value[componentName])
       }
     })
 
     return {
       components: loadedComponents,
-      site: window.location.hostname.split('.')[0]
+      site
     }
   }
 }
@@ -78,7 +81,7 @@ function createSubDirectoryPage(directory, title) {
 
 const pagesDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../pages/');
 const dirents = fs.readdirSync(pagesDir, { withFileTypes: true });
-const subDirectories = dirents.filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
+const subDirectories = dirents.filter(dirent => dirent.isDirectory() && dirent.name !== 'cms').map(dirent => dirent.name);
 
 const createPages = () => {
     const title = process.argv[2];

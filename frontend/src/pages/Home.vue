@@ -8,6 +8,8 @@ export default {
   },
   setup(props) {
     const loadedComponents = ref({})
+    const site = window.location.hostname.split('.')[0]
+    console.log(site, props.thisPageComponentName)
 
     onMounted(async () => {
       for (let componentName in components) {
@@ -16,12 +18,13 @@ export default {
 
         // Use the imported component
         loadedComponents.value[componentName] = component.default
+        console.log(loadedComponents.value[componentName])
       }
     })
 
     return {
       components: loadedComponents,
-      site: window.location.hostname.split('.')[0]
+      site
     }
   }
 }
@@ -30,7 +33,6 @@ export default {
 <template>
   <Header />
   <div>
-    <component :is="components[`${site}_${thisPageComponentName}`]"></component>
-  </div>
-  <Footer />
+    <component :is="components[`${site}_${props.thisPageComponentName}`]"></component>
+</div>
 </template>

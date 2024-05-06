@@ -27,8 +27,9 @@ export default {
 
         // Use the component
         loadedComponents.value[componentName] = component.default
-        console.log(loadedComponents.value[componentName])
       }
+      console.log(Object.keys(components))
+      console.log(components[\`\${site}\${props.thisPageComponentName}\`])
     })
 
     return {
@@ -40,12 +41,6 @@ export default {
 }
 </script>
 `
-
-const subDirectoryPageOutput = `
-<script setup>
-</script>
-<template>
-</template>`
 
 import fs from 'fs'
 import path from 'path'

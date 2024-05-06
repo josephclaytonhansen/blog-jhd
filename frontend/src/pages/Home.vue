@@ -13,10 +13,7 @@ export default {
 
     onMounted(async () => {
       for (let componentName in components) {
-        // Wait for the component to be imported
         let component = await components[componentName]
-
-        // Use the component
         loadedComponents.value[componentName] = component.default
       }
       console.log(Object.keys(components))

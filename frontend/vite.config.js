@@ -14,9 +14,15 @@ export default defineConfig({
         drop_console: true,
       },
       output: {
-      comments: false,
+        comments: function(node, comment) {
+          var text = comment.value;
+          var type = comment.type;
+          if (type == "comment2") {
+            // multiline comment
+            return /@license/i.test(text);
+          }
+        },
       beautify: false,
-      
       },
 
     },

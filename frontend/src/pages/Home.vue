@@ -35,6 +35,6 @@ export default {
 <template>
   <Header />
   <div>
-    <component :is="components[`${site}_${thisPageComponentName}`]"></component>
+    <component :is="components[`${site}${thisPageComponentName}`]"></component>
 </div>
 </template>

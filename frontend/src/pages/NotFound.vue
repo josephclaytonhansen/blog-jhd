@@ -1,24 +1,25 @@
 
 <template>
-    <Header />
+<Header v-if = "header"/>
     <div>
         <component :is="components[`${site}${thisPageComponentName}`]"></component>
     </div>
-    <Footer />
+    <Footer v-if = "footer" />
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
 import components from './NotFoundComponents.ts'
+import Header from '../components/bricks/header.vue'
+import Footer from '../components/bricks/footer.vue'
 
 export default {
   props: {
-    thisPageComponentName: String
+    thisPageComponentName: String,
+    header: {Boolean, default: true},
+    footer: {Boolean, default: true}
   },
   setup(props) {
-    if (props.thisPageComponentName === undefined) {
-      props.thisPageComponentName = 'NotFound'
-    }
     const loadedComponents = ref({})
     const site = window.location.hostname
     console.log(site, props.thisPageComponentName)
@@ -38,7 +39,9 @@ export default {
     return {
       components: loadedComponents,
       site,
-      thisPageComponentName: props.thisPageComponentName
+      thisPageComponentName: props.thisPageComponentName,
+      header: props.header,
+      footer: props.footer
     }
   }
 }

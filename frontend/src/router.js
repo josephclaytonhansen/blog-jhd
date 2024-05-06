@@ -4,7 +4,7 @@ import axios from 'axios'
 // TODO: set up routes so that individual sites have different routes; change the contents of routes based on a "site" command line variable and the contents of the site's page directory. 
 const routes = [
     //all these routes are for all sites and the dashboard, leave them alone
-    { path: '/', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home'} },  
+    { path: '/', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home', header: true, footer: true} },  
     { path: '/login', component: () => import('./pages/Login.vue') },
     { path: '/register', component: () => import('./pages/Login.vue') },
     { path: '/cms', component: () => import('./pages/CMS.vue') },

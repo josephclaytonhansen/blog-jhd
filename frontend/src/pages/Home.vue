@@ -1,10 +1,14 @@
 <script>
 import { ref, onMounted } from 'vue'
 import components from './HomeComponents.ts'
+import Header from '../components/bricks/header.vue'
+import Footer from '../components/bricks/footer.vue'
 
 export default {
   props: {
-    thisPageComponentName: String
+    thisPageComponentName: String,
+    header: Boolean,
+    footer: Boolean
   },
   setup(props) {
     const loadedComponents = ref({})
@@ -26,15 +30,18 @@ export default {
     return {
       components: loadedComponents,
       site,
-      thisPageComponentName: props.thisPageComponentName
+      thisPageComponentName: props.thisPageComponentName,
+      header: props.header,
+      footer: props.footer
     }
   }
 }
 </script>
 
 <template>
-  <Header />
+  <Header v-if = "header"/>
   <div>
     <component :is="components[`${site}${thisPageComponentName}`]"></component>
 </div>
+<Footer v-if = "footer"/>
 </template>

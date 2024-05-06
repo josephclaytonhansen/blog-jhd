@@ -8,17 +8,15 @@ dotenv.config()
 
 export default defineConfig({
   build: {
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        warnings: false,
-        drop_console: true,
-      },
-      output: {
-        comments: false,
-      beautify: false,
-      },
-
+    minify: 'esbuild',
+    esbuild: {
+      legalComments: 'none',
+      minify: true,
+      minifyWhitespace: true,
+      minifyIdentifiers: true,
+      minifySyntax: true,
+      treeShaking: true,
+      
     },
   },
   resolve: {

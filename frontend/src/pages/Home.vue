@@ -1,3 +1,12 @@
+
+<template>
+    <Header />
+    <div>
+        <component :is="components[`${site}${thisPageComponentName}`]"></component>
+    </div>
+    <Footer />
+</template>
+
 <script>
 import { ref, onMounted } from 'vue'
 import components from './HomeComponents.ts'
@@ -18,9 +27,8 @@ export default {
 
         // Use the component
         loadedComponents.value[componentName] = component.default
+        console.log(loadedComponents.value[componentName])
       }
-      console.log(Object.keys(components))
-      console.log(components[`${site}${props.thisPageComponentName}`])
     })
 
     return {
@@ -31,10 +39,3 @@ export default {
   }
 }
 </script>
-
-<template>
-  <Header />
-  <div>
-    <component :is="components[`${site}${thisPageComponentName}`]"></component>
-</div>
-</template>

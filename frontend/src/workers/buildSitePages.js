@@ -2,7 +2,7 @@ const mainPageOutput = (pageName) => `
 <template>
     <Header />
     <div>
-        <component :is="components[\`\${site}_\${thisPageComponentName}\`]"></component>
+        <component :is="components[\`\${site}\${thisPageComponentName}\`]"></component>
     </div>
     <Footer />
 </template>
@@ -58,7 +58,7 @@ function createMainPage(title) {
     });
 
     const componentsOutput = `
-let prefixes = process.env.VUE_APP_FRONTEND_PREFIXES.split;
+let prefixes = process.env.VUE_APP_FRONTEND_PREFIXES;
 
 let components = {};
 

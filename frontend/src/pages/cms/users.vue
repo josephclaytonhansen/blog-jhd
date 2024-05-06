@@ -182,7 +182,7 @@
     }
 
     const demoteUser = async (id) => {
-        active_user.value.role = 'verified-user'
+        active_user.value.role = 'user'
         updateUser(id)
     }
 
@@ -192,7 +192,7 @@
     }
 
     const demoteUserToVerified = async (id) => {
-        active_user.value.role = 'verified-user'
+        active_user.value.role = 'user'
         updateUser(id)
     }
 
@@ -261,7 +261,7 @@
                             </div>
                             <router-link class=" hover:text-accent-500 transition-all duration-300" :to = "`/profile/${user.displayName.replace(/ /g, '-')}`"><h3>{{user.displayName}}</h3></router-link>
                         </div>
-                        <MailCheck v-if = "user.verifiedEmail || user.role === 'verified-user'" class="text-emerald-500"/>
+                        <MailCheck v-if = "user.verifiedEmail || user.role === 'user'" class="text-emerald-500"/>
                         <MailWarning v-else-if = "!user.displayName.startsWith('anon')" class="text-amber-500"/>
 
                             <Router :class="duplicateIps.indexOf(user.registeredIp) === -1? 'text-emerald-500':'text-amber-500'"/>
@@ -339,7 +339,7 @@
                         <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="updateUser(active_user._id)">
                             <Save/>
                         </button>
-                        <button v-if = "active_user.role === 'verified-user' && active_user.role !== 'admin'" class="cursor-pointer bg-green-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUserToAuthor(active_user._id)">
+                        <button v-if = "active_user.role === 'user' && active_user.role !== 'admin'" class="cursor-pointer bg-green-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUserToAuthor(active_user._id)">
                             <BookUser/>
                         </button>
                         <button v-else-if = "active_user.role === 'author'" class="cursor-pointer bg-red-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUserToVerified(active_user._id)">

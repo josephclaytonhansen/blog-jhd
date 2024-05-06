@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const routes = [
     //all these routes are for all sites and the dashboard, leave them alone
-    { path: '/', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home', header: true, footer: true} },  
+    { path: '/', name: 'home', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home', header: true, footer: true} },  
     { path: '/login', component: () => import('./pages/Login.vue') },
     { path: '/register', component: () => import('./pages/Login.vue') },
     { path: '/cms', component: () => import('./pages/CMS.vue') },

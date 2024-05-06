@@ -156,8 +156,3 @@ cron.schedule('0 0 1 * *', async () => {
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)
 })
-// TODO: move to blogapi.josephhansen.dev
-// TODO: upload to DO
-// TODO: configure Nginx
-
-// TODO: update ENV for production

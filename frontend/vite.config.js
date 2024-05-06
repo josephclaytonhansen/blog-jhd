@@ -19,7 +19,7 @@ export default defineConfig({
           var type = comment.type;
           if (type == "comment2") {
             // multiline comment
-            return /@license/i.test(text);
+            return !/@license/i.test(text);
           }
         },
       beautify: false,

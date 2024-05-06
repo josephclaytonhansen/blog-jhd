@@ -1,4 +1,6 @@
 
 <script>
 </script>
-<template></template>
+<template>
+    404 Not Found - hansenstudios.art
+</template>

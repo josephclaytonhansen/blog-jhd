@@ -16,7 +16,7 @@
 
 <template>
     <div class="fivesquare-img-container relative" :class="classes">
-        <div class="bg-backdrop-500 absolute inset-0 transition-opacity duration-75 ease-in-out" :class="{ 'opacity-0': imageLoaded }"></div>
+        <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out" :class="{ 'opacity-0': imageLoaded }"></div>
         <img :src="image" :alt="alt" @load="onImageLoad" :class="{ 'hidden': !imageLoaded }" />
     </div>
 </template>

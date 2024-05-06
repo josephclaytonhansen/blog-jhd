@@ -8,7 +8,7 @@ export default {
   },
   setup(props) {
     const loadedComponents = ref({})
-    const site = window.location.hostname.split('.')[0]
+    const site = window.location.hostname
     console.log(site, props.thisPageComponentName)
 
     onMounted(async () => {

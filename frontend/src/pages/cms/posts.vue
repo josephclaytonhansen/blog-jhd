@@ -150,6 +150,8 @@ const editingPostMetaTitle = ref('')
 const editingPostMetaDescription = ref('')
 const editingPostMetaKeywords = ref('')
 const editingPostExcerpt = ref('')
+const editingPostSites = ref([])
+const editingPostFeaturedImage = ref('')
 
 const unpublishPost = async (id) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/unpublish/` + id
@@ -197,7 +199,7 @@ const unpublishPost = async (id) => {
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="metaDescription" class="text-text-1">Meta Description</label>
-                <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMetaDescription" placeholder="Meta Description">
+                <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMetaDescription" placeholder="Meta Description">
                 </textarea>
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
@@ -206,9 +208,13 @@ const unpublishPost = async (id) => {
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="site" class="text-text-1">Sites</label>
-                <select multiple name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full">
+                <select multiple name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostSites">
                     <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
                 </select>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="featuredImage" class="text-text-1">Featured Image</label>
+                <input type="text" name="featuredImage" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostFeaturedImage" placeholder="Featured Image">
             </div>
 
 

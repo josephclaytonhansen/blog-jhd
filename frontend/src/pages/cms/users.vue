@@ -5,6 +5,8 @@
 
     import { onMounted, ref, computed } from 'vue'
 
+    import Avatar from '../../components/bricks/images/avatar.vue'
+
     const loggedInStatus = ref(false)
 
     const store = userStore(pinia)
@@ -256,9 +258,7 @@
                 <div v-for = "user in group.users">
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-1 shrink">
-                            <div v-if = "user.picture.length > 0" class="w-10 h-10 rounded-full overflow-hidden avatar">
-                                <img :src="user.picture" alt="avatar" class="w-full h-full object-cover avatar"/>
-                            </div>
+                            <Avatar :image="thisUser.picture" classes="ring-4 mr-2 ring-accent-500 hover:cursor-pointer hover:ring-accent-300 square-img-container transition-all duration-300" alt="avatar"/>
                             <router-link class=" hover:text-accent-500 transition-all duration-300" :to = "`/profile/${user.displayName.replace(/ /g, '-')}`"><h3>{{user.displayName}}</h3></router-link>
                         </div>
                         <MailCheck v-if = "user.verifiedEmail || user.role === 'user'" class="text-emerald-500"/>

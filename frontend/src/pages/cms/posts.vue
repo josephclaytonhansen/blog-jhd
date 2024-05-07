@@ -59,6 +59,7 @@ import {
     Router,
     List,
     PenLine,
+    Save,
 } from 'lucide-vue-next'
 
 import { useToast } from "vue-toastification"
@@ -281,7 +282,7 @@ const saveNewDraft = async () => {
             </div>
         </form>
 
-        <div class = "flex gap-4">
+        <div class = "flex gap-4 p-4">
             <button v-if = "editingPostStatus === 'new-draft'" @click="saveNewDraft" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
                 <Save class = "pr-2"/>Save draft
             </button>

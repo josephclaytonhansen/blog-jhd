@@ -135,7 +135,7 @@ const newPost = () => {
     doing.value = "new"
 }
 
-const listPost = () = {
+const listPost = () => {
     doing.value = "list"
 }
 
@@ -233,7 +233,7 @@ const unpublishPost = async (id) => {
         <button @click="newPost" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
             <PenLine class = "pr-2"/>New post
         </button>
-        <button @click="listPosts" class="cursor-pointer bg-backdrop-0 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-backdrop-1 hover:scale-105 transition-all duration-300">
+        <button @click="listPost" class="cursor-pointer bg-backdrop-0 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-backdrop-1 hover:scale-105 transition-all duration-300">
             <List class = "pr-2"/>List posts
         </button>
     </div>

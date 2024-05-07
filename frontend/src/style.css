@@ -36,7 +36,7 @@
     scrollbar-color: theme('colors.accent.500') theme('colors.backdrop.800');
     scrollbar-width: thin;
   }
-  .ql-toolbar button{
+  .ql-toolbar button, .ql-toolbar button{
     @apply bg-background-2;
     @apply rounded-sm;
   }
@@ -73,11 +73,6 @@
 .ql-toolbar button:hover *{
   opacity: 0.8;
 }
-
-
-
-
-
 
 *:active, *:focus, *:focus-within, *:focus-visible {
   outline: none;
@@ -370,17 +365,17 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
-.avatar{border-radius:999rem;}
 
 
 /* end automated */
+
 
 
 

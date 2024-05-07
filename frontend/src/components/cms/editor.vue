@@ -57,7 +57,7 @@ const onEditorChange = (eventName: string) => console.log(eventName)
   <div class="flex items-center align-middle p-4 max-w-full overflow-auto">
     <div class="w-full">
   <QuillyEditor
-  class="bg-backdrop-2 text-text-1 font-body w-full"
+  class="bg-backdrop-2 text-text-1 font-body w-full min-w-[400px]"
     ref="editor"
     v-model="model"
     :options="options"

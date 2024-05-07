@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, defineEmits } from 'vue'
+import { onMounted, ref, defineEmits, watch } from 'vue'
 import { QuillyEditor } from 'vue-quilly'
 import { Delta, Range } from 'quill/core'
 import Quill from 'quill'
@@ -42,6 +42,15 @@ const options = ref({
 
 onMounted(() => {
   quill = editor.value?.initialize(Quill)!
+})
+
+watch(() => model.value, (value) => {
+  if (quill) {
+    let temp = new Delta(
+      quill.clipboard.convert({html: value})
+  )
+    quill.setContents(temp)
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])

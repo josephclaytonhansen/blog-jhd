@@ -190,7 +190,7 @@ const saveNewDraft = async () => {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/create`
     let config = {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + localStorage.token,
         },

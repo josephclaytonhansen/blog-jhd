@@ -28,5 +28,6 @@ export default defineConfig({
   define: {
     'process.env.VUE_APP_SERVER_URL': JSON.stringify(process.env.VITE_APP_SERVER_URL),
     'process.env.VUE_APP_FRONTEND_PREFIXES': JSON.stringify(process.env.VITE_APP_FRONTEND_PREFIXES.split(',')),
+    'process.env.VUE_APP_MATOMO_URL': JSON.stringify(process.env.VITE_APP_MATOMO_URL),
   },
 })

@@ -40,7 +40,8 @@
 }
 
 .ql-toolbar{
-  border: none;
+  border: none!important;
+  margin-bottom: 0.5rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -51,7 +52,7 @@
 }
 
 .ql-container{
-  border: none;
+  border: none!important;
   border-radius: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -363,17 +364,17 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
-.avatar{border-radius:999rem;}
 
 
 /* end automated */
+
 
 
 

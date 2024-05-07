@@ -54,8 +54,9 @@ const onEditorChange = (eventName: string) => console.log(eventName)
 </script>
 
 <template>
+  <div class = "flex items-center align-middle p-4 max-w-full overflow-auto">
   <QuillyEditor
-  class="bg-backdrop-2 text-text-1 font-body"
+  class="bg-backdrop-2 text-text-1 font-body w-full"
     ref="editor"
     v-model="model"
     :options="options"
@@ -63,4 +64,5 @@ const onEditorChange = (eventName: string) => console.log(eventName)
     @selection-change="onSelectionChange"
     @editor-change="onEditorChange"
   />
+</div>
 </template>

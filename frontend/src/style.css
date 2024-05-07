@@ -36,6 +36,10 @@
     scrollbar-color: theme('colors.accent.500') theme('colors.backdrop.800');
     scrollbar-width: thin;
   }
+  .ql-toolbar button{
+    @apply bg-background-2;
+    @apply rounded-sm;
+  }
 
 }
 
@@ -70,9 +74,7 @@
   opacity: 0.8;
 }
 
-.ql-toolbar button{
-  @apply bg-background-2;
-}
+
 
 
 

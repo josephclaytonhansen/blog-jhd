@@ -47,7 +47,7 @@
   stroke: theme('colors.accent.500')!important;
 }
 
-.ql-picker:hover{
+.ql-toolbar button:hover{
   color: theme('colors.accent.700')!important;
   fill: theme('colors.accent.700')!important;
   stroke: theme('colors.accent.700')!important;
@@ -347,17 +347,17 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
-.avatar{border-radius:999rem;}
 
 
 /* end automated */
+
 
 
 

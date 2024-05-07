@@ -254,6 +254,8 @@
 
     const getUserPostsLength = (id) => {
         let posts = JSON.parse(localStorage.getItem('posts'))
+        let userPosts = posts.filter(post => post.author === id)
+        user.posts = userPosts
         return posts.filter(post => post.author === id).length
     }
 

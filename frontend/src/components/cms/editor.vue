@@ -46,7 +46,7 @@ onMounted(() => {
 
 const onTextChange = ({ delta }) => {
   editorDelta.value = delta
-  console.log(quill?.getContents())
+  console.log(model.value)
 }
 
 const onSelectionChange = ({ range }: { range: Range }) => (editorRange.value = range)
@@ -63,6 +63,15 @@ const onEditorChange = (eventName: string) => console.log(eventName)
     @selection-change="onSelectionChange"
     @editor-change="onEditorChange"
   />
-  <p class="text-text-2 font-body">CONTENTS:</p>
-  <p>{{ quill?.getContents() }}</p>
 </template>
+
+<style scoped>
+.ql-picker{
+  @apply text-accent-500;
+  @apply transition-colors;
+  @apply duration-200;
+}
+.ql-picker:hover{
+  @apply text-accent-600;
+}
+</style>

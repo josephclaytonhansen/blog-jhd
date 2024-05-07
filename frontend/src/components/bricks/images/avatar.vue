@@ -18,11 +18,11 @@
             imageLoaded.value = false
         }
     })
+
 </script>
 
 <template>
-    <div class="square-img-container relative max-w-12 max-h-12" :class="classes">
-        <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out" :class="{ 'opacity-0': imageLoaded }"></div>
-        <img :src="image" :alt="alt" @load="onImageLoad" :class="{ 'opacity-0': !imageLoaded, 'transition-opacity duration-75 ease-in-out': true }" />
-    </div>
+    <div class="overflow-hidden avatar" :class="classes">
+        <img :src="image" alt="avatar" class="w-full h-full object-cover avatar transition-opacity duration-150" :class="imageLoaded ? 'opacity-0' : 'opacity-100'" @load="onImageLoad"/>
+        <div class = "w-full h-full bg-backdrop-500 flex items-center justify-center avatar transition-opacity duration-150" :class="imageLoaded ? 'opacity-100' : 'opacity-0'"></div>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, defineEmits } from 'vue'
 import { QuillyEditor } from 'vue-quilly'
 import { Delta, Range } from 'quill/core'
 import Quill from 'quill'
@@ -44,9 +44,11 @@ onMounted(() => {
   quill = editor.value?.initialize(Quill)!
 })
 
+const emit = defineEmits(['update:modelValue'])
+
 const onTextChange = ({ delta }) => {
   editorDelta.value = delta
-  console.log(model.value)
+  emit('update:modelValue', model.value)
 }
 
 const onSelectionChange = ({ range }: { range: Range }) => (editorRange.value = range)

@@ -7,18 +7,6 @@ import path from 'path'
 dotenv.config()
 
 export default defineConfig({
-  build: {
-    minify: 'esbuild',
-    esbuild: {
-      legalComments: 'none',
-      minify: true,
-      minifyWhitespace: true,
-      minifyIdentifiers: true,
-      minifySyntax: true,
-      treeShaking: true,
-      
-    },
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, '/src')

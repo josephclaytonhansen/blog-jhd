@@ -214,7 +214,7 @@ const saveNewDraft = async () => {
             method: 'POST',
             headers: config.headers,
             credentials: 'include',
-            body: data
+            body: JSON.stringify(data)
         }).then(async (response) => {
             if (response.status !== 200) {
                 throw new Error('Network error- could not save draft')

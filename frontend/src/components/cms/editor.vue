@@ -64,14 +64,3 @@ const onEditorChange = (eventName: string) => console.log(eventName)
     @editor-change="onEditorChange"
   />
 </template>
-
-<style scoped>
-.ql-picker{
-  @apply text-accent-500;
-  @apply transition-colors;
-  @apply duration-200;
-}
-.ql-picker:hover{
-  @apply text-accent-600;
-}
-</style>

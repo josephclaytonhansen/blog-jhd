@@ -46,6 +46,10 @@
   border-radius: 0.5rem;
 }
 
+.ql-toolbar *{
+  transition: all 0.2s;
+}
+
 .ql-container{
   border: none;
   border-radius: 0.5rem;
@@ -56,7 +60,6 @@
 .ql-picker .ql-picker-label, .ql-fill{
   fill: theme('colors.accent.500')!important;
   color: theme('colors.accent.500')!important;
-  transition: all 0.2s;
 }
 .ql-stroke{
   stroke: theme('colors.accent.500')!important;

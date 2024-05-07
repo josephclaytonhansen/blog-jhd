@@ -46,7 +46,7 @@ onMounted(() => {
 
 const onTextChange = ({ delta }) => {
   editorDelta.value = delta
-  console.log(delta, editorDelta.value)
+  console.log(quill?.getContents())
 }
 
 const onSelectionChange = ({ range }: { range: Range }) => (editorRange.value = range)
@@ -55,7 +55,7 @@ const onEditorChange = (eventName: string) => console.log(eventName)
 
 <template>
   <QuillyEditor
-  class="bg-backdrop-2 text-text-1"
+  class="bg-backdrop-2 text-text-1 font-body"
     ref="editor"
     v-model="model"
     :options="options"
@@ -63,4 +63,6 @@ const onEditorChange = (eventName: string) => console.log(eventName)
     @selection-change="onSelectionChange"
     @editor-change="onEditorChange"
   />
+  <p class="text-text-2 font-body">CONTENTS:</p>
+  <p>{{ quill?.getContents() }}</p>
 </template>

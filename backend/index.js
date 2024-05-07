@@ -3,6 +3,8 @@ import User from './models/user.js'
 import Tag from './models/tag.js'
 import Comment from './models/comment.js'
 
+import lusca from 'lusca'
+
 import express from 'express'
 
 import cors from 'cors'
@@ -47,8 +49,6 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal'])
 var corsOptions = {    origin:['https://seabass.josephhansen.dev','seabass.josephhansen.dev','https://blog.josephhansen.dev','blog.josephhasen.dev','hansenstudios.art','https://hansenstudios.art'],   credentials:true, optionsSuccessStatus: 200,  }
 app.use(cors(corsOptions));
 
-const frontendUrls = process.env.FRONTEND_URLS.split(',')
-
 
 app.use(express.urlencoded({
     extended: false
@@ -57,13 +57,10 @@ app.use(express.urlencoded({
 dotenv.config()
 
 app.use(express.json())
-app.use(express.urlencoded({
-    extended: false
-}))
-
 
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
-
+app.use(lusca.csrf())
+app.use(lusca.xframe('SAMEORIGIN'))
 
 app.use(passport.initialize())
 
@@ -77,7 +74,6 @@ passport.deserializeUser(function (id, done) {
     })
 })
 
-
 const limiter = rate_limit({
     windowMs: 15 * 60 * 1000,
     max: 200,
@@ -89,12 +85,16 @@ if (process.env.NODE_ENV === 'production') {
 app.use(limiter)
 }
 
+const ipAddressToBase64 = (ip) => {
+    return Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
+}
+
 app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'no-referrer')
     requests.push({
         url: req.originalUrl,
         method: req.method,
-        ip: req.ip,
+        ip: ipAddressToBase64(req.ip),
         rate_limit: req.rateLimit,
         authenticated: req.isAuthenticated(),
         user: req.user,
@@ -151,7 +151,6 @@ cron.schedule('0 0 1 * *', async () => {
 
     })
 })
-
 
 app.listen(process.env.PORT, () => {
     console.log('Server is running on port ' + process.env.PORT)

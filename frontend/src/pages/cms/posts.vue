@@ -152,6 +152,9 @@ const editingPostMetaKeywords = ref('')
 const editingPostExcerpt = ref('')
 const editingPostSites = ref([])
 const editingPostFeaturedImage = ref('')
+const editingPostLocation = ref('')
+const editingPostStatus = ref('new-draft')
+const editingPostId = ref('')
 
 const unpublishPost = async (id) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/unpublish/` + id
@@ -182,6 +185,53 @@ const unpublishPost = async (id) => {
     }
 }
 
+const saveNewDraft = async () => {
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/create`
+    let config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
+        },
+    }
+
+    let data = {
+        title: editingPostTitle.value,
+        text: editingPostText.value,
+        metaTitle: editingPostMetaTitle.value,
+        metaDescription: editingPostMetaDescription.value,
+        metaKeywords: editingPostMetaKeywords.value,
+        excerpt: editingPostExcerpt.value,
+        sites: editingPostSites.value,
+        featuredImage: editingPostFeaturedImage.value,
+        location: editingPostLocation.value,
+        status: editingPostStatus.value,
+    }
+
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: config.headers,
+            credentials: 'include',
+            body: JSON.stringify(data)
+        }).then(async (response) => {
+            if (response.status !== 200) {
+                throw new Error('Network error- could not save draft')
+            }
+            toast.success('Draft saved')
+            let temp = await response.json()
+            editingPostId.value = temp._id
+            editingPostStatus.value = 'draft'
+            posts.value = await getPosts()
+        }).catch((error) => {
+            toast.error(error.message || error.error || 'Error saving draft')
+        })
+    } catch (error) {
+        toast.error(error.message || error.error || 'Error saving draft')
+    }
+
+}
+
 </script>
 
 <template>
@@ -203,6 +253,19 @@ const unpublishPost = async (id) => {
                 </textarea>
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="metaKeywords" class="text-text-1">Meta Keywords</label>
+                <input type="text" name="metaKeywords" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMetaKeywords" placeholder="Meta Keywords">
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="excerpt" class="text-text-1">Excerpt</label>
+                <textarea  name="excerpt" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostExcerpt" placeholder="Excerpt">
+                </textarea>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="location" class="text-text-1">Location</label>
+                <input type="text" name="location" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostLocation" placeholder="/">
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="author" class="text-text-1">Author</label>
                 <input readonly type="text" name="author" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 w-full" :value="author.displayName" placeholder="">
             </div>
@@ -216,9 +279,22 @@ const unpublishPost = async (id) => {
                 <label for="featuredImage" class="text-text-1">Featured Image</label>
                 <input type="text" name="featuredImage" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostFeaturedImage" placeholder="Featured Image">
             </div>
-
-
         </form>
+
+        <div class = "flex gap-4">
+            <button v-if = "editingPostStatus === 'new-draft'" @click="saveNewDraft" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+                <Save class = "pr-2"/>Save draft
+            </button>
+            <button v-if = "editingPostStatus === 'draft'" @click="publishPost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+                <Send class = "pr-2"/>Publish
+            </button>\
+            <button v-if = "editingPostStatus === 'draft'" @click="schedulePost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+                <Clock class = "pr-2"/>Schedule
+            </button>
+
+
+        </div>
+
     </div>
     <div class="p-3" v-else>
         <table class='w-full text-text-2 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
@@ -277,7 +353,7 @@ const unpublishPost = async (id) => {
             </tbody>
         </table>
     </div>
-    <div  class="fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 flex gap-4 ">
+    <div  class="fixed z-50 md:bottom-5 md:right-5 scale-75 md:scale-100 bottom-1 right-0 flex gap-4 ">
         <button @click="newPost" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
             <PenLine class = "pr-2"/>New post
         </button>

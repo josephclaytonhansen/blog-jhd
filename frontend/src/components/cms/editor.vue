@@ -17,6 +17,10 @@ const model = ref<string>(`<p>Hello, World!</p>`)
 const editorDelta = ref<Delta>()
 const editorRange = ref<Range>()
 
+const props = defineProps<{
+  modelValue: string
+}>()
+
 let quill: Quill | null = null
 
 const options = ref({
@@ -42,14 +46,25 @@ const options = ref({
 
 onMounted(() => {
   quill = editor.value?.initialize(Quill)!
+  let propValue = props.modelValue
+  if (propValue) {
+    model.value = propValue
+  }
+  let temp = new Delta(
+    quill.clipboard.convert({html: model.value})
+  )
+  quill.setContents(temp)
 })
 
-watch(() => model.value, (value) => {
-  if (quill) {
-    let temp = new Delta(
-      quill.clipboard.convert({html: value})
-  )
-    quill.setContents(temp)
+watch(() => props.modelValue, (value) => {
+  if (value !== model.value) {
+    model.value = value
+    if (quill) {
+      let temp = new Delta(
+        quill.clipboard.convert({html: value})
+      )
+      quill.setContents(temp)
+    }
   }
 })
 

@@ -12,6 +12,7 @@
     const store = userStore(pinia)
 
     const users = ref([])
+    const posts = ref([])
 
     const getUsers = async () => {
         let config = {
@@ -42,12 +43,18 @@
     let temp
     if (localStorage.getItem('users')) {
       users.value = JSON.parse(localStorage.getItem('users'))
+    } if (localStorage.getItem('posts')) {
+      posts.value = JSON.parse(localStorage.getItem('posts'))
     }
     temp = await getUsers()
+    temp2 = await getPosts()
 
     if (!users.value || JSON.stringify(users.value) !== JSON.stringify(temp)) {
       users.value = temp
       localStorage.setItem('users', JSON.stringify(users.value))
+    } if (!posts.value || JSON.stringify(posts.value) !== JSON.stringify(temp2)) {
+      posts.value = temp2
+      localStorage.setItem('posts', JSON.stringify(posts.value))
     }
   } else {
     toast.info('Your session has expired. Please log in.')
@@ -233,6 +240,22 @@
         return user.comments.filter(comment => comment.flagged === true)
     }
 
+    const getPosts = async () => {
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
+        if (response.status !== 200) {
+            toast.error('Network error')
+            throw new Error('Network error- could not get posts')
+        }
+        const data = await response.json()
+        localStorage.setItem('posts', JSON.stringify(data))
+        return data
+    }
+
+    const getUserPostsLength = computed(() => {
+        let posts = JSON.parse(localStorage.getItem('posts'))
+        return posts.filter(post => post.author === active_user.value._id).length
+    })
+
 
 </script>
 
@@ -271,7 +294,7 @@
                             <Flag :class="filterFlaggedComments(user).length > 0 ? 'text-red-500' : ''"/><h3>{{filterFlaggedComments(user).length}}</h3>
                         </div>
                         <div class="flex items-center gap-1 shrink" v-if = "user.role == 'admin' || user.role == 'author'">
-                            <Newspaper /><h3>{{user.posts.length}}</h3>
+                            <Newspaper /><h3>{{getUserPostsLength}}</h3>
                         </div>
                         <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
                             <Cog @click="editUser(user._id)"/>

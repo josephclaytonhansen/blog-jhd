@@ -41,6 +41,7 @@
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
     let temp
+    let temp2
     if (localStorage.getItem('users')) {
       users.value = JSON.parse(localStorage.getItem('users'))
     } if (localStorage.getItem('posts')) {

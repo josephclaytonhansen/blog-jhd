@@ -17,7 +17,7 @@
             <p class="text-text-3 pb-2">
                 To edit a page, navigate to the <code class="p-1 rounded-lg bg-backdrop-1 text-accent-500">frontend/src/pages</code> directory and open the page you want to edit. Unlike posts, pages are meant to be designed, so they don't have a frontend editor. Use Vue components to design the page. Run <code class="p-1 rounded-lg bg-backdrop-1 text-accent-500">npm run buildbot</code> after any changes.
             </p>
-            <h2 class="text-xl text-text- pb-2">Deleting a page</h2>
+            <h2 class="text-xl text-text-2 pb-2">Deleting a page</h2>
             <p class="text-text-3 pb-2">
                 To delete a page, run the following command in the terminal: <br/>
                 <code class="p-1 rounded-lg bg-backdrop-1 text-accent-500">npm run remove-site-page {PageName} {sites?}</code>

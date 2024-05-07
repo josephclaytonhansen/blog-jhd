@@ -252,11 +252,11 @@
         return data
     }
 
-    const getUserPostsLength = (id) => {
+    const getUserPostsLength = (user) => {
         let posts = JSON.parse(localStorage.getItem('posts'))
-        let userPosts = posts.filter(post => post.author === id)
+        let userPosts = posts.filter(post => post.author === user._id)
         user.posts = userPosts
-        return posts.filter(post => post.author === id).length
+        return userPosts.length
     }
 
 
@@ -297,7 +297,7 @@
                             <Flag :class="filterFlaggedComments(user).length > 0 ? 'text-red-500' : ''"/><h3>{{filterFlaggedComments(user).length}}</h3>
                         </div>
                         <div class="flex items-center gap-1 shrink" v-if = "user.role == 'admin' || user.role == 'author'">
-                            <Newspaper /><h3>{{getUserPostsLength(user._id)}}</h3>
+                            <Newspaper /><h3>{{getUserPostsLength(user)}}</h3>
                         </div>
                         <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
                             <Cog @click="editUser(user._id)"/>

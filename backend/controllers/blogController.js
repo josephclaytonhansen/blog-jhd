@@ -57,6 +57,7 @@ const createBlog = asyncHandler(async (req, res) => {
     if (!req.user.role === 'admin' || !req.user.role === 'author') {
         return res.status(403).send('Not authorized')
     }
+    console.log(req.body)
     const blog = new Blog({
         content: req.body.content,
         title: req.body.title,
@@ -75,6 +76,7 @@ const createBlog = asyncHandler(async (req, res) => {
         site: req.body.site,
         subDirectory: req.subDirectory,
     })
+    console.log(blog)
     await blog.save()
     res.status(201).json(blog)
 })

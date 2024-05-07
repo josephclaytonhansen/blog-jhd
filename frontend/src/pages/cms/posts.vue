@@ -75,7 +75,19 @@ const viewPost = (id) => {
 }
 
 const editPost = (id) => {
-
+    doing.value = "new"
+    let temp = posts.value.filter(post => post._id === id)
+    editingPostText.value = temp[0].content
+    editingPostTitle.value = temp[0].title
+    editingPostMetaTitle.value = temp[0].metaTitle
+    editingPostMetaDescription.value = temp[0].metaDescription
+    editingPostMetaKeywords.value = temp[0].metaKeywords
+    editingPostExcerpt.value = temp[0].excerpt
+    editingPostSites.value = temp[0].site
+    editingPostFeaturedImage.value = temp[0].featuredImage
+    editingPostLocation.value = temp[0].subDirectory
+    editingPostStatus.value = temp[0].status
+    editingPostId.value = temp[0]._id
 }
 
 const deletePost = async (id) => {

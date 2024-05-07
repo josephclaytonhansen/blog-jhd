@@ -258,7 +258,7 @@
                 <div v-for = "user in group.users">
                     <div class="flex items-center gap-3 max-h-8">
                         <div class="flex items-center gap-1 shrink">
-                            <Avatar :image="user.picture" classes="ring-4 mr-2 ring-accent-500 hover:cursor-pointer hover:ring-accent-300 square-img-container transition-all duration-300 avatar" alt="avatar"/>
+                            <Avatar :image="user.picture" classes="ring-4 mr-2 ring-accent-500 hover:cursor-pointer hover:ring-accent-300 transition-all duration-300 avatar" alt="avatar"/>
                             <router-link class=" hover:text-accent-500 transition-all duration-300" :to = "`/profile/${user.displayName.replace(/ /g, '-')}`"><h3>{{user.displayName}}</h3></router-link>
                         </div>
                         <MailCheck v-if = "user.verifiedEmail || user.role === 'user'" class="text-emerald-500"/>

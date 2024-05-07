@@ -185,28 +185,28 @@ const unpublishPost = async (id) => {
 <template>
     <Editor v-if="doing === 'new'"  :modelValue="editingPostText" @update:modelValue="editingPostText = $event"/>
     <div v-if="doing === 'new'">
-        <h2 class="text-left text-2xl text-text-1 px-4 pt-4">Metadata</h2>
+        <h2 class="text-center text-2xl text-text-1 px-4 pt-4">Metadata</h2>
         <form class = "flex gap-4 flex-wrap items-start p-4">
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="title" class="text-text-1">Title</label>
-                <input type="text" name="title" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 grow" v-model="editingPostTitle" placeholder="Title">>
+                <input type="text" name="title" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostTitle" placeholder="Title">>
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="metaTitle" class="text-text-1">Meta Title</label>
-                <input type="text" name="metaTitle" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 grow" v-model="editingPostMetaTitle" placeholder="Meta Title">
+                <input type="text" name="metaTitle" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMetaTitle" placeholder="Meta Title">
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="metaDescription" class="text-text-1">Meta Description</label>
-                <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 grow" v-model="editingPostMetaDescription" placeholder="Meta Description">
+                <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMetaDescription" placeholder="Meta Description">
                 </textarea>
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="author" class="text-text-1">Author</label>
-                <input readonly type="text" name="author" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 " :value="author.displayName" placeholder="">
+                <input readonly type="text" name="author" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 w-full" :value="author.displayName" placeholder="">
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="site" class="text-text-1">Sites</label>
-                <select multiple name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 grow">
+                <select multiple name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full">
                     <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
                 </select>
             </div>

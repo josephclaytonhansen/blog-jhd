@@ -25,6 +25,7 @@ const getPosts = async () => {
     throw new Error('Network error- could not get posts')
   }
   const data = await response.json()
+  localStorage.setItem('posts', JSON.stringify(data))
   return data
 }
 
@@ -59,6 +60,7 @@ import {
     Router,
     List,
     PenLine,
+    NotepadText,
     Save,
 } from 'lucide-vue-next'
 
@@ -208,6 +210,7 @@ const saveNewDraft = async () => {
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
     }
+    console.log(JSON.stringify(data))
 
     try {
         await fetch(url, {
@@ -216,13 +219,14 @@ const saveNewDraft = async () => {
             credentials: 'include',
             body: JSON.stringify(data)
         }).then(async (response) => {
-            if (response.status !== 200) {
+            if (response.status !== 201) {
                 throw new Error('Network error- could not save draft')
             }
             toast.success('Draft saved')
             let temp = await response.json()
             editingPostId.value = temp._id
             editingPostStatus.value = 'draft'
+            localStorage.setItem('posts', '')
             posts.value = await getPosts()
         }).catch((error) => {
             toast.error(error.message || error.error || 'Error saving draft')
@@ -242,7 +246,7 @@ const saveNewDraft = async () => {
         <form class = "flex gap-4 flex-wrap items-start p-4">
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="title" class="text-text-1">Title</label>
-                <input type="text" name="title" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostTitle" placeholder="Title">>
+                <input type="text" name="title" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostTitle" placeholder="Title">
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="metaTitle" class="text-text-1">Meta Title</label>
@@ -328,7 +332,7 @@ const saveNewDraft = async () => {
                     <td class="py-2 border-b-backdrop-800 border-b-2 text-center">{{post.views}}</td>
                     <td class="border-b-backdrop-800 border-b-2 text-center">{{ post.comments.length }}</td>
                     <td class="cursor-pointer hover:text-text-0 transition-all duration-300 border-b-backdrop-800 border-b-2 text-center"><a :href="post.site + '/' + post.slug">{{post.title}}</a></td>
-                    <td class="border-b-backdrop-800 border-b-2 text-center">{{post.author}}</td>
+                    <td class="border-b-backdrop-800 border-b-2 text-center">{{post.author.displayName}}</td>
                     <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.site}}</td>
                     <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.tags.join(', ')}}</td>
                     <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.category}}</td>
@@ -340,7 +344,7 @@ const saveNewDraft = async () => {
                             <Clock />
                         </div>
                         <div v-else @click="publishPost(post._id)" class="cursor-pointer hover:text-text-0 transition-all duration-300 flex items-center justify-center">
-                            <Send  />
+                            <NotepadText  />
                         </div>
                     </td>
                     <td class=" border-b-backdrop-800 border-b-2">

@@ -73,6 +73,7 @@ const createBlog = asyncHandler(async (req, res) => {
         excerpt: req.body.excerpt,
         author: req.user._id,
         comments: [],
+        views: 0,
         site: req.body.site,
         subDirectory: req.subDirectory,
     })

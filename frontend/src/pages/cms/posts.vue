@@ -12,6 +12,8 @@ const store = userStore(pinia)
 
 const posts = ref([])
 
+const doing = ref('list')
+
 const getPosts = async () => {
   const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
   if (response.status !== 200) {
@@ -50,6 +52,8 @@ import {
     MessageCircleMore,
     Tags,
     Router,
+    List,
+    PenLine,
 } from 'lucide-vue-next'
 
 import { useToast } from "vue-toastification"
@@ -128,7 +132,11 @@ const publishPost = async (id) => {
 }
 
 const newPost = () => {
-    router.push('/cms/posts/new')
+    doing.value = "new"
+}
+
+const listPost = () = {
+    doing.value = "list"
 }
 
 const unpublishPost = async (id) => {
@@ -163,8 +171,8 @@ const unpublishPost = async (id) => {
 </script>
 
 <template>
-    <Editor/>
-    <div class="p-3">
+    <Editor v-if="doing === 'new'"/>
+    <div class="p-3" v-else>
         <table class='w-full text-text-2 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -tranbackdrop-x-[21%] sm:-tranbackdrop-x-[10%] md:tranbackdrop-x-0 -tranbackdrop-y-4 sm:tranbackdrop-y-0'>
             <colgroup>
                 <col style="width: 3%"/>
@@ -221,7 +229,13 @@ const unpublishPost = async (id) => {
             </tbody>
         </table>
     </div>
-    <div @click="newPost" class="fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">New post
+    <div  class="fixed z-50 md:bottom-5 md:right-5 scale-50 sm:scale-75 md:scale-100 bottom-1 right-0 ">
+        <button @click="newPost" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
+            <PenLine class = "pr-2"/>New post
+        </button>
+        <button @click="listPosts" class="cursor-pointer bg-backdrop-0 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-backdrop-1 hover:scale-105 transition-all duration-300">
+            <List class = "pr-2"/>List posts
+        </button>
     </div>
 </template>
 

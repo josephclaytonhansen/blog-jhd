@@ -5,13 +5,19 @@
         alt: {String,default:""},
     })
 
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
 
     const imageLoaded = ref(false)
 
     const onImageLoad = () => {
         imageLoaded.value = true
     }
+
+    onMounted(() => {
+        if (!props.image || props.image === '') {
+            imageLoaded.value = false
+        }
+    })
 </script>
 
 <template>

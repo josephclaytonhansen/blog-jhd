@@ -62,7 +62,7 @@ const createBlog = asyncHandler(async (req, res) => {
         title: req.body.title,
         status: req.body.status,
         category: req.body.category,
-        date: req.body.date,
+        date: new Date().toISOString(),
         featuredImage: req.body.featuredImage,
         scheduledDate: req.body.scheduledDate,
         metaTitle: req.body.metaTitle,
@@ -70,9 +70,10 @@ const createBlog = asyncHandler(async (req, res) => {
         metaKeywords: req.body.metaKeywords,
         metaOpenGraph: req.body.metaOpenGraph,
         excerpt: req.body.excerpt,
-        author: req.user.displayName,
+        author: req.user._id,
         comments: [],
-        site: req.protocol + '://' + req.get('host'),
+        site: req.body.site,
+        subDirectory: req.subDirectory,
     })
     await blog.save()
     res.status(201).json(blog)

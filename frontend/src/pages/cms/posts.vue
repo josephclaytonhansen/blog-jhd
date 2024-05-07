@@ -151,7 +151,7 @@ const editingPostMetaTitle = ref('')
 const editingPostMetaDescription = ref('')
 const editingPostMetaKeywords = ref('')
 const editingPostExcerpt = ref('')
-const editingPostSites = ref([])
+const editingPostSites = ref('')
 const editingPostFeaturedImage = ref('')
 const editingPostLocation = ref('')
 const editingPostStatus = ref('new-draft')
@@ -198,14 +198,14 @@ const saveNewDraft = async () => {
 
     let data = {
         title: editingPostTitle.value,
-        text: editingPostText.value,
+        content: editingPostText.value,
         metaTitle: editingPostMetaTitle.value,
         metaDescription: editingPostMetaDescription.value,
         metaKeywords: editingPostMetaKeywords.value,
         excerpt: editingPostExcerpt.value,
-        sites: editingPostSites.value,
+        site: editingPostSites.value,
         featuredImage: editingPostFeaturedImage.value,
-        location: editingPostLocation.value,
+        subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
     }
 
@@ -271,8 +271,8 @@ const saveNewDraft = async () => {
                 <input readonly type="text" name="author" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 w-full" :value="author.displayName" placeholder="">
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
-                <label for="site" class="text-text-1">Sites</label>
-                <select multiple name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostSites">
+                <label for="site" class="text-text-1">Site</label>
+                <select name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostSites">
                     <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
                 </select>
             </div>

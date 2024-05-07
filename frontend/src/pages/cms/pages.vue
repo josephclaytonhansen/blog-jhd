@@ -3,7 +3,7 @@
 
 <template>
     <div class = "p-8">
-        <div class = "prose">
+        <div class = "prose font-normal w-full">
             <h1 class="text-2xl text-text-2">Pages</h1>
             <h2 class="text-xl text-text-2">Creating a new page</h2>
             <p class="text-text-3">

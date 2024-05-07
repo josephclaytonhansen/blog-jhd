@@ -37,25 +37,23 @@
 
 
     onMounted(async () => {
-        store.user ? loggedInStatus.value = true : loggedInStatus.value = false
-        if (loggedInStatus.value){
+  store.user ? loggedInStatus.value = true : loggedInStatus.value = false
+  if (loggedInStatus.value){
+    let temp
+    if (localStorage.getItem('users')) {
+      users.value = JSON.parse(localStorage.getItem('users'))
+    }
+    temp = await getUsers()
 
-            if (localStorage.getItem('users')) {
-                users.value = JSON.parse(localStorage.getItem('users'))
-                let temp = await getUsers()
-                if (JSON.stringify(users.value) !== JSON.stringify(temp)) {
-                    users.value = temp
-                    localStorage.setItem('users', JSON.stringify(users.value))
-                }
-            } else {
-                users.value = await getUsers()
-                localStorage.setItem('users', JSON.stringify(users.value))
-            }
-        } else {
-            toast.info('Your session has expired. Please log in.')
-            router.push('/login')
-        }
-    })
+    if (!users.value || JSON.stringify(users.value) !== JSON.stringify(temp)) {
+      users.value = temp
+      localStorage.setItem('users', JSON.stringify(users.value))
+    }
+  } else {
+    toast.info('Your session has expired. Please log in.')
+    router.push('/login')
+  }
+})
 
     import {
         ShieldCheck,

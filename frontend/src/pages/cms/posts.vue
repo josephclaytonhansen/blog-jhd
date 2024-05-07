@@ -4,6 +4,8 @@ import {userStore} from "../../userStore.js"
 
 import { onMounted, ref } from 'vue'
 
+import Editor from '../../components/cms/editor.vue'
+
 const loggedInStatus = ref(false)
 
 const store = userStore(pinia)
@@ -23,21 +25,15 @@ const getPosts = async () => {
 onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
-    
-
-        if (localStorage.getItem('posts')) {
-        posts.value = JSON.parse(localStorage.getItem('posts'))
-        let temp = await getPosts()
-        if (JSON.stringify(posts.value) !== JSON.stringify(temp)) {
-            posts.value = temp
-            localStorage.setItem('posts', JSON.stringify(posts.value))
-        }
-    } else {
-        posts.value = await getPosts()
-        localStorage.setItem('posts', JSON.stringify(posts.value))
+    let temp
+    if (localStorage.getItem('posts')) {
+      posts.value = JSON.parse(localStorage.getItem('posts'))
     }
-
-    
+    temp = await getPosts()
+    if (!posts.value || JSON.stringify(posts.value) !== JSON.stringify(temp)) {
+      posts.value = temp
+      localStorage.setItem('posts', JSON.stringify(posts.value))
+    }
   } else {
     toast.info('Your session has expired. Please log in.')
     router.push('/login')
@@ -167,6 +163,7 @@ const unpublishPost = async (id) => {
 </script>
 
 <template>
+    <Editor/>
     <div class="p-3">
         <table class='w-full text-text-2 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -tranbackdrop-x-[21%] sm:-tranbackdrop-x-[10%] md:tranbackdrop-x-0 -tranbackdrop-y-4 sm:tranbackdrop-y-0'>
             <colgroup>

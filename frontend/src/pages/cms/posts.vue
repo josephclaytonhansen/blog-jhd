@@ -75,7 +75,7 @@ const viewPost = (id) => {
 }
 
 const editPost = (id) => {
-    doing.value = "new"
+    doing.value = "editing"
     let temp = posts.value.filter(post => post._id === id)
     editingPostText.value = temp[0].content
     editingPostTitle.value = temp[0].title
@@ -249,11 +249,55 @@ const saveNewDraft = async () => {
 
 }
 
+const saveExistingDraft = async() => {
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/edit/` + editingPostId.value
+    let config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
+        },
+    }
+
+    let data = {
+        title: editingPostTitle.value,
+        content: editingPostText.value,
+        metaTitle: editingPostMetaTitle.value,
+        metaDescription: editingPostMetaDescription.value,
+        metaKeywords: editingPostMetaKeywords.value,
+        excerpt: editingPostExcerpt.value,
+        site: editingPostSites.value,
+        featuredImage: editingPostFeaturedImage.value,
+        subDirectory: editingPostLocation.value,
+        status: editingPostStatus.value,
+    }
+
+    try {
+        await fetch(url, {
+            method: 'PUT',
+            headers: config.headers,
+            credentials: 'include',
+            body: JSON.stringify(data)
+        }).then(async (response) => {
+            if (response.status !== 200) {
+                throw new Error('Network error- could not save draft')
+            }
+            toast.success('Draft saved')
+            localStorage.setItem('posts', '')
+            posts.value = await getPosts()
+        }).catch((error) => {
+            toast.error(error.message || error.error || 'Error saving draft')
+        })
+    } catch (error) {
+        toast.error(error.message || error.error || 'Error saving draft')
+    }
+}
+
 </script>
 
 <template>
-    <Editor v-if="doing === 'new'"  :modelValue="editingPostText" @update:modelValue="editingPostText = $event"/>
-    <div v-if="doing === 'new'">
+    <Editor v-if="doing === 'new' || doing === 'editing'"  :modelValue="editingPostText" @update:modelValue="editingPostText = $event"/>
+    <div v-if="doing === 'new' || doing === 'editing'">
         <h2 class="text-center text-2xl text-text-1 px-4 pt-4">Metadata</h2>
         <form class = "flex gap-4 flex-wrap items-start p-4">
             <div class="flex flex-col grow items-center align-middle gap-2">
@@ -299,7 +343,7 @@ const saveNewDraft = async () => {
         </form>
 
         <div class = "flex gap-4 p-4">
-            <button v-if = "editingPostStatus === 'new-draft'" @click="saveNewDraft" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+            <button v-if = "editingPostStatus === 'new-draft'" @click="doing === 'new' ? saveNewDraft() : saveExistingDraft()" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
                 <Save class = "pr-2"/>Save draft
             </button>
             <button v-if = "editingPostStatus === 'draft'" @click="publishPost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">

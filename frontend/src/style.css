@@ -36,18 +36,21 @@
     scrollbar-color: theme('colors.accent.500') theme('colors.backdrop.800');
     scrollbar-width: thin;
   }
-  .ql-container{
-    @apply bg-backdrop-2;
-    @apply text-text-1;
-    @apply font-body;
-    @apply border-none;
-    @apply rounded-lg;
-  }
-  .ql-toolbar{
-    @apply bg-backdrop-3;
-    @apply border-none;
-    @apply rounded-lg;
-  }
+
+}
+
+.ql-toolbar{
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.ql-container{
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .ql-picker .ql-picker-label, .ql-fill{
@@ -60,10 +63,7 @@
 }
 
 .ql-toolbar button:hover *{
-  color: theme('colors.accent.700')!important;
-  fill: theme('colors.accent.700')!important;
-  stroke: theme('colors.accent.700')!important;
-
+  opacity: 0.8;
 }
 
 
@@ -360,17 +360,17 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'undefined';
 }
 
-.avatar{border-radius:999rem;}
 
 
 /* end automated */
+
 
 
 

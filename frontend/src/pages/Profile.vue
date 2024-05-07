@@ -94,7 +94,7 @@ import {
             <hr class="border-backdrop-1 my-4">
             <div class="flex flex-row items-stretch gap-12 justify-start h-auto flex-wrap">
                 <div class="flex items-center gap-2 shrink flex-wrap max-w-[50%]">
-                    <Avatar :image="thisUser.avatar" classes="w-20 h-20"/>
+                    <Avatar :image="thisUser.picture" classes="w-20 h-20"/>
                     <div class="max-w-[100%] flex flex-col gap-2 border-r-2 pr-5 border-backdrop-1">
                         <h3 class="text-2xl">{{thisUser.displayName}}</h3>
                         <h4 class="text-md italic text-text-1">{{thisUser.shortBio}}</h4>

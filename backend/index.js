@@ -3,8 +3,6 @@ import User from './models/user.js'
 import Tag from './models/tag.js'
 import Comment from './models/comment.js'
 
-import lusca from 'lusca'
-
 import express from 'express'
 
 import cors from 'cors'
@@ -59,8 +57,6 @@ dotenv.config()
 app.use(express.json())
 
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET))
-app.use(lusca.csrf())
-app.use(lusca.xframe('SAMEORIGIN'))
 
 app.use(passport.initialize())
 

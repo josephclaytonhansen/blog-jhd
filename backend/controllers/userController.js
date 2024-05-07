@@ -6,6 +6,10 @@ import {
 } from './jwt.js'
 import jwt from 'jsonwebtoken'
 
+const ipAddressToBase64 = (ip) => {
+    return Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
+}
+
 const userLoginByEmail = asyncHandler(async (req, res) => {
     const user = await User.findOne({
         email: {
@@ -14,6 +18,7 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
     })
     if (user && user.validPassword(req.body.password)) {
         user.lastLogin = new Date()
+        user.lastIp = ipAddressToBase64(req.ip)
         await user.save()
         let auth_token = createToken(user)
         res.json({
@@ -188,8 +193,8 @@ const createUser = asyncHandler(async (req, res) => {
         lastEdit: new Date(),
         posts: [],
         comments: [],
-        registeredIp: req.ip,
-        lastIp: req.ip,
+        registeredIp: ipAddressToBase64(req.ip),
+        lastIp: ipAddressToBase64(req.ip),
         verifiedEmail: false
     })
     

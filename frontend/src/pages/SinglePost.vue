@@ -4,7 +4,7 @@ import CommentSection from '../components/bricks/comments/commentSection.vue'
 import postProgressBar from '../components/bricks/post/postProgressBar.vue'
 import authorBox from '../components/bricks/post/authorBox.vue'
 import postBody from '../components/bricks/post/postBody.vue'
-import Sidebar from '../components/bricks/sidebar/Sidebar.vue'
+import Sidebar from '../components/bricks/post/sidebar.vue'
 
 const props = defineProps({
   id: String

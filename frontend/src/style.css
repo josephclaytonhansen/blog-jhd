@@ -414,8 +414,8 @@ body {
 }
 
 .sidebar.colorblock_accent{
-  background-color: theme('colors.accent.700');
-  color: theme('colors.backdrop.100');
+  background-color: transparent;
+  color: theme('colors.text.0');
 
 }
 
@@ -442,6 +442,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

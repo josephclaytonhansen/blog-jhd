@@ -59,8 +59,8 @@ onMounted( async() => {
             <h1 class="text-4xl font-normal text-left  ">Profile<PenLine class="ml-2 h-full w-auto text-accent-500 hover:cursor-pointer hover:text-accent-300 transition-all duration-300 inline-block"/></h1>
             <hr class="border-backdrop-1 my-4">
             <div class="flex flex-row items-stretch gap-12 justify-start h-auto flex-wrap">
-                <div class="flex items-center gap-2 shrink flex-wrap max-w-[50%] w-[10vw] ">
-                    <Avatar :image="thisUser.picture" classes="ring-4 mr-2 ring-accent-500 hover:cursor-pointer hover:ring-accent-300 square-img-container transition-all duration-300" alt="avatar"/>
+                <div class="flex items-center gap-2 shrink flex-wrap max-w-[50%] ">
+                    <Avatar :image="thisUser.picture" classes="ring-4 mr-2 ring-accent-500 hover:cursor-pointer hover:ring-accent-300 square-img-container transition-all duration-300  w-[10vw]" alt="avatar"/>
                     <div class="max-w-[100%] flex flex-col gap-2 border-r-2 pr-5 border-backdrop-1">
                         <h3 class="text-2xl">{{thisUser.displayName}}</h3>
                         <h4 class="text-md italic text-text-1">{{thisUser.shortBio}}</h4>

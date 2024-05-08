@@ -9,6 +9,7 @@ const props = defineProps({
 })
 
 const post = ref({})
+const isLoading = ref(true)
 
 const getPostById = async (id) => {
   const cachedPost = sessionStorage.getItem(`post-${id}`)
@@ -16,6 +17,7 @@ const getPostById = async (id) => {
 
   if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
     post.value = JSON.parse(cachedPost)
+    isLoading.value = false
   } else {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/id/` + id
     let config = {
@@ -35,51 +37,25 @@ const getPostById = async (id) => {
           throw new Error('Network error- could not get post')
         }
         post.value = await response.json()
-        sessionStorage.setItem(`post-${id}`, JSON.stringify(post.value))
-        sessionStorage.setItem(`timestamp-${id}`, String(new Date().getTime()))
+        isLoading.value = false
       })
     } catch (error) {
       console.error(error)
+      isLoading.value = false
     }
   }
 }
 
-const incrementPostViews = async (id) => {
-    let url = `${process.env.VUE_APP_SERVER_URL}/blog/incrementviews/` + id
-    let config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
-    }
-    try {
-        await fetch(url, {
-            method: 'POST',
-            headers: config.headers,
-            credentials: 'include'
-        })
-    } catch (error) {
-        console.error(error)
-    }
-    const cachedPost = JSON.parse(sessionStorage.getItem(`post-${id}`))
-  if (cachedPost) {
-    cachedPost.views += 1
-    sessionStorage.setItem(`post-${id}`, JSON.stringify(cachedPost))
-  }
-}
-
-onBeforeMount(async() => {
-    await getPostById(props.id)
+onBeforeMount(async () => {
+  await getPostById(props.id)
 })
-
-onMounted(async() => {
-    await incrementPostViews(props.id)
-})
-
 </script>
 
 <template>
-  <div class="bg-backdrop-1 flex items center align-middle">
+  <div v-if="isLoading" class="flex">
+    <p class = "text-xl text-text-3">Loading...</p>
+  </div>
+  <div v-else class="bg-backdrop-1 flex items center align-middle">
     <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto">
       <postProgressBar />
       {{post}}

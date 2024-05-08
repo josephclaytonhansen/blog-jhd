@@ -3,6 +3,7 @@ import { ref, onBeforeMount, onMounted } from 'vue'
 import CommentSection from '../components/bricks/comments/commentSection.vue'
 import postProgressBar from '../components/bricks/post/postProgressBar.vue'
 import authorBox from '../components/bricks/post/authorBox.vue'
+import postBody from '../components/bricks/post/postBody.vue'
 
 const props = defineProps({
   id: String
@@ -58,7 +59,7 @@ onBeforeMount(async () => {
   <div v-else class="bg-backdrop-1 flex items center align-middle">
     <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto">
       <postProgressBar />
-      {{post}}
+      <postBody :content="post.content"/>
       <div class="h-[800px] bg-backdrop-1"/>
       <hr class="dividing-line"/>
       <authorBox :author_id="post.author" />

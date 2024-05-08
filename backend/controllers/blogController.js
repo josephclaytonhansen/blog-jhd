@@ -52,10 +52,10 @@ const getBlogById = asyncHandler(async (req, res) => {
 
 const incrementBlogViews = asyncHandler(async (req, res) => {
     const blog = await Blog.findById(req.params.id)
-    blog.views = blog.views + 1
-    await blog.save()
     if (blog) {
-        res.status(200)
+        blog.views = blog.views + 1
+        await blog.save()
+        res.status(200).send('Views incremented')
     } else {
         res.status(404).send('Blog not found')
     }

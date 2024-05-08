@@ -346,6 +346,10 @@ const saveExistingDraft = async() => {
                 <input type="text" name="location" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostLocation" placeholder="/">
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="sidebar" class="text-text-1">Sidebar</label>
+                <input type="checkbox" name="sidebar" v-model="sidebar" class="cursor-pointer scale-150"/>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="author" class="text-text-1">Author</label>
                 <input readonly type="text" name="author" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 w-full" :value="author.displayName" placeholder="">
             </div>
@@ -377,10 +381,6 @@ const saveExistingDraft = async() => {
                 <label for="metaDescription" class="text-text-1">Meta Description</label>
                 <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMetaDescription" placeholder="Meta Description">
                 </textarea>
-            </div>
-            <div class="flex flex-col grow items-center align-middle gap-2">
-                <label for="sidebar" class="text-text-1">Sidebar</label>
-                <input type="checkbox" name="sidebar" v-model="sidebar" class="cursor-pointer scale-150"/>
             </div>
         </form>
 

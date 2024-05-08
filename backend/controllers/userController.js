@@ -8,8 +8,7 @@ import jwt from 'jsonwebtoken'
 
 const ipAddressToBase64 = (ip) => {
     let step1 = Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
-    step1 = step1.slice(0, -2)
-    return step1.toString('base64').slice(0, -2)
+    return step1
 }
 
 const userLoginByEmail = asyncHandler(async (req, res) => {
@@ -21,11 +20,13 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
     if (user && user.validPassword(req.body.password)) {
         user.lastLogin = new Date()
         user.lastIp = ipAddressToBase64(req.ip)
+        user.session = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        user.sessionTimestamp = new Date().toISOString()
         await user.save()
         let auth_token = createToken(user)
         res.json({
             auth_token: auth_token,
-            user: user
+            user: user,
         })
     } else {
         res.status(401)
@@ -61,8 +62,13 @@ const verifyTokenUser = asyncHandler(async (req, res, next) => {
 })
 
 const isAdminUser = asyncHandler(async (req, res) => {
+    const session = req.body.session || req.query.session
     const token = req.body.token || req.query.token
     const user = req.body.user || req.query.user
+    if (!(user.session === session) && !(Date.now() - new Date(user.sessionTimestamp).getTime() < 15 * 60 * 1000)) {
+        res.status(401)
+        throw new Error('Invalid session')
+    }
     let decode = verifyToken(token)
     let user_json = JSON.parse(user)
     if (decode.email === user_json.user.email) {

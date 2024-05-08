@@ -47,6 +47,7 @@ const attemptLogin = () => {
         toast.success('Login successful')
         if (response.data) {
             store.login(response.data)
+            sessionStorage.setItem('session', response.data.user.session)
             setTimeout(() => {
                 router.push('/')
             }, 2000)
@@ -104,6 +105,7 @@ const registerUser = () => {
         toast.success('Your registration was successful. Please check your email for verification.')
         if (response.data) {
             store.login(response.data)
+            sessionStorage.setItem('session', response.data.user.session)
             setTimeout(() => {
                 router.push('/')
             }, 2000)

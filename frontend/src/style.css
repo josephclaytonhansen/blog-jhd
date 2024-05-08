@@ -375,7 +375,11 @@ body {
 .avatar{border-radius:999rem;}
 
 
+#progress-bar, #progress-bar-fill{
+  display: block;
+}
 /* end automated */
+
 
 
 

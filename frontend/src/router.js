@@ -67,18 +67,16 @@ router.beforeEach(async (to, from, next) => {
             if (response.status == 200) {
                 success += 1
             } 
-        } else if (lockedRoute.roles.includes('author')) {
+        }  if (lockedRoute.roles.includes('author')) {
             url = `${process.env.VUE_APP_SERVER_URL}/user/isauthor`
             response = await axios.post(url, params, config)
             if (response.status == 200) {
                 success += 1
             }
-          } else if (lockedRoute.roles.includes('user')) {
+          } if (lockedRoute.roles.includes('user')) {
             success += 1
           }
-        else {
-            next()
-        }
+
         if (success > 0) {
             next()
         } else {

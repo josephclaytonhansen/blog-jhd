@@ -7,7 +7,9 @@ import {
 import jwt from 'jsonwebtoken'
 
 const ipAddressToBase64 = (ip) => {
-    return Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
+    let step1 = Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
+    step1 = step1.slice(0, -1)
+    return ipAddressToBase64(step1)
 }
 
 const userLoginByEmail = asyncHandler(async (req, res) => {

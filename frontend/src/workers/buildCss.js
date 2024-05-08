@@ -17,6 +17,9 @@ body {
 
 ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''}
 
+#progress-bar, #progress-bar-fill{
+  display: ${process.env.READING_PROGRESS_BAR === 'true' ? 'block' : 'none'};
+}
 /* end automated */
 `
 

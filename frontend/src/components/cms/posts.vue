@@ -319,20 +319,12 @@ const saveExistingDraft = async() => {
                 <label for="metaTitle" class="text-text-1">Meta Title</label>
                 <input type="text" name="metaTitle" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMetaTitle" placeholder="Meta Title">
             </div>
-            <div class="flex flex-col grow items-center align-middle gap-2">
-                <label for="metaDescription" class="text-text-1">Meta Description</label>
-                <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMetaDescription" placeholder="Meta Description">
-                </textarea>
-            </div>
+            
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="metaKeywords" class="text-text-1">Meta Keywords</label>
                 <input type="text" name="metaKeywords" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMetaKeywords" placeholder="Meta Keywords">
             </div>
-            <div class="flex flex-col grow items-center align-middle gap-2">
-                <label for="excerpt" class="text-text-1">Excerpt</label>
-                <textarea  name="excerpt" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostExcerpt" placeholder="Excerpt">
-                </textarea>
-            </div>
+            
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="location" class="text-text-1">Location</label>
                 <input type="text" name="location" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostLocation" placeholder="/">
@@ -350,6 +342,19 @@ const saveExistingDraft = async() => {
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="featuredImage" class="text-text-1">Featured Image</label>
                 <input type="text" name="featuredImage" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostFeaturedImage" placeholder="Featured Image">
+            </div>
+        </form>
+
+        <form class = "flex gap-4 flex-wrap items-start p-4">
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="excerpt" class="text-text-1">Excerpt</label>
+                <textarea  name="excerpt" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostExcerpt" placeholder="Excerpt">
+                </textarea>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="metaDescription" class="text-text-1">Meta Description</label>
+                <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMetaDescription" placeholder="Meta Description">
+                </textarea>
             </div>
         </form>
 

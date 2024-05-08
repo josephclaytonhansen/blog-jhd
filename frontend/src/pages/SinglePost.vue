@@ -1,5 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, onMounted } from 'vue'
+import CommentSection from '../components/bricks/comments/commentSection.vue'
+import postProgressBar from '../components/bricks/post/postProgressBar.vue';
 
 const props = defineProps({
   id: String
@@ -76,5 +78,8 @@ onMounted(async() => {
 </script>
 
 <template>
+    <postProgressBar />
     {{post}}
+    <div class = "h-[2000px] bg-backdrop-0"/>
+    <CommentSection :post_id="post.id" />
 </template>

@@ -36,7 +36,7 @@
 </script>
 
 <template>
-    <div id="author_box" class="flex item-center rounded-lg w-full p-5 colorblock_accent">
+    <div id="author_box" class="flex item-center rounded-lg w-full p-5 colorblock">
         <Avatar :image="author.picture" classes=" mr-2  square-img-container w-12" alt="avatar"/>
     </div>
 </template>

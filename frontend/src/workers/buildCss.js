@@ -26,8 +26,8 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 }
 
 .colorblock_accent{
-  background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.accent.500\')' : 'transparent'};
-  color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop.800\')' : 'transparent'};
+  background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.accent.700\')' : 'transparent'};
+  color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop.100\')' : 'transparent'};
 }
 
 .dividing-line{
@@ -35,6 +35,33 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
   width: 100%;
   margin-bottom: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
   margin-top: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
+}
+
+.sidebar{
+  display: ${process.env.SIDEBAR === 'true' ? 'flex!important' : 'none!important'};
+}
+
+@layer components {
+  #post_content {
+    margin: auto;
+    width: 80vw;
+    max-width: 70ch;
+  }
+  @screen sm {
+    #post_content {
+      width: 70vw;
+    }
+  }
+  @screen md {
+    #post_content {
+      width: 60vw;
+    }
+  }
+  @screen lg {
+    #post_content {
+      width: 50vw;
+    }
+  }
 }
 /* end automated */
 `

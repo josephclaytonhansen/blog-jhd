@@ -37,6 +37,12 @@
 
 <template>
     <div id="author_box" class="flex item-center rounded-lg w-full p-5 colorblock">
-        <Avatar :image="author.picture" classes=" mr-2  square-img-container w-12" alt="avatar"/>
+        <div class="flex">
+            <Avatar :image="author.picture" classes=" mr-2  square-img-container w-12" alt="avatar"/>
+            <div class="flex flex-col">
+                <p class="">{{ author.username }}</p>
+                <p class="text-text-2">{{ author.shortBio }}</p>
+            </div>
+        </div>
     </div>
 </template>

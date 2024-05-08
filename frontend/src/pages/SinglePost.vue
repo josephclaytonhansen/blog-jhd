@@ -63,7 +63,7 @@ onBeforeMount(async () => {
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>
-        <hr class="dividing-line hidden lg:block"/>
+        <hr class="dividing-line block lg:hidden"/>
         <authorBox :author_id="post.author" class="block lg:hidden" />
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />

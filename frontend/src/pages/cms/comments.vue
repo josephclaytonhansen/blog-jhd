@@ -223,7 +223,7 @@
     <h2 class="text-3xl text-text-0 px-8 -mb-4  ">Flagged Comments</h2>
     <div class="p-1 md:p-8 flex gap-4 flex-wrap">
         <div class="min-w-[30%] grow" v-for="comment in filterFlaggedComments">
-            <div class="bg-backdrop-2 text-text-0 8 m-w-[500px] w-auto h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4">
+            <div class="bg-backdrop-2 text-text-0 8 m-w-[500px] w-auto h-auto m-auto rounded-xl   p-4">
                 <p class="italic">{{comment.content}}</p>
                 <p >Posted by: {{findCommentUser(comment.user)}}</p>
                 <p >Posted on: <a :href="getBlogPostSlug(comment.blogPost)" class= "text-accent-500 hover:text-accent-600 duration-300 transition-all">{{findBlogPostTitle(comment.blogPost)}}</a></p>
@@ -251,7 +251,7 @@
             <h3 class='text-accent-500 hover:text-accent-600 transition-all duration-300 text-xl pb-2'><a :href="post.site + post.subDirectory + post.slug">{{post.title}}</a></h3>
 
                 <div class="flex gap-4 flex-wrap">
-                    <div class="min-w-[30%] grow bg-backdrop-2 text-text-0 8 m-w-[500px] w-auto h-auto m-auto rounded-xl drop-shadow-2xl shadow-md p-4" v-for="comment in filterCommentsByBlogPost(post._id)">
+                    <div class="min-w-[30%] grow bg-backdrop-2 text-text-0 8 m-w-[500px] w-auto h-auto m-auto rounded-xl   p-4" v-for="comment in filterCommentsByBlogPost(post._id)">
 
                         <div class="
                             flex gap-2 mt-2 items-center justify-between w-full

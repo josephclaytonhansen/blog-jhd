@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onBeforeMount, onMounted } from 'vue'
 import CommentSection from '../components/bricks/comments/commentSection.vue'
-import postProgressBar from '../components/bricks/post/postProgressBar.vue';
+import postProgressBar from '../components/bricks/post/postProgressBar.vue'
+import authorBox from '../components/bricks/post/authorBox.vue'
 
 const props = defineProps({
   id: String
@@ -82,6 +83,7 @@ onMounted(async() => {
     <postProgressBar />
     {{post}}
     <div class = "h-[2000px] bg-backdrop-1"/>
+    <authorBox :author_id="post.author_id" />
     <CommentSection :post_id="post.id" />
   </div>
 </template>

@@ -266,10 +266,10 @@
     
     <div class="p-5 text-text-1 flex gap-4 justify-center w-full flex-wrap">
         <div class="flex gap-3 items-start mt-3 w-full">
-            <textarea class="accent-accent-500 h-[40px] bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900 grow" v-model = "emailMessage" placeholder = "Message"></textarea>
-            <input type = "text" v-model = "emailSubject" class="accent-accent-500 grow bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Subject"/>
-            <input type = "text" v-model = "inviteUserEmail" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Email"/>
-            <button class="cursor-pointer bg-backdrop-0 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-backdrop-1 hover:scale-105 transition-all duration-300" @click="mailUser(inviteUserEmail)">
+            <textarea class="accent-accent-500 h-[40px] bg-backdrop-1 text-text-1 px-2 py-2 rounded  grow" v-model = "emailMessage" placeholder = "Message"></textarea>
+            <input type = "text" v-model = "emailSubject" class="accent-accent-500 grow bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Subject"/>
+            <input type = "text" v-model = "inviteUserEmail" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Email"/>
+            <button class="cursor-pointer bg-backdrop-0 px-2 py-2 rounded  text-text-0 hover:bg-backdrop-1 hover:scale-105 transition-all duration-300" @click="mailUser(inviteUserEmail)">
                 <Mail/>
             </button>
         </div>
@@ -299,7 +299,7 @@
                         <div class="flex items-center gap-1 shrink" v-if = "user.role == 'admin' || user.role == 'author'">
                             <Newspaper /><h3>{{getUserPostsLength(user)}}</h3>
                         </div>
-                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
+                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
                             <Cog @click="editUser(user._id)"/>
                         </button>
         
@@ -315,22 +315,22 @@
             <h2 class="text-xl mb-2  ">Edit User</h2>
 
                 <form class = 'flex flex-row justify-between items-end flex-wrap gap-3' @prevent.submit = "updateUser(active_user._id)">
-                    <input type = "text" v-model = "active_user.displayName" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Display Name"/>
-                    <input type = "text" v-model = "active_user.email" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Email"/>
-                    <input type = "text" v-model = "active_user.website" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Website"/>
-                    <input type = "text" v-model = "active_user.picture" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Avatar"/>
-                    <input type = "text" v-model = "active_user.shortBio" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Short Bio"/>
-                    <input type = "text" v-model = "active_user.longBio" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded shadow-backdrop-900" placeholder = "Long Bio"/>
+                    <input type = "text" v-model = "active_user.displayName" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Display Name"/>
+                    <input type = "text" v-model = "active_user.email" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Email"/>
+                    <input type = "text" v-model = "active_user.website" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Website"/>
+                    <input type = "text" v-model = "active_user.picture" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Avatar"/>
+                    <input type = "text" v-model = "active_user.shortBio" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Short Bio"/>
+                    <input type = "text" v-model = "active_user.longBio" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Long Bio"/>
                     <h3 class="flex gap-4 items-center bg-backdrop-1  text-text-1 px-2 py-2 rounded-lg">Role: {{ active_user.role }}</h3>
                     <div class="flex gap-4 items-center px-2 bg-backdrop-1 rounded-lg">
                         <Router/>
-                        <h3 class=" text-text-1 px-2 py-2 rounded shadow-backdrop-900">Registered IP: {{ active_user.registeredIp }}</h3>
-                        <h3 class=" text-text-1 px-2 py-2 rounded shadow-backdrop-900">Last IP: {{ active_user.lastIp }}</h3>
+                        <h3 class=" text-text-1 px-2 py-2 rounded ">Registered IP: {{ active_user.registeredIp }}</h3>
+                        <h3 class=" text-text-1 px-2 py-2 rounded ">Last IP: {{ active_user.lastIp }}</h3>
                     </div>
                     <div class="flex gap-4 items-center px-2 bg-backdrop-1 rounded-lg">
                         <Clock/>
-                        <h3 class=" text-text-1 px-2 py-2 rounded shadow-backdrop-900">Last login: {{ new Date(active_user.lastLogin).toLocaleString() }}</h3>
-                        <h3 class=" text-text-1 px-2 py-2 rounded shadow-backdrop-900">Last edit: {{ new Date(active_user.lastEdit).toLocaleString() }}</h3>
+                        <h3 class=" text-text-1 px-2 py-2 rounded ">Last login: {{ new Date(active_user.lastLogin).toLocaleString() }}</h3>
+                        <h3 class=" text-text-1 px-2 py-2 rounded ">Last edit: {{ new Date(active_user.lastEdit).toLocaleString() }}</h3>
                     </div>
 
                 </form>
@@ -360,29 +360,29 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="updateUser(active_user._id)">
+                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="updateUser(active_user._id)">
                             <Save/>
                         </button>
-                        <button v-if = "active_user.role === 'user' && active_user.role !== 'admin'" class="cursor-pointer bg-green-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUserToAuthor(active_user._id)">
+                        <button v-if = "active_user.role === 'user' && active_user.role !== 'admin'" class="cursor-pointer bg-green-500 px-2 py-2 rounded  text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUserToAuthor(active_user._id)">
                             <BookUser/>
                         </button>
-                        <button v-else-if = "active_user.role === 'author'" class="cursor-pointer bg-red-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUserToVerified(active_user._id)">
+                        <button v-else-if = "active_user.role === 'author'" class="cursor-pointer bg-red-500 px-2 py-2 rounded  text-text-0 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUserToVerified(active_user._id)">
                             <BookX/>
                         </button>
                         
-                        <button v-if = "active_user.role === 'admin'" class="cursor-pointer bg-red-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUser(active_user._id)">
+                        <button v-if = "active_user.role === 'admin'" class="cursor-pointer bg-red-500 px-2 py-2 rounded  text-text-0 hover:bg-red-600 hover:scale-105 transition-all duration-300 mt-3" @click="demoteUser(active_user._id)">
                             <ShieldMinus/>
                         </button>
-                        <button v-else-if ="active_user.role === 'author'" class="cursor-pointer bg-green-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUser(active_user._id)">
+                        <button v-else-if ="active_user.role === 'author'" class="cursor-pointer bg-green-500 px-2 py-2 rounded  text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUser(active_user._id)">
                             <ShieldCheck/>
                         </button>
                         <div class="w-[1px] h-[40px] mt-[12px] mx-1 border-r-2 border-backdrop-1"></div>
                         
-                        <button v-if = "active_user.role !== 'admin'" class="cursor-pointer bg-orange-500 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-orange-600 hover:scale-105 transition-all duration-300 mt-3" @click="anonymizeUser(active_user._id)">
+                        <button v-if = "active_user.role !== 'admin'" class="cursor-pointer bg-orange-500 px-2 py-2 rounded  text-text-0 hover:bg-orange-600 hover:scale-105 transition-all duration-300 mt-3" @click="anonymizeUser(active_user._id)">
                         <VenetianMask/>
                         </button>
                         <div class="w-[1px] h-[40px] mt-[12px] mx-1 border-r-2 border-backdrop-1"  v-if = "active_user.role !== 'admin'"></div>
-                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="deselectUser(active_user._id)">
+                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="deselectUser(active_user._id)">
                             <UserX/>
                         </button>
                         

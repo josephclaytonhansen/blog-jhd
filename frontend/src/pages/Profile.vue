@@ -89,7 +89,7 @@ import {
 
 <template>
     <div class="flex bg-backdrop-3 h-[100vh] overflow-hidden w-full p-3 lg:p-0">
-        <div class= "bg-backdrop-2 text-text-0 p-8 m-w-[500px] w-full lg:w-1/2 h-auto m-auto rounded-xl drop-shadow-2xl shadow-md">
+        <div class= "bg-backdrop-2 text-text-0 p-8 m-w-[500px] w-full lg:w-1/2 h-auto m-auto rounded-xl  ">
             <h1 class="text-4xl font-normal text-left  ">Profile</h1>
             <hr class="border-backdrop-1 my-4">
             <div class="flex flex-row items-stretch gap-12 justify-start h-auto flex-wrap">
@@ -140,7 +140,7 @@ import {
             
         </div>
         <div class="fixed top-0 left-0 p-4" @click="router.push('/')">
-            <Home class="w-10 h-10 cursor-pointer bg-accent-600 p-2 rounded-lg shadow-md shadow-backdrop-900 text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300"/>
+            <Home class="w-10 h-10 cursor-pointer bg-accent-600 p-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300"/>
         </div>
     </div>
 </template>

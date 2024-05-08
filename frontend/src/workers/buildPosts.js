@@ -29,7 +29,7 @@ const updateRouterFile = async () => {
         if (postData.subDirectory !== '' && postData.subDirectory !== undefined && postData.subDirectory !== '/') {
             newRoute = `{ path: '/${postData.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: ${postData}} },`
         } else {
-            newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: ${postData}} },`
+            newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: ${postData._id}} },`
         }
         addRoutes.push(newRoute)
     }

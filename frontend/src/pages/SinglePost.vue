@@ -1,10 +1,36 @@
 <script setup>
 const props = defineProps(
-    {post: Object}
+    {id: String}
 )
+
+const post = ref({})
 
 import { ref, onBeforeMount } from 'vue'
 
+const getPostById = async (id) => {
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/id/` + id
+    let config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        withCredentials: true
+    }
+    try {
+        await fetch(url, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include'
+        }).then(async (response) => {
+            if (response.status !== 200) {
+                throw new Error('Network error- could not get post')
+            }
+            post.value = await response.json()
+        })
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 const incrementPostViews = async (id) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/incrementviews/` + id
@@ -21,14 +47,15 @@ const incrementPostViews = async (id) => {
             headers: config.headers,
             credentials: 'include'
         }).then(async (response) => {
-            post.views += 1
+            post.value.views += 1
         })
     } catch (error) {
         console.error(error)
     }
 }
 
-onBeforeMount(() => {
+onBeforeMount(async() => {
+    await getPostById(props.id)
     incrementPostViews(props.post._id)
 })
 

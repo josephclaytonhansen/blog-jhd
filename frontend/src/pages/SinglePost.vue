@@ -3,6 +3,8 @@ const props = defineProps(
     {post: Object}
 )
 
+import { ref, onBeforeMount } from 'vue'
+
 
 const incrementPostViews = async (id) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/incrementviews/` + id
@@ -25,6 +27,11 @@ const incrementPostViews = async (id) => {
         console.error(error)
     }
 }
+
+onBeforeMount(() => {
+    incrementPostViews(props.post._id)
+})
+
 </script>
 
 <template>

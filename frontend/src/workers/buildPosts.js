@@ -1,7 +1,7 @@
 import fs from 'fs'
 import fetch from 'node-fetch'
-import path, { fileURLToPath } from 'path'
-import { URL } from 'url'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

@@ -36,7 +36,6 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
 
 const checkSessionUser = asyncHandler(async (req, res) => {
     let user = JSON.parse(req.body.user || req.query.user)
-    console.log(user.user._id)
     let session = req.body.session || req.query.session
     let userCheck = await User.findOne({ session: { $eq: session } })
     if (userCheck._id.toString() === user.user._id) {
@@ -83,78 +82,6 @@ const verifyTokenUser = asyncHandler(async (req, res, next) => {
     }
 })
 
-const isAdminUser = asyncHandler(async (req, res) => {
-    const session = req.body.session || req.query.session
-    const token = req.body.token || req.query.token
-    const user = req.body.user || req.query.user
-    if (!(user.session === session) && !(Date.now() - new Date(user.sessionTimestamp).getTime() < 15 * 60 * 1000)) {
-        res.status(401)
-        throw new Error('Invalid session')
-    }
-    let decode = verifyToken(token)
-    let user_json = JSON.parse(user)
-    if (decode.email === user_json.user.email) {
-        if (decode.exp - Date.now() / 1000 < 60 * 120) {
-            let signature = decode.signature
-            let auth_secret = process.env.JWT_SECRET
-            let signature_check = jwt.verify(token, auth_secret)
-            if (signature_check.signature === signature) {
-                if (user_json.user.role === 'admin') {
-                    res.status(200)
-                    res.json({
-                        message: 'user is admin'
-                    })
-                } else {
-                    res.status(401)
-                    throw new Error('role failed')
-                }
-            } else {
-                res.status(401)
-                throw new Error('role failed')
-            }
-        } else {
-            res.status(401)
-            throw new Error('token expired')
-        }
-    } else {
-        res.status(401)
-        throw new Error('role failed')
-    }
-})
-
-const isAuthorUser = asyncHandler(async (req, res) => {
-    const token = req.body.token || req.query.token
-    const user = req.body.user || req.query.user
-    let decode = verifyToken(token)
-    let user_json = JSON.parse(user)
-    if (decode.email === user_json.user.email) {
-        if (decode.exp - Date.now() / 1000 < 60 * 120) {
-            let signature = decode.signature
-            let auth_secret = process.env.JWT_SECRET
-            let signature_check = jwt.verify(token, auth_secret)
-            if (signature_check.signature === signature) {
-                if (user_json.user.role === 'author') {
-                    res.status(200)
-                    res.json({
-                        message: 'user is author'
-                    })
-                } else {
-                    res.status(401)
-                    throw new Error('role failed')
-                }
-            } else {
-                res.status(401)
-                throw new Error('role failed')
-            }
-        } else {
-            res.status(401)
-            throw new Error('token expired')
-        }
-    } else {
-        res.status(401)
-        throw new Error('role failed')
-    }
-})
 
 const isVerifiedUser = asyncHandler(async (req, res) => {
     const token = req.body.token || req.query.token
@@ -418,7 +345,7 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
 })
 
 const getUsers = asyncHandler(async (req, res) => {
-    console.log(req.user)
+
 
     const users = await User.find({})
 
@@ -449,7 +376,7 @@ const getUsers = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id)
     if (user) {
-        console.log(user)
+
         let response = {
             displayName: user.displayName,
             picture: user.picture,
@@ -498,9 +425,7 @@ const getUserByEmail = asyncHandler(async (req, res) => {
 export {
     userLoginByEmail,
     verifyTokenUser,
-    isAdminUser,
     isVerifiedUser,
-    isAuthorUser,
     createUser,
     editUser,
     deleteUser,

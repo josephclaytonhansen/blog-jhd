@@ -13,9 +13,7 @@ import {
     getUserById,
     getUserByEmail,
     getUsers,
-    isAdminUser,
     isVerifiedUser,
-    isAuthorUser,
     checkSessionUser
 } from '../controllers/userController.js'
 
@@ -31,8 +29,6 @@ export default (transporter) => {
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
     router.post('/checksession', checkSessionUser)
-    router.post('/isadmin', isAdminUser)
-    router.post('/isauthor', isAuthorUser)
     router.post('/isverified', isVerifiedUser)
     router.post('/create', async (req, res) => {
         try {

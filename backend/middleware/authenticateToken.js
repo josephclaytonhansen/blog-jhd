@@ -6,7 +6,7 @@ dotenv.config()
 
 
 const authenticateToken = (req, res, next) => {
-  console.log('authenticateToken')
+
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
   
@@ -16,13 +16,13 @@ const authenticateToken = (req, res, next) => {
       if (err) {console.log(err)
         return res.sendStatus(403)}
       req.user = await User.findOne({email: user.email})
-      console.log(req.user)
+
       next()
     })
   }
 
   const lightAuthToken = (req, res, next) => {
-    console.log('lightAuthToken')
+
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
@@ -36,7 +36,7 @@ const authenticateToken = (req, res, next) => {
             } else {
                 try {
                     req.user = await User.findOne({email: user.email})
-                    console.log(req.user)
+
                     next()
                 } catch (err) {
                     console.log(err)

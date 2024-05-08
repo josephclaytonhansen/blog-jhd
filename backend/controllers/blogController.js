@@ -88,7 +88,6 @@ const createBlog = asyncHandler(async (req, res) => {
         site: req.body.site,
         subDirectory: req.subDirectory,
     })
-    console.log(blog)
     await blog.save()
     res.status(201).json(blog)
 })

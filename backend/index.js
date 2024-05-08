@@ -4,6 +4,7 @@ import Tag from './models/tag.js'
 import Comment from './models/comment.js'
 
 import express from 'express'
+import compression from 'compression'
 
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -37,7 +38,6 @@ const transporter = nodemailer.createTransport({
     },
   })
 
-const requests = []
 const removedUsers = []
 
 const app = express()
@@ -51,6 +51,8 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({
     extended: false
 }))
+
+app.use(compression())
 
 dotenv.config()
 
@@ -81,34 +83,14 @@ if (process.env.NODE_ENV === 'production') {
 app.use(limiter)
 }
 
-const ipAddressToBase64 = (ip) => {
-    let step1 = Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
-    step1 = step1.slice(0, -2)
-    return step1.toString('base64').slice(0, -2)
-}
 
 app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'no-referrer')
-    requests.push({
-        url: req.originalUrl,
-        method: req.method,
-        ip: ipAddressToBase64(req.ip),
-        rate_limit: req.rateLimit,
-        authenticated: req.isAuthenticated(),
-        user: req.user,
-    })
     next()
 })
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
-})
-
-app.get('/requests', (req, res) => {
-    if (!req.isAuthenticated() || req.user.role !== 'admin') {
-        return res.status(403).send('Not authorized')
-    }
-    res.json(requests)
 })
 
 app.get('/removed-users', (req, res) => {
@@ -130,20 +112,13 @@ app.use((err, req, res, next) => {
     res.status(500).send('An error occurred: ' + err.message)
 })
 
-cron.schedule('0 0 * * 0', async () => {
-    console.log('Clearing requests')
-    requests = []
-})
-
 cron.schedule('0 0 1 * *', async () => {
-    console.log('Pruning unverified users')
     let users = await User.find({
         role: 'unverified-user',
         createdAt: {
             $lt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7)
         }})
     users.forEach(async (user) => {
-        console.log('Removing user ' + user.displayName)
         removedUsers.push(user)
         await user.remove()
 

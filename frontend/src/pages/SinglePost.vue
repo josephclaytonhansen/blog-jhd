@@ -59,7 +59,7 @@ onBeforeMount(async () => {
   </div>
   <div v-else class="bg-backdrop-1 flex items center align-middle">
     <postProgressBar />
-    <div class = "flex space-between">
+    <div class = "flex space-between p-5 w-full">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>

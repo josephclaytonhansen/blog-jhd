@@ -40,8 +40,8 @@
         <div class="flex">
             <Avatar :image="author.picture" classes=" mr-2  square-img-container w-12" alt="avatar"/>
             <div class="flex flex-col">
-                <p class='text-md'>{{ author.displayName }}</p>
-                <p class="text-text-2 text-sm">{{ author.shortBio }}</p>
+                <p class='text-md font-semibold'>by {{ author.displayName }}</p>
+                <p class="text-text-2 text-sm italic">{{ author.shortBio }}</p>
             </div>
         </div>
     </div>

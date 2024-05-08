@@ -386,7 +386,14 @@ body {
   background-color: theme('colors.backdrop-2');
 }
 
+.dividing-line{
+  border-bottom: 2px solid theme('colors.backdrop-3');
+  width: 100%;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
 /* end automated */
+
 
 
 

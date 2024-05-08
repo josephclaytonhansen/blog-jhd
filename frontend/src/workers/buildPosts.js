@@ -26,9 +26,9 @@ const updateRouterFile = async () => {
     for (const post of posts) {
         let newRoute = ''
         if (post.subDirectory !== '' && post.subDirectory !== undefined && post.subDirectory !== '/') {
-            newRoute = `{ path: '/${post.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}'} },`
+            newRoute = `{ path: '/${post.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}' },`
         } else {
-            newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}'} },`
+            newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}' },`
         }
         addRoutes.push(newRoute)
     }
@@ -46,6 +46,9 @@ const updateRouterFile = async () => {
     fs.writeFileSync(routerFilePath, routerFileContent)
 }
 
+try{
 updateRouterFile()
-
 updateRouterFile()
+} catch (err) {
+    console.log(err)
+}

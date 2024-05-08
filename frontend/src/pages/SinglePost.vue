@@ -6,12 +6,16 @@ import authorBox from '../components/bricks/post/authorBox.vue'
 import postBody from '../components/bricks/post/postBody.vue'
 import Sidebar from '../components/bricks/post/sidebar.vue'
 
+import NoImageHeader from '../components/bricks/post/noImageHeader.vue'
+import ImageHeader from '../components/bricks/post/imageHeader.vue'
+import FullWidthImageHeader from '../components/bricks/post/fullWidthImageHeader.vue'
+
 import axios from 'axios'
 import {useRouter} from 'vue-router'
 const router = useRouter()
 
 const props = defineProps({
-  id: String
+  id: String,
 })
 
 const post = ref({})
@@ -93,17 +97,26 @@ onBeforeMount(async () => {
   </div>
   <div v-else class="bg-backdrop-1 flex items center align-middle">
     <postProgressBar />
+    <div v-if="post.headerType == 'fullwidth'">
+      <FullWidthImageHeader :post="post"/>
+    </div>
     <div class = "flex space-between p-5 w-full">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
+        <div v-if="post.headerType == 'noimage'">
+          <NoImageHeader :post="post"/>
+        </div>
+        <div v-else-if="post.headerType == 'image'">
+          <ImageHeader :post="post"/>
+        </div>
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>
-        <hr class="dividing-line block lg:hidden"/>
-        <authorBox :author_id="post.author" class="block lg:hidden" />
+        <hr v-if = "!(post.sidebar)" class="dividing-line block lg:hidden"/>
+        <authorBox v-if = "!(post.sidebar)" :author_id="post.author" class="block lg:hidden" />
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />
       </div>
       <div class = "dividing-line-mid hidden lg:flex"></div>
-      <Sidebar :author="post.author" :views="post.views" :date="post.date"/>
+      <Sidebar v-if="post.sidebar" :author="post.author" :views="post.views" :date="post.date"/>
     </div>
   </div>
 </template>

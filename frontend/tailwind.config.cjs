@@ -174,8 +174,12 @@ module.exports = {
           'backdrop': colors[process.env.BACKDROP_COLOR] || colors.slate,
           'backdrop-0': process.env.THEME === 'dark' ? 'var(--backdrop-0)' : (process.env.THEME === 'light' ? 'var(--light-backdrop-0)' : 'var(--ultra-light-backdrop-0)'),
           'backdrop-1': process.env.THEME === 'dark' ? 'var(--backdrop-1)' : (process.env.THEME === 'light' ? 'var(--light-backdrop-1)' : 'var(--ultra-light-backdrop-1)'),
+          'backdrop-2': process.env.THEME === 'dark' ? 'var(--backdrop-2)' : 'var(--light-backdrop-2)',
+          'backdrop-3': process.env.THEME === 'dark' ? 'var(--backdrop-3)' : 'var(--light-backdrop-3)',
           'text-0': process.env.THEME === 'dark' ? 'var(--text-text-0)' : (process.env.THEME === 'light' ? 'var(--light-text-0)' : 'var(--ultra-light-text-0)'),
           'text-1': process.env.THEME === 'dark' ? 'var(--text-text-1)' : (process.env.THEME === 'light' ? 'var(--light-text-1)' : 'var(--ultra-light-text-1)'),
+          'text-2': process.env.THEME === 'dark' ? 'var(--text-text-2)' : 'var(--light-text-2)',
+          'text-3': process.env.THEME === 'dark' ? 'var(--text-text-3)' : 'var(--light-text-3)',
         },
         backgroundColor: {
           'backdrop-0': process.env.THEME === 'dark' ? 'var(--backdrop-0)' : (process.env.THEME === 'light' ? 'var(--light-backdrop-0)' : 'var(--ultra-light-backdrop-0)'),

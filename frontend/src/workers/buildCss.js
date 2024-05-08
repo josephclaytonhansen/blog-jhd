@@ -20,6 +20,11 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 #progress-bar, #progress-bar-fill{
   display: ${process.env.READING_PROGRESS_BAR === 'true' ? 'block' : 'none'};
 }
+
+.colorblock{
+  background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-2\')' : 'transparent'};
+}
+
 /* end automated */
 `
 

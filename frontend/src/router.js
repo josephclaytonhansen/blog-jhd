@@ -18,7 +18,7 @@ const routes = [
 
 //end automated
 //blogs
-{ path: '/undefined/test', component: () => import('./components/Post.vue'), props : {post: {"_id":"663a98e604bbf7593d046b54","content":"<p>Awesome. Now let's do it again.</p>","title":"test","status":"draft","tags":[],"date":"2024-05-07T21:11:02.761Z","featuredImage":"","metaTitle":"test","metaDescription":"test","metaKeywords":"test","excerpt":"test","author":"6638f10fb589105f3dd58628","comments":[],"site":"blog.josephhansen.dev","views":0,"slug":"test","__v":0}} },
+{ path: '/undefined/test', component: () => import('./pages/SinglePost.vue'), props : {post: {"_id":"663a98e604bbf7593d046b54","content":"<p>Awesome. Now let's do it again.</p>","title":"test","status":"draft","tags":[],"date":"2024-05-07T21:11:02.761Z","featuredImage":"","metaTitle":"test","metaDescription":"test","metaKeywords":"test","excerpt":"test","author":"6638f10fb589105f3dd58628","comments":[],"site":"blog.josephhansen.dev","views":0,"slug":"test","__v":0}} },
 //end blogs
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]

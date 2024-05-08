@@ -24,17 +24,29 @@ const updateRouterFile = async () => {
     let addRoutes = []
 
     for (const post of posts) {
-        const newRoute = `{ path: '/${post.title}', component: () => import('./components/Post.vue'), props : {post: ${JSON.stringify(post)}} },`
+        let postData = JSON.stringify(post)
+        let newRoute = ''
+        if (postData.subDirectory !== '') {
+            newRoute = `{ path: '/${post.subDirectory}/${post.title}', component: () => import('./components/Post.vue'), props : {post: ${postData}} },`
+        } else {
+            newRoute = `{ path: '/${post.title}', component: () => import('./components/Post.vue'), props : {post: ${postData}} },`
+        }
         addRoutes.push(newRoute)
     }
 
     let newRoutes = addRoutes.join("\n")
 
-    let regex = /(\n\/\/blogs)[\s\S]*?(\n\/\/end blogs)/
+    // Remove existing routes
+    let regexRemove = /(\n\/\/blogs)[\s\S]*?(\n\/\/end blogs)/
+    routerFileContent = routerFileContent.replace(regexRemove, `$1\n//end blogs`)
 
-    routerFileContent = routerFileContent.replace(regex, `$1\n${newRoutes}$2`)
+    // Add new routes
+    let regexAdd = /(\n\/\/end blogs)/
+    routerFileContent = routerFileContent.replace(regexAdd, `\n${newRoutes}$1`)
 
     fs.writeFileSync(routerFilePath, routerFileContent)
 }
+
+updateRouterFile()
 
 updateRouterFile()

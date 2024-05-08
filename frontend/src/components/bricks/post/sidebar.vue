@@ -15,13 +15,17 @@ import {
     <div class="sidebar grow max-w-[30vw] hidden md:hidden lg:flex flex-col p-5 rounded-xl">
         <authorBox :author_id="props.author" class="hidden lg:block" />
         <hr class="dividing-line"/>
-        <div class="flex items-center gap-3">
-            <Eye class="mr-2"/>
-            <p class="text-text-2">{{ props.views }}</p>
+        <div class="flex justify-between">
+            <div class="flex items-center gap-3 grow">
+                <Eye class="mr-2"/>
+                <p class="text-text-2">{{ props.views }}</p>
+            </div>
+            <hr class="dividing-line-mid shrink"/>
+            <div class="flex items-center gap-3 grow">
+                <Calendar class="mr-2"/>
+                <p class="text-text-2">{{ props.date }}</p>
+            </div>
         </div>
-        <div class="flex items-center gap-3">
-            <Calendar class="mr-2"/>
-            <p class="text-text-2">{{ props.date }}</p>
-        </div>
+        
     </div>
 </template>

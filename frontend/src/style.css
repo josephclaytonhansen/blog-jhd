@@ -40,10 +40,6 @@
     scrollbar-color: theme('colors.accent.500') theme('colors.backdrop.800');
     scrollbar-width: thin;
   }
-  .ql-toolbar button, .ql-toolbar button, .ql-container, .ql-toolbar{
-    @apply bg-backdrop-0;
-    @apply rounded-sm;
-  }
 
 }
 
@@ -53,6 +49,7 @@
   border-radius: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  @apply bg-backround-0;
 }
 
 .ql-toolbar *{
@@ -64,6 +61,8 @@
   border-radius: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  @apply bg-backround-0;
+  @apply text-text-0;
 }
 
 .ql-picker .ql-picker-label, .ql-fill{

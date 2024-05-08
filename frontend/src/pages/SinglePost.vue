@@ -8,7 +8,7 @@ import Sidebar from '../components/bricks/post/sidebar.vue'
 
 import NoImageHeader from '../components/bricks/post/noImageHeader.vue'
 import ImageHeader from '../components/bricks/post/imageHeader.vue'
-import FullWidthImageHeader from '../components/bricks/post/fullWidthImageHeader.vue'
+import FullWidthImageHeader from '../components/bricks/post/fullWidthHeader.vue'
 
 import axios from 'axios'
 import {useRouter} from 'vue-router'

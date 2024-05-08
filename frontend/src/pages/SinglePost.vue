@@ -112,11 +112,12 @@ onBeforeMount(async () => {
         <div class="h-[800px] bg-backdrop-1"/>
         <hr v-if = "!(post.sidebar)" class="dividing-line block lg:hidden"/>
         <authorBox v-if = "!(post.sidebar)" :author_id="post.author" class="block lg:hidden" />
+        <infoBox v-if = "!(post.sidebar)" :views="post.views" :date="post.date" />
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />
       </div>
       <div class = "dividing-line-mid hidden lg:flex"></div>
-      <Sidebar v-if="post.sidebar" :author="post.author" :views="post.views" :date="post.date"/>
+      <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>
 </template>

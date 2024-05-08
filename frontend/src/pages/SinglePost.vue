@@ -50,13 +50,17 @@ const getPostById = async (id) => {
 
 onBeforeMount(async () => {
   await getPostById(props.id)
-  if (post.value.status !== "published"){
+  if (post && post.value.status !== "published"){
 
-    let checkUrl = `${process.env.VUE_APP_SERVER_URL}/user/checksession`
+    try{
+  let checkUrl = `${process.env.VUE_APP_SERVER_URL}/user/checksession`
   let checkParams = {
-      user: user,
-      session: session
-  }
+      user: localStorage.getItem('user'),
+      session: sessionStorage.getItem('session')
+  } } catch (error) {
+      console.error(error)
+      router.push({name: 'NotFound'})
+    }
   try {
       let checkResponse = await axios.post(checkUrl, checkParams, config)
       if (checkResponse.status == 200) {

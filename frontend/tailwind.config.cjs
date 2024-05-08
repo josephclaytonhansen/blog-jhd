@@ -172,9 +172,10 @@ module.exports = {
         colors: {
           'accent': colors[process.env.ACCENT_COLOR] || colors.cyan,
           'backdrop': colors[process.env.BACKDROP_COLOR] || colors.slate,
-          'text-text-0': 'var(--text-text-0)',
-          'text-text-1': 'var(--text-text-1)',
-          'text-text-2': 'var(--text-text-2)',
+          'backdrop-0': process.env.THEME === 'dark' ? 'var(--backdrop-0)' : (process.env.THEME === 'light' ? 'var(--light-backdrop-0)' : 'var(--ultra-light-backdrop-0)'),
+          'backdrop-1': process.env.THEME === 'dark' ? 'var(--backdrop-1)' : (process.env.THEME === 'light' ? 'var(--light-backdrop-1)' : 'var(--ultra-light-backdrop-1)'),
+          'text-0': process.env.THEME === 'dark' ? 'var(--text-text-0)' : (process.env.THEME === 'light' ? 'var(--light-text-0)' : 'var(--ultra-light-text-0)'),
+          'text-1': process.env.THEME === 'dark' ? 'var(--text-text-1)' : (process.env.THEME === 'light' ? 'var(--light-text-1)' : 'var(--ultra-light-text-1)'),
         },
         backgroundColor: {
           'backdrop-0': process.env.THEME === 'dark' ? 'var(--backdrop-0)' : (process.env.THEME === 'light' ? 'var(--light-backdrop-0)' : 'var(--ultra-light-backdrop-0)'),

@@ -34,6 +34,23 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
     }
 })
 
+const checkSessionUser = asyncHandler(async (req, res) => {
+    let user = req.body.user || req.query.user
+    let session = req.body.session || req.query.session
+    let userCheck = User.findOne({ session: { $eq: session } })
+    if (userCheck._id === user._id) {
+        res.status(200)
+        res.json({
+            message: user.role
+        })
+    }
+    else {
+        res.status(401)
+        throw new Error('Invalid session')
+    }
+
+})
+
 const verifyTokenUser = asyncHandler(async (req, res, next) => {
     const token = req.body.token || req.query.token
     const user = req.body.user || req.query.user
@@ -489,5 +506,6 @@ export {
     getUserByDisplayName,
     getUserById,
     getUserByEmail,
-    getUsers
+    getUsers,
+    checkSessionUser
 }

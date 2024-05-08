@@ -15,7 +15,8 @@ import {
     getUsers,
     isAdminUser,
     isVerifiedUser,
-    isAuthorUser
+    isAuthorUser,
+    checkSessionUser
 } from '../controllers/userController.js'
 
 import {authenticateToken, lightAuthToken} from '../middleware/authenticateToken.js'
@@ -29,6 +30,7 @@ export default (transporter) => {
     router.get('/', authenticateToken, getUsers)
     router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
+    router.post('/checksession', checkSessionUser)
     router.post('/isadmin', isAdminUser)
     router.post('/isauthor', isAuthorUser)
     router.post('/isverified', isVerifiedUser)

@@ -32,78 +32,42 @@ const lockedRoutes = [
 ]
 
 router.beforeEach(async (to, from, next) => {
-    const lockedRoute = lockedRoutes.find(lockedRoute => to.path.startsWith(lockedRoute.path))
-    if (!lockedRoute) {
+  const lockedRoute = lockedRoutes.find(lockedRoute => to.path.startsWith(lockedRoute.path))
+  if (!lockedRoute) {
       next()
       return
-    }
-  
-    let user = localStorage.getItem('user')
-    let token = localStorage.getItem('token')
-    if (token && user) {
-      let config = {
-        headers: {
+  }
+
+  let user = localStorage.getItem('user')
+  let session = sessionStorage.getItem('session')
+  let config = {
+      headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json',
           'Access-Control-Allow-Origin': '*'
-        }
-      };
-      let url = `${process.env.VUE_APP_SERVER_URL}/user/verify`
-      let params = {
-        token: token,
-        user: user
-      };
-      
-      let success = false;
-      try {
-          let response = await axios.post(url, params, config)
-          if (response.status !== 200) {
-              next(lockedRoute.redirect)
+      }
+  };
+
+  let checkUrl = `${process.env.VUE_APP_SERVER_URL}/user/checksession`
+  let checkParams = {
+      user: user,
+      session: session
+  }
+  try {
+      let checkResponse = await axios.post(checkUrl, checkParams, config)
+      if (checkResponse.status == 200) {
+          if (lockedRoute.roles.includes(checkResponse.data.message)) { 
+              next()
           } else {
-              try {
-                  if (lockedRoute.roles.includes('admin')) {
-                      url = `${process.env.VUE_APP_SERVER_URL}/user/isadmin`
-                      response = await axios.post(url, params, config)
-                      if (response.status == 200) {
-                          success = true
-                      }
-                  }
-              } catch (err) {
-                  console.log('Admin check failed');
-              }
-
-              if (!success) {
-                  try {
-                      if (lockedRoute.roles.includes('author')) {
-                          url = `${process.env.VUE_APP_SERVER_URL}/user/isauthor`
-                          response = await axios.post(url, params, config)
-                          if (response.status == 200) {
-                              success = true
-                          }
-                      }
-                  } catch (err) {
-                      console.log('Author check failed');
-                  }
-              }
-
-              if (!success && lockedRoute.roles.includes('user')) {
-                  success = true
-              }
-
-              if (success) {
-                  next()
-              } else {
-                  next(lockedRoute.redirect)
-              }
+              next(lockedRoute.redirect)
           }
-      } catch (err) {
+      } else {
           next(lockedRoute.redirect)
       }
-
-    } else {
-
+  } catch (err) {
+      console.log('Session check failed')
       next(lockedRoute.redirect)
-    }
-  })
+  }
+})
 
 export default router

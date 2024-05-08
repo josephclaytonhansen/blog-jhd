@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps(
-    post: Object
+    {post: Object}
 )
 </script>
 

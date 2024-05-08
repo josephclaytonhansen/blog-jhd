@@ -26,10 +26,10 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 }
 
 .dividing-line{
-  border-bottom: ${process.env.LINES === 'true' ? '2px solid theme(\'colors.backdrop-3\')' : 'none'};
+  border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-1\')' : 'none'};
   width: 100%;
-  padding-bottom: ${process.env.LINES === 'true' ? '1rem' : '.5rem'};
-  padding-top: ${process.env.LINES === 'true' ? '1rem' : '.5rem'};
+  margin-bottom: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
+  margin-top: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
 }
 /* end automated */
 `

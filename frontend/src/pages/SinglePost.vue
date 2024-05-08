@@ -80,11 +80,11 @@ onMounted(async() => {
 
 <template>
   <div class="bg-backdrop-1 flex items center align-middle">
-    <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70chr] mx-auto">
+    <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto">
       <postProgressBar />
       {{post}}
       <div class="h-[800px] bg-backdrop-1"/>
-      <authorBox :author_id="post.author_id" />
+      <authorBox :author_id="post.author" />
       <CommentSection :post_id="post.id" />
     </div>
   </div>

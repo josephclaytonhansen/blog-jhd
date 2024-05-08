@@ -40,7 +40,7 @@ const checkSessionUser = asyncHandler(async (req, res) => {
     let session = req.body.session || req.query.session
     let userCheck = await User.findOne({ session: { $eq: session } })
     if (userCheck._id.toString() === user.user._id) {
-        if (Date.now() - new Date(userCheck.sessionTimestamp).getTime() < 15 * 60 * 1000) {
+        if (Date.now() - new Date(userCheck.sessionTimestamp).getTime() < 60 * 60 * 1000) {
             res.status(200)
             res.json({
                 message: userCheck.role

@@ -64,12 +64,12 @@ onBeforeMount(async () => {
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>
         <hr class="dividing-line"/>
-        <authorBox :author_id="post.author" />
+        <authorBox :author_id="post.author" class="block lg:hidden" />
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />
       </div>
-      <div class = "dividing-line-mid hidden md:hidden lg:flex"></div>
-      <Sidebar />
+      <div class = "dividing-line-mid hidden lg:flex"></div>
+      <Sidebar :author="post.author"/>
     </div>
   </div>
 </template>

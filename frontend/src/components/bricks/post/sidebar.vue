@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="sidebar grow max-w-64 hidden md:hidden lg:flex flex-col p-5 colorblock_accent">
+    <div class="sidebar grow max-w-64 hidden md:hidden lg:flex flex-col p-5 rounded-xl colorblock_accent">
 
     </div>
 </template>

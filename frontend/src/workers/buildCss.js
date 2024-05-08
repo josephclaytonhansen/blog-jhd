@@ -37,6 +37,10 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
   margin-top: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
 }
 
+.colorblock_accent .dividing-line{
+  border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.accent.600\')' : 'none'};
+}
+
 .sidebar{
   display: ${process.env.SIDEBAR === 'true' ? 'flex' : 'none!important'};
 }

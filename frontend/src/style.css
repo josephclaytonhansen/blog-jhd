@@ -386,6 +386,11 @@ body {
   background-color: theme('colors.backdrop-2');
 }
 
+.colorblock_accent{
+  background-color: theme('colors.accent.500');
+  color: theme('colors.backdrop.800');
+}
+
 .dividing-line{
   border-bottom: 1px solid theme('colors.backdrop-0');
   width: 100%;
@@ -393,6 +398,7 @@ body {
   margin-top: 2rem;
 }
 /* end automated */
+
 
 
 

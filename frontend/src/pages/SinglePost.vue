@@ -1,35 +1,44 @@
 <script setup>
-const props = defineProps(
-    {id: String}
-)
+import { ref, onBeforeMount, onMounted } from 'vue'
+
+const props = defineProps({
+  id: String
+})
 
 const post = ref({})
 
-import { ref, onBeforeMount } from 'vue'
-
 const getPostById = async (id) => {
+  const cachedPost = sessionStorage.getItem(`post-${id}`)
+  const timestamp = sessionStorage.getItem(`timestamp-${id}`)
+
+  if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
+    post.value = JSON.parse(cachedPost)
+  } else {
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/id/` + id
     let config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        withCredentials: true
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      withCredentials: true
     }
     try {
-        await fetch(url, {
-            method: 'GET',
-            headers: config.headers,
-            credentials: 'include'
-        }).then(async (response) => {
-            if (response.status !== 200) {
-                throw new Error('Network error- could not get post')
-            }
-            post.value = await response.json()
-        })
+      await fetch(url, {
+        method: 'GET',
+        headers: config.headers,
+        credentials: 'include'
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          throw new Error('Network error- could not get post')
+        }
+        post.value = await response.json()
+        sessionStorage.setItem(`post-${id}`, JSON.stringify(post.value))
+        sessionStorage.setItem(`timestamp-${id}`, String(new Date().getTime()))
+      })
     } catch (error) {
-        console.error(error)
+      console.error(error)
     }
+  }
 }
 
 const incrementPostViews = async (id) => {
@@ -38,25 +47,30 @@ const incrementPostViews = async (id) => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-        },
-        withCredentials: true
+        }
     }
     try {
         await fetch(url, {
             method: 'POST',
             headers: config.headers,
             credentials: 'include'
-        }).then(async (response) => {
-            post.value.views += 1
         })
     } catch (error) {
         console.error(error)
     }
+    const cachedPost = JSON.parse(sessionStorage.getItem(`post-${id}`))
+  if (cachedPost) {
+    cachedPost.views += 1
+    sessionStorage.setItem(`post-${id}`, JSON.stringify(cachedPost))
+  }
 }
 
 onBeforeMount(async() => {
     await getPostById(props.id)
-    incrementPostViews(props.post._id)
+})
+
+onMounted(async() => {
+    await incrementPostViews(props.id)
 })
 
 </script>

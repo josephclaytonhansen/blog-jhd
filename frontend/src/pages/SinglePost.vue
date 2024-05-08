@@ -8,7 +8,7 @@ import Sidebar from '../components/bricks/post/sidebar.vue'
 
 import {UseRouter } from 'vue-router'
 import axios from 'axios'
-const router = useRouter()
+const router = UseRouter()
 
 const props = defineProps({
   id: String

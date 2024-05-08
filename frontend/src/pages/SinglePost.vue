@@ -55,6 +55,7 @@ const getPostById = async (id) => {
 onBeforeMount(async () => {
   await getPostById(props.id)
   if (post && post.value.status !== "published"){
+    isLoading.value = true
     try{
   let checkParams = {
       user: localStorage.getItem('user'),
@@ -71,6 +72,8 @@ onBeforeMount(async () => {
       if (checkResponse.status == 200) {
         if (!(checkResponse.data.message == "admin") && !(checkResponse.data.message == "author")) {
           router.push('/NotFound')
+        } else {
+          isLoading.value = false
         }
       } else {
         router.push('/NotFound')

@@ -7,7 +7,7 @@
 
     const author = ref({})
     const getAuthor = async(id) => {
-        let url = `${process.env.VUE_APP_SERVER_URL}/user/` + props.author_id
+        let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + props.author_id
         let config = {
             headers: {
                 'Content-Type': 'application/json',

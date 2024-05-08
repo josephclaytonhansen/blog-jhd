@@ -35,10 +35,10 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
 })
 
 const checkSessionUser = asyncHandler(async (req, res) => {
-    let user = req.body.user || req.query.user
+    let user = JSON.parse(req.body.user || req.query.user)
     let session = req.body.session || req.query.session
     let userCheck = await User.findOne({ session: { $eq: session } })
-    if (userCheck._id === user._id) {
+    if (userCheck._id.toString() === user._id) {
         if (Date.now() - new Date(userCheck.sessionTimestamp).getTime() < 15 * 60 * 1000) {
             res.status(200)
             res.json({

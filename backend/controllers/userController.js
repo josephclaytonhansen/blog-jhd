@@ -35,7 +35,8 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
 })
 
 const checkSessionUser = asyncHandler(async (req, res) => {
-    let user = JSON.parse(req.body.user.user || req.query.user.user)
+    let user = JSON.parse(req.body.user || req.query.user)
+    console.log(user)
     let session = req.body.session || req.query.session
     let userCheck = await User.findOne({ session: { $eq: session } })
     console.log(user._id, userCheck)

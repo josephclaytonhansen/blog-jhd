@@ -23,7 +23,7 @@ const updateRouterFile = async () => {
     let posts = await getPosts()
     let addRoutes = []
 
-    for (const post of posts) {'
+    for (const post of posts) {
         let postData = JSON.stringify(post)
         let newRoute = ''
         if (post.subDirectory !== '' && post.subDirectory !== undefined && postw.subDirectory !== '/') {

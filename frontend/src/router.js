@@ -53,6 +53,7 @@ router.beforeEach(async (to, from, next) => {
         token: token,
         user: user
       };
+      let success = 0
       try {
         let response = await axios.post(url, params, config)
         if (response.status !== 200) {
@@ -63,21 +64,25 @@ router.beforeEach(async (to, from, next) => {
           if (lockedRoute.roles.includes('admin')) {
             url = `${process.env.VUE_APP_SERVER_URL}/user/isadmin`
             response = await axios.post(url, params, config)
-            if (response.status !== 200) {
-                next(lockedRoute.redirect)
-            } else {
-                next()
-            }
+            if (response.status == 200) {
+                success += 1
+            } 
         } else if (lockedRoute.roles.includes('author')) {
             url = `${process.env.VUE_APP_SERVER_URL}/user/isauthor`
             response = await axios.post(url, params, config)
-            if (response.status !== 200) {
-                next(lockedRoute.redirect)
-            } else {
-                next()
+            if (response.status == 200) {
+                success += 1
             }
-        } else {
+          } else if (lockedRoute.roles.includes('user')) {
+            success += 1
+          }
+        else {
             next()
+        }
+        if (success > 0) {
+            next()
+        } else {
+            next(lockedRoute.redirect)
         }
         }
       } catch (err) {

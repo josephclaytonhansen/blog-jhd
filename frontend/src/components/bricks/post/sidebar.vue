@@ -1,5 +1,5 @@
 <script setup>
-import authorBox from '../components/bricks/post/authorBox.vue'
+import authorBox from './authorBox.vue'
 const props = defineProps({
     author: String
 })

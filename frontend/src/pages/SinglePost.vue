@@ -68,6 +68,7 @@ onBeforeMount(async () => {
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />
       </div>
+      <div class = "dividing-line-mid hidden md:hidden lg:flex"></div>
       <Sidebar />
     </div>
   </div>

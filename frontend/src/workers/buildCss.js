@@ -37,6 +37,13 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
   margin-top: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
 }
 
+.dividing-line-mid{
+  border-right: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-0\')' : 'none'};
+  height: 100%;
+  margin-left: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
+  margin-right: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
+}
+
 .colorblock_accent .dividing-line{
   border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.accent.600\')' : 'none'};
 }

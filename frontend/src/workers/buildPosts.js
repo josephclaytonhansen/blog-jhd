@@ -17,19 +17,9 @@ const getPosts = async () => {
     return []
 }
 
-const updateRouterFile = async () => {
-    const routerFilePath = path.resolve(__dirname, '../router.js')
-    let routerFileContent = fs.readFileSync(routerFilePath, 'utf8')
-    let posts = await getPosts()
-    let addRoutes = []
-
-    for (const post of posts) {
-        let postData = JSON.stringify(post)
-        let newRoute = ''
-        if (post.subDirectory !== '' && post.subDirectory !== undefined && postw.subDirectory !== '/') {
-            newRoute = `{ path: '/${post.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: '${post._id}'} },`
+const updateRouterFile = async () => {id: '${post._id}'} },`
         } else {
-            newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: '${post._id}'} },`
+            newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}'} },`
         }
         addRoutes.push(newRoute)
     }

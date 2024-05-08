@@ -78,8 +78,10 @@ onMounted(async() => {
 </script>
 
 <template>
+  <div class = "bg-backdrop-1">
     <postProgressBar />
     {{post}}
-    <div class = "h-[2000px] bg-backdrop-0"/>
+    <div class = "h-[2000px] bg-backdrop-1"/>
     <CommentSection :post_id="post.id" />
+  </div>
 </template>

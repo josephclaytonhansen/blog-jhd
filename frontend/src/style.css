@@ -381,7 +381,13 @@ body {
 #progress-bar, #progress-bar-fill{
   display: block;
 }
+
+.colorblock{
+  background-color: theme('colors.backdrop-2');
+}
+
 /* end automated */
+
 
 
 

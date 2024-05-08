@@ -25,6 +25,11 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
   background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-2\')' : 'transparent'};
 }
 
+.colorblock_accent{
+  background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.accent.500\')' : 'transparent'};
+  color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop.800\')' : 'transparent'};
+}
+
 .dividing-line{
   border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-0\')' : 'none'};
   width: 100%;

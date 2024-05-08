@@ -38,7 +38,7 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 }
 
 .sidebar{
-  display: ${process.env.SIDEBAR === 'true' ? 'flex!important' : 'none!important'};
+  display: ${process.env.SIDEBAR === 'true' ? 'flex' : 'none!important'};
 }
 
 @layer components {

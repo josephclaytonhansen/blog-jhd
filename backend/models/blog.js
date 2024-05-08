@@ -21,6 +21,7 @@ const blogSchema = new mongoose.Schema({
     subDirectory: String,
     views: Number,
     headerStyle: String,
+    sidebar: Boolean,
 })
 
 blogSchema.pre('save', function(next) {

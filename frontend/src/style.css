@@ -24,10 +24,10 @@
   --light-text-1: theme('colors.backdrop.700');
   --light-text-2: theme('colors.backdrop.600');
   --light-text-3: theme('colors.backdrop.500');
-  --ultra-light-backdrop-1: rgb(235, 235, 235);
+  --ultra-light-backdrop-1: rgb(225, 225, 225);
   --ultra-light-backdrop-0: white;
   --ultra-light-text-0: black;
-  --ultra-light-text-1: rgb(20, 20, 20);
+  --ultra-light-text-1: rgb(40, 40, 40);
 }
 
 @layer base {

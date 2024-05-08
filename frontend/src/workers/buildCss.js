@@ -26,7 +26,7 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 }
 
 .dividing-line{
-  border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-1\')' : 'none'};
+  border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-0\')' : 'none'};
   width: 100%;
   margin-bottom: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
   margin-top: ${process.env.LINES === 'true' ? '2rem' : '1rem'};

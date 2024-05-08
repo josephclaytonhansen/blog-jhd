@@ -26,8 +26,8 @@ const updateRouterFile = async () => {
     for (const post of posts) {
         let postData = JSON.stringify(post)
         let newRoute = ''
-        if (postData.subDirectory !== '') {
-            newRoute = `{ path: '/${post.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: ${postData}} },`
+        if (postData.subDirectory !== '' && postData.subDirectory !== undefined && postData.subDirectory !== '/') {
+            newRoute = `{ path: '/${postData.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: ${postData}} },`
         } else {
             newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {post: ${postData}} },`
         }

@@ -19,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div id="progress-bar" class="fixed top-0 left-0 w-screen overflow-hidden bg-backdrop-1 transition-opacity duration-300 h-4 border-b-2 border-backdrop-2" :class="progressBar > 5 ? 'opacity-100' : 'opacity-0'" >
-        <div id="progress-bar-fill" class="h-full absolute left-0 top-0 bg-accent-500 transition-opacity duration-300":style="{ width: progressBar + '%' }" :class="progressBar > 5 ? 'opacity-100' : 'opacity-0'"></div>
+    <div id="progress-bar" class="fixed top-0 left-0 w-screen overflow-hidden bg-backdrop-1 transition-opacity duration-300 h-2 border-b-2 border-top-2 border-backdrop-1" :class="progressBar > 2 ? 'opacity-100' : 'opacity-0'" >
+        <div id="progress-bar-fill" class="h-full absolute rounded-r-md left-0 top-0 bg-accent-500 transition-opacity duration-300":style="{ width: progressBar + '%' }" :class="progressBar > 2 ? 'opacity-100' : 'opacity-0'"></div>
     </div>
 </template>

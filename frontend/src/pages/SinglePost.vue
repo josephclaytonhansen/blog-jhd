@@ -69,7 +69,7 @@ onBeforeMount(async () => {
         <CommentSection :post_id="post.id" />
       </div>
       <div class = "dividing-line-mid hidden lg:flex"></div>
-      <Sidebar :author="post.author"/>
+      <Sidebar :author="post.author" :views="post.views" :date="post.date"/>
     </div>
   </div>
 </template>

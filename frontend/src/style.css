@@ -387,8 +387,8 @@ body {
 }
 
 .colorblock_accent{
-  background-color: theme('colors.accent.500');
-  color: theme('colors.backdrop.800');
+  background-color: theme('colors.accent.700');
+  color: theme('colors.backdrop.100');
 }
 
 .dividing-line{
@@ -397,7 +397,35 @@ body {
   margin-bottom: 2rem;
   margin-top: 2rem;
 }
+
+.sidebar{
+  display: flex!important;
+}
+
+@layer components {
+  #post_content {
+    margin: auto;
+    width: 80vw;
+    max-width: 70ch;
+  }
+  @screen sm {
+    #post_content {
+      width: 70vw;
+    }
+  }
+  @screen md {
+    #post_content {
+      width: 60vw;
+    }
+  }
+  @screen lg {
+    #post_content {
+      width: 50vw;
+    }
+  }
+}
 /* end automated */
+
 
 
 

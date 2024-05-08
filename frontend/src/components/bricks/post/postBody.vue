@@ -29,5 +29,5 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <div v-html="sanitizedContent" class="prose"></div>
+    <div v-html="sanitizedContent" class="prose grow"></div>
 </template>

@@ -164,6 +164,8 @@ const newPost = () => {
     editingPostFeaturedImage.value = ''
     editingPostLocation.value = ''
     editingPostStatus.value = 'new-draft'
+    editingPostHeader.value = 'image'
+    sidebar.value = true
 }
 
 const listPost = () => {
@@ -242,6 +244,8 @@ const saveNewDraft = async () => {
         featuredImage: editingPostFeaturedImage.value,
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
+        header: editingPostHeader.value,
+        sidebar: sidebar.value
     }
     console.log(JSON.stringify(data))
 
@@ -291,6 +295,8 @@ const saveExistingDraft = async() => {
         featuredImage: editingPostFeaturedImage.value,
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
+        header: editingPostHeader.value,
+        sidebar: sidebar.value
     }
 
     try {

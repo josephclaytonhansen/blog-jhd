@@ -18,7 +18,7 @@ const routes = [
 
 //end automated
 //blogs
-{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {post: undefined} },
+{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {post: 663a98e604bbf7593d046b54} },
 //end blogs
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]

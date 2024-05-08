@@ -6,6 +6,10 @@ import authorBox from '../components/bricks/post/authorBox.vue'
 import postBody from '../components/bricks/post/postBody.vue'
 import Sidebar from '../components/bricks/post/sidebar.vue'
 
+import {UseRouter } from 'vue-router'
+import axios from 'axios'
+const router = useRouter()
+
 const props = defineProps({
   id: String
 })

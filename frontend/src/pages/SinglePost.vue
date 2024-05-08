@@ -50,11 +50,32 @@ const getPostById = async (id) => {
 
 onBeforeMount(async () => {
   await getPostById(props.id)
+  if (post.value.status !== "published"){
+
+    let checkUrl = `${process.env.VUE_APP_SERVER_URL}/user/checksession`
+  let checkParams = {
+      user: user,
+      session: session
+  }
+  try {
+      let checkResponse = await axios.post(checkUrl, checkParams, config)
+      if (checkResponse.status == 200) {
+        if (!(checkResponse.data.message == "admin") && !(checkResponse.data.message == "author")) {
+          router.push({name: 'NotFound'})
+        }
+      } else {
+        router.push({name: 'NotFound'})
+      }
+  } catch (error) {
+      console.error(error)
+      router.push({name: 'NotFound'})
+  }
+  }
 })
 </script>
 
 <template>
-  <div v-if="isLoading" class="flex">
+  <div v-if="isLoading" class="flex w-screen h-screen overflow-hidden">
     <p class = "text-xl text-text-3">Loading...</p>
   </div>
   <div v-else class="bg-backdrop-1 flex items center align-middle">

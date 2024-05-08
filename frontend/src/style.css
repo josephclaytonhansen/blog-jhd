@@ -369,11 +369,11 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'Prompt';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'Prompt';
 }
 
 .avatar{border-radius:999rem;}
@@ -383,6 +383,7 @@ body {
   display: block;
 }
 /* end automated */
+
 
 
 

@@ -17,6 +17,8 @@ const routes = [
     // automated
 
 //end automated
+//blogs
+//end blogs
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]
 

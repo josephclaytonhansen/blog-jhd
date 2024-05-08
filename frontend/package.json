@@ -7,10 +7,11 @@
     "dev": "NODE_ENV=production node ./src/builders/buildCss.js && vite",
     "build": "vite build",
     "preview": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build && vite preview",
-    "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && node commit.js && npm run build",
+    "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build-posts && node commit.js && npm run build",
     "create-site-page": "node ./src/workers/buildSitePages.js",
     "remove-site": "node ./src/workers/removeSite.js",
-    "remove-site-page": "node ./src/workers/removeSitePages.js"
+    "remove-site-page": "node ./src/workers/removeSitePages.js",
+    "build-posts": "node ./src/workers/buildPosts.js"
   },
   "dependencies": {
     "@lucide/lab": "^0.1.1",

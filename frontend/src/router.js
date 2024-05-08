@@ -53,40 +53,53 @@ router.beforeEach(async (to, from, next) => {
         token: token,
         user: user
       };
-      let success = 0
+      
+      let success = false;
       try {
-        let response = await axios.post(url, params, config)
-        if (response.status !== 200) {
+          let response = await axios.post(url, params, config)
+          if (response.status !== 200) {
+              next(lockedRoute.redirect)
+          } else {
+              try {
+                  if (lockedRoute.roles.includes('admin')) {
+                      url = `${process.env.VUE_APP_SERVER_URL}/user/isadmin`
+                      response = await axios.post(url, params, config)
+                      if (response.status == 200) {
+                          success = true
+                      }
+                  }
+              } catch (err) {
+                  console.log('Admin check failed');
+              }
 
-          next(lockedRoute.redirect)
-        } else {
+              if (!success) {
+                  try {
+                      if (lockedRoute.roles.includes('author')) {
+                          url = `${process.env.VUE_APP_SERVER_URL}/user/isauthor`
+                          response = await axios.post(url, params, config)
+                          if (response.status == 200) {
+                              success = true
+                          }
+                      }
+                  } catch (err) {
+                      console.log('Author check failed');
+                  }
+              }
 
-          if (lockedRoute.roles.includes('admin')) {
-            url = `${process.env.VUE_APP_SERVER_URL}/user/isadmin`
-            response = await axios.post(url, params, config)
-            if (response.status == 200) {
-                success += 1
-            } 
-        }  if (lockedRoute.roles.includes('author')) {
-            url = `${process.env.VUE_APP_SERVER_URL}/user/isauthor`
-            response = await axios.post(url, params, config)
-            if (response.status == 200) {
-                success += 1
-            }
-          } if (lockedRoute.roles.includes('user')) {
-            success += 1
+              if (!success && lockedRoute.roles.includes('user')) {
+                  success = true
+              }
+
+              if (success) {
+                  next()
+              } else {
+                  next(lockedRoute.redirect)
+              }
           }
-
-        if (success > 0) {
-            next()
-        } else {
-            next(lockedRoute.redirect)
-        }
-        }
       } catch (err) {
-
-        next(lockedRoute.redirect)
+          next(lockedRoute.redirect)
       }
+
     } else {
 
       next(lockedRoute.redirect)

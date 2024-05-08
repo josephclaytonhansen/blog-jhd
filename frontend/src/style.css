@@ -387,12 +387,13 @@ body {
 }
 
 .dividing-line{
-  border-bottom: 1px solid theme('colors.backdrop-1');
+  border-bottom: 1px solid theme('colors.backdrop-0');
   width: 100%;
   margin-bottom: 2rem;
   margin-top: 2rem;
 }
 /* end automated */
+
 
 
 

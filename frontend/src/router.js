@@ -28,7 +28,7 @@ const router = createRouter({
 const lockedRoutes = [
   { path: '/cms', redirect: '/author', roles: ['admin'] },
   { path: '/me', redirect: '/login', roles: ['user', 'admin', 'author'] },
-  { path: '/author', redirect: '/login', roles: ['author'] },
+  { path: '/author', redirect: '/login', roles: ['author', 'admin'] },
 ]
 
 router.beforeEach(async (to, from, next) => {

@@ -55,14 +55,13 @@ const getPostById = async (id) => {
 onBeforeMount(async () => {
   await getPostById(props.id)
   if (post && post.value.status !== "published"){
-
-  let checkUrl = `${process.env.VUE_APP_SERVER_URL}/user/checksession`
+    try{
   let checkParams = {
       user: localStorage.getItem('user'),
       session: sessionStorage.getItem('session')
-  } 
-  try {
-      let checkResponse = await axios.post(checkUrl, checkParams, config)
+  }
+
+      let checkResponse = await axios.post(`${process.env.VUE_APP_SERVER_URL}/user/checksession`, checkParams, config)
       if (checkResponse.status == 200) {
         if (!(checkResponse.data.message == "admin") && !(checkResponse.data.message == "author")) {
           router.push({name: 'NotFound'})
@@ -70,11 +69,12 @@ onBeforeMount(async () => {
       } else {
         router.push({name: 'NotFound'})
       }
+
   } catch (error) {
-      console.error(error)
-      router.push({name: 'NotFound'})
+    console.error(error)
+    router.push({name: 'NotFound'})
   }
-  }
+}
 })
 </script>
 

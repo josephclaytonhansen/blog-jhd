@@ -17,6 +17,7 @@ import {getBlogs,
     getBlogsByTag,
     unpublishBlog,
     publishBlog,
+    incrementBlogViews
 } from '../controllers/blogController.js'
 
 const router = express.Router()
@@ -36,5 +37,6 @@ router.put('/addcomment/:id', authenticateToken, addCommentToBlog)
 router.put('/deletecomment/:id', authenticateToken, deleteCommentFromBlog)
 router.post('/unpublish/:id', authenticateToken, unpublishBlog)
 router.post('/publish/:id', authenticateToken, publishBlog)
+router.post('/incrementviews/:id', incrementBlogViews)
 
 export default router

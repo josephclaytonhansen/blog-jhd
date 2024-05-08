@@ -50,6 +50,17 @@ const getBlogById = asyncHandler(async (req, res) => {
     }
 })
 
+const incrementBlogViews = asyncHandler(async (req, res) => {
+    const blog = await Blog.findById(req.params.id)
+    blog.views = blog.views + 1
+    await blog.save()
+    if (blog) {
+        res.status(200)
+    } else {
+        res.status(404).send('Blog not found')
+    }
+})
+
 const createBlog = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
@@ -212,4 +223,5 @@ export {
     getBlogsByTag,
     publishBlog,
     unpublishBlog,
+    incrementBlogViews
 }

@@ -83,8 +83,8 @@ app.use(limiter)
 
 const ipAddressToBase64 = (ip) => {
     let step1 = Buffer.from(ip.split('.').map((octet) => parseInt(octet)).join('.')).toString('base64')
-    step1 = step1.slice(0, -1)
-    return step1.toString('base64')
+    step1 = step1.slice(0, 2)
+    return step1.toString('base64').slice(0, 2)
 }
 
 app.use((req, res, next) => {

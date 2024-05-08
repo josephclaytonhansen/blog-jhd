@@ -60,19 +60,25 @@ onBeforeMount(async () => {
       user: localStorage.getItem('user'),
       session: sessionStorage.getItem('session')
   }
-
+  let config = {
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+      }
+  }
       let checkResponse = await axios.post(`${process.env.VUE_APP_SERVER_URL}/user/checksession`, checkParams, config)
       if (checkResponse.status == 200) {
         if (!(checkResponse.data.message == "admin") && !(checkResponse.data.message == "author")) {
-          router.push({name: 'NotFound'})
+          router.push('/NotFound')
         }
       } else {
-        router.push({name: 'NotFound'})
+        router.push('/NotFound')
       }
 
   } catch (error) {
     console.error(error)
-    router.push({name: 'NotFound'})
+    router.push('/NotFound')
   }
 }
 })

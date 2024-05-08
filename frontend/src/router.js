@@ -20,6 +20,7 @@ const routes = [
 //blogs
 { path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663a98e604bbf7593d046b54'} },
 //end blogs
+    { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]
 

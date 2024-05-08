@@ -87,6 +87,7 @@ const createBlog = asyncHandler(async (req, res) => {
         views: 0,
         site: req.body.site,
         subDirectory: req.subDirectory,
+        headerStyle: req.body.headerStyle || 'image'
     })
     await blog.save()
     res.status(201).json(blog)
@@ -113,6 +114,8 @@ const editBlog = asyncHandler(async (req, res) => {
         blog.metaOpenGraph = req.body.metaOpenGraph || blog.metaOpenGraph
         blog.excerpt = req.body.excerpt || blog.excerpt
         blog.site = req.body.site || blog.site
+        blog.subDirectory = req.body.subDirectory || blog.subDirectory
+        blog.headerStyle = req.body.headerStyle || blog.headerStyle
         await blog.save()
         res.json(blog)
     } else {

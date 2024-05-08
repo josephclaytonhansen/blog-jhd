@@ -19,7 +19,8 @@ const blogSchema = new mongoose.Schema({
     comments: Array,
     site: String,
     subDirectory: String,
-    views: Number
+    views: Number,
+    headerStyle: String,
 })
 
 blogSchema.pre('save', function(next) {

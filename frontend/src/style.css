@@ -25,9 +25,9 @@
   --light-text-2: theme('colors.backdrop.600');
   --light-text-3: theme('colors.backdrop.500');
   --ultra-light-backdrop-1: white;
-  --ultra-light-backdrop-0-ultra-light: white;
-  --ultra-light-text-0-ultra-light: black;
-  --ultra-light-text-1-ultra-light: black;
+  --ultra-light-backdrop-0: white;
+  --ultra-light-text-0: black;
+  --ultra-light-text-1: black;
 }
 
 @layer base {

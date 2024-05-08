@@ -411,9 +411,6 @@ body {
 
 .sidebar{
   display: flex;
-}
-
-.sidebar.colorblock_accent{
   background-color: transparent;
   color: theme('colors.text-0');
 
@@ -442,6 +439,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

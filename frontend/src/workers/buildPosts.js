@@ -2,12 +2,14 @@ import fs from 'fs'
 import fetch from 'node-fetch'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const getPosts = async () => {
-    const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
+    const response = await fetch(`${process.env.VITE_APP_SERVER_URL}/blog/`)
     if (response.ok){
         let data = await response.json()
         return data

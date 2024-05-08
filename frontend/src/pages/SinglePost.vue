@@ -60,7 +60,9 @@ onBeforeMount(async () => {
       <postProgressBar />
       {{post}}
       <div class="h-[800px] bg-backdrop-1"/>
+      <hr class="dividing-line"/>
       <authorBox :author_id="post.author" />
+      <hr class="dividing-line"/>
       <CommentSection :post_id="post.id" />
     </div>
   </div>

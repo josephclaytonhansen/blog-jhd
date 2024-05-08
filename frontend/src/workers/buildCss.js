@@ -25,6 +25,12 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
   background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-2\')' : 'transparent'};
 }
 
+.dividing-line{
+  border-bottom: ${process.env.LINES === 'true' ? '2px solid theme(\'colors.backdrop-3\')' : 'none'};
+  width: 100%;
+  padding-bottom: ${process.env.LINES === 'true' ? '1rem' : '.5rem'};
+  padding-top: ${process.env.LINES === 'true' ? '1rem' : '.5rem'};
+}
 /* end automated */
 `
 

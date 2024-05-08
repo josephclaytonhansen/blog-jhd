@@ -399,7 +399,13 @@ body {
 }
 
 .sidebar{
-  display: flex!important;
+  display: flex;
+}
+
+.sidebar.colorblock_accent{
+  background-color: theme('colors.accent.700');
+  color: theme('colors.backdrop.100');
+
 }
 
 @layer components {
@@ -425,6 +431,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

@@ -39,10 +39,15 @@ const checkSessionUser = asyncHandler(async (req, res) => {
     let session = req.body.session || req.query.session
     let userCheck = User.findOne({ session: { $eq: session } })
     if (userCheck._id === user._id) {
-        res.status(200)
-        res.json({
-            message: user.role
-        })
+        if (Date.now() - new Date(userCheck.sessionTimestamp).getTime() < 15 * 60 * 1000) {
+            res.status(200)
+            res.json({
+                message: userCheck.role
+            })
+        } else {
+            res.status(401)
+            throw new Error('Invalid session')
+        }
     }
     else {
         res.status(401)

@@ -104,7 +104,7 @@ const editPost = (id) => {
     editingPostLocation.value = temp[0].subDirectory
     editingPostStatus.value = temp[0].status
     editingPostId.value = temp[0]._id
-    editingPostHeader.value = temp[0].header
+    editingPostHeader.value = temp[0].headerStyle
     editingPostTags.value = temp[0].tags
     sidebar.value = temp[0].sidebar
     editingPostCategory.value = temp[0].category
@@ -269,7 +269,7 @@ const saveNewDraft = async () => {
         featuredImage: editingPostFeaturedImage.value,
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
-        header: editingPostHeader.value,
+        headerStyle: editingPostHeader.value,
         sidebar: sidebar.value,
         tags: editingPostTags.value,
         category: editingPostCategory.value
@@ -320,7 +320,7 @@ const saveExistingDraft = async() => {
         featuredImage: editingPostFeaturedImage.value,
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
-        header: editingPostHeader.value,
+        headerStyle: editingPostHeader.value,
         sidebar: sidebar.value,
         tags: editingPostTags.value,
         category: editingPostCategory.value

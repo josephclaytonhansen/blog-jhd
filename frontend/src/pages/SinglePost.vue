@@ -107,18 +107,18 @@ onBeforeMount(async () => {
   </div>
   <div v-else class="bg-backdrop-1 flex items center align-middle">
     <postProgressBar />
-    <div v-if="post.headerType == 'fullwidth'">
+    <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>
     </div>
     <div class = "flex space-between p-5 w-full">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
-        <div v-if="post.headerType == 'noimage'">
+        <div v-if="post.headerStyle == 'noimage'">
           <NoImageHeader :post="post"/>
         </div>
-        <div v-if="post.headerType == 'imageoverlay'">
+        <div v-if="post.headerStyle == 'imageoverlay'">
           <ImageHeader :post="post" :overlay="true"/>
         </div>
-        <div v-else-if="post.headerType == 'image'">
+        <div v-else-if="post.headerStyle == 'image'">
           <ImageHeader :post="post" :overlay="false"/>
         </div>
         <postBody :content="post.content"/>

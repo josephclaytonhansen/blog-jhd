@@ -14,6 +14,7 @@
 
     onMounted(async () => {
         author.value = await getAuthor(props.author_id)
+        console.log(author.value)
     })
 </script>
 

@@ -18,7 +18,7 @@ const routes = [
 
 //end automated
 //blogs
-{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663a98e604bbf7593d046b54'} },
+{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663d2558fb47c37907826c62'} },
 //end blogs
 //tags
 

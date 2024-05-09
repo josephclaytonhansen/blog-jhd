@@ -1,5 +1,5 @@
 <script setup>
-import HdImage from './hdImage.vue'
+import HdImage from '../images/hdImage.vue'
 import { ref } from 'vue'
 const props = defineProps({
     src: String,

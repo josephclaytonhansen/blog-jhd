@@ -11,7 +11,7 @@ import getAuthor from '../../functions/getAuthor.js'
 import { onMounted } from 'vue'
 
 onMounted(async () => {
-        await getAuthor(props.post.value.author).then((data) => {
+        await getAuthor(props.post.author).then((data) => {
             author.value = data
             console.log(data)
         })

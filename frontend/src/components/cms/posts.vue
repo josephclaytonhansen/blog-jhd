@@ -445,7 +445,7 @@ const saveExistingDraft = async() => {
 
     </div>
     <div class="p-3" v-else>
-        <table class='w-full text-text-2 table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
+        <table class='w-full text-text-2 table-sort table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
             <colgroup>
                 <col style="width: 3%"/>
                 <col style="width: 3%"/>

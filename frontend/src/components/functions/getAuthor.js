@@ -8,7 +8,7 @@ const getAuthor = async(id) => {
         sessionStorage.removeItem(`author-${id}`)
         sessionStorage.removeItem(`timestamp-${id}`)
 
-    let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + props.author_id
+    let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + id
     let config = {
         headers: {
             'Content-Type': 'application/json',

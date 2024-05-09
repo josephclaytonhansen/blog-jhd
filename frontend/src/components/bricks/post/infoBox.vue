@@ -3,11 +3,12 @@ const props = defineProps({
     views: Number,
     date: String,
     tags: Array,
-    category: String
+    category: String,
+    comments: Number
 })
 
 import Tags from './micros/tags.vue'
-import {Eye,Calendar} from 'lucide-vue-next'
+import {Eye,Calendar, MessageCircleMore} from 'lucide-vue-next'
 import ISOdateStringToRelative from '../../functions/relativeDate.js'
 
 </script>
@@ -24,6 +25,11 @@ import ISOdateStringToRelative from '../../functions/relativeDate.js'
             <div class="flex items-center gap-1 grow">
                 <Eye class="mr-2"/>
                 <p class="text-text-2">{{ props.views }}</p>
+            </div>
+            <hr class="dividing-line-mid shrink"/>
+            <div class="flex items-center gap-1 grow">
+                <MessageCircleMore class="mr-2"/>
+                <p class="text-text-2">{{ props.comments }}</p>
             </div>
             <hr class="dividing-line-mid shrink"/>
             <div class="flex items-center gap-1 grow">

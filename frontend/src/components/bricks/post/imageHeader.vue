@@ -31,7 +31,7 @@ post.value = props.post
             <HdImage :image="props.post.featuredImage" :alt="props.post.title" class="w-full rounded" />
             <div class="absolute inset-0 opacity-0"></div>
         </div>
-        <h1 class="text-4xl font-header">{{props.post.title}}</h1>
+        <h1 class="text-4xl font-header mt-4">{{props.post.title}}</h1>
         <h2 class="text-xs font-header italic">Written by {{author.displayName}}, {{ISOdateStringToRelative(props.post.date)}}</h2>
     </div>
     <hr class="dividing-line"/>

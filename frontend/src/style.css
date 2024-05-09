@@ -365,10 +365,10 @@ a {
 }
 /* automated */
 h1, h2 {
-  text-transform: none;
+  text-transform: uppercase;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Maitree';
+  font-family: 'Cairo';
 }
 
 body {
@@ -441,6 +441,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

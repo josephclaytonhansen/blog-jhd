@@ -2,7 +2,8 @@
 const props = defineProps({
     views: Number,
     date: String,
-    tags: Array
+    tags: Array,
+    category: String
 })
 
 import Tags from './micros/tags.vue'
@@ -48,7 +49,11 @@ const ISOdateStringToRelative = (date) => {
 
 <template>
     <hr class="dividing-line"/>
-    <Tags :tags="props.tags" />
+    <div class="flex justify-between">
+        <h2 class="font-header grow">{{props.category}}</h2>
+        <hr class="dividing-line-mid shrink"/>
+        <Tags :tags="props.tags" class='grow' />
+    </div>
     <hr class="dividing-line"/>
     <div class="flex justify-between">
             <div class="flex items-center gap-1 grow">

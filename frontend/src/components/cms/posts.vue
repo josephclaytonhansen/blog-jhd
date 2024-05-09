@@ -270,7 +270,7 @@ const saveNewDraft = async () => {
         status: editingPostStatus.value,
         header: editingPostHeader.value,
         sidebar: sidebar.value,
-        tags: editingPostTags.value
+        tags: editingPostTags.value,
         category: editingPostCategory.value
     }
 

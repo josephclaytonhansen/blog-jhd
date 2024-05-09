@@ -125,8 +125,8 @@ onBeforeMount(async () => {
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>
         <hr class="block dividing-line" :class="post.sidebar ? 'lg:hidden' : ''"/>
-        <authorBox  :author_id="post.author" class="block" :class="post.sidebar ? 'lg:hidden' : ''" />
-        <infoBox v-if="!(post.sidebar)" :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar" class="block" :class="post.sidebar ? 'lg:hidden' : ''" />
+        <authorBox  :author_id="post.author" :class="post.sidebar ? 'block md:block lg:hidden' : 'hidden md:hidden lg:block'" />
+        <infoBox :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar"  :class="post.sidebar ? 'block md:block lg:hidden' : 'hidden md:hidden lg:block'" />
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />
       </div>

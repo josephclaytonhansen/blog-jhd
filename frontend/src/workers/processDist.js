@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const distDir = path.resolve(dirname, './dist')
+const distDir = path.resolve(dirname, '../../dist')
 const sitePrefix = process.env.SITE_PREFIX
 if (!sitePrefix || sitePrefix === '') {
   throw new Error('SITE_PREFIX environment variable is required')

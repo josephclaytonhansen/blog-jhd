@@ -18,7 +18,7 @@ import ISOdateStringToRelative from '../../functions/relativeDate.js'
 
 <template>
     <hr class="dividing-line"/>
-    <div class="flex justify-between items-center" v-if="props.sidebar">
+    <div class="flex justify-between items-center text-text-1" v-if="props.sidebar">
             <h2 class="font-header font-bold">{{props.category}}</h2>
         <hr class="dividing-line-mid shrink" v-if="props.tags.length > 0"/>
         <Tags :tags="props.tags" class='grow' v-if="props.tags.length > 0" />
@@ -41,7 +41,7 @@ import ISOdateStringToRelative from '../../functions/relativeDate.js'
             </div>
         </div>
 
-         <div v-else class="flex justify-between items-center">
+         <div v-else class="flex justify-between items-center text-text-1">
             <div class="flex items-center gap-1 grow">
                 <Eye class="mr-2"/>
                 <p class="text-text-2">{{ props.views }}</p>

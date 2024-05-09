@@ -31,17 +31,19 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 }
 
 .dividing-line{
-  border-bottom: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-0\')' : 'none'};
+  border-bottom: ${process.env.LINES === 'true' ? '2px solid theme(\'colors.backdrop-0\')' : 'none'};
   width: 100%;
   margin-bottom: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
   margin-top: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
+  border-top-width: 0;
 }
 
 .dividing-line-mid{
-  border-right: ${process.env.LINES === 'true' ? '1px solid theme(\'colors.backdrop-0\')' : 'none'};
+  border-right: ${process.env.LINES === 'true' ? '2px solid theme(\'colors.backdrop-0\')' : 'none'};
   height: 100%;
   margin-left: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
   margin-right: ${process.env.LINES === 'true' ? '2rem' : '1rem'};
+  border-top-width: 0;
 }
 
 .colorblock_accent .dividing-line{

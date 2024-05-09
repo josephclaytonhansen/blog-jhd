@@ -21,7 +21,6 @@ const routes = [
 { path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663a98e604bbf7593d046b54'} },
 //end blogs
 //tags
-{ path: '/tag/test', component: () => import('./pages/SingleTag.vue'), props : {id: '663ce6e844f7586b42a80345'} },
 //end tags
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

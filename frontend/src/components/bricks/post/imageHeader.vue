@@ -7,11 +7,13 @@ const props = defineProps({
     overlay: {type: Boolean, default: true},
 })
 const author = ref('')
-import { getAuthor } from '../../functions/getAuthor.js'
+import getAuthor from '../../functions/getAuthor.js'
 import { onBeforeMount } from 'vue'
 
 onBeforeMount(async () => {
+    if (props.overlay === true){
         author.value = await getAuthor(props.post.author)
+    }
     })
 post.value = props.post
 </script>

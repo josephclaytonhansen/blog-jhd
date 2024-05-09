@@ -4,7 +4,7 @@
     })
     import { ref, onMounted } from 'vue'
     import Avatar from '@/components/bricks/images/avatar.vue'
-    import { getAuthor } from '../../functions/getAuthor.js'
+    import getAuthor from '../../functions/getAuthor.js'
 
     import {useRouter } from 'vue-router'
     const router = useRouter()

@@ -384,11 +384,13 @@ body {
 
 .colorblock{
   background-color: transparent;
+  
 }
 
 .colorblock_accent{
   background-color: transparent;
-  color: transparent;
+  ;
+  
 }
 
 .dividing-line{
@@ -441,6 +443,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

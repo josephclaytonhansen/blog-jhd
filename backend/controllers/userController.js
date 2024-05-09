@@ -140,7 +140,8 @@ const createUser = asyncHandler(async (req, res) => {
                 throw new Error('Passwords do not match')
         }
     } 
-    let displayNameCheck = await User.findOne({ displayName: { $regex: new RegExp(`^${req.body.displayName}$`, 'i') } });
+    let cleanedDisplayName = req.body.displayName.replace(/[-\s]/g, '').toLowerCase()
+    let displayNameCheck = await User.findOne({ dataDisplayName: cleanedDisplayName })
     if (displayNameCheck) {
         throw new Error('Display name already in use')
     }
@@ -202,7 +203,8 @@ const editUser = asyncHandler(async (req, res) => {
         throw new Error('You must be logged in to edit a user.')
     } 
     const user = await User.findById(req.params.id)
-    let displayNameCheck = await User.findOne({ displayName: { $regex: new RegExp(`^${req.body.displayName}$`, 'i') } });
+    let cleanedDisplayName = req.body.displayName.replace(/[-\s]/g, '').toLowerCase()
+    let displayNameCheck = await User.findOne({ dataDisplayName: cleanedDisplayName })
     if (displayNameCheck && displayNameCheck._id.toString() !== user._id.toString()) {
         res.status(401)
         throw new Error('Display name already in use')

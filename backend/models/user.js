@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     displayName: String,
+    dataDisplayName: String,
     picture: String,
     shortBio: String,
     longBio: String,
@@ -41,6 +42,9 @@ userSchema.methods.generateEmailVerifyToken = function() {
 userSchema.pre('save', function(next) {
     if (this.isModified('password')) {
         this.password = this.encryptPassword(this.password)
+    }
+    if (this.isModified('displayName')){
+        this.dataDisplayName = this.displayName.toLowerCase().split(" ").join("")
     }
     next()
 })

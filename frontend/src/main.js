@@ -8,7 +8,7 @@ import {createPinia} from 'pinia'
 
 import piniaPluginPersistedState from "pinia-plugin-persistedstate"
 
-import tableSort from '../node_modules/table-sort-js/table-sort.js'
+import tableSort from 'table-sort-js/table-sort.js'
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedState)

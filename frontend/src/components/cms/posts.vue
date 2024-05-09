@@ -445,7 +445,7 @@ const saveExistingDraft = async() => {
 
     </div>
     <div class="p-3" v-else>
-        <table class='w-full text-text-2 table-sort table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
+        <table class='w-full text-text-2 table-sort table-arrows table-auto border-separate border-spacing-0 min-w-[700px] scale-[60%] sm:scale-[80%] md:scale-100 -translate-x-[21%] sm:-translate-x-[10%] md:translate-x-0 -translate-y-4 sm:translate-y-0'>
             <colgroup>
                 <col style="width: 3%"/>
                 <col style="width: 3%"/>
@@ -459,15 +459,15 @@ const saveExistingDraft = async() => {
             </colgroup>
             <thead class="bg-backdrop-1 text-center uppercase">
                 <tr>
-                    <th class="p-3"><div class=  "flex items-center justify-center w-8 h-8"><Eye/></div></th>
-                    <th class=" p-3"><div class="flex items-center justify-center w-8 h-8"><MessageCircleMore/></div></th>
-                    <th class="font-normal p-3">Title</th>
-                    <th class="font-normal p-3">Author</th>
-                    <th class="hidden sm:table-cell p-3"><div class="flex items-center justify-center m-auto w-8 h-8"><Router/></div></th>
-                    <th class="hidden sm:table-cell p-3"><div class="flex items-center justify-center m-auto w-8 h-8"><Tags/></div></th>
-                    <th class="hidden sm:table-cell p-3 font-normal">Category</th>
-                    <th class="font-normal p-3">Status</th>
-                    <th class="font-normal p-3">Actions</th>
+                    <th class="p-3 order-by-desc"><div class=  "flex items-center justify-center w-8 h-8"><Eye/></div></th>
+                    <th class=" p-3 order-by-desc"><div class="flex items-center justify-center w-8 h-8"><MessageCircleMore/></div></th>
+                    <th class="font-normal p-3 order-by-desc">Title</th>
+                    <th class="font-normal p-3 order-by-desc">Author</th>
+                    <th class="hidden sm:table-cell p-3 order-by-desc"><div class="flex items-center justify-center m-auto w-8 h-8"><Router/></div></th>
+                    <th class="hidden sm:table-cell p-3 order-by-desc"><div class="flex items-center justify-center m-auto w-8 h-8"><Tags/></div></th>
+                    <th class="hidden sm:table-cell p-3 font-normal order-by-desc">Category</th>
+                    <th class="font-normal p-3 order-by-desc">Status</th>
+                    <th class="font-normal p-3 order-by-desc">Actions</th>
                 </tr>
             </thead>
             <tbody>

@@ -275,7 +275,7 @@
                 </div>
             </div>
             <table
-                class="grow text-text-2 table-auto border-separate border-spacing-0 table-sort">
+                class="grow text-text-2 table-auto border-separate border-spacing-0 table-sort table-arrows">
 
                 <tr v-for="tag in tags" :key="tag.id" class='flex'>
                     <td class="grow flex gap-1">

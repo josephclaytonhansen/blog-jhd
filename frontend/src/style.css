@@ -368,11 +368,11 @@ h1, h2 {
   text-transform: uppercase;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oswald';
+  font-family: 'Cairo';
 }
 
 body {
-  font-family: 'Libre Baskerville';
+  font-family: 'Cairo';
 }
 
 .avatar{border-radius:999rem;}
@@ -383,12 +383,12 @@ body {
 }
 
 .colorblock{
-  background-color: transparent;
+  background-color: theme('colors.backdrop-2');
 }
 
 .colorblock_accent{
-  background-color: transparent;
-  color: transparent;
+  background-color: theme('colors.accent.700');
+  color: theme('colors.backdrop.100');
 }
 
 .dividing-line{
@@ -441,6 +441,8 @@ body {
   }
 }
 /* end automated */
+
+
 
 
 

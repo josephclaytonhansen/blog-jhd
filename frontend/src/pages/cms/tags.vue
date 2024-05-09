@@ -35,7 +35,11 @@
     const categories = ref([])
 
     const newTagName = ref('')
+    const AllTagSites = process.env.VUE_APP_FRONTEND_PREFIXES
+    const newTagSite = ref('')
     const newCategoryName = ref('')
+    const AllCategorySites = process.env.VUE_APP_FRONTEND_PREFIXES
+    const newCategorySite = ref('')
 
     const addCategory = async () => {
         let config = {
@@ -51,7 +55,8 @@
             headers: config.headers,
             credentials: 'include',
             body: new URLSearchParams({
-                name: newCategoryName.value
+                name: newCategoryName.value,
+                site: newCategorySite.value
             })
         })
         if (response.status !== 200) {
@@ -61,6 +66,7 @@
         toast.success('Category added')
         categories.value = await getCategory()
         newCategoryName.value = ''
+        newCategorySite.value = ''
     }
 
     const deleteCategory = async (id) => {
@@ -99,7 +105,8 @@
             headers: config.headers,
             credentials: 'include',
             body: new URLSearchParams({
-                name: newTagName.value
+                name: newTagName.value,
+                site: newTagSite.value
             })
         })
         if (response.status !== 200) {
@@ -212,7 +219,8 @@
             credentials: 'include',
             body: new URLSearchParams({
                 name: categories.value.find(category => category._id === id).name,
-                slug: slugify(categories.value.find(category => category._id === id).name)
+                slug: slugify(categories.value.find(category => category._id === id).name),
+                site: categories.value.find(category => category._id === id).site
             })
         })
         if (response.status !== 200) {
@@ -238,7 +246,8 @@
             credentials: 'include',
             body: new URLSearchParams({
                 name: tags.value.find(tag => tag._id === id).name,
-                slug: slugify(tags.value.find(tag => tag._id === id).name)
+                slug: slugify(tags.value.find(tag => tag._id === id).name),
+                site: tags.value.find(tag => tag._id === id).site
             })
         })
         if (response.status !== 200) {
@@ -258,6 +267,9 @@
                 <h1 class="text-2xl text-text-2  ">Tags</h1>
                 <div class = 'flex gap-2'>
                 <input v-model="newTagName" type="text" class="bg-backdrop-0 text-text-0 px-2 py-2 rounded-md accent-accent-500 " placeholder="New Tag Name">
+                <select v-model="newTagSite" class="bg-backdrop-0 text-text-0 px-2 py-2 rounded-md accent-accent-500">
+                    <option v-for="site in AllTagSites" :key="site" :value="site">{{site}}</option>
+                </select>
                 <button @click="addTag" class="bg-backdrop-1 text-text-0 p-2 rounded-md">Add
                     Tag</button>
                 </div>
@@ -286,6 +298,9 @@
                 <h1 class="text-2xl text-text-2  ">Categories</h1>
                 <div class="flex gap-2">
                 <input v-model="newCategoryName" type="text" class="bg-backdrop-0 text-text-0 px-2 py-2 rounded-md accent-accent-500" placeholder="Category name">
+                <select v-model="newCategorySite" class="bg-backdrop-0 text-text-0 px-2 py-2 rounded-md accent-accent-500">
+                    <option v-for="site in AllCategorySites" :key="site" :value="site">{{site}}</option>
+                </select>
                 <button @click="addCategory" class="bg-backdrop-1 text-text-0 p-2 rounded-md">Add
                     Category</button>
                 </div>

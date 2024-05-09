@@ -24,6 +24,7 @@ const createCategory = asyncHandler(async (req, res) => {
     }
     const tag = new Category({
         name: req.body.name,
+        site: req.body.site
     })
     await tag.save()
     res.json(tag)
@@ -54,7 +55,8 @@ const editCategory = asyncHandler(async (req, res) => {
     }
     const tag = await Category.findById(req.params.id)
     if (tag) {
-        tag.name = req.body.name
+        tag.name = req.body.name || tag.name
+        tag.site = req.body.site || tag.site
         await tag.save()
         res.json(tag)
     } else {

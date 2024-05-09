@@ -9,6 +9,7 @@ const props = defineProps({
 const author = ref('')
 import getAuthor from '../../functions/getAuthor.js'
 import { onBeforeMount } from 'vue'
+import ISOdateStringToRelative from '../../functions/relativeDate.js'
 
 onBeforeMount(async () => {
         await getAuthor(props.post.author).then((data) => {
@@ -26,9 +27,12 @@ post.value = props.post
         <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-header text-white max-w-[80%]">{{props.post.title}}</h1>
     </div>
     <div class="w-full flex flex-col gap-2 rounded" v-else>
-        <HdImage :image="props.post.featuredImage" :alt="props.post.title" class="w-full rounded" />
+        <div class="relative w-full h-full rounded">
+            <HdImage :image="props.post.featuredImage" :alt="props.post.title" class="w-full rounded" />
+            <div class="absolute inset-0 opacity-0"></div>
+        </div>
         <h1 class="text-4xl font-header">{{props.post.title}}</h1>
-        <h2 class="text-xs font-header italic">{{author.displayName}}</h2>
+        <h2 class="text-xs font-header italic">Written by {{author.displayName}}, {{ISOdateStringToRelative(props.post.date)}}</h2>
     </div>
     <hr class="dividing-line"/>
 </template>

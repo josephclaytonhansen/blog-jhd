@@ -129,7 +129,7 @@ onBeforeMount(async () => {
         <hr class="dividing-line"/>
         <CommentSection :post_id="post.id" />
       </div>
-      <div class = "dividing-line-mid hidden lg:flex"></div>
+      <div class = "dividing-line-mid hidden" :class="post.sidebar ? 'lg:flex' : ''"></div>
       <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>

@@ -63,6 +63,8 @@ onBeforeMount(async () => {
   if (post && post.value.status !== "published"){
     isLoading.value = true
     try{
+      let checkResult = sessionStorage.getItem('checkResult')
+      if (!checkResult == "show") {
   let checkParams = {
       user: localStorage.getItem('user'),
       session: sessionStorage.getItem('session')
@@ -83,6 +85,8 @@ onBeforeMount(async () => {
         }
       } else {
         router.push('/NotFound')
+      }} else {
+        isLoading.value = false
       }
 
   } catch (error) {

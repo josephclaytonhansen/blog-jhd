@@ -12,11 +12,21 @@ const ipAddressToBase64 = (ip) => {
 }
 
 const userLoginByEmail = asyncHandler(async (req, res) => {
-    const user = await User.findOne({
+    let user
+    const users = await User.find({
         email: {
             $eq: req.body.email || req.body.username
         }
     })
+
+    if (users.length === 0) {
+        res.status(401)
+        throw new Error('Invalid credentials')
+    } else if (users.length > 1) {
+        user = users.find((user) => user.site === req.body.site)
+    } else {
+        user = users[0]
+    }
     if (user && user.validPassword(req.body.password)) {
         if (user.site === req.body.site) {
         user.lastLogin = new Date()

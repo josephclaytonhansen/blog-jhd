@@ -141,8 +141,7 @@ const showLogin = () => {
             
             <p class="text-sm italic text-text-2" v-if="!isRegistering">Don't have an account? <button class="hover:text-text-0 transition-all duration-300" @click="showRegister">Sign up</button></p>
             <p class="text-sm italic text-text-2" v-if="isRegistering">Already have an account? <button class="hover:text-text-0 transition-all duration-300" @click="showLogin">Login</button></p>
-            <hr class="border-backdrop-1 my-5"/>
-            <p class="text-sm text-normal text-text-3">Your login for <a class="text-accent-700" href = "https://hansenstudios.art">hansenstudios.art</a> and <a class="text-accent-700" href = "https://blog.josephhansen.dev">blog.josephhansen.dev</a> are the same. If you have an account on one, your credentials will work on both.</p>
+            
         </form>
     </div>
 </template>

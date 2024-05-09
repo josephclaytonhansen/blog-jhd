@@ -412,7 +412,7 @@ body {
 }
 
 .sidebar{
-  display: flex;
+  display: none!important;
   background-color: transparent;
   color: theme('colors.text-0');
 
@@ -441,6 +441,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

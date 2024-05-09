@@ -393,7 +393,7 @@ const saveExistingDraft = async() => {
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2 h-12">
                 <label for="tags" class="text-text-1">Tags</label>
-                <select multiple name="tags" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostTags">
+                <select multiple name="tags" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-12" v-model="editingPostTags">
                     <option v-for="tag in tags" :key="tag.name" :value="tag.name">{{tag.name}}</option>
                 </select>
             </div>

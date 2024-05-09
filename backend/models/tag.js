@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 const tagSchema = new mongoose.Schema({
     name: String,
     slug: String,
+    site: String
 })
 
 tagSchema.pre("save", function(next) {

@@ -24,6 +24,7 @@ const createTag = asyncHandler(async (req, res) => {
     }
     const tag = new Tag({
         name: req.body.name,
+        site: req.body.site
     })
     await tag.save()
     res.json(tag)
@@ -55,6 +56,7 @@ const editTag = asyncHandler(async (req, res) => {
     const tag = await Tag.findById(req.params.id)
     if (tag) {
         tag.name = req.body.name
+        tag.site = req.body.site
         await tag.save()
         res.json(tag)
     } else {

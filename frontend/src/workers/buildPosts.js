@@ -8,6 +8,8 @@ dotenv.config()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const thisSite = process.env.SITE_PREFIX
+
 const getPosts = async () => {
     const response = await fetch(`${process.env.VITE_APP_SERVER_URL}/blog/`)
     if (response.ok){
@@ -24,6 +26,7 @@ const updateRouterFile = async () => {
     let addRoutes = []
 
     for (const post of posts) {
+        if (post.site === thisSite) {
         let newRoute = ''
         if (post.subDirectory !== '' && post.subDirectory !== undefined && post.subDirectory !== '/') {
             newRoute = `{ path: '/${post.subDirectory}/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}'} },`
@@ -31,6 +34,7 @@ const updateRouterFile = async () => {
             newRoute = `{ path: '/${post.title}', component: () => import('./pages/SinglePost.vue'), props : {id: '${post._id}'} },`
         }
         addRoutes.push(newRoute)
+    }
     }
 
     let newRoutes = addRoutes.join("\n")

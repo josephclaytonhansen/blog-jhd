@@ -17,7 +17,7 @@ export {pinia}
 import {userStore} from './userStore'
 import { createHead } from '@vueuse/head'
 
-import tableSort from 'table-sort-js/table-sort.js'
+import tableSort from 'table-sort-js'
 
 const toastOptions = {
     position: "top-right",

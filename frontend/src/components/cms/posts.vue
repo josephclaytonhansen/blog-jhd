@@ -407,6 +407,7 @@ const saveExistingDraft = async() => {
                 <select name="category" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostCategory">
                     <option v-for="category in categories" :key="category.name" :value="category.name">{{category.name}}</option>
                 </select>
+            </div>
         </form>
 
         <form class = "flex gap-4 flex-wrap items-start p-4 min-h-36">

@@ -9,7 +9,7 @@ const sitePrefix = process.env.SITE_PREFIX
 if (!sitePrefix || sitePrefix === '') {
   throw new Error('SITE_PREFIX environment variable is required')
 }
-const newDistDir = path.resolve(dirname, `./dist.${sitePrefix}`)
+const newDistDir = path.resolve(dirname, `../../dist.${sitePrefix}`)
 
 if (fs.existsSync(newDistDir)) {
   fs.removeSync(newDistDir)

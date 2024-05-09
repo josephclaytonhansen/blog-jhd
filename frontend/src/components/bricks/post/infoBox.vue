@@ -17,6 +17,7 @@ import ISOdateStringToRelative from '../../functions/relativeDate.js'
 </script>
 
 <template>
+    <div id = "info-box">
     <hr class="dividing-line"/>
     <div class="flex justify-between items-center text-text-1" v-if="props.sidebar">
             <h2 class="font-header font-bold">{{props.category}}</h2>
@@ -57,4 +58,5 @@ import ISOdateStringToRelative from '../../functions/relativeDate.js'
                 <p class="text-text-2">{{ ISOdateStringToRelative(props.date) }}</p>
             </div>
          </div>
+        </div>
 </template>

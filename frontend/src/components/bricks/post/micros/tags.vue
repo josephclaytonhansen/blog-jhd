@@ -12,7 +12,7 @@ const router = useRouter()
 </script>
 
 <template>
-    <div class="flex flex-wrap gap-2" >
+    <div class="flex flex-wrap gap-2 items-center" >
         <Tag />
         <tagD v-for="tag in tags" :tag="tag" :key="tag"  @click="router.push(`/tag/${tag}`)" />
     </div>

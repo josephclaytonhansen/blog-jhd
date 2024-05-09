@@ -49,8 +49,8 @@ const ISOdateStringToRelative = (date) => {
 
 <template>
     <hr class="dividing-line"/>
-    <div class="flex justify-between">
-        <h2 class="font-header grow">{{props.category}}</h2>
+    <div class="flex justify-between items-center">
+        <p>in </p><h2 class="font-header font-bold">{{props.category}}</h2>
         <hr class="dividing-line-mid shrink" v-if="props.tags.length > 0"/>
         <Tags :tags="props.tags" class='grow' v-if="props.tags.length > 0" />
     </div>

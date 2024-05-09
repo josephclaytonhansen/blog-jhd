@@ -29,6 +29,9 @@ const getPostById = async (id) => {
     post.value = JSON.parse(cachedPost)
     isLoading.value = false
   } else {
+    sessionStorage.removeItem(`post-${id}`)
+    sessionStorage.removeItem(`timestamp-${id}`)
+    sessionStorage.removeItem('checkResult')
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/id/` + id
     let config = {
       headers: {

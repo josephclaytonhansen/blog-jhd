@@ -53,18 +53,11 @@ const getTags = async () => {
 onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
+    author.value = store.user
+    
     tags.value = await getTags()
     categories.value = await getCategory()
-    author.value = store.user
-    let temp
-    if (localStorage.getItem('posts')) {
-      posts.value = JSON.parse(localStorage.getItem('posts'))
-    }
-    temp = await getPosts()
-    if (!posts.value || JSON.stringify(posts.value) !== JSON.stringify(temp)) {
-      posts.value = temp
-      localStorage.setItem('posts', JSON.stringify(posts.value))
-    }
+    posts.value = await getPosts()
   } else {
     toast.info('Your session has expired. Please log in.')
     router.push('/login')
@@ -279,7 +272,6 @@ const saveNewDraft = async () => {
         sidebar: sidebar.value,
         tags: editingPostTags.value
     }
-    console.log(JSON.stringify(data))
 
     try {
         await fetch(url, {
@@ -295,7 +287,6 @@ const saveNewDraft = async () => {
             let temp = await response.json()
             editingPostId.value = temp._id
             editingPostStatus.value = 'draft'
-            localStorage.setItem('posts', '')
             posts.value = await getPosts()
         }).catch((error) => {
             toast.error(error.message || error.error || 'Error saving draft')
@@ -343,7 +334,6 @@ const saveExistingDraft = async() => {
                 throw new Error('Network error- could not save draft')
             }
             toast.success('Draft saved')
-            localStorage.setItem('posts', '')
             posts.value = await getPosts()
         }).catch((error) => {
             toast.error(error.message || error.error || 'Error saving draft')

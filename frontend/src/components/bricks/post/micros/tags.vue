@@ -1,0 +1,17 @@
+<script setup>
+import {ref} from 'vue'
+import tag from './tag.vue'
+const tags = ref([])
+const props = defineProps({
+    tags: Array
+})
+tags.value = props.tags
+import {useRouter} from 'vue-router'
+const router = useRouter()
+</script>
+
+<template>
+    <div class="flex flex-wrap gap-2" >
+        <tag v-for="tag in tags" :tag="tag" :key="tag"  @click="router.push(`/tag/${tag}`)" />
+    </div>
+</template>

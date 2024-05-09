@@ -2,7 +2,11 @@
 const props = defineProps({
     views: Number,
     date: String,
+    tags: Array
 })
+
+import Tags from './micros/tags.vue'
+
 import {
     Eye,
      Calendar
@@ -53,6 +57,8 @@ import {
 </script>
 
 <template>
+    <hr class="dividing-line"/>
+    <Tags :tags="props.tags" />
     <hr class="dividing-line"/>
     <div class="flex justify-between">
             <div class="flex items-center gap-1 grow">

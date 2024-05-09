@@ -8,8 +8,6 @@ import {createPinia} from 'pinia'
 
 import piniaPluginPersistedState from "pinia-plugin-persistedstate"
 
-import tableSort from 'table-sort-js/table-sort.js'
-
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedState)
 
@@ -45,7 +43,6 @@ app.use(createHead())
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 
-app.provide('tableSort', tableSort)
 app.use(Toast, toastOptions)
 app.use(pinia)
 app.use(router)

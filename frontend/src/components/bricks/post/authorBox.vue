@@ -13,8 +13,10 @@
     
 
     onMounted(async () => {
-        author.value = await getAuthor(props.author_id)
-        console.log(author.value)
+        await getAuthor(props.author_id).then((data) => {
+            author.value = data
+            console.log(data)
+        })
     })
 </script>
 

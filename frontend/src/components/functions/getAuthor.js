@@ -27,6 +27,7 @@ const getAuthor = async(id) => {
             author.value = await response.json()
             sessionStorage.setItem(`author-${id}`, JSON.stringify(author.value))
             sessionStorage.setItem(`timestamp-${id}`, new Date().getTime())
+            return author
         })
     } catch (error) {
         console.error(error)

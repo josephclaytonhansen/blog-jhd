@@ -11,9 +11,10 @@ import getAuthor from '../../functions/getAuthor.js'
 import { onMounted } from 'vue'
 
 onMounted(async () => {
-    if (props.overlay === false){
-        author.value = await getAuthor(props.post.author)
-    }
+        await getAuthor(props.post.value.author).then((data) => {
+            author.value = data
+            console.log(data)
+        })
     })
 post.value = props.post
 </script>

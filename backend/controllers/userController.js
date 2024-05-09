@@ -139,6 +139,12 @@ const createUser = asyncHandler(async (req, res) => {
             if (req.body.password !== req.body.confirmPassword) {
                 throw new Error('Passwords do not match')
         }
+    } 
+    let displayNameCheck = await User.findOne({
+        displayName: {$eq: req.body.displayName}
+    })
+    if (displayNameCheck) {
+        throw new Error('Display name already in use')
     }
     const user = new User({
         email: req.body.email,

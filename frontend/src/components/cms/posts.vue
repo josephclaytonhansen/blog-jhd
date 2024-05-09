@@ -210,6 +210,7 @@ const editingPostCategory = ref('')
 
 const headerOptions = ref([
     'image',
+    'imageoverlay',
     'noimage',
     'fullwidth'
 ])
@@ -333,15 +334,15 @@ const saveExistingDraft = async() => {
             body: JSON.stringify(data)
         }).then(async (response) => {
             if (response.status !== 200) {
-                throw new Error('Network error- could not save draft')
+                throw new Error('Network error- could not save post')
             }
             toast.success('Draft saved')
             posts.value = await getPosts()
         }).catch((error) => {
-            toast.error(error.message || error.error || 'Error saving draft')
+            toast.error(error.message || error.error || 'Error saving post')
         })
     } catch (error) {
-        toast.error(error.message || error.error || 'Error saving draft')
+        toast.error(error.message || error.error || 'Error saving post')
     }
 }
 

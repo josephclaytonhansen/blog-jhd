@@ -115,8 +115,11 @@ onBeforeMount(async () => {
         <div v-if="post.headerType == 'noimage'">
           <NoImageHeader :post="post"/>
         </div>
+        <div v-if="post.headerType == 'imageoverlay'">
+          <ImageHeader :post="post" :overlay="true"/>
+        </div>
         <div v-else-if="post.headerType == 'image'">
-          <ImageHeader :post="post"/>
+          <ImageHeader :post="post" :overlay="false"/>
         </div>
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>

@@ -11,7 +11,7 @@ const loggedInStatus = ref(false)
 const store = userStore(pinia)
 
 const posts = ref([])
-
+const tags = ref([])
 const author = ref({})
 
 const allSites = process.env.VUE_APP_FRONTEND_PREFIXES
@@ -29,9 +29,20 @@ const getPosts = async () => {
   return data
 }
 
+const getTags = async () => {
+  const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/tag/`)
+  if (response.status !== 200) {
+    toast.error('Network error')
+    throw new Error('Network error- could not get tags')
+  }
+  const data = await response.json()
+  return data
+}
+
 onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
+    tags.value = await getTags()
     author.value = store.user
     let temp
     if (localStorage.getItem('posts')) {
@@ -183,6 +194,7 @@ const editingPostFeaturedImage = ref('')
 const editingPostLocation = ref('')
 const editingPostStatus = ref('new-draft')
 const editingPostId = ref('')
+const editingPostTags = ref([])
 
 const headerOptions = ref([
     'image',
@@ -245,7 +257,8 @@ const saveNewDraft = async () => {
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
         header: editingPostHeader.value,
-        sidebar: sidebar.value
+        sidebar: sidebar.value,
+        tags: editingPostTags.value
     }
     console.log(JSON.stringify(data))
 
@@ -296,7 +309,8 @@ const saveExistingDraft = async() => {
         subDirectory: editingPostLocation.value,
         status: editingPostStatus.value,
         header: editingPostHeader.value,
-        sidebar: sidebar.value
+        sidebar: sidebar.value,
+        tags: editingPostTags.value
     }
 
     try {
@@ -363,6 +377,12 @@ const saveExistingDraft = async() => {
                 <label for="site" class="text-text-1">Site</label>
                 <select name="site" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostSites">
                     <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
+                </select>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="tags" class="text-text-1">Site</label>
+                <select multiple name="tags" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostTags">
+                    <option v-for="tag in tags" :key="tag.name" :value="tag.name">{{tag.name}}</option>
                 </select>
             </div>
             <div class="flex flex-col grow items-center align-middle gap-2">

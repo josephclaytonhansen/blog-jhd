@@ -31,7 +31,8 @@ const attemptLogin = () => {
     let p = password.value
     let params = {
         email: u,
-        password: p
+        password: p,
+        site: window.location.hostname
     }
     let config = {
         headers: {
@@ -100,7 +101,8 @@ const registerUser = () => {
     axios.post(url, {
         email: username.value,
         password: password.value,
-        displayName: displayName.value
+        displayName: displayName.value,
+        site: window.location.hostname
     }, config).then((response) => {
         toast.success('Your registration was successful. Please check your email for verification.')
         if (response.data) {

@@ -18,6 +18,7 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
         }
     })
     if (user && user.validPassword(req.body.password)) {
+        if (user.site === req.body.site) {
         user.lastLogin = new Date()
         user.lastIp = ipAddressToBase64(req.ip)
         user.session = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -28,6 +29,10 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
             auth_token: auth_token,
             user: user,
         })
+    } else {
+        res.status(401)
+        throw new Error('Invalid credentials')
+    }
     } else {
         res.status(401)
         throw new Error('Invalid credentials')
@@ -120,15 +125,9 @@ const isVerifiedUser = asyncHandler(async (req, res) => {
 
 const createUser = asyncHandler(async (req, res) => {
     let existingUser = await User.findOne({
-        email: {
-            $eq: req.body.email
-        }
-    } || {
-        registeredIp: {
-            $eq: req.ip
-        }
+        email: {$eq: req.body.email}} || {registeredIp: {$eq: req.ip}
     })
-    if (existingUser) {
+    if (existingUser && req.body.site === existingUser.site) {
         throw new Error('User already exists')
     } else {
         if (req.body.confirmPassword){
@@ -152,7 +151,8 @@ const createUser = asyncHandler(async (req, res) => {
         comments: [],
         registeredIp: ipAddressToBase64(req.ip),
         lastIp: ipAddressToBase64(req.ip),
-        verifiedEmail: false
+        verifiedEmail: false,
+        site: req.body.site
     })
     
     user.emailVerifyToken = user.generateEmailVerifyToken()

@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     emailVerifyToken: String,
     session: String,
     sessionTimestamp: String,
+    site: String,
 })
 
 userSchema.methods.encryptPassword = function( pwd ) {

@@ -19,17 +19,32 @@ import {
         let weeks = Math.floor(days / 7)
         let months = Math.floor(weeks / 4)
         let years = Math.floor(months / 12)
-        if (years > 0) {
+        if (years > 0 < 2) {
+            return years + ' year ago on ' + then.toDateString()
+        } else if (years >= 2) {
             return years + ' years ago on ' + then.toDateString()
-        } else if (months > 0) {
+        }
+         else if (months > 0 < 2) {
             return months + ' months ago on ' + then.toDateString()
-        } else if (weeks > 0) {
+        } else if (months >= 2) {
+            return months + ' months ago on ' + then.toDateString()
+        } 
+        else if (weeks > 0 < 2) {
+            return weeks + ' week ago on ' + then.toDateString()
+        } else if (weeks >= 2) {
             return weeks + ' weeks ago on ' + then.toDateString()
-        } else if (days > 0) {
+        } 
+        else if (days > 0 < 2) {
+            return days + ' day ago'
+        } else if (days >= 2) {
             return days + ' days ago'
-        } else if (hours > 0) {
+        }
+        else if (hours > 0 < 2) {
+            return hours + ' hour ago'
+        } else if (hours >= 2) {
             return hours + ' hours ago'
-        } else if (minutes > 0) {
+        } 
+        else if (minutes > 0) {
             return minutes + ' minutes ago'
         } else {
             return seconds + ' seconds ago'

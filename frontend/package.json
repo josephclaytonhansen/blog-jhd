@@ -7,12 +7,13 @@
     "dev": "NODE_ENV=production node ./src/builders/buildCss.js && vite",
     "build": "vite build",
     "preview": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build && vite preview",
-    "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build-posts && npm run build-tags && node commit.js && npm run build",
+    "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build-posts && npm run build-tags && node commit.js && npm run build && npm run process-site",
     "create-site-page": "node ./src/workers/buildSitePages.js",
     "remove-site": "node ./src/workers/removeSite.js",
     "remove-site-page": "node ./src/workers/removeSitePages.js",
     "build-posts": "node ./src/workers/buildPosts.js",
-    "build-tags": "node ./src/workers/buildTags.js"
+    "build-tags": "node ./src/workers/buildTags.js",
+    "process-site": "node ./src/workers/processDist.js"
   },
   "dependencies": {
     "@lucide/lab": "^0.1.1",
@@ -22,6 +23,7 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
     "lucide-vue-next": "^0.376.0",
     "node-fetch": "^3.3.2",
     "pinia": "^2.1.7",

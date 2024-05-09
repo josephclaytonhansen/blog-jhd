@@ -12,6 +12,7 @@ const props = defineProps({
 <template>
     <div class="relative" v-if="overlay===true">
         <HdImage :image="props.src" :alt="props.title" class="w-full rounded" />
+        <div class="absolute inset-0 bg-black opacity-30"></div>
         <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-header text-white max-w-[80%]">{{props.title}}</h1>
     </div>
     <div class="w-full flex flex-col gap-2" v-else>

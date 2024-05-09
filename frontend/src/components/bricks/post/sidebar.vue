@@ -9,6 +9,6 @@ const props = defineProps({
 <template>
     <div class="sidebar grow max-w-[30vw] hidden md:hidden lg:flex flex-col p-5 rounded-xl">
         <authorBox :author_id="props.post.author" class="hidden lg:block" />
-        <infoBox :views="props.post.views" :date="props.post.date" />
+        <infoBox :views="props.post.views" :date="props.post.date" :tags="props.post.tags" />
     </div>
 </template>

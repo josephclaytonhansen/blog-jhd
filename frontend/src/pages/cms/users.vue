@@ -318,6 +318,7 @@
                     <input type = "text" v-model = "active_user.displayName" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Display Name"/>
                     <input type = "text" v-model = "active_user.email" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Email"/>
                     <input type = "text" v-model = "active_user.website" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Website"/>
+                    <input type = "text" v-model = "active_user.site" disabled class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Site"/>
                     <input type = "text" v-model = "active_user.picture" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Avatar"/>
                     <input type = "text" v-model = "active_user.shortBio" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Short Bio"/>
                     <input type = "text" v-model = "active_user.longBio" class="accent-accent-500 bg-backdrop-1 text-text-1 px-2 py-2 rounded " placeholder = "Long Bio"/>
@@ -336,7 +337,7 @@
                 </form>
 
                 <h2 class="text-md mt-4  ">Comments</h2>
-                    <div class="flex flex-row justify-between items-end flex-wrap gap-3">
+                    <div class="flex flex-row justify-start items-end flex-wrap gap-3">
                         <div v-for = "comment in active_user.comments">
                             <div class="flex items-center gap-3">
                                 <p>{{comment.content}}</p>
@@ -348,7 +349,7 @@
                     </div>
 
                 <h2 class="text-md mt-4  ">Posts</h2>
-                    <div class="flex flex-row justify-between items-end flex-wrap gap-3">
+                    <div class="flex flex-row justify-start items-end flex-wrap gap-3">
                         <div v-for = "post in active_user.posts">
                             <div class="flex items-center gap-3">
                                 <p>{{post.title}}</p>

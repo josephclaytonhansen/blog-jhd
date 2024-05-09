@@ -26,7 +26,7 @@ const updateRouterFile = async () => {
     for (const tag of tags) {
         let newRoute = ''
         
-            newRoute = `{ path: '/tag/${tag.title}', component: () => import('./pages/SingleTag.vue'), props : {id: '${tag._id}'} },`
+            newRoute = `{ path: '/tag/${tag.name}', component: () => import('./pages/SingleTag.vue'), props : {id: '${tag._id}'} },`
         
         addRoutes.push(newRoute)
     }

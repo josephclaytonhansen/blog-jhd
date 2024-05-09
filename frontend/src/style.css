@@ -392,17 +392,19 @@ body {
 }
 
 .dividing-line{
-  border-bottom: 1px solid theme('colors.backdrop-0');
+  border-bottom: 2px solid theme('colors.backdrop-0');
   width: 100%;
   margin-bottom: 2rem;
   margin-top: 2rem;
+  border-top-width: 0;
 }
 
 .dividing-line-mid{
-  border-right: 1px solid theme('colors.backdrop-0');
+  border-right: 2px solid theme('colors.backdrop-0');
   height: 100%;
   margin-left: 2rem;
   margin-right: 2rem;
+  border-top-width: 0;
 }
 
 .colorblock_accent .dividing-line{
@@ -439,6 +441,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

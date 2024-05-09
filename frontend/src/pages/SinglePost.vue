@@ -47,6 +47,8 @@ const getPostById = async (id) => {
           throw new Error('Network error- could not get post')
         }
         post.value = await response.json()
+        sessionStorage.setItem(`post-${id}`, JSON.stringify(post.value))
+        sessionStorage.setItem(`timestamp-${id}`, new Date().getTime())
         isLoading.value = false
       })
     } catch (error) {

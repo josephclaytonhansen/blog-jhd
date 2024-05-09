@@ -23,11 +23,13 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 
 .colorblock{
   background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-2\')' : 'transparent'};
+  ${!(process.env.COLOR_BLOCK) ? 'padding: none!important;': ''}
 }
 
 .colorblock_accent{
   background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.accent.700\')' : 'transparent'};
-  color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop.100\')' : 'transparent'};
+  ${process.env.COLOR_BLOCK === 'true' ? 'color:theme(\'colors.backdrop.100\')' : ''};
+  ${!(process.env.COLOR_BLOCK) ? 'padding: none!important;': ''}
 }
 
 .dividing-line{

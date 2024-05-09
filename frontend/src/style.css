@@ -368,48 +368,49 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'undefined';
+  font-family: 'Prompt';
 }
 
 body {
-  font-family: 'undefined';
+  font-family: 'Prompt';
 }
 
+.avatar{border-radius:999rem;}
 
 
 #progress-bar, #progress-bar-fill{
-  display: none;
+  display: block;
 }
 
 .colorblock{
-  background-color: transparent;
+  background-color: theme('colors.backdrop-2');
 }
 
 .colorblock_accent{
-  background-color: transparent;
-  color: transparent;
+  background-color: theme('colors.accent.700');
+  color: theme('colors.backdrop.100');
 }
 
 .dividing-line{
-  border-bottom: none;
+  border-bottom: 1px solid theme('colors.backdrop-0');
   width: 100%;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .dividing-line-mid{
-  border-right: none;
+  border-right: 1px solid theme('colors.backdrop-0');
   height: 100%;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .colorblock_accent .dividing-line{
-  border-bottom: none;
+  border-bottom: 1px solid theme('colors.accent.600');
 }
 
 .sidebar{
-  display: none!important;
+  display: flex;
   background-color: transparent;
   color: theme('colors.text-0');
 
@@ -438,6 +439,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

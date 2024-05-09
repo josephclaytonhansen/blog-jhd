@@ -475,7 +475,7 @@ const saveExistingDraft = async() => {
                     <td class="py-2 border-b-backdrop-800 border-b-2 text-center">{{post.views}}</td>
                     <td class="border-b-backdrop-800 border-b-2 text-center">{{ post.comments.length }}</td>
                     <td class="cursor-pointer hover:text-text-0 transition-all duration-300 border-b-backdrop-800 border-b-2 text-center"><a :href="post.site + '/' + post.slug">{{post.title}}</a></td>
-                    <td class="border-b-backdrop-800 border-b-2 text-center">{{post.author.displayName}}</td>
+                    <td class="border-b-backdrop-800 border-b-2 text-center">{{post.author}}</td>
                     <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.site}}</td>
                     <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.tags.join(', ')}}</td>
                     <td class="hidden sm:table-cell border-b-backdrop-800 border-b-2 text-center">{{post.category}}</td>

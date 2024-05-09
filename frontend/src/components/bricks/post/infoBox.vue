@@ -23,24 +23,25 @@ const ISOdateStringToRelative = (date) => {
     let weeks = Math.floor(days / 7)
     let months = Math.floor(weeks / 4)
     let years = Math.floor(months / 12)
+    let formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(then)
     if (years > 0 && years < 2) {
-        return years + ' year ago on ' + then.toDateString()
+        return years + ' year ago on ' + formattedDate
     } else if (years >= 2) {
-        return years + ' years ago on ' + then.toDateString()
+        return years + ' years ago on ' + formattedDate
     } else if (months > 0 && months < 2) {
-        return months + ' month ago on ' + then.toDateString()
+        return months + ' month ago on ' + formattedDate
     } else if (months >= 2) {
-        return months + ' months ago on ' + then.toDateString()
+        return months + ' months ago on ' + formattedDate
     } else if (weeks > 0 && weeks < 2) {
-        return weeks + ' week ago on ' + then.toDateString()
+        return weeks + ' week ago on ' + formattedDate
     } else if (weeks >= 2) {
-        return weeks + ' weeks ago on ' + then.toDateString()
+        return weeks + ' weeks ago'
     } else if (days > 0 && days < 2) {
-        return days + ' day ago on ' + then.toDateString()
+        return days + ' day ago'
     } else if (days >= 2) {
-        return days + ' days ago on ' + then.toDateString()
+        return days + ' days ago' 
     } else {
-        return 'Less than a day ago on ' + then.toDateString()
+        return 'Less than a day ago'
     }
 }
 </script>

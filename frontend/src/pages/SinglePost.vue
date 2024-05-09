@@ -112,7 +112,7 @@ onBeforeMount(async () => {
         </div>
         <postBody :content="post.content"/>
         <div class="h-[800px] bg-backdrop-1"/>
-        <hr class="block" :class="post.sidebar ? 'lg:hidden' : ''" class="dividing-line"/>
+        <hr class="block dividing-line" :class="post.sidebar ? 'lg:hidden' : ''"/>
         <authorBox  :author_id="post.author" class="block" :class="post.sidebar ? 'lg:hidden' : ''" />
         <infoBox :views="post.views" :date="post.date" class="block" :class="post.sidebar ? 'lg:hidden' : ''" />
         <hr class="dividing-line"/>

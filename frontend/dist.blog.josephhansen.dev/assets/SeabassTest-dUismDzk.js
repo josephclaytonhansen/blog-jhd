@@ -1,0 +1,1 @@
+import{O as e,c as t,h as s}from"./index-DEn7kpto.js";const c={__name:"SeabassTest",setup(a){return e({title:"SEABASS Test",meta:[{name:"description",content:"This is a test page for the SEABASS framework"}]}),(n,r)=>(s(),t("h1",null,"This site is running on SEABASS"))}};export{c as default};

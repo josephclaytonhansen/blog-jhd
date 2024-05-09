@@ -8,7 +8,7 @@ const props = defineProps({
 
 import Tags from './micros/tags.vue'
 import {Eye,Calendar} from 'lucide-vue-next'
-import { ISOdateStringToRelative } from '../../functions/relativeDate.js'
+import ISOdateStringToRelative from '../../functions/relativeDate.js'
 
 </script>
 

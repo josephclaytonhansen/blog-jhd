@@ -22,7 +22,7 @@ post.value = props.post
 
 <template>
     <div class="relative rounded" v-if="overlay===true">
-        <HdImage :image="props.post.featuredImage" :alt="props.post.title" class="w-full rounded" />
+        <HdImage :image="props.post.featuredImage" :alt="props.post.title" class="w-full rounded" :classes="rounded" />
         <div class="absolute inset-0 bg-black opacity-30 rounded"></div>
         <h1 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-header text-white max-w-[80%]">{{props.post.title}}</h1>
     </div>

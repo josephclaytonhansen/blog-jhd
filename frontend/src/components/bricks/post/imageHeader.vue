@@ -11,7 +11,7 @@ import getAuthor from '../../functions/getAuthor.js'
 import { onBeforeMount } from 'vue'
 
 onBeforeMount(async () => {
-    if (props.overlay === true){
+    if (props.overlay === false){
         author.value = await getAuthor(props.post.author)
     }
     })
@@ -27,7 +27,7 @@ post.value = props.post
     <div class="w-full flex flex-col gap-2 rounded" v-else>
         <HdImage :image="props.post.featuredImage" :alt="props.post.title" class="w-full rounded" />
         <h1 class="text-4xl font-header">{{props.post.title}}</h1>
-        <h2 class="text-xs font-header italic">{{props.post.author}}</h2>
+        <h2 class="text-xs font-header italic">{{author.displayName}}</h2>
     </div>
     <hr class="dividing-line"/>
 </template>

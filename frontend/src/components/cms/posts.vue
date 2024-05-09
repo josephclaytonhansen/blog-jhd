@@ -271,6 +271,7 @@ const saveNewDraft = async () => {
         header: editingPostHeader.value,
         sidebar: sidebar.value,
         tags: editingPostTags.value
+        category: editingPostCategory.value
     }
 
     try {
@@ -281,18 +282,18 @@ const saveNewDraft = async () => {
             body: JSON.stringify(data)
         }).then(async (response) => {
             if (response.status !== 201) {
-                throw new Error('Network error- could not save draft')
+                throw new Error('Network error- could not save post')
             }
-            toast.success('Draft saved')
+            toast.success('Post saved')
             let temp = await response.json()
             editingPostId.value = temp._id
             editingPostStatus.value = 'draft'
             posts.value = await getPosts()
         }).catch((error) => {
-            toast.error(error.message || error.error || 'Error saving draft')
+            toast.error(error.message || error.error || 'Error saving post')
         })
     } catch (error) {
-        toast.error(error.message || error.error || 'Error saving draft')
+        toast.error(error.message || error.error || 'Error saving post')
     }
 
 }

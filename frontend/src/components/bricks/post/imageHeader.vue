@@ -8,9 +8,9 @@ const props = defineProps({
 })
 const author = ref('')
 import getAuthor from '../../functions/getAuthor.js'
-import { onMounted } from 'vue'
+import { onBeforeMount } from 'vue'
 
-onMounted(async () => {
+onBeforeMount(async () => {
         await getAuthor(props.post.author).then((data) => {
             author.value = data
             console.log(data)

@@ -3,7 +3,7 @@ const getAuthor = async(id) => {
     const cachedAuthor = sessionStorage.getItem(`author-${id}`)
     const timestamp = sessionStorage.getItem(`timestamp-${id}`)
     if (cachedAuthor && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
-        author.value = JSON.parse(cachedAuthor)
+        author = JSON.parse(cachedAuthor)
     } else {
         sessionStorage.removeItem(`author-${id}`)
         sessionStorage.removeItem(`timestamp-${id}`)

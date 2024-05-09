@@ -24,8 +24,8 @@ const getAuthor = async(id) => {
             if (response.status !== 200) {
                 throw new Error('Network error- could not get author')
             }
-            author.value = await response.json()
-            sessionStorage.setItem(`author-${id}`, JSON.stringify(author.value))
+            author = await response.json()
+            sessionStorage.setItem(`author-${id}`, JSON.stringify(author))
             sessionStorage.setItem(`timestamp-${id}`, new Date().getTime())
             return author
         })

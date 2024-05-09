@@ -8,9 +8,9 @@ const props = defineProps({
 })
 const author = ref('')
 import getAuthor from '../../functions/getAuthor.js'
-import { onBeforeMount } from 'vue'
+import { onMounted } from 'vue'
 
-onBeforeMount(async () => {
+onMounted(async () => {
     if (props.overlay === false){
         author.value = await getAuthor(props.post.author)
     }

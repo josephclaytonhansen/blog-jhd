@@ -204,6 +204,11 @@ const editUser = asyncHandler(async (req, res) => {
         throw new Error('You must be logged in to edit a user.')
     } 
     const user = await User.findById(req.params.id)
+    let displayNameCheck = await User.findOne({displayName: {$eq: req.body.displayName}})
+    if (displayNameCheck && displayNameCheck._id.toString() !== user._id.toString()) {
+        res.status(401)
+        throw new Error('Display name already in use')
+    }
     if (user) {
         if ((user.role !== 'unverified-user' && req.user._id === user._id) || req.user.role === 'admin') {
             user.email = req.body.email || user.email

@@ -17,8 +17,6 @@ export {pinia}
 import {userStore} from './userStore'
 import { createHead } from '@vueuse/head'
 
-import tableSort from 'table-sort-js'
-
 const toastOptions = {
     position: "top-right",
     timeout: 3000,
@@ -47,7 +45,6 @@ import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
 
 app.use(Toast, toastOptions)
-app.provide('tableSort', tableSort)
 app.use(pinia)
 app.use(router)
 app.mount('#app')

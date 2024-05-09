@@ -8,7 +8,7 @@ tagD.value = props.tag
 </script>
 
 <template>
-    <div class="colorblock_accent px-3 py-1 text-sm rounded-lg italic pointer-cursor w-min">
+    <div class="colorblock_accent px-1 text-sm rounded-lg italic pointer-cursor w-min">
         <p>{{tagD}}</p>
     </div>
 </template>

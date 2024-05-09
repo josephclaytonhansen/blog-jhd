@@ -12,6 +12,7 @@ const store = userStore(pinia)
 
 const posts = ref([])
 const tags = ref([])
+const categories = ref([])
 const author = ref({})
 
 const allSites = process.env.VUE_APP_FRONTEND_PREFIXES
@@ -29,6 +30,16 @@ const getPosts = async () => {
   return data
 }
 
+const getCategory = async () => {
+  const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/category/`)
+  if (response.status !== 200) {
+    toast.error('Network error')
+    throw new Error('Network error- could not get categories')
+  }
+  const data = await response.json()
+  return data
+}
+
 const getTags = async () => {
   const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/tag/`)
   if (response.status !== 200) {
@@ -43,6 +54,7 @@ onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
     tags.value = await getTags()
+    categories.value = await getCategory()
     author.value = store.user
     let temp
     if (localStorage.getItem('posts')) {
@@ -99,6 +111,10 @@ const editPost = (id) => {
     editingPostLocation.value = temp[0].subDirectory
     editingPostStatus.value = temp[0].status
     editingPostId.value = temp[0]._id
+    editingPostHeader.value = temp[0].header
+    editingPostTags.value = temp[0].tags
+    sidebar.value = temp[0].sidebar
+    editingPostCategory.value = temp[0].category
 }
 
 const deletePost = async (id) => {
@@ -177,6 +193,8 @@ const newPost = () => {
     editingPostStatus.value = 'new-draft'
     editingPostHeader.value = 'image'
     sidebar.value = true
+    editingPostTags.value = []
+    editingPostCategory.value = ''
 }
 
 const listPost = () => {
@@ -195,6 +213,7 @@ const editingPostLocation = ref('')
 const editingPostStatus = ref('new-draft')
 const editingPostId = ref('')
 const editingPostTags = ref([])
+const editingPostCategory = ref('')
 
 const headerOptions = ref([
     'image',
@@ -383,6 +402,11 @@ const saveExistingDraft = async() => {
                 <label for="featuredImage" class="text-text-1">Featured Image</label>
                 <input type="text" name="featuredImage" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostFeaturedImage" placeholder="Featured Image">
             </div>
+            <div class="flex flex-col grow items-center align-middle gap-2">
+                <label for="category" class="text-text-1">Category</label>
+                <select name="category" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostCategory">
+                    <option v-for="category in categories" :key="category.name" :value="category.name">{{category.name}}</option>
+                </select>
         </form>
 
         <form class = "flex gap-4 flex-wrap items-start p-4 min-h-36">

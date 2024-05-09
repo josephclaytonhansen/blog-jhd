@@ -410,10 +410,17 @@ const saveExistingDraft = async() => {
             </button>
             <button v-if = "editingPostStatus === 'draft'" @click="publishPost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
                 <Send class = "pr-2"/>Publish
-            </button>\
+            </button>
             <button v-if = "editingPostStatus === 'draft'" @click="schedulePost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
                 <Clock class = "pr-2"/>Schedule
             </button>
+            <button v-if = "editingPostStatus === 'published'" @click="saveExistingDraft()" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+                <Save class = "pr-2"/>Save
+            </button>
+            <button v-if = "editingPostStatus === 'published'" @click="unpublishPost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+                <CheckCheck class = "pr-2"/>Unpublish
+            </button>
+            
 
 
         </div>

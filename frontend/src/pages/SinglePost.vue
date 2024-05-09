@@ -64,7 +64,7 @@ onBeforeMount(async () => {
     isLoading.value = true
     try{
       let checkResult = sessionStorage.getItem('checkResult')
-      if (!checkResult == "show") {
+      if (!checkResult == "show" || !checkResult || checkResult === undefined || checkResult === null) {
   let checkParams = {
       user: localStorage.getItem('user'),
       session: sessionStorage.getItem('session')
@@ -81,6 +81,7 @@ onBeforeMount(async () => {
         if (!(checkResponse.data.message == "admin") && !(checkResponse.data.message == "author")) {
           router.push('/NotFound')
         } else {
+          sessionStorage.setItem('checkResult', 'show')
           isLoading.value = false
         }
       } else {

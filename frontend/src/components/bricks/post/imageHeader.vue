@@ -9,7 +9,7 @@ const props = defineProps({
 const author = ref('')
 import getAuthor from '../../functions/getAuthor.js'
 import { onBeforeMount } from 'vue'
-import ISOdateStringToRelative from '../../functions/relativeDate.js'
+import Tags from './micros/tags.vue'
 
 onBeforeMount(async () => {
         await getAuthor(props.post.author).then((data) => {
@@ -32,7 +32,13 @@ post.value = props.post
             <div class="absolute inset-0 opacity-0"></div>
         </div>
         <h1 class="text-4xl font-header mt-4">{{props.post.title}}</h1>
-        <h2 class="text-xs font-header italic">Written by {{author.displayName}}, {{ISOdateStringToRelative(props.post.date)}}</h2>
+        <div class="flex justify-between items-center flex-wrap">
+            <h2 class="text-xs font-header italic">Written by {{author.displayName}}</h2>
+            <div class="flex gap-2">
+                <h2 class="text-xs font-header italic">{{props.post.category}}</h2>
+                <Tags :tags="props.post.tags" class="ml-2" />
+            </div>
+        </div>
     </div>
     <hr class="dividing-line"/>
 </template>

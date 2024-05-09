@@ -18,7 +18,6 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
             $eq: req.body.email || req.body.username
         }
     })
-
     if (users.length === 0) {
         res.status(401)
         throw new Error('Invalid credentials')
@@ -28,7 +27,6 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
         user = users[0]
     }
     if (user && user.validPassword(req.body.password)) {
-        if (user.site === req.body.site) {
         user.lastLogin = new Date()
         user.lastIp = ipAddressToBase64(req.ip)
         user.session = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -39,10 +37,7 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
             auth_token: auth_token,
             user: user,
         })
-    } else {
-        res.status(401)
-        throw new Error('Invalid credentials')
-    }
+
     } else {
         res.status(401)
         throw new Error('Invalid credentials')

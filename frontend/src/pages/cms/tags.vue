@@ -278,7 +278,7 @@
                 class="grow text-text-2 table-auto border-separate border-spacing-0">
 
                 <tr v-for="tag in tags" :key="tag.id" class='flex'>
-                    <td class="grow">
+                    <td class="grow flex gap-1">
                         <input v-model="tag.name" type="text" class = 'bg-backdrop-1 p-2 rounded-md grow w-full accent-accent-500'>
                         <select v-model="tag.site" class="bg-backdrop-1 text-text-0 px-2 py-2 rounded-md accent-accent-500">
                             <option v-for="site in AllTagSites" :key="site" :value="site">{{site}}</option>
@@ -312,7 +312,7 @@
                 class="grow text-text-2 table-auto border-separate border-spacing-0 ">
 
                 <tr v-for="category in categories" :key="category.id" class=' flex'>
-                    <td class="grow">
+                    <td class="grow flex gap-1">
                         <input v-model="category.name" type="text" class = 'bg-backdrop-1 p-2 accent-accent-500 rounded-md grow w-full'>
                         <select v-model="category.site" class="bg-backdrop-1 text-text-0 px-2 py-2 rounded-md accent-accent-500">
                             <option v-for="site in AllCategorySites" :key="site" :value="site">{{site}}</option>

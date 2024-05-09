@@ -6,6 +6,13 @@ const props = defineProps({
     post: Object,
     overlay: {type: Boolean, default: true},
 })
+const author = ref('')
+import { getAuthor } from '../../functions/getAuthor.js'
+import { onBeforeMount } from 'vue'
+
+onBeforeMount(async () => {
+        author.value = await getAuthor(props.post.author)
+    })
 post.value = props.post
 </script>
 

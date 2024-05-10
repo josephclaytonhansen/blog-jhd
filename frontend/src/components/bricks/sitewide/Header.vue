@@ -24,5 +24,6 @@ watch(() => props.thisPageComponentName, (newVal) => {
 </script>
 
 <template>
+  <h1>Render test</h1>
   <component :is="loadedComponents[`${site}${thisPageComponentName.value}`]"></component>
 </template>

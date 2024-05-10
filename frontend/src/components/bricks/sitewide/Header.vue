@@ -19,7 +19,7 @@
         const site = window.location.hostname
     
         const loadComponents = async () => {
-          for (let componentName in components) {
+          const componentPromises = Object.keys(components).map(async (componentName) => {
             // Wait for the component to be imported
             let component = await components[componentName]
             console.log(componentName)
@@ -28,7 +28,9 @@
             loadedComponents.value[componentName] = component.default
             console.log(Object.keys(components))
             console.log(components[`${site}${props.thisPageComponentName}`])
-          }
+          })
+    
+          await Promise.all(componentPromises)
         }
     
         watch(() => props.thisPageComponentName, loadComponents, { immediate: true })

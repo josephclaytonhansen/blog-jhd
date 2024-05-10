@@ -383,6 +383,9 @@ a {
   text-transform: uppercase;
 }
 /* automated */
+:root{
+  --tw-prose-body: theme('colors.text-1')!important;
+}
 h1, h2 {
   text-transform: uppercase;
 }
@@ -468,6 +471,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

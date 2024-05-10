@@ -50,9 +50,9 @@ const trimExcerpt = (excerpt) => {
 
                 <div v-for="post in sitePosts" :key="post.id" class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 backdrop rounded">
                     <hdImage :image="post.featuredImage" :alt="post.title"/>
-                    <div class="p-3">
-                        <h3 class="font-header">{{ post.title }}</h3>
-                        <p class="text-text-1">{{ trimExcerpt(post.excerpt) }}</p>
+                    <div class="p-3 flex flex-col items-center align-middle">
+                        <h3 class="font-header text-lg text-center">{{ post.title }}</h3>
+                        <p class="text-text-1" >{{ trimExcerpt(post.excerpt) }}</p>
                         <button class = "bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all"><router-link :to="postLink(post)" class="text-text-2">Read</router-link></button>
                     </div>
                 </div>

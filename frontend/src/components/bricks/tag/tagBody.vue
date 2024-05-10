@@ -35,7 +35,7 @@ const trimExcerpt = (excerpt) => {
 </script>
 
 <template>
-    <div class="p-5">
+    <div class="p-5 w-full text-text-1">
         <div class="w-full">
             <h1 class="text-3xl font-header">Posts tagged with "{{ props.tagName }}"</h1>
         </div>
@@ -52,7 +52,7 @@ const trimExcerpt = (excerpt) => {
                     <hdImage :image="post.featuredImage" :alt="post.title"/>
                     <div class="p-3 flex flex-col items-center align-middle">
                         <h3 class="font-header text-lg text-center">{{ post.title }}</h3>
-                        <p class="text-text-1" >{{ trimExcerpt(post.excerpt) }}</p>
+                        <p class="text-text-2" >{{ trimExcerpt(post.excerpt) }}</p>
                         <button class = "bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all"><router-link :to="postLink(post)" class="text-text-2">Read</router-link></button>
                     </div>
                 </div>

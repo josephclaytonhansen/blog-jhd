@@ -82,8 +82,8 @@
         toast.error("Network error- could not get posts")
       }
       posts.value = await response.json()
-      sessionStorage.setItem(`tag-${tagId}`, JSON.stringify(posts.value))
-      sessionStorage.setItem(`timestamp-${tagId}`, new Date().getTime())
+      sessionStorage.setItem(`tag-${tag}`, JSON.stringify(posts.value))
+      sessionStorage.setItem(`timestamp-${tag}`, new Date().getTime())
       isLoading.value = false
     })
   } catch (error) {

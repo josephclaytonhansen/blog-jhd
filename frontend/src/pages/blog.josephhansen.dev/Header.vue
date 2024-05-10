@@ -1,7 +1,5 @@
 <script setup>
 import {User, Terminal} from 'lucide-vue-next'
-import {useRouter} from 'vue-router'
-const router = useRouter()
 import {ref, onMounted} from 'vue'
 
 const loggedIn = ref(false)

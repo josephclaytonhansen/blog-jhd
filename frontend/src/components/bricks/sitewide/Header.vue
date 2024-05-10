@@ -27,6 +27,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1>Render test {{ site }} {{ props.thisPageComponentName }}</h1>
   <component :is="components[`${site}${props.thisPageComponentName}`]"></component>
 </template>

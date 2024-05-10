@@ -111,7 +111,7 @@ onBeforeMount(async () => {
     <p class = "text-xl text-text-3">Loading...</p>
   </div>
   <div v-else class="bg-backdrop-1 flex items center align-middle">
-    <SiteHeader :thisPageComponentName="Header" />
+    <SiteHeader :thisPageComponentName="'Header'" />
     <postProgressBar />
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>

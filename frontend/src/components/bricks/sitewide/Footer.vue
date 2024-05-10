@@ -1,45 +1,29 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import components from './FooterComponents.ts'
+
+const props = defineProps({
+  thisPageComponentName: String,
+  header: Boolean,
+  footer: Boolean
+})
+
+const loadedComponents = ref({})
+const site = window.location.hostname
+
+onMounted(async () => {
+  console.log(site, props.thisPageComponentName, components)
+  for (let componentName in components) {
+    // Wait for the component to be imported
+    let component = await components[componentName]
+
+    // Use the component
+    loadedComponents.value[componentName] = component.default
+  }
+})
+
+</script>
 
 <template>
-
-
-            <component :is="components[`${site}${thisPageComponentName}`]"></component>
-
-    </template>
-    
-    <script>
-    import { ref, onMounted, watch } from 'vue'
-    import components from './FooterComponents.ts'
-    
-    export default {
-      props: {
-        thisPageComponentName: String,
-      },
-      setup(props) {
-        const loadedComponents = ref({})
-        const site = window.location.hostname
-    
-        const loadComponents = async () => {
-          const componentPromises = Object.entries(components).map(async ([componentName, componentPromise]) => {
-            try {
-              let component = await componentPromise
-              console.log(componentName)
-    
-              loadedComponents.value[componentName] = component.default
-            } catch (error) {
-              console.error(`Failed to load component ${componentName}: ${error}`)
-            }
-          })
-    
-          await Promise.all(componentPromises)
-        }
-    
-        watch(() => props.thisPageComponentName, loadComponents, { immediate: true })
-    
-        return {
-          components: loadedComponents,
-          site,
-          thisPageComponentName: props.thisPageComponentName,
-        }
-      },
-    }
-    </script>
+  <component :is="loadedComponents[`${site}${props.thisPageComponentName}`]"></component>
+</template>

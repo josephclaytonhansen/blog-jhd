@@ -110,7 +110,7 @@ onBeforeMount(async () => {
   <div v-if="isLoading" class="flex w-screen h-screen overflow-hidden">
     <p class = "text-xl text-text-3">Loading...</p>
   </div>
-  <div v-else class="bg-backdrop-1 flex items center align-middle">
+  <div v-else class="bg-backdrop-1 flex items center align-middle min-h-screen">
     <SiteHeader :thisPageComponentName="'Header'" />
     <postProgressBar />
     <div v-if="post.headerStyle == 'fullwidth'">
@@ -138,5 +138,5 @@ onBeforeMount(async () => {
       <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>
-  <SiteFooter :thisPageComponentName="Footer" />
+  <SiteFooter :thisPageComponentName="'Footer'" />
 </template>

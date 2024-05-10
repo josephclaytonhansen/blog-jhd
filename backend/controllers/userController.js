@@ -336,7 +336,7 @@ const getUserByDisplayName = asyncHandler(async (req, res) => {
     let sanitizedDisplayName = displayName.replace(/[^a-zA-Z0-9 ]/g, "")
     console.log(displayName, sanitizedDisplayName)
     const user = await User.findOne({
-        displayName: {
+        dataDisplayName: {
             $regex: new RegExp(`^${sanitizedDisplayName}$`, 'i')
         }
     })

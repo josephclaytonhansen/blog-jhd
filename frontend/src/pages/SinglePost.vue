@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import { ref, onBeforeMount, onMounted, onUnmounted, nextTick } from 'vue'
 import CommentSection from '../components/bricks/comments/commentSection.vue'
 import postProgressBar from '../components/bricks/post/postProgressBar.vue'
 import authorBox from '../components/bricks/post/authorBox.vue'
@@ -72,11 +72,15 @@ onMounted(() => {
     const header = document.getElementById('header')
     if (header) {
       headerHeight.value = header.offsetHeight + 30
+      console.log(headerHeight.value, header)
     }
   }
 
-  updateHeaderHeight()
-  window.addEventListener('resize', updateHeaderHeight)
+  nextTick(() => {
+    updateHeaderHeight()
+    window.addEventListener('resize', updateHeaderHeight)
+  })
+
   onUnmounted(() => {
     window.removeEventListener('resize', updateHeaderHeight)
   })

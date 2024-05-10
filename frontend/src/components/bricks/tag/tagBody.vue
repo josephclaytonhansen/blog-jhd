@@ -1,13 +1,67 @@
 <script setup>
-
+import { ref, onBeforeMount } from 'vue'
+import hdImage from '../images/hdImage.vue'
 const props = defineProps({
-  taggedPosts: Array
+  taggedPosts: Array,
+  tagName: String
 })
+
+const site = window.location.hostname
+const sitePosts = ref([])
+const filterPostsOnThisSite = (posts) => {
+  return posts.filter(post => post.site === site)
+}
+
+onBeforeMount(() => {
+  sitePosts.value = filterPostsOnThisSite(props.taggedPosts)
+})
+
+const postLink = (post) => {
+  if (post.location === '' || post.location === undefined || post.location === "/") {
+    return '/' + post.slug
+  } else {
+    return '/' + post.location + '/' + post.slug
+  }
+}
+
+const trimExcerpt = (excerpt) => {
+  if (excerpt.length > 300) {
+    return excerpt.substring(0, 300) + '...'
+  } else {
+    return excerpt
+  }
+}
 
 </script>
 
 <template>
-    {{ taggedPosts }}
+    <div class="p-5">
+        <div class="w-full">
+            <h1 class="text-3xl font-header">Posts tagged with "{{ props.tagName }}"</h1>
+        </div>
+        <div class="w-full">
+            <p class="text-lg">There are {{ sitePosts.length }} posts tagged with "{{ props.tagName }}"</p>
+        </div>
+        <div class="w-full">
+            <h2 class="text-2xl font-header">Posts</h2>
+            <hr class="dividing-line"/>
+
+            <div class="flex flex-wrap gap-3">
+
+                <div v-for="post in sitePosts" :key="post.id" class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 backdrop rounded">
+                    <hdImage :image="post.featuredImage" :alt="post.title"/>
+                    <div class="p-3">
+                        <h3 class="font-header">{{ post.title }}</h3>
+                        <p class="text-text-1">{{ trimExcerpt(post.excerpt) }}</p>
+                        <button class = "bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all"><router-link :to="postLink(post)" class="text-text-2">Read</router-link></button>
+                    </div>
+                </div>
+                
+
+            </div>
+
+        </div>
+    </div>
 </template>
 
 

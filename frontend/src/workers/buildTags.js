@@ -10,6 +10,15 @@ const __dirname = path.dirname(__filename)
 
 const thisSite = process.env.SITE_PREFIX
 
+const getPosts = async () => {
+    const response = await fetch(`${process.env.VITE_APP_SERVER_URL}/tag/`)
+    if (response.ok){
+        let data = await response.json()
+        return data
+    }
+    return []
+}
+
 const updateRouterFile = async () => {
     const routerFilePath = path.resolve(__dirname, '../router.js')
     let routerFileContent = fs.readFileSync(routerFilePath, 'utf8')

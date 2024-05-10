@@ -23,6 +23,7 @@
           for (let componentName in components) {
             // Wait for the component to be imported
             let component = await components[componentName]
+            console.log(component)
     
             // Use the component
             loadedComponents.value[componentName] = component.default

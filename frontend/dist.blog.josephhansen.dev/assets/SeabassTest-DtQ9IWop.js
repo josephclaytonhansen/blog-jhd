@@ -1,1 +1,0 @@
-import{M as e,c as t,h as s}from"./index-DAf8q14Y.js";const c={__name:"SeabassTest",setup(a){return e({title:"SEABASS Test",meta:[{name:"description",content:"This is a test page for the SEABASS framework"}]}),(n,r)=>(s(),t("h1",null,"This site is running on SEABASS"))}};export{c as default};

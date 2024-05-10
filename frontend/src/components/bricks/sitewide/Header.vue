@@ -1,29 +1,43 @@
-<script setup>
+<script>
 import { ref, watch } from 'vue'
 
-const props = defineProps({
-  thisPageComponentName: String,
-})
+export default {
+  props: {
+    thisPageComponentName: String,
+    header: Boolean,
+    footer: Boolean
+  },
+  setup(props) {
+    const loadedComponents = ref({})
+    const site = window.location.hostname
+    console.log(site, props.thisPageComponentName)
 
-const thisPageComponentName = ref('')
-const loadedComponents = ref({})
-const site = window.location.hostname
+    onMounted(async () => {
+      for (let componentName in components) {
+        // Wait for the component to be imported
+        let component = await components[componentName]
 
-const { default: componentsPromise } = await import('./HeaderComponents.ts')
-const components = await componentsPromise
+        // Use the component
+        loadedComponents.value[componentName] = component.default
+      }
+      console.log(Object.keys(components))
+      console.log(components[`${site}${props.thisPageComponentName}`])
+    })
 
-for (const [componentName, component] of Object.entries(components)) {
-  loadedComponents.value[componentName] = component
+    return {
+      components: loadedComponents,
+      site,
+      thisPageComponentName: props.thisPageComponentName,
+      header: props.header,
+      footer: props.footer
+    }
+  }
 }
 
-console.log(loadedComponents)
-
-watch(() => props.thisPageComponentName, (newVal) => {
-  thisPageComponentName.value = newVal
-}, { immediate: true })
 </script>
 
 <template>
   <h1>Render test</h1>
+  <component :is="components[`${site}${thisPageComponentName}`]"></component>
 
 </template>

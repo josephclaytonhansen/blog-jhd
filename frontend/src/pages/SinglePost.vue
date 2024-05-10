@@ -52,6 +52,7 @@ const getPostById = async (id) => {
       }).then(async (response) => {
         if (response.status !== 200) {
           throw new Error('Network error- could not get post')
+          router.push('/NotFound')
         }
         post.value = await response.json()
         sessionStorage.setItem(`post-${id}`, JSON.stringify(post.value))
@@ -61,30 +62,10 @@ const getPostById = async (id) => {
     } catch (error) {
       console.error(error)
       isLoading.value = false
+      router.push('/NotFound')
     }
   }
 }
-
-const headerHeight = ref(0)
-
-onMounted(() => {
-  const updateHeaderHeight = () => {
-    const header = document.getElementById('header')
-    if (header) {
-      headerHeight.value = header.offsetHeight + 30
-      console.log(headerHeight.value, header)
-    }
-  }
-
-  nextTick(() => {
-    updateHeaderHeight()
-    window.addEventListener('resize', updateHeaderHeight)
-  })
-
-  onUnmounted(() => {
-    window.removeEventListener('resize', updateHeaderHeight)
-  })
-})
 
 onBeforeMount(async () => {
   await getPostById(props.id)
@@ -137,7 +118,7 @@ onBeforeMount(async () => {
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>
     </div>
-    <div class = "flex space-between p-5 w-full text-text-1" :style="{ 'margin-top': headerHeight + 'px' }">
+    <div class = "flex space-between p-5 w-full text-text-1">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
         <div v-if="post.headerStyle == 'noimage'">
           <NoImageHeader :post="post"/>

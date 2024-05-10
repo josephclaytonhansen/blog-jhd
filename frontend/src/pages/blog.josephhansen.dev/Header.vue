@@ -13,7 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <header class="w-screen overflow-hidden colorblock py-3 px-16 absolute border-b-2 border-backdrop-2" style = "z-index:999">
+    <header class="w-screen overflow-hidden colorblock py-3 px-16 sticky-top sticky border-b-2 border-backdrop-2" style = "z-index:999">
         <nav class="flex justify-between items-center">
             <div class="flex items-center flex-nowrap">
                 <Terminal class="text-accent-500 w-8 h-8"/>

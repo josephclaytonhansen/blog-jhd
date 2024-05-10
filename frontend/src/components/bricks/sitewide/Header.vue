@@ -9,8 +9,6 @@
     <script>
     import { ref, onMounted, watch } from 'vue'
     import components from './HeaderComponents.ts'
-    console.log('Header.vue')
-    console.log(components)
     
     export default {
       props: {
@@ -21,21 +19,17 @@
         const site = window.location.hostname
     
         const loadComponents = async () => {
-          const componentPromises = Object.keys(components).map(async (componentName) => {
+          const componentPromises = Object.entries(components).map(async ([componentName, componentPromise]) => {
             try {
-              // Wait for the component to be imported
-              let component = await components[componentName]
+              let component = await componentPromise
               console.log(componentName)
-
-              // Use the component
+    
               loadedComponents.value[componentName] = component.default
-              console.log(Object.keys(components))
-              console.log(components[`${site}${props.thisPageComponentName}`])
             } catch (error) {
               console.error(`Failed to load component ${componentName}: ${error}`)
             }
           })
-
+    
           await Promise.all(componentPromises)
         }
     
@@ -49,4 +43,3 @@
       },
     }
     </script>
-    

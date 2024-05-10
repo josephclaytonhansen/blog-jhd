@@ -1,5 +1,5 @@
 <script setup>
-/* import { ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   thisPageComponentName: String,
@@ -20,7 +20,7 @@ console.log(loadedComponents)
 
 watch(() => props.thisPageComponentName, (newVal) => {
   thisPageComponentName.value = newVal
-}, { immediate: true }) */
+}, { immediate: true })
 </script>
 
 <template>

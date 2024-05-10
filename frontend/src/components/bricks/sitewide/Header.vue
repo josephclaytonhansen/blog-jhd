@@ -2,7 +2,7 @@
 <template>
 
 
-            <component :is="components[`${site}${thisPageComponentName}`]"></component>
+<component :is="components[`${site}${thisPageComponentName}`]" v-if="components[`${site}${thisPageComponentName}`]"></component>
 
     </template>
     
@@ -15,31 +15,31 @@
         thisPageComponentName: String,
       },
       setup(props) {
-        const loadedComponents = ref({})
-        const site = window.location.hostname
-    
-        const loadComponents = async () => {
-          const componentPromises = Object.entries(components).map(async ([componentName, componentPromise]) => {
-            try {
-              let component = await componentPromise
-              console.log(componentName)
-    
-              loadedComponents.value[componentName] = component.default
-            } catch (error) {
-              console.error(`Failed to load component ${componentName}: ${error}`)
-            }
-          })
-    
-          await Promise.all(componentPromises)
-        }
-    
-        watch(() => props.thisPageComponentName, loadComponents, { immediate: true })
-    
-        return {
-          components: loadedComponents,
-          site,
-          thisPageComponentName: props.thisPageComponentName,
-        }
-      },
+      const loadedComponents = {}
+      const site = window.location.hostname
+
+      const loadComponents = async () => {
+        const componentPromises = Object.entries(components).map(async ([componentName, componentPromise]) => {
+          try {
+            let component = await componentPromise
+            console.log(componentName)
+
+            loadedComponents[componentName] = ref(component.default)
+          } catch (error) {
+            console.error(`Failed to load component ${componentName}: ${error}`)
+          }
+        })
+
+        await Promise.all(componentPromises)
+      }
+
+      watch(() => props.thisPageComponentName, loadComponents, { immediate: true })
+
+      return {
+        ...loadedComponents,
+        site: ref(site),
+        thisPageComponentName: toRef(props, 'thisPageComponentName'),
+      }
+    }
     }
     </script>

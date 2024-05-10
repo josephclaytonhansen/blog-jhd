@@ -60,6 +60,7 @@
 
     onBeforeMount(async () => {
         await getTag(props.tag)
+        await getTaggedPosts(props.tag)
     })
 
     const getTaggedPosts = async(tag) => {

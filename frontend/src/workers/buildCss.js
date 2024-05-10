@@ -4,9 +4,6 @@ import { fileURLToPath } from 'url'
 
 const css = `
 /* automated */
-:root{
-  --tw-prose-body: theme('colors.text-1')!important;
-}
 h1, h2 {
   text-transform: ${process.env.UPPERCASE_HEADERS === 'true' ? 'uppercase' : 'none'};
 }

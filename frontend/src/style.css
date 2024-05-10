@@ -28,6 +28,8 @@
   --ultra-light-backdrop-0: rgb(230, 230, 230);
   --ultra-light-text-0: rgb(40,40,40);
   --ultra-light-text-1: rgb(0,0,0);
+  --tw-prose-body: theme('colors.text-1');
+  
 }
 
 @layer base {

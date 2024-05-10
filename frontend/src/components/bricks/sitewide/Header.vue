@@ -20,16 +20,20 @@
     
         const loadComponents = async () => {
           const componentPromises = Object.keys(components).map(async (componentName) => {
-            // Wait for the component to be imported
-            let component = await components[componentName]
-            console.log(componentName)
-    
-            // Use the component
-            loadedComponents.value[componentName] = component.default
-            console.log(Object.keys(components))
-            console.log(components[`${site}${props.thisPageComponentName}`])
+            try {
+              // Wait for the component to be imported
+              let component = await components[componentName]
+              console.log(componentName)
+
+              // Use the component
+              loadedComponents.value[componentName] = component.default
+              console.log(Object.keys(components))
+              console.log(components[`${site}${props.thisPageComponentName}`])
+            } catch (error) {
+              console.error(`Failed to load component ${componentName}: ${error}`)
+            }
           })
-    
+
           await Promise.all(componentPromises)
         }
     

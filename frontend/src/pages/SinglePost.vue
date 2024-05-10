@@ -13,6 +13,7 @@ import FullWidthImageHeader from '../components/bricks/post/fullWidthHeader.vue'
 
 import SiteHeader from '../components/bricks/sitewide/Header.vue'
 import SiteFooter from '../components/bricks/sitewide/Footer.vue'
+import TestRender from '../components/bricks/sitewide/TestRender.vue'
 
 import axios from 'axios'
 import {useRouter} from 'vue-router'
@@ -106,11 +107,13 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <SiteHeader :thisPageComponentName="Header" />
+  
   <div v-if="isLoading" class="flex w-screen h-screen overflow-hidden">
     <p class = "text-xl text-text-3">Loading...</p>
   </div>
   <div v-else class="bg-backdrop-1 flex items center align-middle">
+    <SiteHeader :thisPageComponentName="Header" />
+    <TestRender/>
     <postProgressBar />
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>

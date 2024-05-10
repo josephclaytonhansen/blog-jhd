@@ -20,13 +20,11 @@ onMounted(async () => {
     // Use the component
     loadedComponents.value[componentName] = component.default
   }
-  console.log(Object.keys(components))
-  console.log(components[`${site}${props.thisPageComponentName}`])
 })
 
 </script>
 
 <template>
-  <h1>Render test {{ site }}{{ props.thisPageComponentName }}</h1>
+  <h1>Render test {{ components[`${site}${props.thisPageComponentName}`] }}</h1>
   <component :is="components[`${site}${props.thisPageComponentName}`]"></component>
 </template>

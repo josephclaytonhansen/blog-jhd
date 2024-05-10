@@ -13,7 +13,9 @@ const filterPostsOnThisSite = (posts) => {
 }
 
 onBeforeMount(() => {
+  console.log(props.taggedPosts)
   sitePosts.value = filterPostsOnThisSite(props.taggedPosts)
+  console.log(sitePosts.value)
 })
 
 const postLink = (post) => {
@@ -43,7 +45,6 @@ const trimExcerpt = (excerpt) => {
             <p class="text-lg">There are {{ sitePosts.length }} posts tagged with "{{ props.tagName }}"</p>
         </div>
         <div class="w-full">
-            <h2 class="text-2xl font-header">Posts</h2>
             <hr class="dividing-line"/>
 
             <div class="flex flex-wrap gap-3">
@@ -54,7 +55,7 @@ const trimExcerpt = (excerpt) => {
                         <h3 class="font-header text-lg text-center">{{ post.title }}</h3>
                         <p class="text-text-2" >{{ trimExcerpt(post.excerpt) }}</p>
                         <button class = "bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all"><router-link :to="postLink(post)" class="text-text-2">Read</router-link></button>
-                    </div>
+                    </div> 
                 </div>
                 
 

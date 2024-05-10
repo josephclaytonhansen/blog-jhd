@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import Blog from '../models/blog.js'
+import Tag from '../models/tag.js'
 
 const getBlogs = asyncHandler(async (req, res) => {
     const blogs = await Blog.find({})
@@ -175,7 +176,16 @@ const deleteCommentFromBlog = asyncHandler(async (req, res) => {
 })
 
 const getBlogsByTag = asyncHandler(async (req, res) => {
-    const blogs = await Blog.find({ tags: { $in: [req.params.tag] } })
+    const tag = await Tag.findById(req.params.tag)
+    if (!tag) {
+        res.status(404)
+        throw new Error('Tag not found')
+    }
+    const blogs = await Blog.find({ tags: { $in: [tag._id] } })
+    if (!blogs){
+        res.status(404)
+        throw new Error('Blogs not found')
+    }
     res.json(blogs)
 })
 

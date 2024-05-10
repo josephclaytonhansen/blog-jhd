@@ -404,6 +404,12 @@ body {
   
 }
 
+.colorblock_dark{
+  background-color: theme('colors.backdrop-1');
+  
+
+}
+
 .colorblock_accent{
   background-color: theme('colors.accent.700');
   color:theme('colors.backdrop.100');
@@ -460,6 +466,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

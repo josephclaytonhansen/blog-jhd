@@ -11,8 +11,8 @@ import NoImageHeader from '../components/bricks/post/noImageHeader.vue'
 import ImageHeader from '../components/bricks/post/imageHeader.vue'
 import FullWidthImageHeader from '../components/bricks/post/fullWidthHeader.vue'
 
-import SiteHeader from '../components/header.vue'
-import SiteFooter from '../components/footer.vue'
+import SiteHeader from '../components/bricks/sitewide/Header.vue'
+import SiteFooter from '../components/bricks/sitewide/Footer.vue'
 
 import axios from 'axios'
 import {useRouter} from 'vue-router'

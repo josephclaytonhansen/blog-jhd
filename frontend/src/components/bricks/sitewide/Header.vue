@@ -10,9 +10,10 @@ export default {
   setup(props) {
     const loadedComponents = ref({})
     const site = window.location.hostname
-    console.log(site, props.thisPageComponentName)
+    
 
     onMounted(async () => {
+      console.log(site, props.thisPageComponentName)
       for (let componentName in components) {
         // Wait for the component to be imported
         let component = await components[componentName]
@@ -37,7 +38,7 @@ export default {
 </script>
 
 <template>
-  <h1>Render test</h1>
+  <h1>Render test {{ site }} {{ thisPageComponentName }}</h1>
   <component :is="components[`${site}${thisPageComponentName}`]"></component>
 
 </template>

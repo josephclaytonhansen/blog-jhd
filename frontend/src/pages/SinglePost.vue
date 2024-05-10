@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import CommentSection from '../components/bricks/comments/commentSection.vue'
 import postProgressBar from '../components/bricks/post/postProgressBar.vue'
 import authorBox from '../components/bricks/post/authorBox.vue'
@@ -65,6 +65,23 @@ const getPostById = async (id) => {
   }
 }
 
+const headerHeight = ref(0)
+
+onMounted(() => {
+  const updateHeaderHeight = () => {
+    const header = document.getElementById('header')
+    if (header) {
+      headerHeight.value = header.offsetHeight + 30
+    }
+  }
+
+  updateHeaderHeight()
+  window.addEventListener('resize', updateHeaderHeight)
+  onUnmounted(() => {
+    window.removeEventListener('resize', updateHeaderHeight)
+  })
+})
+
 onBeforeMount(async () => {
   await getPostById(props.id)
   if (post && post.value.status !== "published"){
@@ -116,7 +133,7 @@ onBeforeMount(async () => {
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>
     </div>
-    <div class = "flex space-between p-5 w-full text-text-1 mt-[120px]">
+    <div class = "flex space-between p-5 w-full text-text-1" :style="{ 'margin-top': headerHeight + 'px' }">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
         <div v-if="post.headerStyle == 'noimage'">
           <NoImageHeader :post="post"/>

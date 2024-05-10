@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, onBeforeMount} from 'vue'
 import CommentSection from '../components/bricks/comments/commentSection.vue'
 import postProgressBar from '../components/bricks/post/postProgressBar.vue'
 import authorBox from '../components/bricks/post/authorBox.vue'

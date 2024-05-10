@@ -1,7 +1,7 @@
 <script setup>
 
 const props = defineProps({
-  taggedPosts: Object
+  taggedPosts: Array
 })
 
 </script>

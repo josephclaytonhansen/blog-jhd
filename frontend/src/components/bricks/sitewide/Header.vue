@@ -1,6 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue'
 
+const props = defineProps({
+  thisPageComponentName: String,
+})
+
 const thisPageComponentName = ref('')
 const loadedComponents = ref({})
 const site = window.location.hostname

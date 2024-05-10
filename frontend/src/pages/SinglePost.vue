@@ -106,7 +106,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <SiteHeader />
+  <SiteHeader :thisPageComponentName="Header" />
   <div v-if="isLoading" class="flex w-screen h-screen overflow-hidden">
     <p class = "text-xl text-text-3">Loading...</p>
   </div>
@@ -138,5 +138,5 @@ onBeforeMount(async () => {
       <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>
-  <SiteFooter />
+  <SiteFooter :thisPageComponentName="Footer" />
 </template>

@@ -1,10 +1,7 @@
 
 <template>
-
-
-<component :is="components[`${site}${thisPageComponentName}`]" v-if="components[`${site}${thisPageComponentName}`]"></component>
-
-    </template>
+  <component :is="loadedComponents[`${site}${thisPageComponentName}`]" v-if="loadedComponents[`${site}${thisPageComponentName}`]"></component>
+</template>
     
     <script>
 import { ref, onMounted, watch, toRef } from 'vue'

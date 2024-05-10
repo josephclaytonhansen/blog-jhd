@@ -334,15 +334,14 @@ const anonymizeUser = asyncHandler(async (req, res) => {
 const getUserByDisplayName = asyncHandler(async (req, res) => {
     const displayName = req.params.displayName.replace(/-/g, ' ');
     let sanitizedDisplayName = displayName.replace(/[^a-zA-Z0-9 ]/g, "")
-    console.log(displayName, sanitizedDisplayName)
     const user = await User.findOne({
         dataDisplayName: {
             $regex: new RegExp(`^${sanitizedDisplayName}$`, 'i')
         }
     })
+
     if (user) {
-        if (req.user._id === user._id || req.user.role === 'admin') {
-            console.log(user)
+        if (req.user._id.toString() === user._id || req.user.role === 'admin') {
             res.json(user)
         } else {
             res.json({

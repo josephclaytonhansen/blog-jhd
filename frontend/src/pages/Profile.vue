@@ -112,12 +112,14 @@ import {
                 <div class="flex flex-col gap-2">
                     <h3 class="text-2xl">Posts</h3>
                     <div class="flex flex-row items-center gap-2 justify-start h-auto flex-wrap">
-                        <div v-for="post in thisUser.posts" class="flex flex-col gap-2">
-                            <h4 class="text-lg">{{post.title}}</h4>
-                            <div class="flex items-center gap-2 justify-start h-auto flex-wrap">
-                                <div><Eye/><p class="text-md text-text-1">{{post.views}}</p></div>
-
+                        <div v-for="post in thisUser.posts" class="flex gap-2">
+                            
+                            <div class="flex flex-col items-center gap-2 justify-start h-auto flex-wrap">
+                                <h4 class="text-lg">{{post.title}}</h4>
+                                <h5 class="text-md italic text-text-1">{{post.date}}</h5>
+                                <div class="flex"><Eye/><p class="text-md text-text-1">{{post.views}}</p></div>
                             </div>
+                            <hr class="dividing-line-mid mx-2"/>
                         </div>
                     </div>
                 </div>

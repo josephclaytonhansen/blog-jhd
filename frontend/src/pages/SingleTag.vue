@@ -18,7 +18,8 @@
     const post = ref({})
     const isLoading = ref(true)
 
-    const getTag = async (tag) => {
+    const getTag = async (tagObj) => {
+        let tag = tagObj._id
         const cachedPost = sessionStorage.getItem(`tag-${tag}`)
         const timestamp = sessionStorage.getItem(`timestamp-${tag}`)
         if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {

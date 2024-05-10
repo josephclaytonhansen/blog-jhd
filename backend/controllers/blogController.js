@@ -175,7 +175,7 @@ const deleteCommentFromBlog = asyncHandler(async (req, res) => {
 })
 
 const getBlogsByTag = asyncHandler(async (req, res) => {
-    const blogs = await Blog.find({ tags: {$eq:req.params.tag} })
+    const blogs = await Blog.find({ tags: { $in: [req.params.tag] } })
     res.json(blogs)
 })
 

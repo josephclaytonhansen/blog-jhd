@@ -13,16 +13,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <header class="w-screen overflow-hidden colorblock py-3 px-8 absolute" style = "z-index:999">
+    <header class="w-screen overflow-hidden colorblock py-3 px-16 absolute" style = "z-index:999">
         <nav class="flex justify-between items-center">
-            <div class="flex items-center">
+            <div class="flex items-center flex-nowrap">
                 <Terminal class="text-accent-500 w-8 h-8"/>
-                <a href="josephhansen.dev" class="text-accent-500 cursor-pointer">josephhansen.dev</a>
+                <a href="https://josephhansen.dev" class="text-accent-500 cursor-pointer">josephhansen.dev</a>
             </div>
             <div class="flex items-center">
-                <router-link to="/blog" class="text-text-0 cursor-pointer">Blog</router-link>
+                <router-link to="/" class="text-text-0 cursor-pointer">Blog</router-link>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center flex-nowrap">
                 <router-link to="/login" v-if="!loggedIn" class="text-text-0 cursor-pointer"><User/>Login</router-link>
                 <router-link to="/me" v-if="loggedIn" class="text-text-0 cursor-pointer"><User/>Me</router-link>
             </div>

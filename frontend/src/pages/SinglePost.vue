@@ -116,7 +116,7 @@ onBeforeMount(async () => {
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>
     </div>
-    <div class = "flex space-between p-5 w-full text-text-1 mt-30">
+    <div class = "flex space-between p-5 w-full text-text-1 mt-[120px]">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
         <div v-if="post.headerStyle == 'noimage'">
           <NoImageHeader :post="post"/>

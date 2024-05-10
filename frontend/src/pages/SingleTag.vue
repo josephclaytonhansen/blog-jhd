@@ -42,7 +42,7 @@
                     headers: config.headers,
                     credentials: 'include'
                 }).then(async (response) => {
-                    if (response.status !== 200) {
+                    if (response.status !== 200 && response.status !== 304) {
                         router.push('/NotFound')
                     }
                     tagD.value = await response.json()

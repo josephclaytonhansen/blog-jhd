@@ -176,9 +176,7 @@ const deleteCommentFromBlog = asyncHandler(async (req, res) => {
 })
 
 const getBlogsByTag = asyncHandler(async (req, res) => {
-    console.log(req.params.tag)
     const tag = await Tag.findById(req.params.tag)
-    console.log(tag, req.params.tag)
     if (!tag) {
         res.status(404)
         throw new Error('Tag not found')
@@ -188,7 +186,6 @@ const getBlogsByTag = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('Blogs not found')
     }
-    console.log(blogs)
     res.json(blogs)
 })
 

@@ -1,6 +1,6 @@
 <script>
 import { ref, onMounted } from 'vue'
-
+import components from './HeaderComponents.ts'
 export default {
   props: {
     thisPageComponentName: String,

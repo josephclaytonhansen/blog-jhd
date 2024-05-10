@@ -1,8 +1,8 @@
 <script>
 import { ref, onMounted } from 'vue'
 import components from './HomeComponents.ts'
-import Header from '../components/bricks/header.vue'
-import Footer from '../components/bricks/footer.vue'
+import Header from '../components/bricks/sitewide/Header.vue'
+import Footer from '../components/bricks/sitewide/Footer.vue'
 
 export default {
   props: {

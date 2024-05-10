@@ -10,8 +10,8 @@
 <script>
 import { ref, onMounted } from 'vue'
 import components from './NotFoundComponents.ts'
-import Header from '../components/bricks/header.vue'
-import Footer from '../components/bricks/footer.vue'
+import Header from '../components/bricks/sitewide/Header.vue'
+import Footer from '../components/bricks/sitewide/Footer.vue'
 
 export default {
   props: {
@@ -31,7 +31,6 @@ export default {
       props.thisPageComponentName = 'NotFound'
     }
     const site = window.location.hostname
-    console.log(site, props.thisPageComponentName)
 
     onMounted(async () => {
       for (let componentName in components) {
@@ -41,8 +40,6 @@ export default {
         // Use the component
         loadedComponents.value[componentName] = component.default
       }
-      console.log(Object.keys(components))
-      console.log(components[`${site}${props.thisPageComponentName}`])
     })
 
     return {

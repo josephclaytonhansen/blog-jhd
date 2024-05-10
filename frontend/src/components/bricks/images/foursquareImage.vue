@@ -15,8 +15,8 @@
 </script>
 
 <template>
-    <div class="foursquare-img-container relative" :class="classes">
-        <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out" :class="{ 'opacity-0': imageLoaded }"></div>
-        <img :src="image" :alt="alt" @load="onImageLoad" :class="{ 'opacity-0': !imageLoaded, 'transition-opacity duration-75 ease-in-out': true }" />
+    <div class="foursquare-img-container relative rounded" :class="classes">
+        <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out rounded" :class="{ 'opacity-0': imageLoaded }"></div>
+        <img :src="image" class="foursquare-img rounded" :alt="alt" @load="onImageLoad" :class="{ 'hidden': !imageLoaded }" />
     </div>
 </template>

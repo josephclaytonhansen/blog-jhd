@@ -11,6 +11,9 @@ import NoImageHeader from '../components/bricks/post/noImageHeader.vue'
 import ImageHeader from '../components/bricks/post/imageHeader.vue'
 import FullWidthImageHeader from '../components/bricks/post/fullWidthHeader.vue'
 
+import SiteHeader from '../components/header.vue'
+import SiteFooter from '../components/footer.vue'
+
 import axios from 'axios'
 import {useRouter} from 'vue-router'
 const router = useRouter()
@@ -103,6 +106,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
+  <SiteHeader />
   <div v-if="isLoading" class="flex w-screen h-screen overflow-hidden">
     <p class = "text-xl text-text-3">Loading...</p>
   </div>
@@ -134,4 +138,5 @@ onBeforeMount(async () => {
       <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>
+  <SiteFooter />
 </template>

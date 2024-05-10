@@ -15,8 +15,8 @@
 </script>
 
 <template>
-    <div class="threesquare-img-container relative rounded" :class="classes">
+    <div class="hd-portrait-img-container relative rounded" :class="classes">
         <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out rounded" :class="{ 'opacity-0': imageLoaded }"></div>
-        <img :src="image" class="threesquare-img rounded" :alt="alt" @load="onImageLoad" :class="{ 'hidden': !imageLoaded }" />
+        <img :src="image" class="hd-portrait-img rounded" :alt="alt" @load="onImageLoad" :class="{ 'hidden': !imageLoaded }" />
     </div>
 </template>

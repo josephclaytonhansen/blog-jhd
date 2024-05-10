@@ -79,8 +79,13 @@ onMounted( async() => {
     await getUserFromUrlParams()
 })
 
-const toISOstring = (date) => {
-    return new Date(date).toISOString()
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+        return 'Invalid date';
+    } else {
+        return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    }
 }
 
 import {
@@ -119,7 +124,7 @@ import {
                         <div v-for="post in thisUser.posts" class="flex gap-2">
                             
                             <div class="flex flex-col items-center gap-2 justify-start h-auto flex-wrap">
-                                <h4 class="text-lg">{{toISOstring(post.title)}}</h4>
+                                <h4 class="text-lg">{{formatDate(post.title)}}</h4>
                                 <h5 class="text-md italic text-text-1">{{post.date}}</h5>
                                 <div class="flex"><Eye/><p class="text-md text-text-1">{{post.views}}</p></div>
                             </div>

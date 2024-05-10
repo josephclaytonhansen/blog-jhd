@@ -9,6 +9,8 @@
     <script>
     import { ref, onMounted, watch } from 'vue'
     import components from './HeaderComponents.ts'
+    console.log('Header.vue')
+    console.log(components)
     
     export default {
       props: {

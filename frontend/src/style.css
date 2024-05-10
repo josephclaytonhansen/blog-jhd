@@ -387,11 +387,11 @@ h1, h2 {
   text-transform: uppercase;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oswald';
+  font-family: 'Cairo';
 }
 
 body {
-  font-family: 'Libre Baskerville';
+  font-family: 'Cairo';
 }
 
 .avatar{border-radius:999rem;}
@@ -402,19 +402,19 @@ body {
 }
 
 .colorblock{
-  background-color: transparent;
+  background-color: theme('colors.backdrop-2');
   
 }
 
 .colorblock_dark{
-  background-color: transparent;
+  background-color: theme('colors.backdrop-1');
   
 
 }
 
 .colorblock_accent{
-  background-color: transparent;
-  ;
+  background-color: theme('colors.accent.700');
+  color:theme('colors.backdrop.100');
   
 }
 
@@ -439,7 +439,7 @@ body {
 }
 
 .sidebar{
-  display: none!important;
+  display: flex;
   background-color: transparent;
   color: theme('colors.text-0');
 
@@ -468,6 +468,8 @@ body {
   }
 }
 /* end automated */
+
+
 
 
 

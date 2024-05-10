@@ -373,6 +373,10 @@ const getUsers = asyncHandler(async (req, res) => {
             users[i].lastLogin = ""
             users[i].lastEdit = ""
             users[i].role = ""
+            users[i].session = ""
+            users[i].sessionTimestamp = ""
+            users[i].verifiedEmail = ""
+            users[i].dataDisplayName = ""
         
         }
     } else {
@@ -384,6 +388,10 @@ const getUsers = asyncHandler(async (req, res) => {
             users[i].lastLogin = ""
             users[i].lastEdit = ""
             users[i].role = ""
+            users[i].session = ""
+            users[i].sessionTimestamp = ""
+            users[i].verifiedEmail = ""
+            users[i].dataDisplayName = ""
         }
     }} 
     res.json(users)

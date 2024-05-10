@@ -1,7 +1,7 @@
 <script setup>
     import SiteHeader from '../components/bricks/sitewide/Header.vue'
     import SiteFooter from '../components/bricks/sitewide/Footer.vue'
-    import tagBody from '../components/bricks/tag/TagBody.vue'
+    import TagBody from '../components/bricks/tag/tagBody.vue'
 
     import {ref, onBeforeMount, defineProps} from 'vue'
     import {useRouter} from 'vue-router'

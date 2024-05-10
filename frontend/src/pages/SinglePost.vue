@@ -128,7 +128,6 @@ onBeforeMount(async () => {
           <ImageHeader :post="post" :overlay="false"/>
         </div>
         <postBody :content="post.content"/>
-        <div class="h-[800px] bg-backdrop-1"/>
         <hr class="block dividing-line" :class="post.sidebar ? 'lg:hidden' : ''"/>
         <authorBox  :author_id="post.author" :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
         <infoBox :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar"  :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />

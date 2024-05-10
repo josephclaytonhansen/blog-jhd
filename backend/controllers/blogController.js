@@ -183,7 +183,7 @@ const getBlogsByTag = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('Tag not found')
     }
-    const blogs = await Blog.find({ tags: { $in: [tag._id] } })
+    const blogs = await Blog.find({ tags: { $in: [tag.name] } })
     if (!blogs){
         res.status(404)
         throw new Error('Blogs not found')

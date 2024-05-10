@@ -1,7 +1,7 @@
 <script setup>
     import SiteHeader from '../components/bricks/sitewide/Header.vue'
     import SiteFooter from '../components/bricks/sitewide/Footer.vue'
-    import tagBody from '../components/bricks/tag/TagBody.vue'
+
 
     import {ref, onBeforeMount, defineProps} from 'vue'
     import {useRouter} from 'vue-router'
@@ -101,7 +101,7 @@
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />
-            <TagBody :taggedPosts="posts" />
+
         <SiteFooter :thisPageComponentName="'Footer'" />
     </div>
 </template>

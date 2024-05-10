@@ -7,39 +7,34 @@
     </template>
     
     <script>
-    import { ref, onMounted, watch, toRef } from 'vue'
-    import components from './HeaderComponents.ts'
-    
-    export default {
-      props: {
-        thisPageComponentName: String,
-      },
-      setup(props) {
-      const loadedComponents = {}
-      const site = window.location.hostname
+import { ref, onMounted, watch, toRef } from 'vue'
 
-      const loadComponents = async () => {
-        const componentPromises = Object.entries(components).map(async ([componentName, componentPromise]) => {
-          try {
-            let component = await componentPromise
-            console.log(componentName)
+export default {
+  props: {
+    thisPageComponentName: String,
+  },
+  async setup(props) {
+    const loadedComponents = {}
+    const site = window.location.hostname
 
-            loadedComponents[componentName] = ref(component.default)
-          } catch (error) {
-            console.error(`Failed to load component ${componentName}: ${error}`)
-          }
-        })
+    const components = await import('./HeaderComponents.ts')
 
-        await Promise.all(componentPromises)
-      }
+    const loadComponents = async () => {
+      const componentPromises = Object.entries(components).map(([componentName, component]) => {
+        console.log(componentName)
+        loadedComponents[componentName] = ref(component)
+      })
 
-      watch(() => props.thisPageComponentName, loadComponents, { immediate: true })
-
-      return {
-        ...loadedComponents,
-        site: ref(site),
-        thisPageComponentName: toRef(props, 'thisPageComponentName'),
-      }
+      await Promise.all(componentPromises)
     }
+
+    onMounted(loadComponents)
+
+    return {
+      ...toRefs(loadedComponents),
+      site: ref(site),
+      thisPageComponentName: toRef(props, 'thisPageComponentName'),
     }
-    </script>
+  }
+}
+</script>

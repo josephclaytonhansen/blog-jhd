@@ -14,27 +14,21 @@ export default {
     thisPageComponentName: String,
   },
   async setup(props) {
-    const loadedComponents = {}
-    const site = window.location.hostname
+  const loadedComponents = ref({});
+  const site = window.location.hostname;
 
-    const components = await import('./HeaderComponents.ts')
+  const { default: componentsPromise } = await import('./HeaderComponents.ts');
+  const components = await componentsPromise;
 
-    const loadComponents = async () => {
-      const componentPromises = Object.entries(components).map(([componentName, component]) => {
-        console.log(componentName)
-        loadedComponents[componentName] = ref(component)
-      })
-
-      await Promise.all(componentPromises)
-    }
-
-    onMounted(loadComponents)
-
-    return {
-      ...toRefs(loadedComponents),
-      site: ref(site),
-      thisPageComponentName: toRef(props, 'thisPageComponentName'),
-    }
+  for (const [componentName, component] of Object.entries(components)) {
+    loadedComponents.value[componentName] = component;
   }
+
+  return {
+    loadedComponents,
+    site: ref(site),
+    thisPageComponentName: toRef(props, 'thisPageComponentName'),
+  }
+}
 }
 </script>

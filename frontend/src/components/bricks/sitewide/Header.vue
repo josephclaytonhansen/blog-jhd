@@ -7,7 +7,7 @@
     </template>
     
     <script>
-    import { ref, onMounted, watch } from 'vue'
+    import { ref, onMounted, watch, toRef } from 'vue'
     import components from './HeaderComponents.ts'
     
     export default {

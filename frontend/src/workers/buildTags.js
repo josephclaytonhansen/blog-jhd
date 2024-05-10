@@ -29,7 +29,7 @@ const updateRouterFile = async () => {
         let newRoute = ''
         if(tag.site === thisSite){
         
-            newRoute = `{ path: '/tag/${tag.name}', component: () => import('./pages/SingleTag.vue'), props : {id: '${tag._id}'} },`
+            newRoute = `{ path: '/tag/${tag.name}', component: () => import('./pages/SingleTag.vue'), props : {tag: '${tag._id}'} },`
         
         addRoutes.push(newRoute)
     }}

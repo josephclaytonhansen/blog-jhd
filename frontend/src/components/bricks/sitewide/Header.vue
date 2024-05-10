@@ -1,44 +1,32 @@
-<script>
+<script setup>
 import { ref, onMounted } from 'vue'
 import components from './HeaderComponents.ts'
-export default {
-  props: {
-    thisPageComponentName: String,
-    header: Boolean,
-    footer: Boolean
-  },
-  setup(props) {
-    const loadedComponents = ref({})
-    const site = window.location.hostname
-    
 
-    onMounted(async () => {
-      console.log(site, props.thisPageComponentName)
-      for (let componentName in components) {
-        // Wait for the component to be imported
-        let component = await components[componentName]
+const props = defineProps({
+  thisPageComponentName: String,
+  header: Boolean,
+  footer: Boolean
+})
 
-        // Use the component
-        loadedComponents.value[componentName] = component.default
-      }
-      console.log(Object.keys(components))
-      console.log(components[`${site}${props.thisPageComponentName}`])
-    })
+const loadedComponents = ref({})
+const site = window.location.hostname
 
-    return {
-      components: loadedComponents,
-      site,
-      thisPageComponentName: props.thisPageComponentName,
-      header: props.header,
-      footer: props.footer
-    }
+onMounted(async () => {
+  console.log(site, props.thisPageComponentName)
+  for (let componentName in components) {
+    // Wait for the component to be imported
+    let component = await components[componentName]
+
+    // Use the component
+    loadedComponents.value[componentName] = component.default
   }
-}
+  console.log(Object.keys(components))
+  console.log(components[`${site}${props.thisPageComponentName}`])
+})
 
 </script>
 
 <template>
-  <h1>Render test {{ site }} {{ thisPageComponentName }}</h1>
-  <component :is="components[`${site}${thisPageComponentName}`]"></component>
-
+  <h1>Render test {{ site }} {{ props.thisPageComponentName }}</h1>
+  <component :is="components[`${site}${props.thisPageComponentName}`]"></component>
 </template>

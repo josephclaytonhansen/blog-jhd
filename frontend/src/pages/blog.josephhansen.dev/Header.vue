@@ -17,13 +17,13 @@ onMounted(() => {
         <nav class="flex justify-between items-center">
             <div class="flex items-center flex-nowrap">
                 <Terminal class="text-accent-500 w-8 h-8"/>
-                <a href="https://josephhansen.dev" class="text-accent-500 cursor-pointer">josephhansen.dev</a>
+                <a href="https://josephhansen.dev" class="text-accent-500 cursor-pointer font-mono">josephhansen.dev</a>
             </div>
             <div class="flex items-center">
                 <router-link to="/" class="text-text-0 cursor-pointer">Blog</router-link>
             </div>
             <div class="flex items-center flex-nowrap">
-                <router-link to="/login" v-if="!loggedIn" class="text-text-0 cursor-pointer"><User/>Login</router-link>
+                <router-link to="/login" v-if="!loggedIn" class="text-text-0 cursor-pointer flex gap-2 items-center"><User/>Login</router-link>
                 <router-link to="/me" v-if="loggedIn" class="text-text-0 cursor-pointer"><User/>Me</router-link>
             </div>
         </nav>

@@ -23,7 +23,7 @@ const routes = [
 { path: '/tag/test', component: () => import('./pages/SingleTag.vue'), props : {tag: '663ce6e844f7586b42a80345'} },
 //end tags
 //categories
-
+{ path: '/category/category', component: () => import('./pages/SingleCategory.vue'), props : {category: '663cef5044f7586b42a803a5'} },
 //end categories
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

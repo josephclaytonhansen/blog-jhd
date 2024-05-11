@@ -23,6 +23,7 @@
         const timestamp = sessionStorage.getItem(`timestamp-${tag}`)
         if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
             post.value = JSON.parse(cachedPost)
+            tagD.value = post.value
             isLoading.value = false
         } else {
             sessionStorage.removeItem(`tag-${tag}`)

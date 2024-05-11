@@ -48,5 +48,3 @@ const updateRouterFile = async () => {
 }
 
 updateRouterFile()
-
-updateRouterFile()

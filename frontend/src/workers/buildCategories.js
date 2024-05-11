@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename)
 
 const thisSite = process.env.SITE_PREFIX
 
-const getPosts = async () => {
+const getCats = async () => {
     const response = await fetch(`${process.env.VITE_APP_SERVER_URL}/category/`)
     if (response.ok){
         let data = await response.json()
@@ -22,7 +22,7 @@ const getPosts = async () => {
 const updateRouterFile = async () => {
     const routerFilePath = path.resolve(__dirname, '../router.js')
     let routerFileContent = fs.readFileSync(routerFilePath, 'utf8')
-    let cats = await getPosts()
+    let cats = await getCats()
     let addRoutes = []
 
     for (const cat of cats) {
@@ -46,7 +46,5 @@ const updateRouterFile = async () => {
 
     fs.writeFileSync(routerFilePath, routerFileContent)
 }
-
-updateRouterFile()
 
 updateRouterFile()

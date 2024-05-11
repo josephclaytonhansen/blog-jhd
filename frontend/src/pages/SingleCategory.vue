@@ -1,7 +1,7 @@
 <script setup>
     import SiteHeader from '../components/bricks/sitewide/Header.vue'
     import SiteFooter from '../components/bricks/sitewide/Footer.vue'
-    import TagBody from '../components/bricks/category/categoryBody.vue'
+    import categoryBody from '../components/bricks/category/categoryBody.vue'
 
     import {ref, onBeforeMount, defineProps} from 'vue'
     import {useRouter} from 'vue-router'
@@ -9,17 +9,17 @@
     import { useToast } from "vue-toastification"
     const toast = useToast()
 
-    const tagD = ref({})
+    const categoryD = ref({})
     const posts = ref([])
     const props = defineProps({
-    tag: String,
+    category: String,
     })
 
     const isLoading = ref(true)
 
-    const getTag = async (tag) => {
+    const getcategory = async (category) => {
        
-            let url = `${process.env.VUE_APP_SERVER_URL}/category/` + tag
+            let url = `${process.env.VUE_APP_SERVER_URL}/category/` + category
             let config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +36,7 @@
                     if (response.status !== 200 && response.status !== 304) {
                         router.push('/NotFound')
                     }
-                    tagD.value = await response.json()
+                    categoryD.value = await response.json()
                 })
             } catch (error) {
                 console.error(error)
@@ -46,12 +46,12 @@
     
 
     onBeforeMount(async () => {
-        await getTag(props.tag)
-        await getTaggedPosts(props.tag)
+        await getcategory(props.category)
+        await getcategorygedPosts(props.category)
     })
 
-    const getTaggedPosts = async(tag) => {
-  let url = `${process.env.VUE_APP_SERVER_URL}/blog/category/` + tag
+    const getcategorygedPosts = async(category) => {
+  let url = `${process.env.VUE_APP_SERVER_URL}/blog/category/` + category
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -69,8 +69,8 @@
         toast.error("Network error- could not get posts")
       }
       posts.value = await response.json()
-      sessionStorage.setItem(`tag-${tag}`, JSON.stringify(posts.value))
-      sessionStorage.setItem(`timestamp-${tag}`, new Date().getTime())
+      sessionStorage.setItem(`category-${category}`, JSON.stringify(posts.value))
+      sessionStorage.setItem(`timestamp-${category}`, new Date().getTime())
       isLoading.value = false
     })
   } catch (error) {
@@ -89,8 +89,8 @@
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />
-          <TagBody v-if="posts && posts.length > 0 " :taggedPosts="posts" :tagName="tagD.name"/>
-          <h2 v-else-if="tagD" class="text-text-1 text-2xl p-5">No posts found in category "{{ tagD.name }}"</h2>
+          <categoryBody v-if="posts && posts.length > 0 " :categorygedPosts="posts" :categoryName="categoryD.name"/>
+          <h2 v-else-if="categoryD" class="text-text-1 text-2xl p-5">No posts found in category "{{ categoryD.name }}"</h2>
           <h2 v-else class="text-text-1 text-2xl p-5">Loading...</h2>
         <SiteFooter :thisPageComponentName="'Footer'" />
     </div>

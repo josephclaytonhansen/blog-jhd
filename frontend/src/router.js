@@ -14,16 +14,14 @@ const routes = [
     { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
     {path: '/seabasstest', component: () => import('./pages/SeabassTest.vue')},
     //end required routes
-    // automated
-
+// automated
 //end automated
 //blogs
-{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663d2558fb47c37907826c62'} },
 //end blogs
 //tags
-
 //end tags
 //categories
+//end categories
 //end tags
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

@@ -15,20 +15,10 @@
     tag: String,
     })
 
-    const post = ref({})
     const isLoading = ref(true)
 
     const getTag = async (tag) => {
-        const cachedPost = sessionStorage.getItem(`tag-${tag}`)
-        const timestamp = sessionStorage.getItem(`timestamp-${tag}`)
-        if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
-            post.value = JSON.parse(cachedPost)
-            tagD.value = post.value
-            isLoading.value = false
-        } else {
-            sessionStorage.removeItem(`tag-${tag}`)
-            sessionStorage.removeItem(`timestamp-${tag}`)
-            sessionStorage.removeItem('checkResult')
+       
             let url = `${process.env.VUE_APP_SERVER_URL}/tag/` + tag
             let config = {
                 headers: {
@@ -47,17 +37,13 @@
                         router.push('/NotFound')
                     }
                     tagD.value = await response.json()
-                    sessionStorage.setItem(`tag-${tag}`, JSON.stringify(post.value))
-                    sessionStorage.setItem(`timestamp-${tag}`, new Date().getTime())
-                    isLoading.value = false
                 })
             } catch (error) {
                 console.error(error)
-                isLoading.value = false
                 router.push('/NotFound')
             }
         }
-    }
+    
 
     onBeforeMount(async () => {
         await getTag(props.tag)
@@ -103,8 +89,9 @@
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />
-          <TagBody v-if="posts && posts.length > 0 " :taggedPosts="posts" :tagName="props.tag"/>
-          <h2 v-else class="text-text-1 text-2xl p-5">No posts found tagged with "{{ props.tag }}"</h2>
+          <TagBody v-if="posts && posts.length > 0 " :taggedPosts="posts" :tagName="tagD.name"/>
+          <h2 v-else-if="tagD" class="text-text-1 text-2xl p-5">No posts found tagged with "{{ tagD.name }}"</h2>
+          <h2 v-else class="text-text-1 text-2xl p-5">Loading...</h2>
         <SiteFooter :thisPageComponentName="'Footer'" />
     </div>
 </template>

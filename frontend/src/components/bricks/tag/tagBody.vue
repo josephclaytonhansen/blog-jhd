@@ -49,7 +49,7 @@ const trimExcerpt = (excerpt) => {
 
             <div class="flex flex-wrap gap-3">
 
-                <div v-for="post in sitePosts" :key="post.id" class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 backdrop_dark rounded">
+                <div v-for="post in sitePosts" :key="post.id" class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 colorblock rounded">
                     <router-link :to="postLink(post)">
                     <hdImage :image="post.featuredImage" :alt="post.title"/>
                     <div class="p-3 flex flex-col items-center align-middle">

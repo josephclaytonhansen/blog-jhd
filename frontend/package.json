@@ -13,7 +13,8 @@
     "remove-site-page": "node ./src/workers/removeSitePages.js",
     "build-posts": "node ./src/workers/buildPosts.js",
     "build-tags": "node ./src/workers/buildTags.js",
-    "process-site": "node ./src/workers/processDist.js"
+    "process-site": "node ./src/workers/processDist.js",
+    "git-commit": "node commit.js"
   },
   "dependencies": {
     "@lucide/lab": "^0.1.1",

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue'
+import { ref, onMounted } from 'vue'
 import hdImage from '../images/hdImage.vue'
 const props = defineProps({
   taggedPosts: Array,
@@ -12,7 +12,7 @@ const filterPostsOnThisSite = (posts) => {
   return posts.filter(post => post.site === site)
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   console.log(props.taggedPosts)
   sitePosts.value = filterPostsOnThisSite(props.taggedPosts)
   console.log(sitePosts.value)

@@ -102,7 +102,7 @@
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />
-            <TagBody :taggedPosts="posts" />
+            <TagBody :taggedPosts="posts" :tagName="tagD.name"/>
         <SiteFooter :thisPageComponentName="'Footer'" />
     </div>
 </template>

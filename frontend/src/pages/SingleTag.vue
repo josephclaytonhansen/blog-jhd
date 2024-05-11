@@ -86,8 +86,8 @@
 <template>
     <div v-if="isLoading" class="flex w-screen h-screen overflow-hidden bg-backdrop-1">
       <SiteHeader :thisPageComponentName="'Header'" />
-      <p class = "text-xl text-text-1">Loading...</p>
-      <SiteFooter :thisPageComponentName="'Footer'" />
+            <p class = "text-xl text-text-1 w-full">Loading...</p>
+        <SiteFooter :thisPageComponentName="'Footer'" />
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />

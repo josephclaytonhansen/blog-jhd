@@ -29,7 +29,7 @@ const updateRouterFile = async () => {
         let newRoute = ''
         if(tag.site === thisSite){
         
-            newRoute = `{ path: '/tag/${tag.name}', component: () => import('./pages/SingleCategory.vue'), props : {category: '${category._id}'} },`
+            newRoute = `{ path: '/category/${tag.name}', component: () => import('./pages/SingleCategory.vue'), props : {category: '${category._id}'} },`
         
         addRoutes.push(newRoute)
     }}
@@ -38,7 +38,7 @@ const updateRouterFile = async () => {
 
     // Remove existing routes
     let regexRemove = /(\n\/\/categories)[\s\S]*?(\n\/\/end categories)/
-    routerFileContent = routerFileContent.replace(regexRemove, `$1\n//end tags`)
+    routerFileContent = routerFileContent.replace(regexRemove, `$1\n//end categories`)
 
     // Add new routes
     let regexAdd = /(\n\/\/end categories)/

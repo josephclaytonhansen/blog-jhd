@@ -22,14 +22,14 @@ const getPosts = async () => {
 const updateRouterFile = async () => {
     const routerFilePath = path.resolve(__dirname, '../router.js')
     let routerFileContent = fs.readFileSync(routerFilePath, 'utf8')
-    let tags = await getPosts()
+    let cats = await getPosts()
     let addRoutes = []
 
-    for (const tag of tags) {
+    for (const cat of cats) {
         let newRoute = ''
-        if(tag.site === thisSite){
+        if(cat.site === thisSite){
         
-            newRoute = `{ path: '/category/${tag.name}', component: () => import('./pages/SingleCategory.vue'), props : {category: '${category._id}'} },`
+            newRoute = `{ path: '/category/${cat.name}', component: () => import('./pages/SingleCategory.vue'), props : {category: '${cat._id}'} },`
         
         addRoutes.push(newRoute)
     }}

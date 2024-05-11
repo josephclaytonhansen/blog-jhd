@@ -17,13 +17,13 @@ const routes = [
 // automated
 //end automated
 //blogs
-{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663d2558fb47c37907826c62'} },
+{ path: '/test', component: () => import('./pages/SinglePost.vue'), props : {id: '663a98e604bbf7593d046b54'} },
 //end blogs
 //tags
-
+{ path: '/tag/test', component: () => import('./pages/SingleTag.vue'), props : {tag: '663ce6e844f7586b42a80345'} },
 //end tags
 //categories
-
+{ path: '/category/category', component: () => import('./pages/SingleCategory.vue'), props : {category: '663cef5044f7586b42a803a5'} },
 //end categories
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

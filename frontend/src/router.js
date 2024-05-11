@@ -23,6 +23,8 @@ const routes = [
 //tags
 
 //end tags
+//categories
+//end categories
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }
 ]

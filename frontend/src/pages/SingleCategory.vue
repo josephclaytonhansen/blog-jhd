@@ -91,7 +91,7 @@ onBeforeMount(async () => {
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />
-          <categoryBody v-if="posts && posts.length > 0 " :categorygedPosts="posts" :categoryName="categoryD.name"/>
+          <categoryBody v-if="posts && posts.length > 0 " :categoryPosts="posts" :categoryName="categoryD.name"/>
           <h2 v-else-if="categoryD" class="text-text-1 text-2xl p-5">No posts found in category "{{ categoryD.name }}"</h2>
           <h2 v-else class="text-text-1 text-2xl p-5">Loading...</h2>
         <SiteFooter :thisPageComponentName="'Footer'" />

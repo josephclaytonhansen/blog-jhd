@@ -18,40 +18,42 @@
     const isLoading = ref(true)
 
     const getcategory = async (category) => {
-       
-            let url = `${process.env.VUE_APP_SERVER_URL}/category/` + category
-            let config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                withCredentials: true
-            }
-            try {
-                await fetch(url, {
-                    method: 'GET',
-                    headers: config.headers,
-                    credentials: 'include'
-                }).then(async (response) => {
-                    if (response.status !== 200 && response.status !== 304) {
-                        router.push('/NotFound')
-                    }
-                    categoryD.value = await response.json()
-                })
-            } catch (error) {
-                console.error(error)
-                router.push('/NotFound')
-            }
+    let url = `${process.env.VUE_APP_SERVER_URL}/category/` + category
+    let config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        withCredentials: true
+    }
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include'
+        })
+
+        if (response.status !== 200 && response.status !== 304) {
+            router.push('/NotFound')
         }
-    
 
-    onBeforeMount(async () => {
-        await getcategory(props.category)
-        await getcategorygedPosts(props.category)
-    })
+        categoryD.value = await response.json()
+    } catch (error) {
+        console.error(error)
+        router.push('/NotFound')
+    }
+    return categoryD.value
+}
 
-    const getcategorygedPosts = async(category) => {
-  let url = `${process.env.VUE_APP_SERVER_URL}/blog/category/` + category
+onBeforeMount(async () => {
+    const result = await getcategory(props.category);
+    if (result) {
+        await getcategoryPosts(props.category, result.name);
+    }
+})
+
+    const getcategoryPosts = async(category, name) => {
+  let url = `${process.env.VUE_APP_SERVER_URL}/blog/category/` + name
   let config = {
     headers: {
       'Content-Type': 'application/json',

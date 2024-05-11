@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue'
 import hdImage from '../images/hdImage.vue'
 const props = defineProps({
-  taggedPosts: Array,
-  tagName: String
+  categoryPosts: Array,
+  categoryName: String
 })
 
 const site = window.location.hostname
@@ -13,8 +13,8 @@ const filterPostsOnThisSite = (posts) => {
 }
 
 onMounted(() => {
-  console.log(props.taggedPosts)
-  sitePosts.value = filterPostsOnThisSite(props.taggedPosts)
+  console.log(props.categoryPosts)
+  sitePosts.value = filterPostsOnThisSite(props.categoryPosts)
   console.log(sitePosts.value)
 })
 
@@ -39,10 +39,10 @@ const trimExcerpt = (excerpt) => {
 <template>
     <div class="p-5 w-full text-text-1">
         <div class="w-full">
-            <h1 class="text-3xl font-header">Posts in "{{ props.tagName }}"</h1>
+            <h1 class="text-3xl font-header">Posts in "{{ props.categoryName }}"</h1>
         </div>
         <div class="w-full">
-            <p class="text-lg">There are {{ sitePosts.length }} posts in "{{ props.tagName }}"</p>
+            <p class="text-lg">There are {{ sitePosts.length }} posts in "{{ props.categoryName }}"</p>
         </div>
         <div class="w-full">
             <hr class="dividing-line"/>

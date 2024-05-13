@@ -8,8 +8,6 @@ const props = defineProps({
     user: String,
     blogPost: String
 })
-const user = ref(props.user)
-const blogPost = ref(props.blogPost)
 
 import { useToast } from "vue-toastification"
 const toast = useToast()
@@ -25,7 +23,7 @@ const uploadComment = async() => {
         },
     }
     let body = {
-        parent: parent.value,
+        parent: props.blogPost,
         content: comment.value,
         user: props.user,
         blogPost: props.blogPost
@@ -69,7 +67,7 @@ const uploadComment = async() => {
         <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2 w-full" placeholder="Add your thoughts to the discussion."></textarea>
         <button @click="uploadComment" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Submit</button>
     </div>
-    <div v-else-if="!writing && user !== '' && user !== null" class="w-full">
+    <div v-else-if="!writing && props.user !== '' && props.user !== null" class="w-full">
         <button @click="writing = true" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg w-full text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Write a comment</button>
     </div>
     <div v-else class="w-full items-start">

@@ -47,6 +47,7 @@
 
 onMounted(async () => {
     const route = useRoute()
+    console.log(route)
     const tagSlug = route.params.tag
     const tagData = await getTag(tagSlug)
     if (tagData && tagData._id) {

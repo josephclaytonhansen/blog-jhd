@@ -1,24 +1,21 @@
 <script setup>
     import SiteHeader from '../components/bricks/sitewide/Header.vue'
     import SiteFooter from '../components/bricks/sitewide/Footer.vue'
-    import categoryBody from '../components/bricks/category/categoryBody.vue'
+    import CategoryBody from '../components/bricks/tag/categoryBody.vue'
 
-    import {ref, onBeforeMount, defineProps} from 'vue'
-    import {useRouter} from 'vue-router'
+    import {ref, onMounted} from 'vue'
+    import {useRouter, useRoute} from 'vue-router'
     const router = useRouter()
     import { useToast } from "vue-toastification"
     const toast = useToast()
 
-    const categoryD = ref({})
+    const category = ref({})
     const posts = ref([])
-    const props = defineProps({
-    category: String,
-    })
 
     const isLoading = ref(true)
 
-    const getcategory = async (category) => {
-    let url = `${process.env.VUE_APP_SERVER_URL}/category/` + category
+    const getTag = async (categorySlug) => {
+    let url = `${process.env.VUE_APP_SERVER_URL}/category/slug/` + categorySlug
     let config = {
         headers: {
             'Content-Type': 'application/json',
@@ -27,33 +24,37 @@
         withCredentials: true
     }
     try {
-        const response = await fetch(url, {
+        let categoryData
+        await fetch(url, {
             method: 'GET',
             headers: config.headers,
             credentials: 'include'
+        }).then(async (response) => {
+            if (response.status !== 200 && response.status !== 304) {
+                router.push('/NotFound')
+            }
+            categoryData = await response.json()
+            category.value = categoryData
         })
-
-        if (response.status !== 200 && response.status !== 304) {
-            router.push('/NotFound')
-        }
-
-        categoryD.value = await response.json()
+        return categoryData
     } catch (error) {
         console.error(error)
         router.push('/NotFound')
     }
-    return categoryD.value
 }
 
-onBeforeMount(async () => {
-    const result = await getcategory(props.category);
-    if (result) {
-        await getcategoryPosts(props.category, result.name);
+onMounted(async () => {
+    const route = useRoute()
+    console.log(route)
+    const categorySlug = route.params.slug
+    const categoryData = await getTag(categorySlug)
+    if (categoryData) {
+        await getTaggedPosts(categorySlug)
     }
 })
 
-    const getcategoryPosts = async(category, name) => {
-  let url = `${process.env.VUE_APP_SERVER_URL}/blog/category/` + name
+    const getTaggedPosts = async(category) => {
+  let url = `${process.env.VUE_APP_SERVER_URL}/blog/category/` + category
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -71,8 +72,8 @@ onBeforeMount(async () => {
         toast.error("Network error- could not get posts")
       }
       posts.value = await response.json()
-      sessionStorage.setItem(`category-${category}`, JSON.stringify(posts.value))
-      sessionStorage.setItem(`timestamp-${category}`, new Date().getTime())
+      sessionStorage.setItem(`tag-${tag}`, JSON.stringify(posts.value))
+      sessionStorage.setItem(`timestamp-${tag}`, new Date().getTime())
       isLoading.value = false
     })
   } catch (error) {
@@ -87,14 +88,14 @@ onBeforeMount(async () => {
 
 <template>
     <div v-if="isLoading" class="flex flex-col w-screen h-screen overflow-hidden bg-backdrop-1">
-        <SiteHeader :thisPageComponentName="'Header'" />
+      <SiteHeader :thisPageComponentName="'Header'" />
             <p class = "text-xl text-text-1 w-full">Loading...</p>
         <SiteFooter :thisPageComponentName="'Footer'" />
     </div>
     <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
         <SiteHeader :thisPageComponentName="'Header'" />
-          <categoryBody v-if="posts && posts.length > 0 " :categoryPosts="posts" :categoryName="categoryD.name"/>
-          <h2 v-else-if="categoryD" class="text-text-1 text-2xl p-5">No posts found in category "{{ categoryD.name }}"</h2>
+          <CategoryBody v-if="posts && posts.length > 0 " :taggedPosts="posts" :tagName="category.name"/>
+          <h2 v-else-if="category" class="text-text-1 text-2xl p-5">No posts found tagged with "{{ category.name }}"</h2>
           <h2 v-else class="text-text-1 text-2xl p-5">Loading...</h2>
         <SiteFooter :thisPageComponentName="'Footer'" />
     </div>

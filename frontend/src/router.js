@@ -9,12 +9,12 @@ const routes = [
     { path: '/cms', component: () => import('./pages/CMS.vue') },
     { path: '/author', component: () => import('./pages/Author.vue') },
     { path: '/me', component: () => import('./pages/Me.vue') },
-    { path: '/profile/id/:id', component: () => import('./pages/Profile.vue') },
-    { path: '/profile/:displayName', component: () => import('./pages/Profile.vue') },
-    { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
     {path: '/seabasstest', component: () => import('./pages/SeabassTest.vue')},
     { path: '/:slug', component: () => import('./pages/SinglePost.vue')},
     { path: '/tag/:slug', component: () => import('./pages/SingleTag.vue')},
+    { path: '/profile/id/:id', component: () => import('./pages/Profile.vue') },
+    { path: '/profile/:displayName', component: () => import('./pages/Profile.vue') },
+    { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
     //end required routes
 // automated
 //end automated

@@ -37,6 +37,8 @@ const getPostComments = async(id) => {
             }
             comments.value = await response.json()
             console.log("COMMENTS: ", comments.value)
+            comments.value = groupByCommentParent(comments.value)
+            console.log("GROUPED COMMENTS: ", comments.value)
         })
     } catch (error) {
         console.error(error)
@@ -65,7 +67,6 @@ const groupByCommentParent = (comments) => {
             }
         }
     })
-    console.log("GROUPED COMMENTS: " + groupedComments)
     return groupedComments
 }
 
@@ -87,10 +88,7 @@ const nestedLevelLeftMargin = (nestedLevel) => {
 onMounted(async () => {
     console.log("commentSection POST ID: " + props.post_id)
     console.log("commentSection USER: " + props.user)
-    await getPostComments(props.post_id).then(() => {
-        comments.value = groupByCommentParent(comments.value)
-        console.log("GROUPED COMMENTS: ", comments.value)
-    })
+    await getPostComments(props.post_id)
 })
 
 </script>

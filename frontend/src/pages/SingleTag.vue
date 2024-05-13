@@ -48,8 +48,8 @@ onMounted(async () => {
     console.log(route)
     const tagSlug = route.params.slug
     const tagData = await getTag(tagSlug)
-    if (tagData && tagData._id) {
-        await getTaggedPosts(tagData._id)
+    if (tagData) {
+        await getTaggedPosts(tagSlug)
     }
 })
 

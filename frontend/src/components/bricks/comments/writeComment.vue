@@ -3,11 +3,17 @@
 import { ref, onMounted } from 'vue'
 const parent = ref('')
 const comment = ref('')
+const props = ref({})
 
-const props = defineProps({
+
+onMounted(() => {
+    props.value = defineProps({
     user: String,
     blogPost: String
 })
+console.log(props.value)
+})
+
 
 import { useToast } from "vue-toastification"
 const toast = useToast()

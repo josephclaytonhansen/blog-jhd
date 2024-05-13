@@ -57,7 +57,6 @@ const getPost = async (displayNameSlugified) => {
         }
         let posts = await response.json()
         post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
-        console.log(post.value)
         sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
         sessionStorage.setItem(`timestamp-${displayNameSlugified}`, new Date().getTime())
         isLoading.value = false
@@ -126,7 +125,7 @@ onMounted(async () => {
 
         }
     } else {
-        user.value = ''
+        
     }
 
 

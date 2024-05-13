@@ -60,6 +60,7 @@ const groupByCommentParent = (comments) => {
             }
         }
     })
+    console.log(groupedComments)
     return groupedComments
 }
 

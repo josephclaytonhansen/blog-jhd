@@ -36,6 +36,28 @@
         return data
     }
 
+    const getRemovedUsers = async () => {
+        let config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
+        },
+        withCredentials: true
+    }
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/removed-users`, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include',
+        })
+        if (response.status !== 200) {
+            toast.error('Network error')
+            throw new Error('Network error- could not get users')
+        }
+        const data = await response.json()
+        return data
+    }
+
 
     onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
@@ -84,7 +106,8 @@
         Trash,
         VenetianMask,
         Router,
-        Flag
+        Flag,
+        UserX2
     } from 'lucide-vue-next'
 
     import { useToast } from "vue-toastification"
@@ -101,11 +124,13 @@
     const admins = computed(() => filterUsers(users.value, user => user.role === 'admin'))
     const regusers = computed(() => filterUsers(users.value, user => user.role !== 'admin' && user.displayName.startsWith('anon') === false))
     const anonymizedUsers = computed(() => filterUsers(users.value, user => user.displayName.startsWith('anon') === true))
+    const removedUsers = await getRemovedUsers()
 
     const groups = ref([
         {key: 'Admins', icon: ShieldCheck, users: admins, class: "shrink"},
         {key: 'Users', icon: UserCheck, users: regusers, class: "grow"},
         {key: 'Anonymized Users', icon: UserMinus, users: anonymizedUsers, class: "shrink"},
+        {key: 'Removed Users', icon: UserX2, users: removedUsers, class: "shrink"}
     ])
 
     const isIpUnique = (users) => {
@@ -293,7 +318,7 @@
                         <div class="flex items-center gap-1 shrink">
                             <MessageCircleMore/><h3>{{user.comments.length}}</h3>
                         </div>
-                        <div class="flex items-center gap-1 shrink">
+                        <div class="flex items-center gap-1 shrink" v-if="group.key !== 'Removed Users'">
                             <Flag :class="filterFlaggedComments(user).length > 0 ? 'text-red-500' : ''"/><h3>{{filterFlaggedComments(user).length}}</h3>
                         </div>
                         <div class="flex items-center gap-1 shrink" v-if = "user.role == 'admin' || user.role == 'author'">

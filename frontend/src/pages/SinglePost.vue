@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount} from 'vue'
+import { ref, onMounted} from 'vue'
 import CommentSection from '../components/bricks/comments/commentSection.vue'
 import postProgressBar from '../components/bricks/post/postProgressBar.vue'
 import authorBox from '../components/bricks/post/authorBox.vue'
@@ -17,9 +17,6 @@ import SiteFooter from '../components/bricks/sitewide/Footer.vue'
 import axios from 'axios'
 import {useRouter} from 'vue-router'
 const router = useRouter()
-
-
-const titleSlugifiedFromUrlParams = router.currentRoute.value.params.title
 
 const slugify = (string) => {
   return string.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
@@ -70,7 +67,8 @@ const getPost = async (displayNameSlugified) => {
   }
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
+  const titleSlugifiedFromUrlParams = router.currentRoute.value.params.title
   await getPost(titleSlugifiedFromUrlParams)
 
 })

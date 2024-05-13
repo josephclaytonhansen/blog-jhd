@@ -3,7 +3,7 @@
     import SiteFooter from '../components/bricks/sitewide/Footer.vue'
     import TagBody from '../components/bricks/tag/tagBody.vue'
 
-    import {ref, onBeforeMount, defineProps} from 'vue'
+    import {ref, onMo, onMounted} from 'vue'
     import {useRouter} from 'vue-router'
     const router = useRouter()
     import { useToast } from "vue-toastification"
@@ -45,7 +45,8 @@
     }
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
+    const tagSlug = router.currentRoute.value.params.tag
     const tagData = await getTag(tagSlug)
     if (tagData && tagData._id) {
         await getTaggedPosts(tagData._id)

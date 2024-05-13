@@ -15,6 +15,15 @@ const getTagById = asyncHandler(async (req, res) => {
     }
 })
 
+const getTagBySlug = asyncHandler(async (req, res) => {
+    const tag = await Tag.findOne({slug: req.params.slug})
+    if (tag) {
+        res.json(tag)
+    } else {
+        res.status(404).send('Tag not found')
+    }
+})
+
 const createTag = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
@@ -64,4 +73,4 @@ const editTag = asyncHandler(async (req, res) => {
     }
 })
 
-export { getTags, getTagById, createTag, deleteTag, editTag }
+export { getTags, getTagById, createTag, deleteTag, editTag, getTagBySlug }

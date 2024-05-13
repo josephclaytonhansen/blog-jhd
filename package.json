@@ -1,6 +1,6 @@
 {
   "name": "blog-jhd",
   "scripts": {
-    "buildbot": "cd backend && npm run buildbot"
+    "commit": "git pull && cd backend && npm run buildbot && cd ../ && cd frontend && npm run git-commit"
   }
 }

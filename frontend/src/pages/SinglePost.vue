@@ -154,7 +154,7 @@ onMounted(async () => {
         <authorBox  :author_id="post.author" :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
         <infoBox :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar"  :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
         <hr class="dividing-line"/>
-        <CommentSection v-if="post._id && user._id" :post_id="post._id" :user="user._id" />
+        <CommentSection :post_id="post._id" :user="user._id" />
       </div>
       <div class = "dividing-line-mid hidden" :class="post.sidebar ? 'lg:flex' : ''"></div>
       <Sidebar v-if="post.sidebar" :post="post"/>

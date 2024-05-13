@@ -3,6 +3,8 @@ import User from './models/user.js'
 import Tag from './models/tag.js'
 import Comment from './models/comment.js'
 
+import { authenticateToken } from './middleware/authenticateToken.js'
+
 import express from 'express'
 import compression from 'compression'
 
@@ -93,7 +95,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.get('/removed-users', (req, res) => {
+app.get('/removed-users', authenticateToken, (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin') {
         return res.status(403).send('Not authorized')
     }

@@ -50,7 +50,11 @@ const groupByCommentParent = (comments) => {
         if (comment.parent === null || comment.parent === undefined || comment.parent === "") {
             comment.nestedLevel = 0
             groupedComments.push(comment)
-        } else {
+        } else if (comment.parent === props.blogPost){
+            comment.nestedLevel = 0
+            groupedComments.push(comment)
+        }
+         else {
             let parent = groupedComments.find(parent => parent.id === comment.parent)
             if (parent) {
                 comment.nestedLevel = parent.nestedLevel + 1

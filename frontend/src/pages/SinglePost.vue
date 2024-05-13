@@ -26,15 +26,15 @@ const post = ref({})
 const isLoading = ref(true)
 
 const getPost = async (displayNameSlugified) => {
-  const cachedPost = sessionStorage.getItem(`post-${titleSlugifiedFromUrlParams}`)
-  const timestamp = sessionStorage.getItem(`timestamp-${titleSlugifiedFromUrlParams}`)
+  const cachedPost = sessionStorage.getItem(`post-${displayNameSlugified}`)
+  const timestamp = sessionStorage.getItem(`timestamp-${displayNameSlugified}`)
 
   if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
     post.value = JSON.parse(cachedPost)
     isLoading.value = false
   } else {
-    sessionStorage.removeItem(`post-${titleSlugifiedFromUrlParams}`)
-    sessionStorage.removeItem(`timestamp-${titleSlugifiedFromUrlParams}`)
+    sessionStorage.removeItem(`post-${displayNameSlugified}`)
+    sessionStorage.removeItem(`timestamp-${displayNameSlugified}`)
     sessionStorage.removeItem('checkResult')
     let url = `${process.env.VUE_APP_SERVER_URL}/blog/` 
     let config = {

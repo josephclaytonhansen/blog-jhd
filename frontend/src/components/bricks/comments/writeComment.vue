@@ -31,10 +31,6 @@ const uploadComment = async() => {
         blogPost: props.blogPost
     }
 
-    if (!parent.value || parent.value === ''){
-        body.parent = props.blogPost
-    }
-
     if (!comment.value) {
         toast.error('Please write a comment')
         return
@@ -43,11 +39,7 @@ const uploadComment = async() => {
         return
     }
 
-    if (body.parent !== props.blogPost) {
-        url = `${process.env.VUE_APP_SERVER_URL}/comment/create`
-    } else {
-        url = `${process.env.VUE_APP_SERVER_URL}/comment/reply/${parent.value}`
-    }
+    url = `${process.env.VUE_APP_SERVER_URL}/comment/create`
 
     try {
         await fetch(url, {
@@ -74,7 +66,7 @@ const uploadComment = async() => {
 
 <template>
     <div v-if="writing" class="w-full flex flex-col items-start">
-        <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2" placeholder="Add your thoughts to the discussion."></textarea>
+        <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2 w-full" placeholder="Add your thoughts to the discussion."></textarea>
         <button @click="uploadComment" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Submit</button>
     </div>
     <div v-else-if="!writing && user !== '' && user !== null" class="w-full">

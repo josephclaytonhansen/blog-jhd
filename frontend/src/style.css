@@ -403,19 +403,18 @@ body {
 
 .colorblock{
   background-color: transparent;
-  
 }
 
 .colorblock_dark{
   background-color: transparent;
-  
+}
 
+.colorblock_darker{
+  background-color: transparent;
 }
 
 .colorblock_accent{
   background-color: transparent;
-  ;
-  
 }
 
 .dividing-line{

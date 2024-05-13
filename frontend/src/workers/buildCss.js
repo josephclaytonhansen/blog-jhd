@@ -29,7 +29,11 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 .colorblock_dark{
   background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-1\')' : 'transparent'};
   ${!(process.env.COLOR_BLOCK) ? 'padding: none!important;': ''}
+}
 
+.colorblock_darker {
+  background-color: ${process.env.COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-0\')' : 'transparent'};
+  ${!(process.env.COLOR_BLOCK) ? 'padding: none!important;': ''}
 }
 
 .colorblock_accent{

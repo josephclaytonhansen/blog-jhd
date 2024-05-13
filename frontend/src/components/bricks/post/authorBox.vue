@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <div id="author_box" class="flex item-center rounded-lg w-full p-5 colorblock">
+    <div id="author_box" class="flex item-center rounded-lg w-full p-5 colorblock_dark">
         <div class="flex">
             <Avatar :image="author.picture" classes=" mr-2  square-img-container w-12" alt="avatar"/>
             <div class="flex flex-col">

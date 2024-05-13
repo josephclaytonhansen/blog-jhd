@@ -6,6 +6,7 @@
     import { ref, onMounted } from 'vue'
     import { useToast } from "vue-toastification"
     const toast = useToast()
+    import ISOdateStringToRelative from '../functions/relativeDate.js'
 
     import {
         Flag,
@@ -49,8 +50,8 @@
     })
 
 
-    const flagComment = async() => {
-        let url = `${process.env.VUE_APP_SERVER_URL}/comment/flag/` + comment.value.id
+    const flagComment = async(id) => {
+        let url = `${process.env.VUE_APP_SERVER_URL}/comment/flag/` + id
         let config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -83,11 +84,11 @@
             <div class="flex flex-row gap-2">
                 <div class="flex flex-col gap-1">
                     <div class="font-bold text-lg">{{comment.user}}</div>
-                    <div class="text-sm">{{comment.date}}</div>
+                    <div class="text-sm">{{ISOdateStringToRelative(comment.date)}}</div>
                 </div>
             </div>
             <div class="flex flex-row gap-2">
-                <div v-if="canFlag" @click="flagComment" class="cursor-pointer">
+                <div v-if="canFlag" @click="flagComment(comment._id)" class="cursor-pointer">
                     <Flag class="w-6"/>
                 </div>
                 <div v-if="canFlag" @click="replyToComment" class="cursor-pointer">
@@ -98,6 +99,6 @@
                 </div>
             </div>
         </div>
-        <div class="text-lg">{{comment.content}}</div>
+        <div>{{comment.content}}</div>
     </div>
 </template>

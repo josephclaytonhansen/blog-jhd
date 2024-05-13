@@ -36,6 +36,7 @@ const getPostComments = async(id) => {
                 throw new Error('Network error- could not get comments')
             }
             comments.value = await response.json()
+            console.log("COMMENTS: ", comments.value)
         })
     } catch (error) {
         console.error(error)
@@ -60,7 +61,7 @@ const groupByCommentParent = (comments) => {
             }
         }
     })
-    console.log(groupedComments)
+    console.log("GROUPED COMMENTS: " + groupedComments)
     return groupedComments
 }
 
@@ -84,6 +85,7 @@ onMounted(async () => {
     console.log("commentSection USER: " + props.user)
     await getPostComments(props.post_id).then(() => {
         comments.value = groupByCommentParent(comments.value)
+        console.log("GROUPED COMMENTS: ", comments.value)
     })
 })
 

@@ -43,6 +43,7 @@ const getPost = async (displayNameSlugified) => {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.token,
       },
       withCredentials: true
     }
@@ -85,6 +86,7 @@ onMounted(async () => {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.token,
     },
     withCredentials: true
   }

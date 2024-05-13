@@ -23,6 +23,7 @@ const uploadComment = async() => {
             'Authorization': 'Bearer ' + localStorage.token,
         },
     }
+    console.log(props.user, props.blogPost)
     let body = {
         parent: props.blogPost,
         content: comment.value,
@@ -33,7 +34,7 @@ const uploadComment = async() => {
     if (!comment.value) {
         toast.error('Please write a comment')
         return
-    } else if (comment.length < 20 || comment.length > 900) {
+    } else if (comment.value.length < 20 || comment.value.length > 900) {
         toast.error('Comment must be between 20 and 900 characters')
         return
     }

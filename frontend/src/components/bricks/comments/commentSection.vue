@@ -87,8 +87,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class = "w-full flex flex-col gap-2 rounded p-4 colorblock">
-        <h2 class="text-2xl font-header pb-2">Comments</h2>
+    <div class = "w-full flex flex-col gap-2 rounded-lg p-6 colorblock">
+        <h2 class="text-2xl font-header">Comments</h2>
+        <hr class="dividing-line"/>
         <Comment v-for="comment in comments" :comment="comment" :key="comment.id" :class="nestedLevelLeftMargin(comment.nestedLevel)" />
         <hr class="dividing-line"/>
         <WriteComment :user="props.user" :blogPost="props.post_id" />

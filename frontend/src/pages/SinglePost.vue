@@ -57,6 +57,7 @@ const getPost = async (displayNameSlugified) => {
         }
         let posts = await response.json()
         post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
+        console.log(post.value)
         sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
         sessionStorage.setItem(`timestamp-${displayNameSlugified}`, new Date().getTime())
         isLoading.value = false
@@ -89,7 +90,7 @@ onMounted(async () => {
     }).then(async (response) => {
       if (response.status !== 200) {
         console.error('Network error- could not increment views')
-      }
+      } 
     })
   } catch (error) {
     console.error(error)
@@ -113,6 +114,13 @@ onMounted(async () => {
                 headers: config.headers,
                 credentials: 'include',
             })
+                .then(async (response) => {
+                    if (response.status !== 200) {
+                        throw new Error('Network error- could not get user')
+                    }
+                    user.value = await response.json()
+                    console.log(user.value)
+                })
         } catch (error) {
           console.error(error)
 

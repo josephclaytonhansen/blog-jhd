@@ -17,37 +17,40 @@
     const isLoading = ref(true)
 
     const getTag = async (tagSlug) => {
-       
-            let url = `${process.env.VUE_APP_SERVER_URL}/tag/slug/` + tagSlug
-            let config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                withCredentials: true
-            }
-            try {
-                await fetch(url, {
-                    method: 'GET',
-                    headers: config.headers,
-                    credentials: 'include'
-                }).then(async (response) => {
-                    if (response.status !== 200 && response.status !== 304) {
-                        router.push('/NotFound')
-                    }
-                    tagD.value = await response.json()
-                })
-            } catch (error) {
-                console.error(error)
+    let url = `${process.env.VUE_APP_SERVER_URL}/tag/slug/` + tagSlug
+    let config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        withCredentials: true
+    }
+    try {
+        let tagData
+        await fetch(url, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include'
+        }).then(async (response) => {
+            if (response.status !== 200 && response.status !== 304) {
                 router.push('/NotFound')
             }
-        }
-    
+            tagData = await response.json()
+            tagD.value = tagData
+        })
+        return tagData
+    } catch (error) {
+        console.error(error)
+        router.push('/NotFound')
+    }
+}
 
-    onBeforeMount(async () => {
-        await getTag(tagSlug)
-        await getTaggedPosts(tagD.value._id)
-    })
+onBeforeMount(async () => {
+    const tagData = await getTag(tagSlug)
+    if (tagData && tagData._id) {
+        await getTaggedPosts(tagData._id)
+    }
+})
 
     const getTaggedPosts = async(tag) => {
   let url = `${process.env.VUE_APP_SERVER_URL}/blog/tag/` + tag

@@ -15,7 +15,7 @@ import SiteHeader from '../components/bricks/sitewide/Header.vue'
 import SiteFooter from '../components/bricks/sitewide/Footer.vue'
 
 import axios from 'axios'
-import {useRouter} from 'vue-router'
+import {useRouter, useRoute} from 'vue-router'
 const router = useRouter()
 
 const slugify = (string) => {
@@ -68,7 +68,8 @@ const getPost = async (displayNameSlugified) => {
 }
 
 onMounted(async () => {
-  const titleSlugifiedFromUrlParams = router.currentRoute.value.params.title
+  const route = useRoute()
+  const titleSlugifiedFromUrlParams = route.params.title
   await getPost(titleSlugifiedFromUrlParams)
 
 })

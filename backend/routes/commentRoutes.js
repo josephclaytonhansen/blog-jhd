@@ -3,7 +3,7 @@ import asyncHandler from "../middleware/asyncHandler.js"
 import Blog from '../models/blog.js'
 import dotenv from 'dotenv'
 import Comment from '../models/comment.js'
-import {authenticateToken} from '../middleware/authenticateToken.js'
+import {authenticateToken, lightAuthToken} from '../middleware/authenticateToken.js'
 
 dotenv.config()
 
@@ -20,7 +20,7 @@ const router = express.Router()
 
 export default (transporter) => {
     router.get('/', authenticateToken, getComments)
-    router.get('/blog/:id', getCommentsByBlogPost)
+    router.get('/blog/:id', lightAuthToken, getCommentsByBlogPost)
     router.get('/user/:id', getCommentsByUser)
     router.get('/id/:id', getCommentById)
     router.put('/unflag/:id', authenticateToken, asyncHandler(async (req, res) => {

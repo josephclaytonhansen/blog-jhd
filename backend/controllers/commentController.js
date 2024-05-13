@@ -24,7 +24,17 @@ const getCommentsByBlogPost = asyncHandler(async (req, res) => {
             })
             res.json(comments)
         }
-    } 
+    } else {
+        let comments = await Comment.find({
+            blogPost: {
+                $eq: req.params.id
+            },
+            visible: {
+                $eq: true
+            }
+        })
+        res.json(comments)
+    }
 })
 const getCommentsByUser = asyncHandler(async (req, res) => {
     const comments = await Comment.find({

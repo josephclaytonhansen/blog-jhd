@@ -61,7 +61,7 @@
         }
         try {
             await fetch(url, {
-                method: 'POST',
+                method: 'PUT',
                 headers: config.headers,
                 credentials: 'include'
             }).then(async (response) => {

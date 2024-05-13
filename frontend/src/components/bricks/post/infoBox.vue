@@ -28,16 +28,12 @@ const router = useRouter()
         <Tags :tags="props.tags" class='grow' v-if="props.tags.length > 0" />
     </div>
     <hr class="dividing-line" v-if="props.sidebar"/>
-    <div class="flex justify-between" v-if="props.sidebar">
+    <div class="flex justify-around" v-if="props.sidebar">
             <div class="flex items-center gap-1 grow">
                 <Eye class="mr-2"/>
                 <p class="text-text-2">{{ props.views }}</p>
             </div>
             <hr class="dividing-line-mid shrink"/>
-            <div class="flex items-center gap-1 grow">
-                <MessageCircleMore class="mr-2"/>
-                <p class="text-text-2">{{ props.comments }}</p>
-            </div>
             <hr class="dividing-line-mid shrink"/>
             <div class="flex items-center gap-1 grow">
                 <Calendar class="mr-2"/>

@@ -42,7 +42,7 @@
                 if (checkResponse?.data?.message === "admin" || checkResponse?.data?.message === "author" || String(props.comment.user) === parsedUser) {
                     canDelete.value = true
                 }
-                if ((checkResponse?.data?.message? !== 'unverified-user')) {
+                if (checkResponse?.data?.message !== 'unverified-user') {
                     canFlag.value = true
                 }
             }

@@ -15,6 +15,15 @@ const getCategoryById = asyncHandler(async (req, res) => {
     }
 })
 
+const getCategoryBySlug = asyncHandler(async (req, res) => {
+    const category = await Category.findOne({slug: req.params.slug})
+    if (category) {
+        res.json(category)
+    } else {
+        res.status(404).send('Category not found')
+    }
+})
+
 const createCategory = asyncHandler(async (req, res) => {
     if (!req.isAuthenticated()) {
         return res.status(403).send('Not authorized')
@@ -64,4 +73,4 @@ const editCategory = asyncHandler(async (req, res) => {
     }
 })
 
-export { getCategories, editCategory, getCategoryById, createCategory, deleteCategory}
+export { getCategories, editCategory, getCategoryById, createCategory, deleteCategory, getCategoryBySlug}

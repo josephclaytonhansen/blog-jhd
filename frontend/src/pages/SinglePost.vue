@@ -118,7 +118,7 @@ onMounted(async () => {
 
         }
     } else {
-        user.value = null
+        user.value = ''
     }
 
 

@@ -31,7 +31,7 @@ const uploadComment = async() => {
     }
 
     if (!parent.value || parent.value === ''){
-        parent = blogPost.value
+        parent.value = blogPost.value
     }
 
     if (!parent.value || !comment.value || !user.value) {

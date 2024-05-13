@@ -50,6 +50,7 @@ const groupByCommentParent = (comments, parentId = null, nestedLevel = 0) => {
 
     for (let i = 0; i < comments.length; i++) {
         let comment = comments[i]
+        console.log("COMMENT: ", comment)
         if (comment.parent === parentId) {
             comment.nestedLevel = nestedLevel
             groupedComments.push(comment)

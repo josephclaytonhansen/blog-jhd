@@ -30,6 +30,10 @@ const uploadComment = async() => {
         blogPost:blogPost.value
     }
 
+    if (!parent.value || parent.value === ''){
+        parent = blogPost.value
+    }
+
     if (!parent.value || !comment.value || !user.value) {
         toast.error('Please write a comment')
         return
@@ -68,7 +72,7 @@ const uploadComment = async() => {
 </script>
 
 <template>
-    <div v-if="writing" class="w-full">
+    <div v-if="writing" class="w-full flex flex-col">
         <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2" placeholder="Add your thoughts to the discussion."></textarea>
         <button @click="uploadComment" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center m-auto">Submit</button>
     </div>

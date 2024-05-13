@@ -92,7 +92,7 @@ onMounted(async () => {
         <hr class="dividing-line"/>
         <Comment v-for="comment in comments" :comment="comment" :key="comment.id" :class="nestedLevelLeftMargin(comment.nestedLevel)" />
         <hr class="dividing-line"/>
-        <WriteComment :user="props.user" :blogPost="props.post_id" />
+        <WriteComment v-if="props.user && props.post_id" :user="props.user" :blogPost="props.post_id" />
 
     </div>
 

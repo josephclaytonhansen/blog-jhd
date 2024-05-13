@@ -65,11 +65,11 @@ const uploadComment = async() => {
 </script>
 
 <template>
-    <div v-if="writing" class="w-full flex flex-col items-start">
+    <div v-if="writing && props.blogPost && props.user" class="w-full flex flex-col items-start">
         <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2 w-full" placeholder="Add your thoughts to the discussion."></textarea>
         <button @click="uploadComment" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Submit</button>
     </div>
-    <div v-else-if="!writing && props.user !== '' && props.user !== null" class="w-full">
+    <div v-else-if="!writing && props.user !== '' && props.user !== null && props.user && props.blogPost" class="w-full">
         <button @click="writing = true" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg w-full text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Write a comment</button>
     </div>
     <div v-else class="w-full items-start">

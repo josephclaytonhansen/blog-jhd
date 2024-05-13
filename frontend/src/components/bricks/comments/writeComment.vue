@@ -69,14 +69,14 @@ const uploadComment = async() => {
 
 <template>
     <div v-if="writing" class="w-full">
-        <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body" placeholder="Add your thoughts to the discussion."></textarea>
+        <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2" placeholder="Add your thoughts to the discussion."></textarea>
         <button @click="uploadComment" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center m-auto">Submit</button>
     </div>
     <div v-else-if="!writing && user !== '' && user !== null">
         <button @click="writing = true" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">Write a comment</button>
     </div>
     <div v-else class="w-full">
-        <p class="text-center w-full">Log in or register to write a comment</p>
+        <p class="text-center w-full mb-2">Log in or register to write a comment</p>
         <router-link to="/login" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center m-auto">Log in</router-link>
     </div>
 

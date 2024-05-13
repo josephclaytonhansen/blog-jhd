@@ -12,8 +12,6 @@
     const tagD = ref({})
     const posts = ref([])
 
-    const tagSlug = router.currentRoute.value.params.tag
-
     const isLoading = ref(true)
 
     const getTag = async (tagSlug) => {
@@ -48,7 +46,7 @@
 onMounted(async () => {
     const route = useRoute()
     console.log(route)
-    const tagSlug = route.params.tag
+    const tagSlug = route.params.slug
     const tagData = await getTag(tagSlug)
     if (tagData && tagData._id) {
         await getTaggedPosts(tagData._id)

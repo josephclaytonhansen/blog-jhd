@@ -69,7 +69,7 @@ const getPost = async (displayNameSlugified) => {
 
 onMounted(async () => {
   const route = useRoute()
-  const titleSlugifiedFromUrlParams = route.params.title
+  const titleSlugifiedFromUrlParams = route.params.slug
   await getPost(titleSlugifiedFromUrlParams)
 
 })

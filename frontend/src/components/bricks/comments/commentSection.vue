@@ -13,6 +13,8 @@ const props = defineProps({
     post_id: String
 })
 
+import Comment from './comment.vue'
+
 const getPostComments = async(id) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/comment/blog/` + props.post_id
     let config = {
@@ -38,12 +40,54 @@ const getPostComments = async(id) => {
     }
 }
 
-onMounted(() => {
-    getPostComments(props.post_id)
+const groupByCommentParent = (comments) => {
+    let groupedComments = []
+    comments.sort((a, b) => (a.parent > b.parent) ? 1 : -1)
+    comments.forEach(comment => {
+        if (comment.parent === null || comment.parent === undefined || comment.parent === "") {
+            comment.nestedLevel = 0
+            groupedComments.push(comment)
+        } else {
+            let parent = groupedComments.find(parent => parent.id === comment.parent)
+            if (parent) {
+                comment.nestedLevel = parent.nestedLevel + 1
+                if (!parent.children) {
+                    parent.children = []
+                }
+                parent.children.push(comment)
+            }
+        }
+    })
+    return groupedComments
+}
+
+const nestedLevelLeftMargin = (nestedLevel) => {
+    switch (nestedLevel) {
+        case 0:
+            return 'ml-0'
+        case 1:
+            return 'ml-8'
+        case 2:
+            return 'ml-16'
+        case 3:
+            return 'ml-24'
+        default:
+            return 'ml-0'
+    }
+}
+
+onMounted(async () => {
+    await getPostComments(props.post_id).then(() => {
+        comments.value = groupByCommentParent(comments.value)
+    })
 })
 
 </script>
 
 <template>
+    <div class = "w-full flex flex-col gap-2">
+        <Comment v-for="comment in comments" :comment="comment" :key="comment.id" :class="nestedLevelLeftMargin(comment.nestedLevel)" />
+        <hr class="dividing-line"/>
+    </div>
 
 </template>

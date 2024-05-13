@@ -51,7 +51,6 @@ const getPostById = async (id) => {
         credentials: 'include'
       }).then(async (response) => {
         if (response.status !== 200) {
-          throw new Error('Network error- could not get post')
           router.push('/NotFound')
         }
         post.value = await response.json()
@@ -69,41 +68,7 @@ const getPostById = async (id) => {
 
 onBeforeMount(async () => {
   await getPostById(props.id)
-  if (post && post.value.status !== "published"){
-    isLoading.value = true
-    try{
-      let checkResult = sessionStorage.getItem('checkResult')
-      if (!checkResult == "show" || !checkResult || checkResult === undefined || checkResult === null) {
-  let checkParams = {
-      user: localStorage.getItem('user'),
-      session: sessionStorage.getItem('session')
-  }
-  let config = {
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-      }
-  }
-      let checkResponse = await axios.post(`${process.env.VUE_APP_SERVER_URL}/user/checksession`, checkParams, config)
-      if (checkResponse.status == 200) {
-        if (!(checkResponse.data.message == "admin") && !(checkResponse.data.message == "author")) {
-          router.push('/NotFound')
-        } else {
-          sessionStorage.setItem('checkResult', 'show')
-          isLoading.value = false
-        }
-      } else {
-        router.push('/NotFound')
-      }} else {
-        isLoading.value = false
-      }
 
-  } catch (error) {
-    console.error(error)
-    router.push('/NotFound')
-  }
-}
 })
 </script>
 

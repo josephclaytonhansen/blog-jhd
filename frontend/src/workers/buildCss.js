@@ -60,7 +60,7 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 
 .sidebar{
   display: ${process.env.SIDEBAR === 'true' ? 'flex' : 'none!important'};
-  background-color: ${process.env.SIDEBAR_COLOR_BLOCK === 'true' ? 'theme(\'colors.accent.700\')' : 'transparent'};
+  background-color: ${process.env.SIDEBAR_COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop-1\')' : 'transparent'};
   color: ${process.env.SIDEBAR_COLOR_BLOCK === 'true' ? 'theme(\'colors.backdrop.100\')' : 'theme(\'colors.text-0\')'};
 
 }

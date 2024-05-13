@@ -45,6 +45,7 @@ const getCommentById = asyncHandler(async (req, res) => {
 })
 
 const createComment = asyncHandler(async (req, res) => {
+    console.log(req.body, req.isAuthenticated(), req.user)
     if (req.isAuthenticated()) {
         if (req.user.role === 'unverified-user') {
             return res.status(403).send('Not authorized')

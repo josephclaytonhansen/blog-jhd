@@ -3,8 +3,11 @@ import Comment from "../models/comment.js"
 import User from "../models/user.js"
 
 const getCommentsByBlogPost = asyncHandler(async (req, res) => {
-    let sentUser = req.isAuthenticated() ? req.user : null
+    let sentUser = req.body.user || req.user
+    console.log(sentUser)
+    try{
     let user = await User.findById(sentUser._id)
+    console.log(user)
     if (user){
         if (user.role === 'admin'){
             let comments = await Comment.find({
@@ -25,6 +28,17 @@ const getCommentsByBlogPost = asyncHandler(async (req, res) => {
             res.json(comments)
         }
     } else {
+        let comments = await Comment.find({
+            blogPost: {
+                $eq: req.params.id
+            },
+            visible: {
+                $eq: true
+            }
+        })
+        res.json(comments)
+    }} catch (error){
+        console.log(error)
         let comments = await Comment.find({
             blogPost: {
                 $eq: req.params.id

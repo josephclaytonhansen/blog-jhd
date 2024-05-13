@@ -18,25 +18,28 @@ import axios from 'axios'
 import {useRouter} from 'vue-router'
 const router = useRouter()
 
-const props = defineProps({
-  id: String,
-})
+
+const titleSlugifiedFromUrlParams = router.currentRoute.value.params.title
+
+const slugify = (string) => {
+  return string.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
+}
 
 const post = ref({})
 const isLoading = ref(true)
 
-const getPostById = async (id) => {
-  const cachedPost = sessionStorage.getItem(`post-${id}`)
-  const timestamp = sessionStorage.getItem(`timestamp-${id}`)
+const getPost = async (displayNameSlugified) => {
+  const cachedPost = sessionStorage.getItem(`post-${titleSlugifiedFromUrlParams}`)
+  const timestamp = sessionStorage.getItem(`timestamp-${titleSlugifiedFromUrlParams}`)
 
   if (cachedPost && timestamp && new Date().getTime() - Number(timestamp) < 45 * 60 * 1000) {
     post.value = JSON.parse(cachedPost)
     isLoading.value = false
   } else {
-    sessionStorage.removeItem(`post-${id}`)
-    sessionStorage.removeItem(`timestamp-${id}`)
+    sessionStorage.removeItem(`post-${titleSlugifiedFromUrlParams}`)
+    sessionStorage.removeItem(`timestamp-${titleSlugifiedFromUrlParams}`)
     sessionStorage.removeItem('checkResult')
-    let url = `${process.env.VUE_APP_SERVER_URL}/blog/id/` + id
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/` 
     let config = {
       headers: {
         'Content-Type': 'application/json',
@@ -53,9 +56,10 @@ const getPostById = async (id) => {
         if (response.status !== 200) {
           router.push('/NotFound')
         }
-        post.value = await response.json()
-        sessionStorage.setItem(`post-${id}`, JSON.stringify(post.value))
-        sessionStorage.setItem(`timestamp-${id}`, new Date().getTime())
+        let posts = await response.json()
+        post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
+        sessionStorage.setItem(`post-${titleSlugifiedFromUrlParams}`, JSON.stringify(post.value))
+        sessionStorage.setItem(`timestamp-${titleSlugifiedFromUrlParams}`, new Date().getTime())
         isLoading.value = false
       })
     } catch (error) {
@@ -67,7 +71,7 @@ const getPostById = async (id) => {
 }
 
 onBeforeMount(async () => {
-  await getPostById(props.id)
+  await getPost(titleSlugifiedFromUrlParams)
 
 })
 </script>

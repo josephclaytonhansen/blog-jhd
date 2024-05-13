@@ -13,17 +13,14 @@ const routes = [
     { path: '/profile/:displayName', component: () => import('./pages/Profile.vue') },
     { path: '/user/:displayName', component: () => import('./pages/Profile.vue') },
     {path: '/seabasstest', component: () => import('./pages/SeabassTest.vue')},
+    { path: '/:slug', component: () => import('./pages/SinglePost.vue')},
+    { path: '/tag/:slug', component: () => import('./pages/SingleTag.vue')},
     //end required routes
 // automated
 //end automated
-//blogs
-{ path: '/Comment test', component: () => import('./pages/SinglePost.vue'), props : {id: '6642419d3d21349404d514cb'} },
-//end blogs
 //tags
-
 //end tags
 //categories
-
 //end categories
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

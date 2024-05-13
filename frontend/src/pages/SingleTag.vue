@@ -11,15 +11,14 @@
 
     const tagD = ref({})
     const posts = ref([])
-    const props = defineProps({
-    tag: String,
-    })
+
+    const tagSlug = router.currentRoute.value.params.tag
 
     const isLoading = ref(true)
 
-    const getTag = async (tag) => {
+    const getTag = async (tagSlug) => {
        
-            let url = `${process.env.VUE_APP_SERVER_URL}/tag/` + tag
+            let url = `${process.env.VUE_APP_SERVER_URL}/tag/slug/` + tagSlug
             let config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,8 +45,8 @@
     
 
     onBeforeMount(async () => {
-        await getTag(props.tag)
-        await getTaggedPosts(props.tag)
+        await getTag(tagSlug)
+        await getTaggedPosts(tagD.value._id)
     })
 
     const getTaggedPosts = async(tag) => {

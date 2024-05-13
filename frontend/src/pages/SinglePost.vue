@@ -71,6 +71,27 @@ onMounted(async () => {
   const route = useRoute()
   const titleSlugifiedFromUrlParams = route.params.slug
   await getPost(titleSlugifiedFromUrlParams)
+  let url = `${process.env.VUE_APP_SERVER_URL}/blog/incrementviews` + post.value.id
+  let config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    withCredentials: true
+  }
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: config.headers,
+      credentials: 'include'
+    }).then(async (response) => {
+      if (response.status !== 200) {
+        console.error('Network error- could not increment views')
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
 
 })
 </script>

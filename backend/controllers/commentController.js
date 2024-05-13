@@ -52,7 +52,7 @@ const createComment = asyncHandler(async (req, res) => {
             const comment = new Comment({
                 content: req.body.content,
                 blogPost: req.body.blogPost,
-                user: req.body.user_id,
+                user: req.body.user,
                 date: new Date(),
                 visible: true,
                 replies: [],

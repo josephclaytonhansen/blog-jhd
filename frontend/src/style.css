@@ -440,7 +440,7 @@ body {
 
 .sidebar{
   display: flex;
-  background-color: theme('colors.accent.700');
+  background-color: theme('colors.backdrop-1');
   color: theme('colors.backdrop.100');
 
 }
@@ -468,6 +468,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

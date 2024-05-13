@@ -48,18 +48,24 @@ const getPostComments = async(id) => {
 const groupByCommentParent = (comments, parentId = null, nestedLevel = 0) => {
     let groupedComments = []
 
-    for (let comment of comments) {
+    for (let i = 0; i < comments.length; i++) {
+        let comment = comments[i]
         if (comment.parent === parentId) {
             comment.nestedLevel = nestedLevel
             groupedComments.push(comment)
 
             let childComments = groupByCommentParent(comments, comment.id, nestedLevel + 1)
-            groupedComments.push(...childComments)
+            groupedComments = groupedComments.concat(childComments)
         }
+    }
+    // If no parent-child relationships were found and this is the top-level call, return the original comments array
+    if (parentId === null && groupedComments.length === 0) {
+        return comments.map(comment => ({ ...comment, nestedLevel: 0 }))
     }
 
     return groupedComments
 }
+
 const nestedLevelLeftMargin = (nestedLevel) => {
     switch (nestedLevel) {
         case 0:

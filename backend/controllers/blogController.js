@@ -1,6 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import Blog from '../models/blog.js'
 import Tag from '../models/tag.js'
+import User from '../models/user.js'
 
 const getBlogs = asyncHandler(async (req, res) => {
     const blogs = await Blog.find({})
@@ -42,13 +43,21 @@ const getBlogBySlug = asyncHandler(async (req, res) => {
 
 const getBlogById = asyncHandler(async (req, res) => {
     const blog = await Blog.findById(req.params.id)
+    let sentUser = req.isAuthenticated() ? req.user._id : null
+    let user = await User.findById(sentUser)
     blog.views = blog.views + 1
     await blog.save()
     if (blog) {
+    let published = blog.status === 'published' ? true : false
+    if (published || user.role === 'admin' || user.role === 'author') {
         res.json(blog)
     } else {
+        res.status(403).send('Not authorized')
+    }} else {
         res.status(404).send('Blog not found')
     }
+    
+    
 })
 
 const incrementBlogViews = asyncHandler(async (req, res) => {

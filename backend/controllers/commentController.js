@@ -1,13 +1,30 @@
 import asyncHandler from "../middleware/asyncHandler.js"
 import Comment from "../models/comment.js"
+import User from "../models/user.js"
 
 const getCommentsByBlogPost = asyncHandler(async (req, res) => {
-    const comments = await Comment.find({
-        blogPost: {
-            $eq: req.params.id
+    let sentUser = req.isAuthenticated() ? req.user._id : null
+    let user = await User.findById(sentUser)
+    if (user){
+        if (user.role === 'admin'){
+            let comments = await Comment.find({
+                blogPost: {
+                    $eq: req.params.id
+                }
+            })
+            res.json(comments)
+        } else {
+            let comments = await Comment.find({
+                blogPost: {
+                    $eq: req.params.id
+                },
+                visible: {
+                    $eq: true
+                }
+            })
+            res.json(comments)
         }
-    })
-    res.json(comments)
+    } 
 })
 const getCommentsByUser = asyncHandler(async (req, res) => {
     const comments = await Comment.find({
@@ -40,6 +57,7 @@ const createComment = asyncHandler(async (req, res) => {
                 visible: true,
                 replies: [],
                 nestedLevel: 0,
+                parent: req.body.parent,
 
             })
             await comment.save()

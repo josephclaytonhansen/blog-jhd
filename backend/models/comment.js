@@ -9,6 +9,7 @@ const commentSchema = new mongoose.Schema({
     nestedLevel: Number,
     blogPost: String,
     flagged: Boolean,
+    parent: String
 })
 
 const Comment = mongoose.model('comments', commentSchema)

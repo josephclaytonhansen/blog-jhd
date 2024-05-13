@@ -3,18 +3,14 @@
 import { ref, onMounted } from 'vue'
 const parent = ref('')
 const comment = ref('')
-const props = ref({})
 
-
-onMounted(() => {
-    props.value = {
+const props = defineProps({
     user: String,
     blogPost: String
-}
-console.log("writeComment USER: " + props.value.user)
-console.log("writeComment BLOGPOST: " + props.value.blogPost)
 })
 
+console.log('writeComment USER: ', props.user)
+console.log('writeComment BLOGPOST: ', props.blogPost)
 
 import { useToast } from "vue-toastification"
 const toast = useToast()
@@ -76,7 +72,7 @@ const uploadComment = async() => {
         <textarea v-model="comment" class = "p-2 rounded colorblock_darker font-body mb-2 w-full" placeholder="Add your thoughts to the discussion."></textarea>
         <button @click="uploadComment" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Submit</button>
     </div>
-    <div v-else-if="!writing && props.user !== '' && props.user !== null && props.user && props.blogPost" class="w-full">
+    <div v-else-if="!writing && props.user !== '' && props.user !== null && props.user !== undefined && props.user && props.blogPost" class="w-full">
         <button @click="writing = true" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg w-full text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">Write a comment</button>
     </div>
     <div v-else class="w-full items-start">

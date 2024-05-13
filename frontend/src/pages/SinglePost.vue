@@ -55,8 +55,8 @@ const getPost = async (displayNameSlugified) => {
         }
         let posts = await response.json()
         post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
-        sessionStorage.setItem(`post-${titleSlugifiedFromUrlParams}`, JSON.stringify(post.value))
-        sessionStorage.setItem(`timestamp-${titleSlugifiedFromUrlParams}`, new Date().getTime())
+        sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
+        sessionStorage.setItem(`timestamp-${displayNameSlugified}`, new Date().getTime())
         isLoading.value = false
       })
     } catch (error) {

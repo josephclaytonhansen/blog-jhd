@@ -23,6 +23,8 @@ const slugify = (string) => {
 }
 
 const post = ref({})
+const user = ref('')
+
 const isLoading = ref(true)
 
 const getPost = async (displayNameSlugified) => {
@@ -93,6 +95,33 @@ onMounted(async () => {
     console.error(error)
   }
 
+  user.value = JSON.parse(localStorage.getItem('user')).user
+    let user_id = user._id
+    if (user_id) {
+        let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + user_id
+        let config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.token,
+            },
+            withCredentials: true
+        }
+        try {
+            await fetch(url, {
+                method: 'GET',
+                headers: config.headers,
+                credentials: 'include',
+            })
+        } catch (error) {
+          console.error(error)
+
+        }
+    } else {
+        user.value = null
+    }
+
+
 })
 </script>
 
@@ -125,7 +154,7 @@ onMounted(async () => {
         <authorBox  :author_id="post.author" :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
         <infoBox :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar"  :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
         <hr class="dividing-line"/>
-        <CommentSection :post_id="post.id" />
+        <CommentSection :post_id="post.id" :user="user._id" />
       </div>
       <div class = "dividing-line-mid hidden" :class="post.sidebar ? 'lg:flex' : ''"></div>
       <Sidebar v-if="post.sidebar" :post="post"/>

@@ -10,10 +10,12 @@ const router = useRouter()
 const comments = ref([])
 
 const props = defineProps({
-    post_id: String
+    post_id: String,
+    user: String
 })
 
 import Comment from './comment.vue'
+import WriteComment from './writeComment.vue'
 
 const getPostComments = async(id) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/comment/blog/` + props.post_id
@@ -88,6 +90,8 @@ onMounted(async () => {
     <div class = "w-full flex flex-col gap-2">
         <Comment v-for="comment in comments" :comment="comment" :key="comment.id" :class="nestedLevelLeftMargin(comment.nestedLevel)" />
         <hr class="dividing-line"/>
+        <WriteComment :user="props.user" :blogPost="props.post_id" />
+
     </div>
 
 </template>

@@ -9,9 +9,8 @@
 
     import {
         Flag,
-        FlagOff,
         Trash,
-        MessageCircleReply,
+        Reply,
     } from 'lucide-vue-next'
 
     import axios from 'axios'
@@ -89,6 +88,9 @@
             <div class="flex flex-row gap-2">
                 <div v-if="canFlag" @click="flagComment" class="cursor-pointer">
                     <Flag class="w-6"/>
+                </div>
+                <div v-if="canFlag" @click="replyToComment" class="cursor-pointer">
+                    <Reply class="w-6"/>
                 </div>
                 <div v-if="canDelete" @click="deleteComment" class="cursor-pointer">
                     <Trash class="w-6" />

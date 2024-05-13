@@ -3,8 +3,8 @@ import Comment from "../models/comment.js"
 import User from "../models/user.js"
 
 const getCommentsByBlogPost = asyncHandler(async (req, res) => {
-    let sentUser = req.isAuthenticated() ? req.user._id : null
-    let user = await User.findById(sentUser)
+    let sentUser = req.isAuthenticated() ? req.user : null
+    let user = await User.findById(sentUser._id)
     if (user){
         if (user.role === 'admin'){
             let comments = await Comment.find({

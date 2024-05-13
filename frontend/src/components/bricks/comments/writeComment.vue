@@ -17,6 +17,7 @@ const toast = useToast()
 const writing = ref(false)
 
 const uploadComment = async() => {
+    let url
     let config = {
         headers: {
             'Content-Type': 'application/json',
@@ -43,9 +44,9 @@ const uploadComment = async() => {
     }
 
     if (parent.value  !== blogPost.value) {
-        let url = `${process.env.VUE_APP_SERVER_URL}/comment/create`
+        url = `${process.env.VUE_APP_SERVER_URL}/comment/create`
     } else {
-        let url = `${process.env.VUE_APP_SERVER_URL}/comment/reply/${parent.value}`
+        url = `${process.env.VUE_APP_SERVER_URL}/comment/reply/${parent.value}`
     }
 
     try {

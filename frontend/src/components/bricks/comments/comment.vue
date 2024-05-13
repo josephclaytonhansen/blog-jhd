@@ -6,7 +6,7 @@
     import { ref, onMounted } from 'vue'
     import { useToast } from "vue-toastification"
     const toast = useToast()
-    import ISOdateStringToRelative from '../functions/relativeDate.js'
+    import ISOdateStringToRelative from '../../functions/relativeDate.js'
 
     import {
         Flag,

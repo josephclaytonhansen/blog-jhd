@@ -36,6 +36,7 @@ const getPostComments = async(id) => {
                 throw new Error('Network error- could not get comments')
             }
             comments.value = await response.json()
+            console.log(comments.value)
         })
     } catch (error) {
         console.error(error)

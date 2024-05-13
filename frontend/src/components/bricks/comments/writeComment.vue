@@ -7,10 +7,10 @@ const props = ref({})
 
 
 onMounted(() => {
-    props.value = defineProps({
+    props.value = {
     user: String,
     blogPost: String
-})
+}
 console.log(props.value)
 })
 

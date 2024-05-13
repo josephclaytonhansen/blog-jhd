@@ -36,7 +36,6 @@ const getPostComments = async(id) => {
                 throw new Error('Network error- could not get comments')
             }
             comments.value = await response.json()
-            console.log(comments.value)
         })
     } catch (error) {
         console.error(error)
@@ -81,6 +80,8 @@ const nestedLevelLeftMargin = (nestedLevel) => {
 }
 
 onMounted(async () => {
+    console.log("commentSection POST ID: " + props.post_id)
+    console.log("commentSection USER: " + props.user)
     await getPostComments(props.post_id).then(() => {
         comments.value = groupByCommentParent(comments.value)
     })

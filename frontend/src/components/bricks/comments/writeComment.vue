@@ -11,7 +11,8 @@ onMounted(() => {
     user: String,
     blogPost: String
 }
-console.log(props.value)
+console.log("writeComment USER: " + props.value.user)
+console.log("writeComment BLOGPOST: " + props.value.blogPost)
 })
 
 

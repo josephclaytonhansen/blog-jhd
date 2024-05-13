@@ -57,6 +57,11 @@ const getPost = async (displayNameSlugified) => {
         }
         let posts = await response.json()
         console.log(posts)
+        posts.forEach(element => {
+          console.log(slugify(element.title))
+          console.log(displayNameSlugified)
+          console.log(slugify(element.title) === displayNameSlugified)
+        });
         post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
         console.log(post.value)
         sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
@@ -120,7 +125,7 @@ onMounted(async () => {
                         throw new Error('Network error- could not get user')
                     }
                     user.value = await response.json()
-                    console.log(user.value)
+                    console.log("USER: " + user.value)
                 })
         } catch (error) {
           console.error(error)

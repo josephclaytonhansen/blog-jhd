@@ -17,7 +17,7 @@ const routes = [
 // automated
 //end automated
 //blogs
-
+{ path: '/Comment test', component: () => import('./pages/SinglePost.vue'), props : {id: '6642419d3d21349404d514cb'} },
 //end blogs
 //tags
 

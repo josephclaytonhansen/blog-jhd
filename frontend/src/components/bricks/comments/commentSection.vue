@@ -45,31 +45,21 @@ const getPostComments = async(id) => {
     }
 }
 
-const groupByCommentParent = (comments) => {
+const groupByCommentParent = (comments, parentId = null, nestedLevel = 0) => {
     let groupedComments = []
-    comments.sort((a, b) => (a.parent > b.parent) ? 1 : -1)
-    comments.forEach(comment => {
-        if (comment.parent === null || comment.parent === undefined || comment.parent === "") {
-            comment.nestedLevel = 0
+
+    for (let comment of comments) {
+        if (comment.parent === parentId) {
+            comment.nestedLevel = nestedLevel
             groupedComments.push(comment)
-        } else if (comment.parent === props.blogPost){
-            comment.nestedLevel = 0
-            groupedComments.push(comment)
+
+            let childComments = groupByCommentParent(comments, comment.id, nestedLevel + 1)
+            groupedComments.push(...childComments)
         }
-         else {
-            let parent = groupedComments.find(parent => parent.id === comment.parent)
-            if (parent) {
-                comment.nestedLevel = parent.nestedLevel + 1
-                if (!parent.children) {
-                    parent.children = []
-                }
-                parent.children.push(comment)
-            }
-        }
-    })
+    }
+
     return groupedComments
 }
-
 const nestedLevelLeftMargin = (nestedLevel) => {
     switch (nestedLevel) {
         case 0:

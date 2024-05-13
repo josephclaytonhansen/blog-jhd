@@ -34,7 +34,7 @@ const uploadComment = async() => {
         parent.value = blogPost.value
     }
 
-    if (!parent.value || !comment.value || !user.value) {
+    if (!comment.value) {
         toast.error('Please write a comment')
         return
     } else if (comment.length < 20 || comment.length > 900) {

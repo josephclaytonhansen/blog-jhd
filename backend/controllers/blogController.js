@@ -9,10 +9,18 @@ const getBlogs = asyncHandler(async (req, res) => {
 })
 const getBlogsByCategory = asyncHandler(async (req, res) => {
     const blogs = await Blog.find({ category: {$eq:req.params.category} })
+    blogs.forEach(blog => {
+        blog.views = blog.views + 1
+        blog.save()
+    })
     res.json(blogs)
 })
 const getBlogsByAuthor = asyncHandler(async (req, res) => {
     const blogs = await Blog.find({ author: {$eq:req.params.author} })
+    blogs.forEach(blog => {
+        blog.views = blog.views + 1
+        blog.save()
+    })
     res.json(blogs)
 })
 const getBlogsByStatus = asyncHandler(async (req, res) => {
@@ -187,6 +195,10 @@ const deleteCommentFromBlog = asyncHandler(async (req, res) => {
 const getBlogsByTag = asyncHandler(async (req, res) => {
     console.log(req.params.tag)
     const blogs = await Blog.find({ tags: { $in: [req.params.tag] } })
+    blogs.forEach(blog => {
+        blog.views = blog.views + 1
+        blog.save()
+    })
     console.log(blogs)
     if (!blogs){
         res.status(404)

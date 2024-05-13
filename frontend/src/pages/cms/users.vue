@@ -12,6 +12,7 @@
     const store = userStore(pinia)
 
     const users = ref([])
+    const removedUsers = ref([])
     const posts = ref([])
 
     const getUsers = async () => {
@@ -36,19 +37,46 @@
         return data
     }
 
+    const getRemovedUsers = async () => {
+        let config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token,
+        },
+        withCredentials: true
+    }
+        const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/removed-users`, {
+            method: 'GET',
+            headers: config.headers,
+            credentials: 'include',
+        })
+        if (response.status !== 200) {
+            toast.error('Network error')
+            throw new Error('Network error- could not get users')
+        }
+        const data = await response.json()
+        return data
+    }
+
+
 
     onMounted(async () => {
   store.user ? loggedInStatus.value = true : loggedInStatus.value = false
   if (loggedInStatus.value){
     let temp
     let temp2
+    let temp3
     if (localStorage.getItem('users')) {
       users.value = JSON.parse(localStorage.getItem('users'))
     } if (localStorage.getItem('posts')) {
       posts.value = JSON.parse(localStorage.getItem('posts'))
+    } if (localStorage.getItem('removedUsers')) {
+      removedUsers.value = JSON.parse(localStorage.getItem('removedUsers'))
     }
     temp = await getUsers()
     temp2 = await getPosts()
+    temp3 = await getRemovedUsers()
 
     if (!users.value || JSON.stringify(users.value) !== JSON.stringify(temp)) {
       users.value = temp
@@ -56,6 +84,9 @@
     } if (!posts.value || JSON.stringify(posts.value) !== JSON.stringify(temp2)) {
       posts.value = temp2
       localStorage.setItem('posts', JSON.stringify(posts.value))
+    } if (!removedUsers.value || JSON.stringify(removedUsers.value) !== JSON.stringify(temp3)) {
+      removedUsers.value = temp3
+      localStorage.setItem('removedUsers', JSON.stringify(removedUsers.value))
     }
   } else {
     toast.info('Your session has expired. Please log in.')

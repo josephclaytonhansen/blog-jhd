@@ -34,7 +34,7 @@ const uploadComment = async() => {
         blogPost: props.blogPost
     }
 
-    if (user.value === null || user.value === undefined || user.value === '') {
+    if (props.user === null || props.user === undefined || props.user === '') {
         toast.error('Please log in to write a comment')
         return
     }

@@ -97,7 +97,7 @@ onMounted(async () => {
     console.error(error)
   }
 
-  user.value = JSON.parse(localStorage.getItem('user')).user
+  try{user.value = JSON.parse(localStorage.getItem('user')).user
     let user_id = user._id
     if (user_id) {
         let url = `${process.env.VUE_APP_SERVER_URL}/user/id/` + user_id
@@ -128,6 +128,11 @@ onMounted(async () => {
         }
     } else {
         
+    } } catch (error) {
+        console.error(error)
+        user.value = {
+          _id: null
+        }
     }
 
 

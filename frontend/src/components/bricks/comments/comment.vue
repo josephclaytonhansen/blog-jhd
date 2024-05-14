@@ -46,8 +46,17 @@
         }
             let checkResponse = await axios.post(`${process.env.VUE_APP_SERVER_URL}/user/checksession`, checkParams, config)
             if (checkResponse?.status === 200) {
-                const user = localStorage.getItem('user')
-                const parsedUser = user ? JSON.parse(user) : null
+                let parsedUser = null
+                try{
+                const user = localStorage.getItem('user') || props.user
+                parsedUser = typeof user === 'string' ? JSON.parse(user) : user}
+                catch (error) {
+                    console.error(error)
+                }
+                if (parsedUser === null || parsedUser._id === null) {
+                    console.error('User access error - please log in again')
+                    return
+                }
                 if (checkResponse?.data?.message === "admin" || checkResponse?.data?.message === "author" || String(props.comment.user) === parsedUser) {
                     canDelete.value = true
                 }

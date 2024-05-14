@@ -103,7 +103,7 @@ export default (transporter) => {
                     const reply = new Comment({
                         content: req.body.content,
                         blogPost: comment.blogPost,
-                        user: req.body.user,
+                        user: req.body.user.split,
                         date: new Date(),
                         visible: true,
                         replies: [],
@@ -113,8 +113,8 @@ export default (transporter) => {
                     comment.replies.push(reply._id)
                     await comment.save()
 
-                    let replyUser = await User.findById(reply.user)
-                    let commentUser = await User.findById(comment.user)
+                    let replyUser = await User.findById(reply.user.split('.')[0])
+                    let commentUser = await User.findById(comment.user.split('.')[0])
                     reply.user = reply.user + '.' + reply.displayName
                     await reply.save()
 

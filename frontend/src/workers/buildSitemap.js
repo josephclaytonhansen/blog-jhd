@@ -2,7 +2,6 @@ import {
     SitemapStream,
     streamToPromise,
 } from 'sitemap'
-import { createGzip } from 'zlib'
 import fetch from 'node-fetch'
 import fs from 'fs'
 import path from 'path'

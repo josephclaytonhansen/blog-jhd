@@ -50,7 +50,7 @@ function sortComments(comments) {
     let commentMap = new Map()
 
     comments.forEach(comment => {
-        commentMap.set(comment.id, comment)
+        commentMap.set(comment._id, comment)
     })
 
     const addCommentAndDescendantsToOrderedComments = (commentId) => {
@@ -62,7 +62,9 @@ function sortComments(comments) {
     }
 
     comments.forEach(comment => {
-        addCommentAndDescendantsToOrderedComments(comment.id)
+        if (!result.includes(comment)) {
+            addCommentAndDescendantsToOrderedComments(comment._id)
+        }
     })
 
     return result

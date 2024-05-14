@@ -120,5 +120,5 @@
         </div>
         <div>{{comment.content}}</div>
     </div>
-    <replyComment :comment="comment" :user="props.user" v-if="replying" />
+    <replyComment :comment="comment" :user="props.user" v-if="replying && props.user" />
 </template>

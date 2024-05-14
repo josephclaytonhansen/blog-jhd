@@ -183,7 +183,7 @@
                     <Reply class="w-6" v-if="!replying"/>
                     <X class="w-6" v-else/>
                 </div>
-                <div v-if="canDelete" @click="deleteComment" class="cursor-pointer">
+                <div v-if="canDelete" @click="deleteComment(comment._id)" class="cursor-pointer">
                     <Trash class="w-6" />
                 </div>
             </div>

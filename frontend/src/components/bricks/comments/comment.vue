@@ -73,19 +73,45 @@
     })
 
     const parseBbCode = (content) => {
+    let lines = content.split(/\r?\n/)
+    let inList = false
+    lines = lines.map(line => {
+        if (line.startsWith('- ') || line.startsWith('* ')) {
+            if (!inList) {
+                inList = true
+                return '<ul><li>' + line.substring(2) + '</li>'
+            } else {
+                return '<li>' + line.substring(2) + '</li>'
+            }
+        } else {
+            if (inList) {
+                inList = false
+                return '</ul>' + line
+            } else {
+                return line
+            }
+        }
+    });
+    if (inList) {
+        lines.push('</ul>')
+    }
+    content = lines.join('<br/>')
     return content.replace(/\[b\]/g, '<strong>')
         .replace(/\[\/b\]/g, '</strong>')
         .replace(/\[bold\]/g, '<strong>')
         .replace(/\[\/bold\]/g, '</strong>')
         .replace(/\[i\]/g, '<em>')
         .replace(/\[\/i\]/g, '</em>')
+        .replace(/\[italic\]/g, '<em>')
+        .replace(/\[\/strikethrough\]/g, '</s>')
+        .replace(/\[strikethrough\]/g, '<s>')
+        .replace(/\[\/italic\]/g, '</em>')
         .replace(/\[u\]/g, '<u>')
         .replace(/\[\/u\]/g, '</u>')
         .replace(/\[s\]/g, '<s>')
         .replace(/\[\/s\]/g, '</s>')
         .replace(/\[small\]/g, '<small>')
         .replace(/\[\/small\]/g, '</small>')
-        .replace(/\r?\n/g, '<br/>')
 }
 
     const flagComment = async(id) => {

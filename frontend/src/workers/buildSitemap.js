@@ -53,7 +53,7 @@ const generateAndSaveSitemap = async () => {
     const smStream = new SitemapStream({ hostname: `https://${process.env.SITE_PREFIX}` })
     const pipeline = smStream.pipe(createGzip())
 
-    pipeline.pipe(fs.createWriteStream(path.resolve('./public/sitemap.xml')))
+    pipeline.pipe(fs.createWriteStream(path.resolve('./public/sitemap.xml.gz')))
 
     await createSitemap(smStream)
     smStream.end()

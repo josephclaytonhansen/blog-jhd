@@ -106,7 +106,7 @@ export default (transporter) => {
                     const reply = new Comment({
                         content: req.body.content,
                         blogPost: comment.blogPost,
-                        user: req.body.user.split,
+                        user: req.body.user.indexOf('.') === -1 ? req.body.user : req.body.user.split('.')[0],
                         date: new Date(),
                         visible: true,
                         replies: [],

@@ -18,6 +18,8 @@ import axios from 'axios'
 import {useRouter, useRoute} from 'vue-router'
 const router = useRouter()
 
+import { useHead } from '@vueuse/head'
+
 const slugify = (string) => {
   return string.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
 }
@@ -135,8 +137,74 @@ onMounted(async () => {
         }
     }
 
-
+    useHead({
+  title: post.value.title + ' | ' + post.value.site,
+  meta: [
+   {
+      name: 'description',
+      content: post.value.description
+    },
+    {
+      name: 'keywords',
+      content: post.value.tags.join(', ') + ', ' + post.value.category + post.value.metaKeywords.split(',').join(', ')
+   },
+    {
+      name: 'robots',
+      content: 'index, follow'
+   },
+   {
+    name: 'og:title',
+    content: post.value.title + ' | ' + post.value.site
+   },
+   {
+    name: 'og:description',
+    content: post.value.description
+   },
+   {
+    name: 'og:image',
+    content: post.value.featuredImage
+   },
+   {
+    name: 'og:url',
+    content: "https://" + post.value.site + "/p/" + slugify(post.value.title)
+   },
+   {
+    name: 'og:type',
+    content: 'article'
+   },
+   {
+    name: 'og:site_name',
+    content: post.value.site
+   },
+   {
+    name: 'og:locale',
+    content: 'en_US'
+   },
+   {
+    name: 'twitter:image',
+    content: post.value.featuredImage
+   },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image'
+    },
+    {
+      name: 'twitter:title',
+      content: post.value.title + ' | ' + post.value.site
+    },
+    {
+      name: 'twitter:description',
+      content: post.value.description
+    },
+    {
+      name: 'twitter:url',
+      content: "https://" + post.value.site + "/p/" + slugify(post.value.title)
+    },
+  ]
 })
+})
+
+
 </script>
 
 <template>

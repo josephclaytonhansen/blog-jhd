@@ -14,6 +14,8 @@
 
     const isLoading = ref(true)
 
+    import { useHead } from '@vueuse/head'
+
     const getTag = async (tagSlug) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/tag/slug/` + tagSlug
     let config = {
@@ -51,6 +53,20 @@ onMounted(async () => {
     if (tagData) {
         await getTaggedPosts(tagSlug)
     }
+    useHead({
+    title: 'Posts tagged ' + tagD.value.name + ' | ' + window.location.hostname,
+    meta: [
+        {
+            name: 'description',
+            content: 'Posts tagged with ' + tagD.value.name
+        },
+        {
+            name: 'keywords',
+            content: 'blog, posts, ' + tagD.value.name
+        }
+    ]
+
+})
 })
 
     const getTaggedPosts = async(tag) => {
@@ -84,6 +100,8 @@ onMounted(async () => {
   }
 
 }
+
+
 </script>
 
 <template>

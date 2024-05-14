@@ -14,6 +14,8 @@
 
     const isLoading = ref(true)
 
+    import { useHead } from '@vueuse/head'
+
     const getTag = async (categorySlug) => {
     let url = `${process.env.VUE_APP_SERVER_URL}/category/slug/` + categorySlug
     let config = {
@@ -51,6 +53,19 @@ onMounted(async () => {
     if (categoryData) {
         await getTaggedPosts(categorySlug)
     }
+    useHead({
+        title: 'Posts in ' + category.value.name,
+        meta: [
+            {
+                name: 'description',
+                content: 'Posts in ' + category.value.name
+            },
+            {
+                name: 'keywords',
+                content: 'blog, posts, ' + category.value.name
+            }
+        ]
+    })
 })
 
     const getTaggedPosts = async(category) => {

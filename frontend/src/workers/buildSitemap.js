@@ -27,8 +27,10 @@ const createSitemap = async (smStream) => {
         '/me',
     ]
     staticRoutes.forEach((route) => {
+        const url = `https://${process.env.SITE_PREFIX}${route}`
+        console.log('Adding static route:', url)
         smStream.write({
-            url: route,
+            url,
             changefreq: 'monthly',
             priority: 0.7,
         })
@@ -37,8 +39,10 @@ const createSitemap = async (smStream) => {
     const posts = await getPosts()
     const filteredPosts = filterPosts(posts)
     filteredPosts.forEach((post) => {
+        const url = `https://${process.env.SITE_PREFIX}/p/${post.slug}`
+        console.log('Adding post:', url)
         smStream.write({
-            url: `/p/${post.slug}`,
+            url,
             changefreq: 'daily',
             priority: 0.7,
         })

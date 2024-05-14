@@ -95,6 +95,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+app.use('/sitemap.xml', express.static('public/sitemap.xml'))
+
 app.get('/removed-users', authenticateToken, (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin') {
         return res.status(403).send('Not authorized')

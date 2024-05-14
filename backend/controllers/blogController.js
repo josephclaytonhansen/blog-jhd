@@ -107,7 +107,12 @@ const createBlog = asyncHandler(async (req, res) => {
         subDirectory: req.subDirectory,
         headerStyle: req.body.headerStyle || 'image',
         sidebar: req.body.sidebar,
-        tags: req.body.tags
+        tags: req.body.tags,
+        messageBar: req.body.messageBar,
+        messageBarLink: req.body.messageBarLink,
+        messageBarContent: req.body.messageBarContent,
+        messageBarLinkText: req.body.messageBarLinkText,
+        messageBarType: req.body.messageBarType
     })
     await blog.save()
     res.status(201).json(blog)
@@ -138,6 +143,11 @@ const editBlog = asyncHandler(async (req, res) => {
         blog.headerStyle = req.body.headerStyle || blog.headerStyle
         blog.sidebar = req.body.sidebar === false || req.body.sidebar === true ? req.body.sidebar : blog.sidebar
         blog.tags = req.body.tags || blog.tags
+        blog.messageBar = req.body.messageBar || blog.messageBar
+        blog.messageBarLink = req.body.messageBarLink || blog.messageBarLink
+        blog.messageBarContent = req.body.messageBarContent || blog.messageBarContent
+        blog.messageBarLinkText = req.body.messageBarLinkText || blog.messageBarLinkText
+        blog.messageBarType = req.body.messageBarType || blog.messageBarType
         await blog.save()
         res.json(blog)
     } else {

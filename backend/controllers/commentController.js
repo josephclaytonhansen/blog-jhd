@@ -103,7 +103,7 @@ const deleteComment = asyncHandler(async (req, res) => {
             if (comment) {
                 if (req.user.email === comment.user || req.user.role === 'admin') {
                     await Comment.deleteOne({
-                        $_id: req.params.id
+                        _id: req.params.id
                     })
                     res.json({
                         message: 'Comment removed'

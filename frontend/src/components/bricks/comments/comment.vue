@@ -1,17 +1,20 @@
 <script setup>
 
     const props = defineProps({
-        comment: Object
+        comment: Object,
+        user: String
     })
     import { ref, onMounted } from 'vue'
     import { useToast } from "vue-toastification"
     const toast = useToast()
     import ISOdateStringToRelative from '../../functions/relativeDate.js'
+    import replyComment from './replyComment.vue'
 
     import {
         Flag,
         Trash,
         Reply,
+        X
     } from 'lucide-vue-next'
 
     import axios from 'axios'
@@ -20,6 +23,12 @@
 
     const canDelete = ref(false)
     const canFlag = ref(false)
+
+    const replying = ref(false)
+
+    const replyToComment = () => {
+        replying.value = !replying.value
+    }
     
     onMounted(async () => {
         let checkResult = sessionStorage.getItem('checkResult')
@@ -79,7 +88,7 @@
 </script>
 
 <template>
-    <div class="colorblock_dark w-full rounded-lg p-4">
+    <div class="colorblock_dark w-auto rounded-lg p-4" :class="replying? 'ring-2 ring-accent-500' : ''">
         <div class="flex flex-row justify-between">
             <div class="flex flex-row gap-2">
                 <div class="flex flex-col gap-1">
@@ -92,7 +101,8 @@
                     <Flag class="w-6"/>
                 </div>
                 <div v-if="canFlag" @click="replyToComment" class="cursor-pointer">
-                    <Reply class="w-6"/>
+                    <Reply class="w-6" v-if="!replying"/>
+                    <X class="w-6" v-else/>
                 </div>
                 <div v-if="canDelete" @click="deleteComment" class="cursor-pointer">
                     <Trash class="w-6" />
@@ -101,4 +111,5 @@
         </div>
         <div>{{comment.content}}</div>
     </div>
+    <replyComment :comment="comment" :user="props.user" v-if="replying" />
 </template>

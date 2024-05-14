@@ -36,9 +36,8 @@ const getPostComments = async(id) => {
                 throw new Error('Network error- could not get comments')
             }
             comments.value = await response.json()
-            console.log("COMMENTS: ", comments.value)
             comments.value = groupByCommentParent(comments.value)
-            console.log("GROUPED COMMENTS: ", comments.value)
+
         })
     } catch (error) {
         console.error(error)
@@ -50,7 +49,6 @@ const groupByCommentParent = (comments, parentId = null, nestedLevel = 0) => {
 
     for (let i = 0; i < comments.length; i++) {
         let comment = comments[i]
-        console.log("COMMENT: ", comment)
         if (comment.parent === parentId) {
             comment.nestedLevel = nestedLevel
             groupedComments.push(comment)
@@ -83,18 +81,16 @@ const nestedLevelLeftMargin = (nestedLevel) => {
 }
 
 onMounted(async () => {
-    console.log("commentSection POST ID: " + props.post_id)
-    console.log("commentSection USER: " + props.user)
     await getPostComments(props.post_id)
 })
 
 </script>
 
 <template>
-    <div class = "w-full flex flex-col gap-2 rounded-lg p-6 colorblock">
+    <div class = "w-full flex flex-col gap-2 rounded-lg p-6 colorbloc items-stretch justify-stretch">
         <h2 class="text-2xl font-header">{{comments.length}} Comments</h2>
         <hr class="dividing-line"/>
-        <Comment v-for="comment in comments" :comment="comment" :key="comment.id" :class="nestedLevelLeftMargin(comment.nestedLevel)" />
+        <Comment v-for="comment in comments" :comment="comment" :key="comment.id" :user="props.user" :class="nestedLevelLeftMargin(comment.nestedLevel)" v-if="props.user" />
         <hr class="dividing-line"/>
         <WriteComment v-if="props.user && props.post_id" :user="props.user" :blogPost="props.post_id" />
 

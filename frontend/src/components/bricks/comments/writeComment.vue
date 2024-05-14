@@ -9,9 +9,6 @@ const props = defineProps({
     blogPost: String
 })
 
-console.log('writeComment USER: ', props.user)
-console.log('writeComment BLOGPOST: ', props.blogPost)
-
 import { useToast } from "vue-toastification"
 const toast = useToast()
 

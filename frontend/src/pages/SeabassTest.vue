@@ -7,6 +7,10 @@ useHead({
         {
             name: 'description',
             content: 'This is a test page for the SEABASS framework'
+        },
+        {
+            name: 'robots',
+            content: 'noindex, nofollow'
         }
     ]
 })

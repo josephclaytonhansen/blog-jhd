@@ -90,7 +90,7 @@ const sortComments = (comments) => {
 
     }
 
-    return comments
+    return orderedComments
 }
 
 const nestedLevelLeftMargin = (nestedLevel) => {

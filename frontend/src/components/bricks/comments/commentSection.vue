@@ -44,32 +44,29 @@ const getPostComments = async(id) => {
     }
 }
 
-const sortComments = (comments) => {
-    let orderedComments = []
+
+const sortComments = computed(() => {
+    let result = []
     let commentMap = new Map()
 
-    let topLevelComments = []
-    comments.forEach(comment => {
+    comments.value.forEach(comment => {
         commentMap.set(comment.id, comment)
-        if (comment.nestedLevel === 0) {
-            topLevelComments.push(comment)
-        }
     })
 
-    function addCommentAndDescendantsToOrderedComments(commentId) {
+    const addCommentAndDescendantsToOrderedComments = (commentId) => {
         let comment = commentMap.get(commentId)
-        if (comment) {
-            orderedComments.push(comment)
+        if (comment && !result.includes(comment)) {
+            result.push(comment)
             comment.replies.forEach(childId => addCommentAndDescendantsToOrderedComments(childId))
         }
     }
 
-    topLevelComments.forEach(comment => {
+    comments.value.forEach(comment => {
         addCommentAndDescendantsToOrderedComments(comment.id)
     })
 
-    return orderedComments
-}
+    return result
+})
 
 const nestedLevelLeftMargin = (nestedLevel) => {
     switch (nestedLevel) {

@@ -97,10 +97,11 @@ export default (transporter) => {
             } else {
                 const comment = await Comment.findById(req.params.id).populate('user')
                 if (comment) {
+                    
                     const reply = new Comment({
                         content: req.body.content,
                         blogPost: comment.blogPost,
-                        user: req.body.user_id,
+                        user: req.body.user,
                         date: new Date(),
                         visible: true,
                         replies: [],

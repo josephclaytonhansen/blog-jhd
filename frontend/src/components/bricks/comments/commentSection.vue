@@ -45,11 +45,11 @@ const getPostComments = async(id) => {
 }
 
 
-const sortComments = computed(() => {
+function sortComments(comments) {
     let result = []
     let commentMap = new Map()
 
-    comments.value.forEach(comment => {
+    comments.forEach(comment => {
         commentMap.set(comment.id, comment)
     })
 
@@ -61,12 +61,12 @@ const sortComments = computed(() => {
         }
     }
 
-    comments.value.forEach(comment => {
+    comments.forEach(comment => {
         addCommentAndDescendantsToOrderedComments(comment.id)
     })
 
     return result
-})
+}
 
 const nestedLevelLeftMargin = (nestedLevel) => {
     switch (nestedLevel) {

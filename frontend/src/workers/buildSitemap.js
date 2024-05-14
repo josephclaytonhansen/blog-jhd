@@ -8,7 +8,6 @@ import fetch from 'node-fetch'
 import 'fs'
 import 'path'
 
-import router from '../router.js'
 const getPosts = async () => {
     const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
     return response.json()
@@ -28,16 +27,6 @@ const createSitemap = async () => {
     })
 
     const pipeline = smStream.pipe(createGzip())
-
-    router.getRoutes().forEach((route) => {
-        if (route.path === '/sitemap.xml' || route.path === '/NotFound') return
-        if (":" in route.path) return
-        smStream.write({
-            url: route.path,
-            changefreq: 'daily',
-            priority: 0.8,
-        })
-    })
 
     const posts = await filterPosts(await getPosts())
     posts.forEach((post) => {

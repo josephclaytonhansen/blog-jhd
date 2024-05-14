@@ -7,12 +7,13 @@
     "dev": "NODE_ENV=production node ./src/builders/buildCss.js && vite",
     "build": "vite build",
     "preview": "NODE_ENV=production node ./src/workers/buildCss.js && npm run build && vite preview",
-    "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && node commit.js && npm run build && npm run process-site",
+    "buildbot": "NODE_ENV=production node ./src/workers/buildCss.js && node commit.js && npm run build && npm run process-site && npm run sitemap",
     "create-site-page": "node ./src/workers/buildSitePages.js",
     "remove-site": "node ./src/workers/removeSite.js",
     "remove-site-page": "node ./src/workers/removeSitePages.js",
     "process-site": "node ./src/workers/processDist.js",
-    "git-commit": "node commit.js"
+    "git-commit": "node commit.js",
+    "sitemap": "node ./src/workers/buildSitemap.js"
   },
   "dependencies": {
     "@lucide/lab": "^0.1.1",
@@ -31,6 +32,7 @@
     "quill": "^2.0.1",
     "quill-magic-url": "^4.2.0",
     "sanitize-html": "^2.13.0",
+    "sitemap": "^7.1.1",
     "table-sort-js": "^1.21.0",
     "tailwindcss": "^3.4.3",
     "vue": "^3.4.21",

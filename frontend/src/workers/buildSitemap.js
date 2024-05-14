@@ -8,6 +8,7 @@ import fetch from 'node-fetch'
 import 'fs'
 import 'path'
 
+
 const getPosts = async () => {
     const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
     return response.json()
@@ -27,6 +28,22 @@ const createSitemap = async () => {
     })
 
     const pipeline = smStream.pipe(createGzip())
+
+    const staticRoutes = [
+        '/',
+        '/about',
+        '/contact',
+        '/home',
+        '/login',
+        '/me',
+    ]
+    staticRoutes.forEach((route) => {
+        smStream.write({
+            url: route,
+            changefreq: 'monthly',
+            priority: 0.7,
+        })
+    })
 
     const posts = await filterPosts(await getPosts())
     posts.forEach((post) => {

@@ -20,6 +20,8 @@ const routes = [
     { path: '/home', component: () => import('./pages/Home.vue'), props : {thisPageComponentName: 'Home', header: true, footer: true} },
     //end required routes
 // automated
+{ path: '/About', component: () => import('./pages/About.vue'), props : {thisPageComponentName: 'About', header: true, footer: true} },
+{ path: '/Contact', component: () => import('./pages/Contact.vue'), props : {thisPageComponentName: 'Contact', header: true, footer: true} },
 //end automated
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

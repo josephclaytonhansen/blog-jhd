@@ -115,12 +115,18 @@ export default (transporter) => {
                     await reply.save()
                     comment.replies.push(reply._id)
                     await comment.save()
-                    let replyUserId = reply.user.split('.')[0]
+                    let replyUserId
+                    if (reply.user.indexOf('.') === -1){
+                        replyUserId = reply.user
+                        reply.user = reply.user + '.' + reply.displayName
+                    } else {
+                     replyUserId = reply.user.split('.')[0]
+                    }
                     let commentUserId = comment.user.split('.')[0]
 
                     let replyUser = await User.findById(replyUserId)
                     let commentUser = await User.findById(commentUserId)
-                    reply.user = reply.user + '.' + reply.displayName
+                    
                     await reply.save()
 
                     // Send email to the original commentor

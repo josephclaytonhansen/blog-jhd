@@ -27,7 +27,7 @@ const uploadComment = async() => {
     let body = {
         parent: props.blogPost,
         content: comment.value,
-        user: props.user,
+        user: props.user.split(".")[0],
         blogPost: props.blogPost
     }
 

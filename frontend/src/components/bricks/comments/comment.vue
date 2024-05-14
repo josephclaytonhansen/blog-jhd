@@ -49,7 +49,7 @@
             if (checkResponse?.status === 200) {
                 let parsedUser = null
                 try{
-                const user = localStorage.getItem('user') || props.user
+                const user = localStorage.getItem('user') || props.user.split(".")[0]
                 parsedUser = typeof user === 'string' ? JSON.parse(user) : user}
                 catch (error) {
                     console.error(error)
@@ -58,7 +58,7 @@
                     console.error('User access error - please log in again')
                     return
                 }
-                if (checkResponse?.data?.message === "admin" || checkResponse?.data?.message === "author" || String(props.comment.user) === parsedUser) {
+                if (checkResponse?.data?.message === "admin" || checkResponse?.data?.message === "author" || String(props.comment.user.split(".")[0]) === parsedUser) {
                     canDelete.value = true
                 }
                 if (checkResponse?.data?.message !== 'unverified-user') {
@@ -102,7 +102,7 @@
         <div class="flex flex-row justify-between">
             <div class="flex flex-row gap-2">
                 <div class="flex flex-col gap-1">
-                    <div class="font-bold text-lg">{{comment.user}}</div>
+                    <div class="font-bold text-lg">{{comment.user.split(".")[1]}}</div>
                     <div class="text-sm">{{ISOdateStringToRelative(comment.date)}}</div>
                 </div>
             </div>

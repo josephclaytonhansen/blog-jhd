@@ -26,7 +26,7 @@ const replyComment = async () => {
     }
     let body = {
         content: reply.value,
-        user: props.user,
+        user: props.user.split(".")[0],
         blogPost: props.comment._id
 
     }

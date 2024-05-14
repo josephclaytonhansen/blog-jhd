@@ -10,7 +10,7 @@ import 'path'
 
 
 const getPosts = async () => {
-    const response = await fetch(`${process.env.VUE_APP_SERVER_URL}/blog/`)
+    const response = await fetch(`${process.env.BACKEND_URL}/blog/`)
     return response.json()
 }
 
@@ -45,8 +45,9 @@ const createSitemap = async () => {
         })
     })
 
-    const posts = await filterPosts(await getPosts())
-    posts.forEach((post) => {
+    const posts = await getPosts()
+    const filteredPosts = filterPosts(posts)
+    filteredPosts.forEach((post) => {
         smStream.write({
             url: `/p/${post.slug}`,
             changefreq: 'daily',

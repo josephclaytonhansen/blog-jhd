@@ -2,7 +2,8 @@
 
     const props = defineProps({
         comment: Object,
-        user: String
+        user: String,
+        class: String
     })
     import { ref, onMounted } from 'vue'
     import { useToast } from "vue-toastification"
@@ -97,7 +98,7 @@
 </script>
 
 <template>
-    <div class="colorblock_dark w-auto rounded-lg p-4" :class="replying? 'ring-2 ring-accent-500' : ''">
+    <div class="colorblock_dark w-auto rounded-lg p-4" :class="[replying ? 'ring-2 ring-accent-500' : '', props.class]">
         <div class="flex flex-row justify-between">
             <div class="flex flex-row gap-2">
                 <div class="flex flex-col gap-1">

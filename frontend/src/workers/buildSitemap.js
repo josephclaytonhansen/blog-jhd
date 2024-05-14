@@ -2,12 +2,10 @@ import {
     SitemapStream,
     streamToPromise,
 } from 'sitemap'
-
 import { createGzip } from 'zlib'
 import fetch from 'node-fetch'
 import fs from 'fs'
 import path from 'path'
-
 
 const getPosts = async () => {
     const response = await fetch(`${process.env.BACKEND_URL}/blog/`)
@@ -19,19 +17,10 @@ const filterPosts = (posts) => {
     let thisSite = process.env.SITE_PREFIX
     filteredPosts = posts.filter(post => post.site === thisSite)
     return filteredPosts
-
 }
 
-const createSitemap = async () => {
-    const smStream = new SitemapStream({
-        hostname: `https://${process.env.SITE_PREFIX}`,
-    })
-
-    const pipeline = smStream.pipe(createGzip())
-
+const createSitemap = async (smStream) => {
     const staticRoutes = [
-        '/',
-        '/about',
         '/contact',
         '/home',
         '/login',
@@ -54,10 +43,6 @@ const createSitemap = async () => {
             priority: 0.7,
         })
     })
-
-    smStream.end()
-
-    return streamToPromise(pipeline)
 }
 
 const generateAndSaveSitemap = async () => {

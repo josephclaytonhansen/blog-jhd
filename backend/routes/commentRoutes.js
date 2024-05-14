@@ -38,7 +38,7 @@ export default (transporter) => {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: comment.user.email,
                         subject: 'Your comment has been unflagged',
-                        text: 'Your comment has been unflagged and is now visible:\n ' + comment.content + "\n\nThis is an automated message, do not reply.",
+                        html: 'Your comment has been unflagged and is now visible:<br/> ' + comment.content + "<br/><br/>This is an automated message, do not reply.",
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
@@ -71,7 +71,7 @@ export default (transporter) => {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: commentUser.email,
                         subject: 'Your comment has been flagged',
-                        text: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "\nIf you believe this was done in error, please contact the site administrator.\n\nThis is an automated message, do not reply.",
+                        html: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "<br/>If you believe this was done in error, please contact the site administrator.<br/><br/>This is an automated message, do not reply.",
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
@@ -121,12 +121,12 @@ export default (transporter) => {
                     // Send email to the original commentor
                     let blogPost = await Blog.findById(comment.blogPost)
                     let blogUrl = blogPost.site + '/blog/' + blogPost.slug
-                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${replyUser.displayName}: ${reply.content}\nIf you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.\n\nThis is an automated message, do not reply.`
+                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${replyUser.displayName}: ${reply.content}<br/>If you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.<br/><br/>This is an automated message, do not reply.`
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: commentUser.email,
                         subject: 'New reply to your comment on' + blogPost.site + ': ' + blogPost.title,
-                        text: emailBody,
+                        html: emailBody,
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {

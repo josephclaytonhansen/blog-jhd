@@ -30,6 +30,30 @@
 
     const replying = ref(false)
 
+    const deleteComment = async(id) => {
+        let url = `${process.env.VUE_APP_SERVER_URL}/comment/delete/` + id
+        let config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }
+        try {
+            await fetch(url, {
+                method: 'DELETE',
+                headers: config.headers,
+                credentials: 'include'
+            }).then(async (response) => {
+                if (response.status !== 200) {
+                    toast.error('Network error- could not delete comment')
+                    throw new Error('Network error- could not delete comment')
+                }
+                toast.success('Comment deleted')
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     const replyToComment = () => {
         replying.value = !replying.value
     }

@@ -1,5 +1,5 @@
 <script setup>
-import ThreeSquareImage from '../images/threesquareImage.vue'
+import FourSquareImage from '../images/foursquareImage.vue'
 import { ref } from 'vue'
 const post = ref({})
 const props = defineProps({

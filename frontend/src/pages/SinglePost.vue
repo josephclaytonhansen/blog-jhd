@@ -243,6 +243,6 @@ onMounted(async () => {
       <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>
-  <MessageBanner v-if="messageBar" :message="post.messageBarContent" :type="post.messageBarType" :link="post.messageBarLink" :linkText="post.messageBarContent"/>
+  <MessageBanner v-if="post.messageBar" :message="post.messageBarContent" :type="post.messageBarType" :link="post.messageBarLink" :linkText="post.messageBarContent"/>
   <SiteFooter :thisPageComponentName="'Footer'" />
 </template>

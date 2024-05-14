@@ -220,14 +220,6 @@ onMounted(async () => {
     <postProgressBar />
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>
-      <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
-        <postBody :content="post.content"/>
-        <hr class="block dividing-line" :class="post.sidebar ? 'lg:hidden' : ''"/>
-        <authorBox  :author_id="post.author" :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
-        <infoBox :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar"  :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
-        <hr class="dividing-line"/>
-        <CommentSection :post_id="post._id" :user="user._id" />
-      </div>
     </div>
     <div class = "flex space-between p-5 w-full text-text-1">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">

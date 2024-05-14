@@ -32,6 +32,7 @@
     }
     
     onMounted(async () => {
+        props.comment.content = parseBbCode(props.comment.content.value)
         let checkResult = sessionStorage.getItem('checkResult')
         if (!(checkResult == "show") || !checkResult || checkResult === undefined || checkResult === null) {
         let checkParams = {
@@ -67,6 +68,25 @@
             }
         }
     })
+
+    const parseBbCode = (content) => {
+        let parsed = content
+        parsed = parsed.replace(/\[b\]/g, '<strong>')
+        .replace(/\[\/b\]/g, '</strong>')
+        .replace(/\[bold\]/g, '<strong>')
+        .replace(/\[\/bold\]/g, '</strong>')
+        .replace(/\[i\]/g, '<em>')
+        .replace(/\[\/i\]/g, '</em>')
+        .replace(/\[u\]/g, '<u>')
+        .replace(/\[\/u\]/g, '</u>')
+        .replace(/\[s\]/g, '<s>')
+        .replace(/\[\/s\]/g, '</s>')
+        .replace(/\[small\]/g, '<small>')
+        .replace(/\[\/small\]/g, '</small>')
+        .replace(/\r?\n/g, '<br/>');
+        return parsed
+    }
+
 
 
     const flagComment = async(id) => {
@@ -119,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div>{{comment.content}}</div>
+        <div v-html="comment.content"></div>
     </div>
     <replyComment :comment="comment" :user="props.user" v-if="replying && props.user" />
 </template>

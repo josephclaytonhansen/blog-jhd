@@ -15,12 +15,12 @@ const toast = useToast()
 const writing = ref(false)
 
 const sanitize = (string) => {
-    const regex = /[^A-Za-z0-9\s!@#$%&*()\/\\:;"'~\-_=+]/g
+    const regex = /[^A-Za-z0-9\s!@#$%&*([])\/\\:;"'~\-_=+]/g
     let rep = string.replace(regex, '').trim()
     if (rep !== string) {
         toast.warning('Illegal characters removed from comment')
     }
-    if (!rep.includes(' ')) {
+    if (!rep.includes(' ') || rep.includes('==') || rep.includes('===') || rep.includes('!==') || rep.includes('!=') || rep.includes('!==') || rep.includes('<=') || rep.includes('>=') || rep.includes('<<') || rep.includes('>>') || rep.includes('>>>') || rep.includes('||') || rep.includes('&&') || rep.includes('==') || rep.includes('!=') || rep.includes('!==') || rep.includes('<=') || rep.includes('>=') || rep.includes('<<') || rep.includes('>>') || rep.includes('>>>') || rep.includes('||') || rep.includes('&&') ){
         return
     }
     if (rep.endsWith('=') || rep.endsWith(';')|| rep.startsWith('=') || rep.startsWith('$') || rep.startsWith('!') || rep.startsWith('/') || rep.startsWith('\\') ) {
@@ -28,6 +28,7 @@ const sanitize = (string) => {
     }
     return rep
 }
+
 
 const uploadComment = async() => {
     let url

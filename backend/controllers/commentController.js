@@ -84,6 +84,8 @@ const createComment = asyncHandler(async (req, res) => {
                 parent: req.body.parent,
 
             })
+            let commentUser = await User.findById(req.body.user)
+            comment.user = comment.user + '.' + commentUser.displayName
             await comment.save()
             res.json(comment)
         }

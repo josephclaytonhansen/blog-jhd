@@ -115,6 +115,8 @@ export default (transporter) => {
 
                     let replyUser = await User.findById(reply.user)
                     let commentUser = await User.findById(comment.user)
+                    reply.user = reply.user + '.' + reply.displayName
+                    await reply.save()
 
                     // Send email to the original commentor
                     let blogPost = await Blog.findById(comment.blogPost)

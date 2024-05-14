@@ -70,8 +70,8 @@
     })
 
     const parseBbCode = (content) => {
-        let parsed = content
-        parsed = parsed.replace(/\[b\]/g, '<strong>')
+    let parsed = content
+    parsed = parsed.replace(/\[b\]/g, '<strong>')
         .replace(/\[\/b\]/g, '</strong>')
         .replace(/\[bold\]/g, '<strong>')
         .replace(/\[\/bold\]/g, '</strong>')
@@ -83,11 +83,9 @@
         .replace(/\[\/s\]/g, '</s>')
         .replace(/\[small\]/g, '<small>')
         .replace(/\[\/small\]/g, '</small>')
-        .replace(/\r?\n/g, '<br/>');
-        return parsed
-    }
-
-
+        .replace(/\r?\n/g, '<br/>')
+    return parsed
+}
 
     const flagComment = async(id) => {
         let url = `${process.env.VUE_APP_SERVER_URL}/comment/flag/` + id

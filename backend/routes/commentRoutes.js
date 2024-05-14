@@ -34,9 +34,11 @@ export default (transporter) => {
                     comment.flagged = false
                     comment.visible = true
                     await comment.save()
+                    let commentUserId = comment.user.split('.')[0]
+                    let commentUser = await User.findById(commentUserId)
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
-                        to: comment.user.email,
+                        to: commentUser.email,
                         subject: 'Your comment has been unflagged',
                         html: 'Your comment has been unflagged and is now visible:<br/> ' + comment.content + "<br/><br/>This is an automated message, do not reply.",
                     }
@@ -66,12 +68,13 @@ export default (transporter) => {
                     comment.flagged = true
                     comment.visible = false
                     await comment.save()
-                    let commentUser = await User.findById(comment.user)
+                    let commentUserId = comment.user.split('.')[0]
+                    let commentUser = await User.findById(commentUserId)
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: commentUser.email,
                         subject: 'Your comment has been flagged',
-                        html: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "<br/>If you believe this was done in error, please contact the site administrator.<br/><br/>This is an automated message, do not reply.",
+                        html: 'Your comment has been flagged and is not currently visible:<br/> ' + comment.content + "<br/>If you believe this was done in error, please contact the site administrator.<br/><br/>This is an automated message, do not reply.",
                     }
                     transporter.sendMail(mailOptions, function (error, info) {
                         if (error) {
@@ -112,9 +115,11 @@ export default (transporter) => {
                     await reply.save()
                     comment.replies.push(reply._id)
                     await comment.save()
+                    let replyUserId = reply.user.split('.')[0]
+                    let commentUserId = comment.user.split('.')[0]
 
-                    let replyUser = await User.findById(reply.user.split('.')[0])
-                    let commentUser = await User.findById(comment.user.split('.')[0])
+                    let replyUser = await User.findById(replyUserId)
+                    let commentUser = await User.findById(commentUserId)
                     reply.user = reply.user + '.' + reply.displayName
                     await reply.save()
 

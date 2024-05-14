@@ -115,24 +115,23 @@ export default (transporter) => {
                     await reply.save()
                     comment.replies.push(reply._id)
                     await comment.save()
-                    let replyUserId
+                    let replyUserId, replyUser
                     if (reply.user.indexOf('.') === -1){
                         replyUserId = reply.user
-                        reply.user = reply.user + '.' + reply.displayName
+                        replyUser = await User.findById(replyUserId)
+                        reply.user = reply.user + '.' + replyUser.displayName
                     } else {
-                     replyUserId = reply.user.split('.')[0]
+                        replyUserId = reply.user.split('.')[0]
                     }
                     let commentUserId = comment.user.split('.')[0]
-
-                    let replyUser = await User.findById(replyUserId)
                     let commentUser = await User.findById(commentUserId)
                     
                     await reply.save()
 
                     // Send email to the original commentor
                     let blogPost = await Blog.findById(comment.blogPost)
-                    let blogUrl = blogPost.site + '/blog/' + blogPost.slug
-                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${replyUser.displayName}: ${reply.content}<br/>If you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.<br/><br/>This is an automated message, do not reply.`
+                    let blogUrl = 'https://' + blogPost.site + '/p/' + blogPost.slug
+                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}>${blogPost.title}</a> by ${replyUser.displayName}: ${reply.content}<br/>If you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.<br/><br/>This is an automated message, do not reply.`
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
                         to: commentUser.email,

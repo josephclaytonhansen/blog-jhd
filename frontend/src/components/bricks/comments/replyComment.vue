@@ -13,6 +13,15 @@ const reply = ref('')
 
 const parent = ref(props.comment._id)
 
+const sanitize = (string) => {
+    const regex = /[^A-Za-z0-9\s!@#$%&*()\/\\:;"'~\-_=+]/g
+    let rep = string.replace(regex, '')
+    if (rep !== string) {
+        toast.warning('Illegal characters removed from comment')
+    }
+    return rep
+}
+
 const replyComment = async () => {
     console.log("Replying to comment: ", comment.value)
     console.log("Parent comment: ", parent.value)
@@ -25,7 +34,7 @@ const replyComment = async () => {
         },
     }
     let body = {
-        content: reply.value,
+        content: sanitize(reply.value),
         user: props.user.split(".")[0],
         blogPost: props.comment._id
 

@@ -14,6 +14,15 @@ const toast = useToast()
 
 const writing = ref(false)
 
+const sanitize = (string) => {
+    const regex = /[^A-Za-z0-9\s!@#$%&*()\/\\:;"'~\-_=+]/g
+    let rep = string.replace(regex, '')
+    if (rep !== string) {
+        toast.warning('Illegal characters removed from comment')
+    }
+    return rep
+}
+
 const uploadComment = async() => {
     let url
     let config = {
@@ -26,7 +35,7 @@ const uploadComment = async() => {
     console.log(props.user, props.blogPost)
     let body = {
         parent: props.blogPost,
-        content: comment.value,
+        content: sanitize(comment.value),
         user: props.user.split(".")[0],
         blogPost: props.blogPost
     }

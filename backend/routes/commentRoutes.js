@@ -66,9 +66,10 @@ export default (transporter) => {
                     comment.flagged = true
                     comment.visible = false
                     await comment.save()
+                    let commentUser = await User.findById(comment.user)
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
-                        to: comment.user.email,
+                        to: commentUser.email,
                         subject: 'Your comment has been flagged',
                         text: 'Your comment has been flagged and is not currently visible:\n ' + comment.content + "\nIf you believe this was done in error, please contact the site administrator.\n\nThis is an automated message, do not reply.",
                     }

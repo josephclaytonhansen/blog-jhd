@@ -3,6 +3,7 @@
         image: String,
         classes: String,
         alt: {String,default:""},
+        rounded: {Boolean,default:true}
     })
 
     import { ref } from 'vue'
@@ -15,8 +16,8 @@
 </script>
 
 <template>
-    <div class="threesquare-img-container relative rounded" :class="classes">
-        <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out rounded" :class="{ 'opacity-0': imageLoaded }"></div>
-        <img :src="image" class="threesquare-img rounded" :alt="alt" @load="onImageLoad" :class="{ 'hidden': !imageLoaded }" />
+    <div class="threesquare-img-container relative" :class="[{'rounded': props.rounded},classes]">
+        <div class="bg-backdrop-500 w-full h-full absolute inset-0 transition-opacity duration-75 ease-in-out rounded" :class="[{ 'opacity-0': imageLoaded },{'rounded': props.rounded}]"></div>
+        <img :src="image" class="threesquare-img " :alt="alt" @load="onImageLoad" :class="[{ 'hidden': !imageLoaded },{'rounded': props.rounded}]" />
     </div>
 </template>

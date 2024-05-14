@@ -6,6 +6,7 @@ import authorBox from '../components/bricks/post/authorBox.vue'
 import infoBox from '../components/bricks/post/infoBox.vue'
 import postBody from '../components/bricks/post/postBody.vue'
 import Sidebar from '../components/bricks/post/sidebar.vue'
+import MessageBanner from '../components/bricks/post/messageBanner.vue'
 
 import NoImageHeader from '../components/bricks/post/noImageHeader.vue'
 import ImageHeader from '../components/bricks/post/imageHeader.vue'
@@ -219,6 +220,14 @@ onMounted(async () => {
     <postProgressBar />
     <div v-if="post.headerStyle == 'fullwidth'">
       <FullWidthImageHeader :post="post"/>
+      <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
+        <postBody :content="post.content"/>
+        <hr class="block dividing-line" :class="post.sidebar ? 'lg:hidden' : ''"/>
+        <authorBox  :author_id="post.author" :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
+        <infoBox :views="post.views" :date="post.date" :tags="post.tags" :category="post.category" :comments="post.comments.length" :sidebar="post.sidebar"  :class="post.sidebar ? 'block md:block lg:hidden' : 'block md:block lg:block'" />
+        <hr class="dividing-line"/>
+        <CommentSection :post_id="post._id" :user="user._id" />
+      </div>
     </div>
     <div class = "flex space-between p-5 w-full text-text-1">
       <div class="w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] max-w-[70ch] mx-auto" id="post_content">
@@ -242,5 +251,6 @@ onMounted(async () => {
       <Sidebar v-if="post.sidebar" :post="post"/>
     </div>
   </div>
+  <MessageBanner v-if="messageBar" :message="post.messageBarContent" :type="post.messageBarType" :link="post.messageBarLink" :linkText="post.messageBarContent"/>
   <SiteFooter :thisPageComponentName="'Footer'" />
 </template>

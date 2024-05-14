@@ -108,6 +108,11 @@ const editPost = (id) => {
     editingPostTags.value = temp[0].tags
     sidebar.value = temp[0].sidebar
     editingPostCategory.value = temp[0].category
+    editingPostMessageBar.value = temp[0].messageBar
+    editingPostMessageBarContent.value = temp[0].messageBarContent
+    editingPostMessageBarType.value = temp[0].messageBarType
+    editingPostMessageBarLink.value = temp[0].messageBarLink
+    editingPostMessageBarLinkText.value = temp[0].messageBarLinkText
 }
 
 const deletePost = async (id) => {
@@ -188,6 +193,11 @@ const newPost = () => {
     sidebar.value = true
     editingPostTags.value = []
     editingPostCategory.value = ''
+    editingPostMessageBar.value = false
+    editingPostMessageBarContent.value = ''
+    editingPostMessageBarType.value = 'info'
+    editingPostMessageBarLink.value = ''
+    editingPostMessageBarLinkText.value = 'Learn more'
 }
 
 const listPost = () => {
@@ -207,12 +217,24 @@ const editingPostStatus = ref('new-draft')
 const editingPostId = ref('')
 const editingPostTags = ref([])
 const editingPostCategory = ref('')
+const editingPostMessageBar = ref(false)
+const editingPostMessageBarContent = ref('')
+const editingPostMessageBarType = ref('info')
+const editingPostMessageBarLink = ref('')
+const editingPostMessageBarLinkText = ref('Learn more')
 
 const headerOptions = ref([
     'image',
     'imageoverlay',
     'noimage',
     'fullwidth'
+])
+
+const messageBarTypeOptions = ref([
+    'info',
+    'warning',
+    'error',
+    'muted'
 ])
 
 const editingPostHeader = ref('image')
@@ -272,7 +294,12 @@ const saveNewDraft = async () => {
         headerStyle: editingPostHeader.value,
         sidebar: sidebar.value,
         tags: editingPostTags.value,
-        category: editingPostCategory.value
+        category: editingPostCategory.value,
+        messageBar: editingPostMessageBar.value,
+        messageBarContent: editingPostMessageBarContent.value,
+        messageBarType: editingPostMessageBarType.value,
+        messageBarLink: editingPostMessageBarLink.value,
+        messageBarLinkText: editingPostMessageBarLinkText.value
     }
 
     try {
@@ -323,7 +350,12 @@ const saveExistingDraft = async() => {
         headerStyle: editingPostHeader.value,
         sidebar: sidebar.value,
         tags: editingPostTags.value,
-        category: editingPostCategory.value
+        category: editingPostCategory.value,
+        messageBar: editingPostMessageBar.value,
+        messageBarContent: editingPostMessageBarContent.value,
+        messageBarType: editingPostMessageBarType.value,
+        messageBarLink: editingPostMessageBarLink.value,
+        messageBarLinkText: editingPostMessageBarLinkText.value
     }
 
     try {
@@ -419,6 +451,32 @@ const saveExistingDraft = async() => {
                 <label for="metaDescription" class="text-text-1">Meta Description</label>
                 <textarea  name="metaDescription" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMetaDescription" placeholder="Meta Description">
                 </textarea>
+            </div>
+        </form>
+
+        <form class = "flex gap-4 flex-wrap items-start p-4 min-h-36">
+            <div class="flex flex-col shrink items-center align-middle gap-2 h-12">
+                <label for="messageBar" class="text-text-1">Message Bar</label>
+                <input type="checkbox" name="messageBar" v-model="editingPostMessageBar" class="cursor-pointer scale-150"/>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+                <label for="messageBarContent" class="text-text-1">Message text</label>
+                <textarea  name="messageBarContent" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMessageBarContent" placeholder="Message Bar Content">
+                </textarea>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+                <label for="messageBarType" class="text-text-1">Message type</label>
+                <select name="messageBarType" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostMessageBarType">
+                    <option v-for="bar in messageBarTypeOptions" :key="bar" :value="bar">{{bar}}</option>
+                </select>
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+                <label for="messageBarLink" class="text-text-1">Message link</label>
+                <input type="text" name="messageBarLink" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMessageBarLink" placeholder="Message Bar Link">
+            </div>
+            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+                <label for="messageBarLinkText" class="text-text-1">Message link text</label>
+                <input type="text" name="messageBarLinkText" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMessageBarLinkText" placeholder="Message Bar Link Text">
             </div>
         </form>
 

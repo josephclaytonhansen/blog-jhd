@@ -5,6 +5,9 @@
         user: String,
         class: String
     })
+
+    const sanitized = ref('')
+
     import { ref, onMounted } from 'vue'
     import { useToast } from "vue-toastification"
     const toast = useToast()
@@ -32,7 +35,7 @@
     }
     
     onMounted(async () => {
-        props.comment.content = parseBbCode(props.comment.content.value)
+        sanitized.value = parseBbCode(props.comment.content)
         let checkResult = sessionStorage.getItem('checkResult')
         if (!(checkResult == "show") || !checkResult || checkResult === undefined || checkResult === null) {
         let checkParams = {
@@ -70,8 +73,7 @@
     })
 
     const parseBbCode = (content) => {
-    let parsed = content
-    parsed = parsed.replace(/\[b\]/g, '<strong>')
+    return content.replace(/\[b\]/g, '<strong>')
         .replace(/\[\/b\]/g, '</strong>')
         .replace(/\[bold\]/g, '<strong>')
         .replace(/\[\/bold\]/g, '</strong>')
@@ -84,7 +86,6 @@
         .replace(/\[small\]/g, '<small>')
         .replace(/\[\/small\]/g, '</small>')
         .replace(/\r?\n/g, '<br/>')
-    return parsed
 }
 
     const flagComment = async(id) => {
@@ -137,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <div v-html="comment.content"></div>
+        <div v-html="sanitized" v-if="sanitized"></div>
     </div>
     <replyComment :comment="comment" :user="props.user" v-if="replying && props.user" />
 </template>

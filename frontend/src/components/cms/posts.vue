@@ -384,7 +384,7 @@ const saveExistingDraft = async() => {
     <Editor v-if="doing === 'new' || doing === 'editing'"  :modelValue="editingPostText" @update:modelValue="editingPostText = $event"/>
     <div v-if="doing === 'new' || doing === 'editing'">
         <h2 class="text-center text-2xl text-text-1 px-4 pt-4">Metadata</h2>
-        <form class = "flex gap-4 flex-wrap items-start p-4">
+        <form class = "flex gap-4 flex-wrap items-start p-4 mb-4">
             <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="title" class="text-text-1">Title</label>
                 <input type="text" name="title" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostTitle" placeholder="Title">
@@ -435,7 +435,7 @@ const saveExistingDraft = async() => {
             </div>
         </form>
 
-        <form class = "flex gap-4 flex-wrap items-start p-4 min-h-36">
+        <form class = "flex gap-4 flex-wrap items-start p-4 min-h-3 mb-4">
             <div class="flex flex-col grow items-center align-middle gap-2 h-12">
                 <label for="excerpt" class="text-text-1">Excerpt</label>
                 <textarea  name="excerpt" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostExcerpt" placeholder="Excerpt">
@@ -454,27 +454,26 @@ const saveExistingDraft = async() => {
             </div>
         </form>
 
-        <form class = "flex gap-4 flex-wrap items-start p-4 min-h-36">
-            <div class="flex flex-col shrink items-center align-middle gap-2 h-12">
+        <form class = "flex gap-4 flex-wrap items-start p-4 mb-4">
+            <div class="flex flex-col shrink items-center align-middle gap-2">
                 <label for="messageBar" class="text-text-1">Message Bar</label>
                 <input type="checkbox" name="messageBar" v-model="editingPostMessageBar" class="cursor-pointer scale-150"/>
             </div>
-            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+            <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="messageBarContent" class="text-text-1">Message text</label>
-                <textarea  name="messageBarContent" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full h-min" v-model="editingPostMessageBarContent" placeholder="Message Bar Content">
-                </textarea>
+                <input type="text" name="messageBarContent" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMessageBarContent" placeholder="Message Bar Content">
             </div>
-            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+            <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="messageBarType" class="text-text-1">Message type</label>
                 <select name="messageBarType" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-500 focus:ring-3 focus:ring-accent-400 accent-accent-300 w-full h-min" v-model="editingPostMessageBarType">
                     <option v-for="bar in messageBarTypeOptions" :key="bar" :value="bar">{{bar}}</option>
                 </select>
             </div>
-            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+            <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="messageBarLink" class="text-text-1">Message link</label>
                 <input type="text" name="messageBarLink" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMessageBarLink" placeholder="Message Bar Link">
             </div>
-            <div class="flex flex-col grow items-center align-middle gap-2 h-12">
+            <div class="flex flex-col grow items-center align-middle gap-2">
                 <label for="messageBarLinkText" class="text-text-1">Message link text</label>
                 <input type="text" name="messageBarLinkText" class="flex-col grow items-center align-middle rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 focus:ring-3 focus:ring-accent-300 accent-accent-300 w-full" v-model="editingPostMessageBarLinkText" placeholder="Message Bar Link Text">
             </div>

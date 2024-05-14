@@ -1,6 +1,7 @@
 import express from 'express'
 import asyncHandler from "../middleware/asyncHandler.js"
 import Blog from '../models/blog.js'
+import User from '../models/user.js'
 import dotenv from 'dotenv'
 import Comment from '../models/comment.js'
 import {authenticateToken, lightAuthToken} from '../middleware/authenticateToken.js'
@@ -111,13 +112,16 @@ export default (transporter) => {
                     comment.replies.push(reply._id)
                     await comment.save()
 
+                    let replyUser = await User.findById(reply.user)
+                    let commentUser = await User.findById(comment.user)
+
                     // Send email to the original commentor
                     let blogPost = await Blog.findById(comment.blogPost)
                     let blogUrl = blogPost.site + '/blog/' + blogPost.slug
-                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${reply.user.displayName}: ${reply.content}\nIf you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.\n\nThis is an automated message, do not reply.`
+                    let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}}>${blogPost.title}</a> by ${replyUser.displayName}: ${reply.content}\nIf you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.\n\nThis is an automated message, do not reply.`
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,
-                        to: comment.user.email,
+                        to: commentUser.email,
                         subject: 'New reply to your comment on' + blogPost.site + ': ' + blogPost.title,
                         text: emailBody,
                     }

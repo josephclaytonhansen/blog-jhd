@@ -15,12 +15,19 @@ const parent = ref(props.comment._id)
 
 const sanitize = (string) => {
     const regex = /[^A-Za-z0-9\s!@#$%&*()\/\\:;"'~\-_=+]/g
-    let rep = string.replace(regex, '')
+    let rep = string.replace(regex, '').trim()
     if (rep !== string) {
         toast.warning('Illegal characters removed from comment')
     }
+    if (!rep.includes(' ')) {
+        return
+    }
+    if (rep.endsWith('=') || rep.endsWith(';')|| rep.startsWith('=') || rep.startsWith('$') || rep.startsWith('!') || rep.startsWith('/') || rep.startsWith('\\') ) {
+        return
+    }
     return rep
 }
+
 
 const replyComment = async () => {
     console.log("Replying to comment: ", comment.value)
@@ -33,8 +40,13 @@ const replyComment = async () => {
             'Authorization': 'Bearer ' + localStorage.token,
         },
     }
+    let sanitizedComment = sanitize(reply.value)
+    if (sanitizedComment === undefined || sanitizedComment === null || sanitizedComment === '') {
+        toast.error('Cannot create comment')
+        return
+    }
     let body = {
-        content: sanitize(reply.value),
+        content: sanitizedComment,
         user: props.user.split(".")[0],
         blogPost: props.comment._id
 

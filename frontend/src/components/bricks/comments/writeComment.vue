@@ -16,9 +16,15 @@ const writing = ref(false)
 
 const sanitize = (string) => {
     const regex = /[^A-Za-z0-9\s!@#$%&*()\/\\:;"'~\-_=+]/g
-    let rep = string.replace(regex, '')
+    let rep = string.replace(regex, '').trim()
     if (rep !== string) {
         toast.warning('Illegal characters removed from comment')
+    }
+    if (!rep.includes(' ')) {
+        return
+    }
+    if (rep.endsWith('=') || rep.endsWith(';')|| rep.startsWith('=') || rep.startsWith('$') || rep.startsWith('!') || rep.startsWith('/') || rep.startsWith('\\') ) {
+        return
     }
     return rep
 }
@@ -33,9 +39,14 @@ const uploadComment = async() => {
         },
     }
     console.log(props.user, props.blogPost)
+    let sanitizedComment = sanitize(comment.value)
+    if (sanitizedComment === undefined || sanitizedComment === null || sanitizedComment === '') {
+        toast.error('Cannot create comment')
+        return
+    }
     let body = {
         parent: props.blogPost,
-        content: sanitize(comment.value),
+        content: sanitizedComment,
         user: props.user.split(".")[0],
         blogPost: props.blogPost
     }

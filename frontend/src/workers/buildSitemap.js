@@ -24,7 +24,7 @@ const filterPosts = (posts) => {
 
 const createSitemap = async () => {
     const smStream = new SitemapStream({
-        hostname: process.env.SITE_PREFIX,
+        hostname: `https://${process.env.SITE_PREFIX}`,
     })
 
     const pipeline = smStream.pipe(createGzip())

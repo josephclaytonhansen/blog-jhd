@@ -7,6 +7,7 @@ import { authenticateToken } from './middleware/authenticateToken.js'
 
 import express from 'express'
 import compression from 'compression'
+import expressStaticGzip from 'express-static-gzip'
 
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -95,7 +96,14 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.use('/sitemap.xml', express.static('public/sitemap.xml'))
+app.use('/sitemap.xml', expressStaticGzip('public/', {
+    enableBrotli: true,
+    customCompressions: [{
+      encodingName: 'gzip',
+      fileExtension: 'gz',
+    }],
+    orderPreference: ['gzip']
+  }))
 
 app.get('/removed-users', authenticateToken, (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin') {

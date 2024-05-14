@@ -22,6 +22,11 @@ const blogSchema = new mongoose.Schema({
     views: Number,
     headerStyle: String,
     sidebar: Boolean,
+    messageBar: Boolean,
+    messageBarContent: String,
+    messageBarLink: String,
+    messageBarLinkText: String,
+    messageBarType: String,
 })
 
 blogSchema.pre('save', function(next) {

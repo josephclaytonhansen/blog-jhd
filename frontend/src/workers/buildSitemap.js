@@ -5,8 +5,8 @@ import {
 
 import { createGzip } from 'zlib'
 import fetch from 'node-fetch'
-import 'fs'
-import 'path'
+import fs from 'fs'
+import path from 'path'
 
 
 const getPosts = async () => {

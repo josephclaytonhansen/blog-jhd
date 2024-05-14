@@ -35,6 +35,8 @@
         let config = {
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.token,
             },
         }
         try {
@@ -70,7 +72,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Authorization': 'Bearer ' + localStorage.token,
             }
         }
             let checkResponse = await axios.post(`${process.env.VUE_APP_SERVER_URL}/user/checksession`, checkParams, config)

@@ -45,50 +45,28 @@ const getPostComments = async(id) => {
 }
 
 const sortComments = (comments) => {
-    let maxNestedLevel = 0
-    let splits = []
-    comments.forEach(comment => {
-        let nestedLevel = comment.nestedLevel
-        if (nestedLevel > maxNestedLevel) {
-            maxNestedLevel = nestedLevel
-            splits[nestedLevel] = []
-        }
-        splits[comments.nestedLevel].push(comment)
-    })
     let orderedComments = []
-    for (let i = 0; i <= maxNestedLevel; i++) {
-        //Each item in splits[0] is a top level comment
-        //Each item in splits[1] is a reply to a top level comment
-        //Each item in splits[2] is a reply to a reply to a top level comment
-        //etc
-        //Ordered comments should reflect this structure- if a comment is a reply to a top level comment, it should be nested under that comment
-        //If a comment is a reply to a reply to a top level comment, it should be nested under the reply to the top level comment
-        //This is determined by comment.parent being equal to the id of the comment it is a reply to
-        //If a comment is a top level comment, it should be pushed to the orderedComments array
-        //If a comment is a reply to a top level comment, it should be pushed to orderedComments after its parent top level comment
-        //If a comment is a reply to a reply to a top level comment, it should be pushed to orderedComments after its parent reply to a top level comment
-        //etc
-        //This is done by iterating through the splits array and pushing each item to the orderedComments array in order
-        // Create a map of comments by their IDs
-        let commentMap = new Map(splits[i].map(comment => [comment.id, comment]))
+    let commentMap = new Map()
 
-        // Recursive function to add a comment and its descendants to the orderedComments array
-        function addCommentAndDescendantsToOrderedComments(commentId) {
-            let comment = commentMap.get(commentId)
-            if (comment) {
-                orderedComments.push(comment)
-                comment.replies.forEach(childId => addCommentAndDescendantsToOrderedComments(childId))
-            }
+    let topLevelComments = []
+    comments.forEach(comment => {
+        commentMap.set(comment.id, comment)
+        if (comment.nestedLevel === 0) {
+            topLevelComments.push(comment)
         }
+    })
 
-        // Add each top-level comment and its descendants to the orderedComments array
-        splits[i].forEach(comment => {
-            if (comment.nestedLevel === 0) {
-                addCommentAndDescendantsToOrderedComments(comment.id)
-            }
-        })
-
+    function addCommentAndDescendantsToOrderedComments(commentId) {
+        let comment = commentMap.get(commentId)
+        if (comment) {
+            orderedComments.push(comment)
+            comment.replies.forEach(childId => addCommentAndDescendantsToOrderedComments(childId))
+        }
     }
+
+    topLevelComments.forEach(comment => {
+        addCommentAndDescendantsToOrderedComments(comment.id)
+    })
 
     return orderedComments
 }

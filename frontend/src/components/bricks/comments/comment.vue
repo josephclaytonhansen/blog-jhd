@@ -79,7 +79,7 @@
         if (line.startsWith('- ') || line.startsWith('* ')) {
             if (!inList) {
                 inList = true
-                return '<ul class="ml-2 list-disc" style="line-height:.5rem"><li class="m-0 py-2">' + line.substring(2) + '</li>'
+                return '<ul class="ml-2 list-disc"><li class="m-0 py-2" style="line-height:.5rem">' + line.substring(2) + '</li>'
             } else {
                 return '<li>' + line.substring(2) + '</li>'
             }

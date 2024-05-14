@@ -14,7 +14,7 @@ const reply = ref('')
 const parent = ref(props.comment._id)
 
 const sanitize = (string) => {
-    const regex = /[^A-Za-z0-9\s!@#$%&*()[\]\/\\:;"'~_=+-]/g
+    const regex = /[^A-Za-z0-9\s!@#$%&*()[\]\/\\:;"'.~_=+-]/g
     let rep = string.replace(regex, '').trim()
     if (rep !== string) {
         toast.warning('Illegal characters removed from comment')

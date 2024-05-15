@@ -5,7 +5,7 @@ const parameterLookup = {
     FONT_SANS: {default: 'Fira Sans', allowedCharacters: "a-zA-Z "},
     BACKDROP_COLOR: {default: 'slate', allowedCharacters: "a-z"},
     ACCENT_COLOR: {default: 'cyan', allowedCharacters: "a-z"},
-    ROUNDED: {default: 'false', allowedValues: ['true', 'false']},
+    ROUNDED: {default: 'rounded', allowedValues: ['subtle', 'rounded', 'sharp']},
     ROUND_AVATARS: {default: 'false', allowedValues: ['true', 'false']},
     READING_PROGRESS_BAR: {default: 'false', allowedValues: ['true', 'false']},
     COLOR_BLOCK: {default: 'false', allowedValues: ['true', 'false']},

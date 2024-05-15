@@ -48,6 +48,10 @@ const validateParameter = (parameter, value) => {
 
 const build = (req, res, next) => {
     const parameters = req.body
+    if (!parameters) {
+        console.error('No parameters provided')
+        return res.status(400).json({message: 'No parameters provided'})
+    }
     for (const [key, value] of Object.entries(parameters)) {
         const valueAsString = String(value)
         if (!validateParameter(key, valueAsString)) {
@@ -63,6 +67,7 @@ const build = (req, res, next) => {
     }
 
     command += ' cd ../ && npm run buildbot'
+    console.log(`Executing build: ${command}`)
 
     exec(command, (error, stdout, stderr) => {
         if (error) {

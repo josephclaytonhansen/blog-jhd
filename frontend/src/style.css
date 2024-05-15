@@ -384,42 +384,41 @@ a {
 }
 /* automated */
 h1, h2 {
-  text-transform: uppercase;
+  text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Cairo';
+  font-family: 'undefined';
 }
 
 body {
-  font-family: 'Cairo';
+  font-family: 'undefined';
 }
 
-.avatar{border-radius:999rem;}
 
 
 #progress-bar, #progress-bar-fill{
-  display: block;
+  display: none;
 }
 
 .colorblock{
-  background-color: theme('colors.backdrop-2');
-  
+  background-color: transparent;
+  padding: none!important;
 }
 
 .colorblock_dark{
-  background-color: theme('colors.backdrop-1');
-  
+  background-color: transparent;
+  padding: none!important;
 }
 
 .colorblock_darker {
-  background-color: theme('colors.backdrop-0');
-  
+  background-color: transparent;
+  padding: none!important;
 }
 
 .colorblock_accent{
-  background-color: theme('colors.accent.700');
-  color:theme('colors.backdrop.100');
-  
+  background-color: transparent;
+  ;
+  padding: none!important;
 }
 
 .dividing-line{
@@ -443,9 +442,9 @@ body {
 }
 
 .sidebar{
-  display: flex;
-  background-color: theme('colors.backdrop-2');
-  color: theme('colors.backdrop.200');
+  display: none!important;
+  background-color: transparent;
+  color: theme('colors.text-0');
 
 }
 
@@ -472,6 +471,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

@@ -89,33 +89,25 @@ const build = (req, res, next) => {
     
     let changeDirectoryCommand = 'cd .. && cd frontend';
     console.log(`Changing directory: ${changeDirectoryCommand}`);
-    try{
     exec(changeDirectoryCommand, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error changing directory: ${error.message}`);
             return res.status(500).json({message: 'Error changing directory'});
         }
-    
+
         if (stderr) {
             console.error(`Error changing directory: ${stderr}`);
             return res.status(500).json({message: 'Error changing directory'});
         }
-    
+
         let parameters = 'NODE_ENV=production';
         for (const [name, value] of Object.entries(req.body)) {
             if (parameterLookup.hasOwnProperty(name)) {
                 parameters += ` ${String(name)}="${String(value)}"`;
             }
         }
-    
-        const commands = [
-            'node ./src/workers/buildCss.js',
-            'npm run build',
-            'npm run sitemap || true',
-            'npm run process-site'
-        ];
 
-        runCommands(commands, parameters, (error) => {
+    runCommands(commands, parameters, (error) => {
             
             if (error) {
                 console.error(`Error executing commands: ${error.message}`);

@@ -59,4 +59,8 @@ const generateAndSaveSitemap = async () => {
     console.log('Sitemap has been generated and saved.')
 }
 
+try{
 generateAndSaveSitemap()
+} catch (e) {
+    console.log('An error occurred:', e)
+}

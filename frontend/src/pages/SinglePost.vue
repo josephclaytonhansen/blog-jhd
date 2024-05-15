@@ -219,7 +219,7 @@ onMounted(async () => {
             <p class = "text-xl text-text-1 w-full">Loading...</p>
         <SiteFooter :thisPageComponentName="'Footer'" />
   </div>
-  <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen">
+  <div v-else class="bg-backdrop-1 flex flex-col items-start align-middle min-h-screen" :class="post.messageBar ? 'pb-24' : ''">
     <SiteHeader :thisPageComponentName="'Header'" />
     <postProgressBar />
     <div v-if="post.headerStyle == 'fullwidth'">

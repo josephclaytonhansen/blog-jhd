@@ -65,9 +65,9 @@ const build = (req, res, next) => {
     .join(' ')
 
     let commands = [
-        `${envVariables} node ./src/workers/buildCss.js`,
-        `${envVariables} npm run build`,
-        `${envVariables} npm run process-site`
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js`,
+        'cd ../frontend && ' + `${envVariables} npm run build`,
+        'cd ../frontend && ' + `${envVariables} npm run process-site`
     ]
 
     function runCommand(index) {
@@ -92,14 +92,7 @@ const build = (req, res, next) => {
         })
     }
 
-    exec('cd ../frontend', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Exec error: ${error}`)
-            return res.status(500).json({message: 'Error changing directory'})
-        }
-
-        runCommand(0)
-    })
+    runCommand(0)
 }
 
 export default build

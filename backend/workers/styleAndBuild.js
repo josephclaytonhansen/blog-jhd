@@ -77,7 +77,7 @@ const build = (req, res, next) => {
     command = ''
 
     for (const [name, value] of Object.entries(parameters)) {
-        command += ` ${String(name)}="${String(value)}"`
+        command += `cd .. && cd ./frontend ${String(name)}="${String(value)}"`
     }
 
     command += ' NODE_ENV=production'

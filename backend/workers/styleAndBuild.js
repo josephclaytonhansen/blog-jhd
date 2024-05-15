@@ -68,34 +68,30 @@ const build = (req, res, next) => {
         'node ./src/workers/buildCss.js',
         'npm run build',
         'npm run process-site'
-    ]
+    ];
 
-    let commandString = commands.join(' && ')
+    let changeDirectoryCommand = 'cd ../frontend && ';
+    let fullCommand = changeDirectoryCommand + envVariables;
 
-    let changeDirectoryCommand = 'cd ../frontend && '
-    let fullCommand = changeDirectoryCommand + envVariables + ' ' + commandString
-
-    exec(fullCommand, (error, stdout, stderr) => {
-        if (stdout) {
-            console.log(`Output: ${stdout}`)
-        }
-        if (stderr) {
-            // Ignore known warning messages
-            if (!stderr.includes('warnings when minifying css')) {
-                console.error(`Error executing command: ${stderr}`)
-                callback(new Error(stderr))
-                return
+    commands.forEach((command) => {
+        exec(fullCommand + ' ' + command, (error, stdout, stderr) => {
+            if (stdout) {
+                console.log(`Output: ${stdout}`);
             }
-        }
-
-        if (error) {
-            console.error(`Error executing commands: ${error.message}`)
-            return res.status(500).json({message: 'Error executing build'})
-        } else {
-            console.log('Commands executed successfully')
-            return res.status(200).json({message: 'Build executed successfully'})
-        }
-    })
+            if (stderr) {
+                // Ignore known warning messages
+                if (!stderr.includes('warnings when minifying css')) {
+                    console.error(`Error executing command: ${stderr}`);
+                    callback(new Error(stderr));
+                    return;
+                }
+            }
+            if (error) {
+                console.error(`Exec error: ${error}`);
+                return res.status(500).json({message: 'Error executing build'});
+            }
+        });
+    });
 }
 
 export default build

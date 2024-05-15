@@ -236,17 +236,16 @@ onMounted(async () => {
             <h2 class= "text-2xl text-text-0 pb-4 pt-8">Select Site to Design</h2>
             <p class = "text-sm italic text-text-2 pb-2">Defaults do not reflect the current status of the site</p>
             <div class="flex gap-4">
-            <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
-                <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
-            </select>
-            <div class = "flex mt-2 gap-3 items-center">
-                <input type="text" class="bg-backdrop-1 text-text-1 rounded p-2" v-model="backendUrl"/>
-                <label for="backendUrl" class="text-text-1">Backend URL</label>
-            </div>
+                <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
+                    <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
+                </select>
+                <div class = "flex mt-2 gap-3 items-center">
+                    <input type="text" class="bg-backdrop-1 text-text-1 rounded p-2" v-model="backendUrl"/>
+                    <label for="backendUrl" class="text-text-1">Backend URL</label>
+                </div>
             
+            </div>
         </div>
-        </div>
-    
 
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
             <h2 class= "text-2xl text-text-0 pb-4  ">Font Settings</h2>
@@ -285,6 +284,7 @@ onMounted(async () => {
             </div>
 
         </div>
+
         <div class="p-8 bg-backdrop-2 rounded grow max-w-full lg:max-w-[31%]">
             <h2 class="text-2xl text-text-0 pb-4  ">Color Settings</h2>
             <hr class="border-backdrop-1 my-2 border-b-2"/>
@@ -318,6 +318,7 @@ onMounted(async () => {
                     <option value="ultra-light">Ultra-Light</option>
                 </select>
             </div>
+        </div>
 
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
             <h2 class="text-2xl text-text-0 pb-4  ">Rounded Corners</h2>
@@ -367,6 +368,6 @@ onMounted(async () => {
     </div>
             
 
-    </div></div>
+    </div>
     
 </template>

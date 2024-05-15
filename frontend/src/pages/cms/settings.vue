@@ -235,15 +235,14 @@ onMounted(async () => {
             </p>
             <h2 class= "text-2xl text-text-0 pb-4 pt-8">Select Site to Design</h2>
             <p class = "text-sm italic text-text-2 pb-2">Defaults do not reflect the current status of the site</p>
-            <div class="flex gap-4">
+            <div class="flex gap-4 flex-col">
                 <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
                     <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
                 </select>
-                <div class = "flex mt-2 gap-3 items-center">
+                <div class = "flex mt-2 gap-3 items-center flex-wrap">
                     <input type="text" class="bg-backdrop-1 text-text-1 rounded p-2" v-model="backendUrl"/>
                     <label for="backendUrl" class="text-text-1">Backend URL</label>
                 </div>
-            
             </div>
         </div>
 

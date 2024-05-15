@@ -123,6 +123,7 @@ onMounted(async () => {
     const sidebar = ref(true)
     const sidebarColorBlock = ref(true)
     const backendUrl = ref('example.com')
+    const currentSiteSettings = ref(allSites[0])
 
     const allSites = process.env.VUE_APP_FRONTEND_PREFIXES
 
@@ -176,8 +177,6 @@ onMounted(async () => {
             'SITE_PREFIX': newCurrentSiteSettings
         }
     })
-
-    const currentSiteSettings = ref(allSites[0])
 
     const pushAndBuild = () => {
         try{

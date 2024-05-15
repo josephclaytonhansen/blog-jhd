@@ -62,64 +62,64 @@ const build = (req, res, next) => {
 
     function runCommands(commands, parameters, index, callback) {
         if (index >= commands.length) {
-            callback(null)
-            return
+            callback(null);
+            return;
         }
     
-        const command = `${parameters} ${commands[index]}`
+        const command = `${parameters} ${commands[index]}`;
         console.log(`Executing: ${command}\n`);
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                console.error(`Error executing command: ${error.message}`)
-                callback(error)
-                return
+                console.error(`Error executing command: ${error.message}`);
+                callback(error);
+                return;
             }
     
             if (stderr) {
-                console.error(`Error executing command: ${stderr}`)
-                callback(new Error(stderr))
-                return
+                console.error(`Error executing command: ${stderr}`);
+                callback(new Error(stderr));
+                return;
             }
     
-            runCommands(commands, parameters, index + 1, callback)
-        })
+            runCommands(commands, parameters, index + 1, callback);
+        });
     }
     
-    let command = 'cd .. && cd frontend';
-    console.log(`Changing directory: ${command}`)
-    exec(command, (error, stdout, stderr) => {
+    let changeDirectoryCommand = 'cd .. && cd frontend';
+    console.log(`Changing directory: ${changeDirectoryCommand}`);
+    exec(changeDirectoryCommand, (error, stdout, stderr) => {
         if (error) {
-            console.error(`Error changing directory: ${error.message}`)
-            return res.status(500).json({message: 'Error changing directory'})
+            console.error(`Error changing directory: ${error.message}`);
+            return res.status(500).json({message: 'Error changing directory'});
         }
     
         if (stderr) {
             console.error(`Error changing directory: ${stderr}`);
-            return res.status(500).json({message: 'Error changing directory'})
+            return res.status(500).json({message: 'Error changing directory'});
         }
     
-        let parameters = 'NODE_ENV=production'
-        for (const [name, value] of Object.entries(parameters)) {
-            parameters += ` ${String(name)}="${String(value)}"`
+        let parameters = 'NODE_ENV=production';
+        for (const [name, value] of Object.entries(parameterLookup)) {
+            parameters += ` ${String(name)}="${String(value)}"`;
         }
     
         const commands = [
-            ' node ./src/workers/buildCss.js',
-            ' npm run build',
-            ' npm run sitemap || true',
-            ' npm run process-site'
-        ]
+            'node ./src/workers/buildCss.js',
+            'npm run build',
+            'npm run sitemap || true',
+            'npm run process-site'
+        ];
     
         runCommands(commands, parameters, 0, (error) => {
             if (error) {
-                console.error(`Error executing commands: ${error.message}`)
-                return res.status(500).json({message: 'Error building'})
+                console.error(`Error executing commands: ${error.message}`);
+                return res.status(500).json({message: 'Error executing build'});
             } else {
-                console.log('Commands executed successfully')
-                return res.status(200).json({message: 'Seabass built successfully'})
+                console.log('Commands executed successfully');
+                return res.status(200).json({message: 'Build executed successfully'});
             }
-        })
-    })
+        });
+    });
     
 }
 

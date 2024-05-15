@@ -72,7 +72,12 @@ const build = (req, res, next) => {
             if (error) {
                 console.error(`Error executing command: ${error.message}`);
                 callback(error);
+                process.exit(1)
                 return;
+            }
+
+            if (stdout) {
+                console.log(`Command output: ${stdout}`);
             }
     
             if (stderr) {
@@ -111,7 +116,7 @@ const build = (req, res, next) => {
         const commands = [
             'cd ../frontend && node ./src/workers/buildCss.js',
             'cd ../frontend && npm run build',
-            'cd ../frontend && npm run sitemap || true',
+            // 'cd ../frontend && npm run sitemap || true',
             'cd ../frontend && npm run process-site'
         ];
     

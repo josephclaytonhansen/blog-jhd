@@ -60,50 +60,66 @@ const build = (req, res, next) => {
         }
     }
 
-    let command = 'cd .. && cd frontend'
+    function runCommands(commands, parameters, index, callback) {
+        if (index >= commands.length) {
+            callback(null)
+            return
+        }
+    
+        const command = `${parameters} ${commands[index]}`
+        console.log(`Executing: ${command}\n`);
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error executing command: ${error.message}`)
+                callback(error)
+                return
+            }
+    
+            if (stderr) {
+                console.error(`Error executing command: ${stderr}`)
+                callback(new Error(stderr))
+                return
+            }
+    
+            runCommands(commands, parameters, index + 1, callback)
+        })
+    }
+    
+    let command = 'cd .. && cd frontend';
     console.log(`Changing directory: ${command}`)
     exec(command, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error changing directory: ${error.message}`)
             return res.status(500).json({message: 'Error changing directory'})
         }
-
+    
         if (stderr) {
-            console.error(`Error changing directory: ${stderr}`)
+            console.error(`Error changing directory: ${stderr}`);
             return res.status(500).json({message: 'Error changing directory'})
         }
-    })
     
-    command = ''
-
-    for (const [name, value] of Object.entries(parameters)) {
-        command += ` ${String(name)}="${String(value)}"`
-    }
-
-    command += ' NODE_ENV=production'
-    const runs = [
-        'node ./src/workers/buildCss.js', 'npm run build', 'npm run sitemap || true', 'npm run process-site'
-    ]
-
-    runs.forEach((run) => {
-        command += ` ${run}`
-        console.log(`Executing: ${command}\n`)
-        exec(command, (error, stdout, stderr) => {
+        let parameters = 'NODE_ENV=production'
+        for (const [name, value] of Object.entries(parameters)) {
+            parameters += ` ${String(name)}="${String(value)}"`
+        }
+    
+        const commands = [
+            ' node ./src/workers/buildCss.js',
+            ' npm run build',
+            ' npm run sitemap || true',
+            ' npm run process-site'
+        ]
+    
+        runCommands(commands, parameters, 0, (error) => {
             if (error) {
-                console.error(`Error executing build: ${error.message}`)
-                return res.status(500).json({message: 'Error executing build'})
+                console.error(`Error executing commands: ${error.message}`)
+                return res.status(500).json({message: 'Error building'})
+            } else {
+                console.log('Commands executed successfully')
+                return res.status(200).json({message: 'Seabass built successfully'})
             }
-    
-            if (stderr) {
-                console.error(`Error executing build: ${stderr}`)
-                return res.status(500).json({message: 'Error executing build'})
-            }
-    
-            console.log(`Build complete: ${stdout}`)
-            return res.status(200).json({message: 'Build complete'})
         })
     })
-
     
 }
 

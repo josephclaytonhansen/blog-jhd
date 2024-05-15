@@ -86,8 +86,8 @@ const build = (req, res, next) => {
     ]
 
     runs.forEach((run) => {
-        command += `cd .. && cd ./frontend  ${run}`
-        console.log(`Executing: ${command}`)
+        command += ` cd .. && cd ./frontend  ${run}`
+        console.log(`Executing: ${command}\n`)
         exec(command, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error executing build: ${error.message}`)

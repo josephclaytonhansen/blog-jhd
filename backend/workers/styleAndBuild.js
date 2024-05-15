@@ -81,7 +81,7 @@ const build = (req, res, next) => {
     }
 
     command += ' NODE_ENV=production'
-    runs = [
+    const runs = [
         'node ./src/workers/buildCss.js', 'npm run build', 'npm run sitemap || true', 'npm run process-site'
     ]
 

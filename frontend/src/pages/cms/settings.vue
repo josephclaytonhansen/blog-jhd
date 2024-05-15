@@ -178,6 +178,7 @@ onMounted(async () => {
     })
 
     const pushAndBuild = () => {
+        toast.info('Pushing settings to Seabass, please wait...')
         try{
         axios.post(`${process.env.VUE_APP_SERVER_URL}/build`, buildScript.value).then(response => {
             toast.success('Settings pushed to Seabass. Please wait a few minutes for the build to complete, then refresh the site.')

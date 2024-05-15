@@ -118,10 +118,7 @@ const build = (req, res, next) => {
                 return res.status(200).json({message: 'Build executed successfully'});
             }
         });
-    });} catch (e) {
-        console.error('An error occurred:', e)
-        process.exit(1)
-    }
+    });
     
     
 }

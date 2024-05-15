@@ -332,6 +332,30 @@ onMounted(async () => {
             </div>
         </div>
 
+        <div class="p-8 bg-backdrop-2 rounded grow max-w-full lg:max-w-[31%]">
+            <h2 class="text-2xl text-text-0 pb-4  ">Layout Settings</h2>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="readingProgressBarCheckbox" v-model="readingProgressBar"/>
+                <label for="readingProgressBarCheckbox" class="text-text-1">Reading progress bar</label>
+            </div>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="colorBlockCheckbox" v-model="colorBlock"/>
+                <label for="colorBlockCheckbox" class="text-text-1">Color block</label>
+            </div>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="linesCheckbox" v-model="lines"/>
+                <label for="linesCheckbox" class="text-text-1">Lines</label>
+            </div>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="sidebarCheckbox" v-model="sidebar"/>
+                <label for="sidebarCheckbox" class="text-text-1">Sidebar</label>
+            </div>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="sidebarColorBlockCheckbox" v-model="sidebarColorBlock"/>
+                <label for="sidebarColorBlockCheckbox" class="text-text-1">Sidebar color block</label>
+            </div>
+        </div>
+
         
 
         <div class="  p-2 gap-2 flex-wrap flex lg:hidden">

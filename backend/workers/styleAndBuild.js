@@ -48,8 +48,8 @@ const validateParameter = (parameter, value) => {
 
 const build = (req, res, next) => {
     const parameters = req.body
-    parameters.forEach((parameter) => {
-        if (!validateParameter(parameter.name, parameter.value)) {
+    Object.entries(parameters).forEach(([key, value]) => {
+        if (!validateParameter(key, value)) {
             return res.status(400).json({message: 'Invalid parameter value'})
         }
     })

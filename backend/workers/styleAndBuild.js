@@ -77,7 +77,7 @@ const build = (req, res, next) => {
     command = ''
 
     for (const [name, value] of Object.entries(parameters)) {
-        command += `cd .. && cd ./frontend ${String(name)}="${String(value)}"`
+        command += ` ${String(name)}="${String(value)}"`
     }
 
     command += ' NODE_ENV=production'
@@ -86,7 +86,7 @@ const build = (req, res, next) => {
     ]
 
     runs.forEach((run) => {
-        command += `  ${run}`
+        command += `cd .. && cd ./frontend  ${run}`
         console.log(`Executing: ${command}`)
         exec(command, (error, stdout, stderr) => {
             if (error) {

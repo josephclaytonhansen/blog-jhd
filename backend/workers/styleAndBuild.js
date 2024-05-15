@@ -60,27 +60,22 @@ const build = (req, res, next) => {
         }
     }
 
-    function runCommands(commands, parameters, index, callback) {
-        if (index >= commands.length) {
-            callback(null);
-            return;
-        }
-    
-        const command = `${parameters} ${commands[index]}`;
+    function runCommands(commands, parameters, callback) {
+        const command = commands.map(cmd => `${parameters} ${cmd}`).join(' && ');
         console.log(`Executing: ${command}\n`);
         exec(command, (error, stdout, stderr) => {
+            if (stdout) {
+                console.log(`Output: ${stdout}`);
+            }
+    
             if (error) {
                 console.error(`Error executing command: ${error.message}`);
                 callback(error);
-                process.exit(1)
                 return;
-            }
-
-            if (stdout) {
-                console.log(`Command output: ${stdout}`);
             }
     
             if (stderr) {
+                // Ignore known warning messages
                 if (!stderr.includes('warnings when minifying css')) {
                     console.error(`Error executing command: ${stderr}`);
                     callback(new Error(stderr));
@@ -88,7 +83,7 @@ const build = (req, res, next) => {
                 }
             }
     
-            runCommands(commands, parameters, index + 1, callback);
+            callback(null);
         });
     }
     
@@ -114,13 +109,13 @@ const build = (req, res, next) => {
         }
     
         const commands = [
-            'cd ../frontend && node ./src/workers/buildCss.js',
-            'cd ../frontend && npm run build',
-            // 'cd ../frontend && npm run sitemap || true',
-            'cd ../frontend && npm run process-site'
+            'node ./src/workers/buildCss.js',
+            'npm run build',
+            'npm run sitemap || true',
+            'npm run process-site'
         ];
-    
-        runCommands(commands, parameters, 0, (error) => {
+
+        runCommands(commands, parameters, (error) => {
             
             if (error) {
                 console.error(`Error executing commands: ${error.message}`);

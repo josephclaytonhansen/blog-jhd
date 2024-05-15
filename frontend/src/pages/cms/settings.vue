@@ -239,6 +239,10 @@ onMounted(async () => {
             <select v-model="currentSiteSettings" class="bg-backdrop-1 text-text-1 rounded p-2">
                 <option v-for="site in allSites" :key="site" :value="site">{{site}}</option>
             </select>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type="text" class="bg-backdrop-1 text-text-1 rounded p-2" v-model="backendUrl"/>
+                <label for="backendUrl" class="text-text-1">Backend URL</label>
+            </div>
             
         </div>
         </div>
@@ -307,13 +311,12 @@ onMounted(async () => {
             <h3 class="text-text-1 pb-2 pt-4">Theme</h3>
 
             <div class="flex mb-6">
-                <p class="text-text-1 pr-2">Dark</p>
-            <Toggle v-model="currentTheme" :width="8" :ringClass="'ring-accent-600 hover:ring-accent-500 ring-2 hover:ring-4'"/>
-                <p class="text-text-1 pl-2">Light</p>
+                <select v-model="currentTheme" class="bg-backdrop-1 text-text-1 rounded p-2">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="ultra-light">Ultra-Light</option>
+                </select>
             </div>
-            <p class="text-text-0 py-2">"Dark" means a dark background with light text. "Light" means a light background with dark text. Note that a user's  browser settings may override this.</p>
-            
-        </div>
 
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
             <h2 class="text-2xl text-text-0 pb-4  ">Rounded Corners</h2>
@@ -351,10 +354,6 @@ onMounted(async () => {
             <div class = "flex mt-2 gap-3 items-center">
                 <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="sidebarColorBlockCheckbox" v-model="sidebarColorBlock"/>
                 <label for="sidebarColorBlockCheckbox" class="text-text-1">Sidebar color block</label>
-            </div>
-            <div class = "flex mt-2 gap-3 items-center">
-                <input type="text" class="bg-backdrop-1 text-text-1 rounded p-2" v-model="backendUrl"/>
-                <label for="backendUrl" class="text-text-1">Backend URL</label>
             </div>
         </div>
 

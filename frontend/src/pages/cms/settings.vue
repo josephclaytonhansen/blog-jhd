@@ -177,29 +177,27 @@ onMounted(async () => {
         }
     })
 
+    const building = ref(false)
+
     const pushAndBuild = () => {
         toast.info('Pushing settings to Seabass, please wait...')
+        building = true
         document.body.style.cursor = 'wait'
-        document.getElementById('pushAndBuild').disabled = true
-        document.getElementById('pushAndBuild2').disabled = true
         try{
         axios.post(`${process.env.VUE_APP_SERVER_URL}/build`, buildScript.value).then(response => {
-            toast.success('Settings pushed to Seabass. Please wait a few minutes for the build to complete, then refresh the site.')
+            toast.success('Settings pushed to Seabass. Please refresh the site.')
             document.body.style.cursor = 'default'
-            document.getElementById('pushAndBuild').disabled = false
-            document.getElementById('pushAndBuild2').disabled = false
+            building = false
         }).catch(error => {
             toast.error('Error pushing settings to Seabass- check the server logs for more information.')
             document.body.style.cursor = 'default'
-            document.getElementById('pushAndBuild').disabled = false
-            document.getElementById('pushAndBuild2').disabled = false
+            building = false
         })
     }  catch (error) {
         console.error(error)
         toast.error('Error pushing settings to Seabass- check the server logs for more information.')
         document.body.style.cursor = 'default'
-        document.getElementById('pushAndBuild').disabled = false
-        document.getElementById('pushAndBuild2').disabled = false
+        building = false
     }
     }
 
@@ -209,7 +207,7 @@ onMounted(async () => {
 <template>
 
     <div class="fixed z-50 right-2 bottom-2 p-2 gap-2 hidden lg:flex items-end">
-        <button @click="pushAndBuild" id="pushAndBuild" class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/>Send settings to Seabass and build</button>
+        <button @click="pushAndBuild" v-if="!building" id="pushAndBuild" class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/>Send settings to Seabass and build</button>
         
 
     </div>
@@ -374,7 +372,7 @@ onMounted(async () => {
         
 
         <div class="  p-2 gap-2 flex-wrap flex lg:hidden">
-        <button id="pushAndBuild2" class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2" @click="pushAndBuild"><HardDriveUpload class = "text-text-0"/>Push settings to Seabass and build</button>
+        <button id="pushAndBuild2" v-if="!building" class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2" @click="pushAndBuild"><HardDriveUpload class = "text-text-0"/>Push settings to Seabass and build</button>
         
 
     </div>

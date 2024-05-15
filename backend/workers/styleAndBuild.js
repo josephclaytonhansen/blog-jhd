@@ -99,8 +99,10 @@ const build = (req, res, next) => {
         }
     
         let parameters = 'NODE_ENV=production';
-        for (const [name, value] of Object.entries(parameterLookup)) {
-            parameters += ` ${String(name)}="${String(value)}"`;
+        for (const [name, value] of Object.entries(req.body)) {
+            if (parameterLookup.hasOwnProperty(name)) {
+                parameters += ` ${String(name)}="${String(value)}"`;
+            }
         }
     
         const commands = [

@@ -106,7 +106,13 @@ const build = (req, res, next) => {
                 parameters += ` ${String(name)}="${String(value)}"`;
             }
         }
-
+        
+        let commands = [
+            'node ./src/workers/buildCss.js',
+            'npm run build',
+            'npm run process-site'
+        ];
+        
     runCommands(commands, parameters, (error) => {
             
             if (error) {

@@ -49,7 +49,8 @@ const validateParameter = (parameter, value) => {
 const build = (req, res, next) => {
     const parameters = req.body
     for (const [key, value] of Object.entries(parameters)) {
-        if (!validateParameter(key, value)) {
+        const valueAsString = String(value)
+        if (!validateParameter(key, valueAsString)) {
             console.error(`Invalid parameter value: ${key}=${value}`)
             return res.status(400).json({message: 'Invalid parameter value'})
         }

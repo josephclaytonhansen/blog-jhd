@@ -27,6 +27,8 @@ import commentRoutes from './routes/commentRoutes.js'
 import tagRoutes from './routes/tagRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 
+import build from './workers/styleAndBuild.js'
+
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -82,10 +84,18 @@ const limiter = rate_limit({
     legacyHeaders: false,
 })
 
+const buildLimiter = rate_limit({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+})
+
+app.post('/build', buildLimiter, build)
+
 if (process.env.NODE_ENV === 'production') {
 app.use(limiter)
 }
-
 
 app.use((req, res, next) => {
     res.setHeader('Referrer-Policy', 'no-referrer')
@@ -114,7 +124,7 @@ app.use('/category', categoryRoutes)
 
 app.use((err, req, res, next) => {
     console.error(err)
-    res.status(500).send('An error occurred: ' + err.message)
+    res.status(500).send('An error occurred: ' +  JSON.stringify(err))
 })
 
 cron.schedule('0 0 1 * *', async () => {

@@ -61,6 +61,9 @@ const getPost = async (displayNameSlugified) => {
         }
         let posts = await response.json()
         post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
+        if (!(post.value._id)) {
+          router.push('/NotFound')
+        }
         sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
         sessionStorage.setItem(`timestamp-${displayNameSlugified}`, new Date().getTime())
         isLoading.value = false

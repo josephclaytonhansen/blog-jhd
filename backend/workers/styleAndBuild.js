@@ -2,9 +2,9 @@ import { exec } from 'child_process'
 
 const parameterLookup = {
     THEME: {default: 'dark', allowedValues: ['dark', 'light', 'ultra-light']},
-    FONT_SANS: {default: 'Fira Sans', allowedCharacters: "azAZ "},
-    BACKDROP_COLOR: {default: 'slate', allowedCharacters: "az"},
-    ACCENT_COLOR: {default: 'cyan', allowedCharacters: "az"},
+    FONT_SANS: {default: 'Fira Sans', allowedCharacters: "a-zA-Z "},
+    BACKDROP_COLOR: {default: 'slate', allowedCharacters: "a-z"},
+    ACCENT_COLOR: {default: 'cyan', allowedCharacters: "a-z"},
     ROUNDED: {default: 'false', allowedValues: ['true', 'false']},
     ROUND_AVATARS: {default: 'false', allowedValues: ['true', 'false']},
     READING_PROGRESS_BAR: {default: 'false', allowedValues: ['true', 'false']},
@@ -12,12 +12,12 @@ const parameterLookup = {
     LINES: {default: 'false', allowedValues: ['true', 'false']},
     SIDEBAR: {default: 'false', allowedValues: ['true', 'false']},
     SIDEBAR_COLOR_BLOCK: {default: 'false', allowedValues: ['true', 'false']},
-    FONT_SERIF: {default: 'Cormorant Garamond', allowedCharacters: "azAZ "},
+    FONT_SERIF: {default: 'Cormorant Garamond', allowedCharacters: "a-zA-Z "},
     SERIF_HEADER_TEXT: {default: 'false', allowedValues: ['true', 'false']},
     UPPERCASE_HEADERS: {default: 'false', allowedValues: ['true', 'false']},
     SERIF_BODY_TEXT: {default: 'false', allowedValues: ['true', 'false']},
-    SITE_PREFIX: {default: 'example.com', allowedCharacters: "azAZ09-.", format: '*.*'},
-    BACKEND_URL: {default: 'https://example.com', allowedCharacters: "azAZ09-./:", format: 'https://*.*'},
+    SITE_PREFIX: {default: 'example.com', allowedCharacters: "a-zA-Z0-9\\-\\.", format: '*.*'},
+    BACKEND_URL: {default: 'https://example.com', allowedCharacters: "a-zA-Z0-9\\-\\.\\/:", format: 'https://*.*'},
 }
 
 const forbiddens = ['exec', 'spawn', 'fork', 'execFile', 'spawnSync', 'spawnSync', 'execFileSync', 'execFileSync', 'execSync', 'child_process', 'require', 'import', 'fs', 'path', 'dgram', 'dns', 'tls', 'stream', 'zlib', 'string_decoder', 'url', 'querystring', 'perf_hooks', 'worker_threads', 'v8', 'vm', 'inspector', 'module', 'cluster', 'assert', 'async_hooks', 'buffer', 'console', 'constants', 'inspector', 'process', 'punycode', 'querystring', 'readline', 'sudo', 'php', 'wget', 'fetch', 'curl', 'cd']

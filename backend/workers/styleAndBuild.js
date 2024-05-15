@@ -60,29 +60,51 @@ const build = (req, res, next) => {
         }
     }
 
-    let command = ''
+    let command = 'cd ..'
+    console.log(`Changing directory: ${command}`)
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error changing directory: ${error.message}`)
+            return res.status(500).json({message: 'Error changing directory'})
+        }
+
+        if (stderr) {
+            console.error(`Error changing directory: ${stderr}`)
+            return res.status(500).json({message: 'Error changing directory'})
+        }
+    })
+    
+    command = ''
 
     for (const [name, value] of Object.entries(parameters)) {
         command += ` ${String(name)}="${String(value)}"`
     }
 
-    command += ' cd ../ && npm run buildbot'
-    console.log(`Executing build: ${command}`)
+    command += ' NODE_ENV=production'
+    runs = [
+        'node ./src/workers/buildCss.js', 'npm run build', 'npm run sitemap || true', 'npm run process-site'
+    ]
 
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error executing build: ${error.message}`)
-            return res.status(500).json({message: 'Error executing build'})
-        }
-
-        if (stderr) {
-            console.error(`Error executing build: ${stderr}`)
-            return res.status(500).json({message: 'Error executing build'})
-        }
-
-        console.log(`Build complete: ${stdout}`)
-        return res.status(200).json({message: 'Build complete'})
+    runs.forEach((run) => {
+        command += `  ${run}`
+        console.log(`Executing: ${command}`)
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error executing build: ${error.message}`)
+                return res.status(500).json({message: 'Error executing build'})
+            }
+    
+            if (stderr) {
+                console.error(`Error executing build: ${stderr}`)
+                return res.status(500).json({message: 'Error executing build'})
+            }
+    
+            console.log(`Build complete: ${stdout}`)
+            return res.status(200).json({message: 'Build complete'})
+        })
     })
+
+    
 }
 
 export default build

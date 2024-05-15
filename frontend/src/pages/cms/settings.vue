@@ -122,9 +122,9 @@ onMounted(async () => {
     const lines = ref(true)
     const sidebar = ref(true)
     const sidebarColorBlock = ref(true)
-    const backendUrl = ref('example.com')
+    const backendUrl = ref('https://seabass.example.com')
     const allSites = process.env.VUE_APP_FRONTEND_PREFIXES
-    const currentSiteSettings = ref(allSites[0])
+    const currentSiteSettings = ref('')
 
     const buildScript = ref({
         'THEME': 'dark',

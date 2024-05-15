@@ -2,6 +2,7 @@ import db from './mongo.js'
 import User from './models/user.js'
 import Tag from './models/tag.js'
 import Comment from './models/comment.js'
+import { exec } from 'child_process'
 
 import { authenticateToken } from './middleware/authenticateToken.js'
 
@@ -126,6 +127,22 @@ cron.schedule('0 0 1 * *', async () => {
         removedUsers.push(user)
         await user.remove()
 
+    })
+})
+
+cron.schedule('0 0 * * 0', () => {
+    exec('cd ../frontend && npm run sitemap', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing sitemap generation: ${error.message}`)
+            return
+        }
+
+        if (stderr) {
+            console.error(`Error in sitemap generation: ${stderr}`)
+            return
+        }
+
+        console.log(`Sitemap generation output: ${stdout}`)
     })
 })
 

@@ -65,9 +65,9 @@ const build = (req, res, next) => {
     .join(' ')
 
     let commands = [
-        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js`,
-        'cd ../frontend && ' + `${envVariables} npm run build`,
-        'cd ../frontend && ' + `${envVariables} npm run process-site`
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js` + '; exit',
+        'cd ../frontend && ' + `${envVariables} npm run build` + '; exit',
+        'cd ../frontend && ' + `${envVariables} npm run process-site` + '; exit'
     ]
 
     function runCommand(index) {

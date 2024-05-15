@@ -352,6 +352,10 @@ onMounted(async () => {
                 <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="sidebarColorBlockCheckbox" v-model="sidebarColorBlock"/>
                 <label for="sidebarColorBlockCheckbox" class="text-text-1">Sidebar color block</label>
             </div>
+            <div class = "flex mt-2 gap-3 items-center">
+                <input type="text" class="bg-backdrop-1 text-text-1 rounded p-2" v-model="backendUrl"/>
+                <label for="backendUrl" class="text-text-1">Backend URL</label>
+            </div>
         </div>
 
         

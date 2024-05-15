@@ -53,6 +53,13 @@ const build = (req, res, next) => {
         console.error('No parameters provided')
         return res.status(400).json({message: 'No parameters provided'})
     }
+
+    for (const [key, value] of Object.entries(parameterLookup)) {
+        if (!parameters.hasOwnProperty(key)) {
+            parameters[key] = value.default
+        }
+    }
+
     for (const [key, value] of Object.entries(parameters)) {
         const valueAsString = String(value)
         if (!validateParameter(key, valueAsString)) {
@@ -66,11 +73,11 @@ const build = (req, res, next) => {
     .join(' ')
 
     let commands = [
-        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js` + '; exit',
-        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true` + '; exit',
-        'cd ../frontend && ' + `${envVariables} node commit.js || true` + '; exit',
-        'cd ../frontend && ' + `${envVariables} npm run build` + '; exit',
-        'cd ../frontend && ' + `${envVariables} npm run process-site` + '; exit'
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js` + ' exit',
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true` + ' exit',
+        'cd ../frontend && ' + `${envVariables} node commit.js || true` + ' exit',
+        'cd ../frontend && ' + `${envVariables} npm run build` + ' exit',
+        'cd ../frontend && ' + `${envVariables} npm run process-site` + ' exit'
     ]
 
     function runCommand(index) {
@@ -84,7 +91,13 @@ const build = (req, res, next) => {
                 console.log(`Output: ${stdout}`)
             }
             if (stderr) {
-                console.error(`Error: ${stderr}`)
+                if (!stderr.includes('warnings when minifying css')) {
+                    console.error(`Error executing command: ${stderr}`)
+                    callback(new Error(stderr))
+                    return
+                } else {
+                    console.log(`Warning: ${stderr}`)
+                }
             }
             if (error) {
                 console.error(`Exec error: ${error}`)

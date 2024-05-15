@@ -60,7 +60,7 @@ const build = (req, res, next) => {
         }
     }
 
-    let command = 'cd ..'
+    let command = 'cd .. && cd frontend'
     console.log(`Changing directory: ${command}`)
     exec(command, (error, stdout, stderr) => {
         if (error) {
@@ -86,7 +86,7 @@ const build = (req, res, next) => {
     ]
 
     runs.forEach((run) => {
-        command += ` cd .. && cd frontend  ${run}`
+        command += ` ${run}`
         console.log(`Executing: ${command}\n`)
         exec(command, (error, stdout, stderr) => {
             if (error) {

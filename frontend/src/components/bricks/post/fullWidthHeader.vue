@@ -21,7 +21,7 @@ post.value = props.post
 
 <template>
     <div class="relative w-screen overflow-hidden">
-        <ThreeSquareImage :image="props.post.featuredImage" :alt="props.post.title" class="w-screen overflow-hidden" :rounded="false" />
+        <FourSquareImage :image="props.post.featuredImage" :alt="props.post.title" class="w-screen overflow-hidden" :rounded="false" />
         <div class="absolute inset-0 bg-black opacity-30 rounded"></div>
         <div class="absolute inset-0 w-full h-full flex flex-col justify-center items-center" style="z-index:999">
             <h1 class="text-4xl font-header text-white max-w-[80%]">{{props.post.title}}</h1>

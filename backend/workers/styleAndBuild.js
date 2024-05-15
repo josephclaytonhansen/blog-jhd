@@ -48,16 +48,16 @@ const validateParameter = (parameter, value) => {
 
 const build = (req, res, next) => {
     const parameters = req.body
-    Object.entries(parameters).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(parameters)) {
         if (!validateParameter(key, value)) {
             return res.status(400).json({message: 'Invalid parameter value'})
         }
-    })
+    }
 
     let command = ''
 
-    for (let i = 0; i < parameters.length; i++) {
-        command += ` ${String(parameters[i].name)}="${String(parameters[i].value)}"`
+    for (const [name, value] of Object.entries(parameters)) {
+        command += ` ${String(name)}="${String(value)}"`
     }
 
     command += ' cd ../ && npm run buildbot'

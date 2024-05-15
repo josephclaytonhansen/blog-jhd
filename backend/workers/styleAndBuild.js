@@ -104,10 +104,10 @@ const build = (req, res, next) => {
         }
     
         const commands = [
-            'node ./src/workers/buildCss.js',
-            'npm run build',
-            'npm run sitemap || true',
-            'npm run process-site'
+            'cd ../frontend && node ./src/workers/buildCss.js',
+            'cd ../frontend && npm run build',
+            'cd ../frontend && npm run sitemap || true',
+            'cd ../frontend && npm run process-site'
         ];
     
         runCommands(commands, parameters, 0, (error) => {

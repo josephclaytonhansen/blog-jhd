@@ -2,6 +2,8 @@
 import {computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 
 import Toggle from '@/components/bricks/userInteraction/toggle.vue'
 
@@ -114,9 +116,14 @@ onMounted(async () => {
     const serifHeaderText = ref(false)
     const uppercaseHeader1and2 = ref(false)
 
-    const roundAvatars = ref(false)
+    const roundAvatars = ref(true)
+    const readingProgressBar = ref(true)
+    const colorBlock = ref(true)
+    const lines = ref(true)
+    const sidebar = ref(true)
+    const sidebarColorBlock = ref(true)
+    const backendUrl = ref('example.com')
 
-    const currentSiteSettings = ref('')
     const allSites = process.env.VUE_APP_FRONTEND_PREFIXES
 
     const buildScript = ref({
@@ -130,6 +137,13 @@ onMounted(async () => {
         'UPPERCASE_HEADERS': false,
         'ROUNDED': 'rounded',
         'ROUND_AVATARS': false,
+        'READING_PROGRESS_BAR': true,
+        'COLOR_BLOCK': true,
+        'LINES': true,
+        'SIDEBAR': true,
+        'SIDEBAR_COLOR_BLOCK': true,
+        'BACKEND_URL': 'https://seabass.example.com',
+        'SITE_PREFIX': 'example.com'
 
     })
 
@@ -141,7 +155,7 @@ onMounted(async () => {
 
     const currentRounded = ref('rounded')
 
-    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded, roundAvatars], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded, newRoundAvatars]) => {
+    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded, roundAvatars, readingProgressBar, colorBlock, lines, sidebar, sidebarColorBlock, backendUrl, currentSiteSettings], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded, newRoundAvatars, newReadingProgressBar, newColorBlock, newLines, newSidebar, newSidebarColorBlock, newBackendUrl, newCurrentSiteSettings]) => {
         buildScript.value = {
             'THEME': newTheme,
             'FONT_SANS': newSansFont.name,
@@ -152,19 +166,31 @@ onMounted(async () => {
             'SERIF_HEADER_TEXT': newSerifHeaderText,
             'UPPERCASE_HEADERS': newUppercaseHeader1and2,
             'ROUNDED': newRounded,
-            'ROUND_AVATARS': newRoundAvatars.valueOf(),
+            'ROUND_AVATARS': newRoundAvatars,
+            'READING_PROGRESS_BAR': newReadingProgressBar,
+            'COLOR_BLOCK': newColorBlock,
+            'LINES': newLines,
+            'SIDEBAR': newSidebar,
+            'SIDEBAR_COLOR_BLOCK': newSidebarColorBlock,
+            'BACKEND_URL': newBackendUrl,
+            'SITE_PREFIX': newCurrentSiteSettings
         }
     })
 
-    const returnBuildScript = computed(() => {
-    let script = ''
-    for (const [key, value] of Object.entries(buildScript.value)) {
-        script += `${key}="${value}" `
+    const currentSiteSettings = ref(allSites[0])
+
+    const pushAndBuild = () => {
+        try{
+        axios.post(`process.env.VUE_APP_SERVER_URL/build`, buildScript.value).then(response => {
+            toast.success('Settings pushed to Seabass. Please wait a few minutes for the build to complete, then refresh the site.')
+        }).catch(error => {
+            toast.error('Error pushing settings to Seabass- check the server logs for more information.')
+        })
+    }  catch (error) {
+        console.error(error)
+        toast.error('Error pushing settings to Seabass- check the server logs for more information.')
     }
-    script += `SITE="${currentSiteSettings.value}"`
-    return script
-    //TODO: set up npm run preview, with the build script, and send it to the appropriate site
-})
+    }
 
 </script>
 
@@ -172,10 +198,8 @@ onMounted(async () => {
 <template>
 
     <div class="fixed z-50 right-2 bottom-2 p-2 gap-2 hidden lg:flex items-end">
-        <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/></button>
-        <div class="text-text-0 flex gap-2 items-center"><p class = " bg-backdrop-1 p-2 rounded flex items-center gap-2 max-w-[25vw]"><Blocks class = "text-text-3"/>{{currentSiteSettings}}
-
-        </p></div>
+        <button @click="pushAndBuild" class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0 shrink"/>Send settings to Seabass and build</button>
+        
 
     </div>
 
@@ -311,10 +335,8 @@ onMounted(async () => {
         
 
         <div class="  p-2 gap-2 flex-wrap flex lg:hidden">
-        <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2"><HardDriveUpload class = "text-text-0"/> Send settings to site</button>
-        <div class="text-text-0 flex gap-2 items-center h-min"><code class = "text-sm bg-backdrop-1 p-2 rounded flex items-center gap-2 h-min overflow-hidden">{{currentSiteSettings}}
-
-        </code></div>
+        <button class="bg-accent-500 text-text-0 rounded p-2 cursor-pointer hover:bg-accent-600 duration-300 transition-all flex gap-2" @click="pushAndBuild"><HardDriveUpload class = "text-text-0"/>Push settings to Seabass and build</button>
+        
 
     </div>
             

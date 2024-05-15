@@ -65,33 +65,41 @@ const build = (req, res, next) => {
     .join(' ')
 
     let commands = [
-        'node ./src/workers/buildCss.js',
-        'npm run build',
-        'npm run process-site'
-    ];
+        `${envVariables} node ./src/workers/buildCss.js`,
+        `${envVariables} npm run build`,
+        `${envVariables} npm run process-site`
+    ]
 
-    let changeDirectoryCommand = 'cd ../frontend && ';
-    let fullCommand = changeDirectoryCommand + envVariables;
+    function runCommand(index) {
+        if (index >= commands.length) {
+            console.log('All commands executed successfully')
+            return res.status(200).json({message: 'Build executed successfully'})
+        }
 
-    commands.forEach((command) => {
-        exec(fullCommand + ' ' + command, (error, stdout, stderr) => {
+        exec(commands[index], (error, stdout, stderr) => {
             if (stdout) {
-                console.log(`Output: ${stdout}`);
+                console.log(`Output: ${stdout}`)
             }
             if (stderr) {
-                // Ignore known warning messages
-                if (!stderr.includes('warnings when minifying css')) {
-                    console.error(`Error executing command: ${stderr}`);
-                    callback(new Error(stderr));
-                    return;
-                }
+                console.error(`Error: ${stderr}`)
             }
             if (error) {
-                console.error(`Exec error: ${error}`);
-                return res.status(500).json({message: 'Error executing build'});
+                console.error(`Exec error: ${error}`)
+                return res.status(500).json({message: 'Error executing build'})
             }
-        });
-    });
+
+            runCommand(index + 1)
+        })
+    }
+
+    exec('cd ../frontend', (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Exec error: ${error}`)
+            return res.status(500).json({message: 'Error changing directory'})
+        }
+
+        runCommand(0)
+    })
 }
 
 export default build

@@ -246,6 +246,7 @@ onMounted(async () => {
             
         </div>
         </div>
+    
 
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
             <h2 class= "text-2xl text-text-0 pb-4  ">Font Settings</h2>
@@ -366,6 +367,6 @@ onMounted(async () => {
     </div>
             
 
-    </div>
+    </div></div>
     
 </template>

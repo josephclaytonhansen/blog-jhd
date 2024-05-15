@@ -47,6 +47,7 @@ const validateParameter = (parameter, value) => {
 }
 
 const build = (req, res, next) => {
+    console.log('Building Seabass')
     const parameters = req.body
     if (!parameters) {
         console.error('No parameters provided')
@@ -66,6 +67,8 @@ const build = (req, res, next) => {
 
     let commands = [
         'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js` + '; exit',
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true` + '; exit',
+        'cd ../frontend && ' + `${envVariables} node commit.js || true` + '; exit',
         'cd ../frontend && ' + `${envVariables} npm run build` + '; exit',
         'cd ../frontend && ' + `${envVariables} npm run process-site` + '; exit'
     ]

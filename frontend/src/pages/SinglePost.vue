@@ -77,6 +77,7 @@ onMounted(async () => {
   const route = useRoute()
   const titleSlugifiedFromUrlParams = route.params.slug
   await getPost(titleSlugifiedFromUrlParams)
+  
   let url = `${process.env.VUE_APP_SERVER_URL}/blog/incrementviews/` + post.value._id
   let config = {
     headers: {

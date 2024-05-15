@@ -25,7 +25,7 @@ const forbiddens = ['exec', 'spawn', 'fork', 'execFile', 'spawnSync', 'spawnSync
 const validateParameter = (parameter, value) => {
     const lowerCaseParameter = String(parameter).toLowerCase()
     if (!Object.keys(parameterLookup).map(key => key.toLowerCase()).includes(lowerCaseParameter)) {
-        return false;
+        return false
     }
     const lookup = parameterLookup[parameter]
     if (!lookup) {
@@ -60,73 +60,42 @@ const build = (req, res, next) => {
         }
     }
 
-    function runCommands(commands, parameters, callback) {
-        const command = commands.map(cmd => `${parameters} ${cmd}`).join(' && ');
-        console.log(`Executing: ${command}\n`);
-        exec(command, (error, stdout, stderr) => {
-            if (stdout) {
-                console.log(`Output: ${stdout}`);
-            }
-    
-            if (error) {
-                console.error(`Error executing command: ${error.message}`);
-                callback(error);
-                return;
-            }
-    
-            if (stderr) {
-                // Ignore known warning messages
-                if (!stderr.includes('warnings when minifying css')) {
-                    console.error(`Error executing command: ${stderr}`);
-                    callback(new Error(stderr));
-                    return;
-                }
-            }
-    
-            callback(null);
-        });
-    }
-    
-    let changeDirectoryCommand = 'cd .. && cd frontend';
-    console.log(`Changing directory: ${changeDirectoryCommand}`);
-    exec(changeDirectoryCommand, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error changing directory: ${error.message}`);
-            return res.status(500).json({message: 'Error changing directory'});
-        }
+    let envVariables = Object.entries(parameters)
+    .map(([key, value]) => `${key.toUpperCase()}="${value}"`)
+    .join(' ')
 
+    let commands = [
+        'node ./src/workers/buildCss.js',
+        'npm run build',
+        'npm run process-site'
+    ]
+
+    let commandString = commands.join(' && ')
+
+    let changeDirectoryCommand = 'cd ../frontend && '
+    let fullCommand = changeDirectoryCommand + envVariables + ' ' + commandString
+
+    exec(fullCommand, (error, stdout, stderr) => {
+        if (stdout) {
+            console.log(`Output: ${stdout}`)
+        }
         if (stderr) {
-            console.error(`Error changing directory: ${stderr}`);
-            return res.status(500).json({message: 'Error changing directory'});
+            // Ignore known warning messages
+            if (!stderr.includes('warnings when minifying css')) {
+                console.error(`Error executing command: ${stderr}`)
+                callback(new Error(stderr))
+                return
+            }
         }
 
-        let parameters = 'NODE_ENV=production';
-        for (const [name, value] of Object.entries(req.body)) {
-            if (parameterLookup.hasOwnProperty(name)) {
-                parameters += ` ${String(name)}="${String(value)}"`;
-            }
+        if (error) {
+            console.error(`Error executing commands: ${error.message}`)
+            return res.status(500).json({message: 'Error executing build'})
+        } else {
+            console.log('Commands executed successfully')
+            return res.status(200).json({message: 'Build executed successfully'})
         }
-        
-        let commands = [
-            'node ./src/workers/buildCss.js',
-            'npm run build',
-            'npm run process-site'
-        ];
-        
-    runCommands(commands, parameters, (error) => {
-            
-            if (error) {
-                console.error(`Error executing commands: ${error.message}`);
-                return res.status(500).json({message: 'Error executing build'});
-                process.exit(1)
-            } else {
-                console.log('Commands executed successfully');
-                return res.status(200).json({message: 'Build executed successfully'});
-            }
-        });
-    });
-    
-    
+    })
 }
 
 export default build

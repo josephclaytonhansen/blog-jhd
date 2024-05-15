@@ -76,9 +76,11 @@ const build = (req, res, next) => {
             }
     
             if (stderr) {
-                console.error(`Error executing command: ${stderr}`);
-                callback(new Error(stderr));
-                return;
+                if (!stderr.includes('warnings when minifying css')) {
+                    console.error(`Error executing command: ${stderr}`);
+                    callback(new Error(stderr));
+                    return;
+                }
             }
     
             runCommands(commands, parameters, index + 1, callback);
@@ -87,6 +89,7 @@ const build = (req, res, next) => {
     
     let changeDirectoryCommand = 'cd .. && cd frontend';
     console.log(`Changing directory: ${changeDirectoryCommand}`);
+    try{
     exec(changeDirectoryCommand, (error, stdout, stderr) => {
         if (error) {
             console.error(`Error changing directory: ${error.message}`);
@@ -113,15 +116,21 @@ const build = (req, res, next) => {
         ];
     
         runCommands(commands, parameters, 0, (error) => {
+            
             if (error) {
                 console.error(`Error executing commands: ${error.message}`);
                 return res.status(500).json({message: 'Error executing build'});
+                process.exit(1)
             } else {
                 console.log('Commands executed successfully');
                 return res.status(200).json({message: 'Build executed successfully'});
             }
         });
-    });
+    });} catch (e) {
+        console.error('An error occurred:', e)
+        process.exit(1)
+    }
+    
     
 }
 

@@ -27,12 +27,15 @@ const createSitemap = async (smStream) => {
     ]
     staticRoutes.forEach((route) => {
         const url = `https://${process.env.SITE_PREFIX}${route}`
+        try{
         console.log('Adding static route:', url)
         smStream.write({
             url,
             changefreq: 'monthly',
             priority: 0.7,
-        })
+        })} catch (e) {
+            console.log('An error occurred with the static route:', e)
+        }
     })
 
     const posts = await getPosts()
@@ -62,5 +65,5 @@ const generateAndSaveSitemap = async () => {
 try{
 generateAndSaveSitemap()
 } catch (e) {
-    console.log('An error occurred:', e)
+    console.log('An error occurred with the sitemap:', e)
 }

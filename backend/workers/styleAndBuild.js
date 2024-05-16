@@ -53,20 +53,13 @@ const existingConsoleError = console.error
 
 const build = (req) => {
 
-    fs.writeFile('seabassBuild.txt', '', err => {
-        if (err) {
-            console.error('Error clearing the log file:', err)
-        }
-    
-        let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
-        
-        console.log = function(msg) {
-            logFile.write(msg + '\n')
-        }
-        console.error = function(msg) {
-            logFile.write(msg + '\n')
-        }
-    })
+    fs.writeFileSync('seabassBuild.txt', '')
+    console.log = function(msg) {
+        logFile.write(msg + '\n')
+    }
+    console.error = function(msg) {
+        logFile.write(msg + '\n')
+    }
 
     console.log('Building Seabass')
 

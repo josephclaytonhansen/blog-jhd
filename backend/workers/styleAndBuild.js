@@ -108,7 +108,8 @@ const build = (req, res, next) => {
             console.log('All commands executed successfully')
             console.log = existingConsoleLog
             console.error = existingConsoleError
-            return res.status(200).json({message: 'Build executed successfully'})
+            let readLog = fs.readFileSync('seabassBuild.txt', 'utf8')
+            return res.status(200).json({message: 'Build executed successfully', logFile: readLog})
         }
 
         exec(commands[index], (error, stdout, stderr) => {

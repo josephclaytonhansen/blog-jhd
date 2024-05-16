@@ -27,8 +27,6 @@ import commentRoutes from './routes/commentRoutes.js'
 import tagRoutes from './routes/tagRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 
-import { spawn } from 'child_process'
-import path from 'path'
 import process from 'process'
 
 

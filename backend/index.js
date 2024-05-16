@@ -121,7 +121,7 @@ async function startBuildProcess(req, process) {
 }
 
 app.post('/build', buildLimiter, async (req, res) => {
-    const jobId = await startBuildProcess(req, 'workers/styleAndBuild.js')
+    const jobId = await startBuildProcess(req, '/workers/styleAndBuild.js')
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 

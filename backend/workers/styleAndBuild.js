@@ -65,7 +65,7 @@ const build = (body) => {
 
     console.log('Building Seabass')
 
-    const parameters = body
+    const parameters = JSON.parse(body)
     if (!parameters) {
         console.error('No parameters provided')
         process.stdout.write(JSON.stringify({message: 'No parameters provided', status: 400}))

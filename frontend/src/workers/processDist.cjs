@@ -10,8 +10,15 @@ if (!sitePrefix || sitePrefix === '') {
 }
 const newDistDir = path.resolve(dirname, `../../dist.${sitePrefix}`)
 
+console.log(`distDir: ${distDir}`)
+console.log(`newDistDir: ${newDistDir}`)
+
+try{
 if (fs.existsSync(newDistDir)) {
   fs.removeSync(newDistDir)
 }
 
 fs.copySync(distDir, newDistDir)
+} catch (e) {
+  console.error('An error occurred:', e)
+}

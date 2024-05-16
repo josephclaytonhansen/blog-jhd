@@ -59,27 +59,27 @@ const build = (req) => {
         }
     }
 
-    fs.writeFile('seabassBuild.txt', '', err => {
-        if (err) {
-            console.error('Error clearing the log file:', err)
-        }
+    try {
+        fs.writeFileSync('seabassBuild.txt', '')
+    } catch (err) {
+        console.error('Error clearing the log file:', err)
+    }
     
-        let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
-        
-        console.log = function(msg) {
-            logFile.write(msg + '\n')
-        }
-        console.error = function(msg) {
-            logFile.write(msg + '\n')
-        }
-    })
-
+    let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
+    
+    console.log = function(msg) {
+        logFile.write(msg + '\n')
+    }
+    console.error = function(msg) {
+        logFile.write(msg + '\n')
+    }
+    
     console.log('Building Seabass')
 
     const parameters = req.body
     if (!parameters) {
         console.error('No parameters provided')
-        return {message: 'No parameters provided', status: 400}
+        process.stdout.write(JSON.stringify({message: 'No parameters provided', status: 400}))
     }
 
     for (const [key, value] of Object.entries(parameterLookup)) {
@@ -92,7 +92,7 @@ const build = (req) => {
         const valueAsString = String(value)
         if (!validateParameter(key, valueAsString)) {
             console.error(`Invalid parameter value: ${key}=${value}`)
-            return {message: 'Invalid parameter value', status: 400}
+            process.stdout.write(JSON.stringify({message: `Invalid parameter value: ${key}=${value}`, status: 400}))
         }
     }
 
@@ -115,7 +115,7 @@ const build = (req) => {
             console.log = existingConsoleLog
             console.error = existingConsoleError
             let readLog = fs.readFileSync('seabassBuild.txt', 'utf8')
-            return {message: 'Build executed successfully', logFile: readLog, status: 200}
+            process.stdout.write(JSON.stringify({message: 'Build executed successfully', logFile: readLog, status: 200}))
         }
 
         try {
@@ -133,7 +133,7 @@ const build = (req) => {
             }
         } catch (error) {
             console.error(`Exec error: ${error}`)
-            return {message: 'Error executing build', status: 500}
+            process.stdout.write(JSON.stringify({message: 'Error executing build', status: 500}))
         }
 
         return runCommand(index + 1)

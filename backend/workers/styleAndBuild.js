@@ -145,7 +145,7 @@ const __basename = basename(__filename)
 if (process.argv[1].endsWith(__basename)) {
     (async () => {
         const param = process.argv.slice(2)
-        const result = await build( body: param )
+        const result = await build( param )
         console.log(JSON.stringify(result))
     })()
 }

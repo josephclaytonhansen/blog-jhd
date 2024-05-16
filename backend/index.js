@@ -108,11 +108,23 @@ async function startBuildProcess(req, processFunction) {
         console.log(`stdout: ${data}`)
         const result = JSON.parse(data)
         jobs[jobId] = result
+        if (result.status === 200) {
+            buildProcess.kill()
+            return
+        }
     })
 
     buildProcess.stderr.on('data', (data) => {
+        if (jobs[jobId].status === 200) {
+            return
+        }
         console.error(`stderr: ${data}`)
-        const result = JSON.parse(data)
+        let result
+        try {
+            result = JSON.parse(data)
+        } catch (e) {
+            result = { message: data.toString(), status: 500 }
+        }
         jobs[jobId] = result
     })
 

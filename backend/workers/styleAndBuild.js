@@ -1,7 +1,6 @@
 import { exec } from 'child_process'
 import fs from 'fs'
 import path from 'path'
-import process from 'process'
 
 const parameterLookup = {
     THEME: {default: 'dark', allowedValues: ['dark', 'light', 'ultra-light']},
@@ -53,34 +52,29 @@ const existingConsoleLog = console.log
 const existingConsoleError = console.error
 
 const build = (req) => {
-    if (!req) {
-        req = {
-            body: JSON.parse(process.argv[2])
-        }
-    }
 
-    try {
-        fs.writeFileSync('seabassBuild.txt', '')
-    } catch (err) {
-        console.error('Error clearing the log file:', err)
-    }
+    fs.writeFile('seabassBuild.txt', '', err => {
+        if (err) {
+            console.error('Error clearing the log file:', err)
+        }
     
-    let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
-    
-    console.log = function(message) {
-        fs.appendFileSync('seabassBuild.txt', message + '\n')
-    }
-    
-    console.error = function(message) {
-        fs.appendFileSync('seabassBuild.txt', message + '\n')
-    }
-    
+        let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
+        
+        console.log = function(msg) {
+            logFile.write(msg + '\n')
+        }
+        console.error = function(msg) {
+            logFile.write(msg + '\n')
+        }
+    })
+
     console.log('Building Seabass')
 
     const parameters = req.body
     if (!parameters) {
         console.error('No parameters provided')
         process.stdout.write(JSON.stringify({message: 'No parameters provided', status: 400}))
+        return
     }
 
     for (const [key, value] of Object.entries(parameterLookup)) {
@@ -93,7 +87,8 @@ const build = (req) => {
         const valueAsString = String(value)
         if (!validateParameter(key, valueAsString)) {
             console.error(`Invalid parameter value: ${key}=${value}`)
-            process.stdout.write(JSON.stringify({message: `Invalid parameter value: ${key}=${value}`, status: 400}))
+            process.stdout.write(JSON.stringify({message: 'Invalid parameter value', status: 400}))
+            return
         }
     }
 
@@ -110,42 +105,38 @@ const build = (req) => {
         'cd ../frontend && ' + `${envVariables} npm run process-site`
     ]
 
-    async function runCommand(index) {
+    function runCommand(index) {
         if (index >= commands.length) {
+            console.log('All commands executed successfully')
             console.log = existingConsoleLog
             console.error = existingConsoleError
             let readLog = fs.readFileSync('seabassBuild.txt', 'utf8')
             process.stdout.write(JSON.stringify({message: 'Build executed successfully', logFile: readLog, status: 200}))
         }
 
-        try {
-            const { stdout, stderr } = await exec(commands[index])
+        exec(commands[index], (error, stdout, stderr) => {
             console.log(`Command: ${commands[index]}`)
             if (stdout) {
-                if (typeof stdout === 'string') {
-                console.log(`Output: ${stdout}`)} else {
-                    console.log(`Output: ${JSON.stringify(stdout)}`)
-                }
+                console.log(`Output: ${stdout}`)
             }
             if (stderr) {
-                if (typeof stderr === 'string') {
-                    console.error(`Error: ${stderr}`)} else {
-                    console.error(`Error: ${JSON.stringify(stderr)}`)
-                }
-                if (!(stderr.toString().includes('warnings when minifying css')) || !(stderr.toString().includes('github'))) {
-                    process.stdout.write(JSON.stringify({message: 'Error executing build - this is a non-blocking error', status: 500}))} else {
+                console.log(`Warning: ${stderr}`)
+                if (!(stderr.includes('warnings when minifying css')) || !(stderr.includes('github'))) {
+                    console.error(`Error executing command: ${stderr}`)
+                    console.log('This is a non-blocking error, Seabass build will proceed')
                 }
             }
-        } catch (error) {
-            console.error(`Exec error: ${error}`)
-            process.stdout.write(JSON.stringify({message: 'Error executing build', status: 500}))
-            return
-        }
+            if (error) {
+                console.error(`Exec error: ${error}`)
+                process.stdout.write(JSON.stringify({message: 'Build failed', logFile: 'An error occurred', status: 500}))
+                return
+            }
 
-        return runCommand(index + 1)
+            runCommand(index + 1)
+        })
     }
 
-    return runCommand(0)
+    runCommand(0)
 }
 
 export default build

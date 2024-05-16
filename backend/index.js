@@ -110,6 +110,8 @@ async function startBuildProcess(req, processFunction) {
 
     buildProcess.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`)
+        const result = JSON.parse(data)
+        jobs[jobId] = result
     })
 
     buildProcess.on('close', (code) => {

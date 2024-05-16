@@ -128,9 +128,9 @@ async function startBuildProcess(req, processFunction) {
         jobs[jobId] = result
     })
 
-    buildProcess.on('close', (code) => {
-        console.log(`child process exited with code ${code}`)
-        if (code !== 0) {
+    buildProcess.on('close', (code, signal) => {
+        console.log(`child process exited with code ${code} and signal ${signal}`)
+        if (code !== 0 && signal !== 'SIGTERM') {
             jobs[jobId] = { message: 'Build failed', status: 500 }
         }
     })

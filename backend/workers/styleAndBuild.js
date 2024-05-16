@@ -62,7 +62,7 @@ const build = (req) => {
     console.error = function(msg) {
         logFile.write(msg + '\n')
     }
-    
+
     console.log('Building Seabass')
 
     const parameters = req.body
@@ -144,7 +144,8 @@ const __basename = basename(__filename)
 
 if (process.argv[1].endsWith(__basename)) {
     (async () => {
-        const result = await build()
+        const param = process.argv.slice(2)
+        const result = await build({ req: param })
         console.log(JSON.stringify(result))
     })()
 }

@@ -144,7 +144,13 @@ const build = (req) => {
 
 export default build
 
-if (process.argv[1] === __filename) {
+import { fileURLToPath } from 'url'
+import { basename } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __basename = basename(__filename)
+
+if (process.argv[1].endsWith(__basename)) {
     (async () => {
         const result = await build()
         console.log(JSON.stringify(result))

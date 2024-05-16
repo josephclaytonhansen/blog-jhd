@@ -180,26 +180,39 @@ onMounted(async () => {
     const building = ref(false)
 
     const pushAndBuild = () => {
-        toast.info('Pushing settings to Seabass, please wait...')
-        building.value = true
-        document.body.style.cursor = 'wait'
-        try{
+    toast.info('Pushing settings to Seabass, please wait...')
+    building.value = true
+    document.body.style.cursor = 'wait'
+    try {
         axios.post(`${process.env.VUE_APP_SERVER_URL}/build`, buildScript.value).then(response => {
-            toast.success('Settings pushed to Seabass. Please refresh the site.')
-            document.body.style.cursor = 'default'
-            building.value = false
+            const jobId = response.data.jobId
+            const intervalId = setInterval(() => {
+                axios.get(`${process.env.VUE_APP_SERVER_URL}/build/${jobId}`).then(response => {
+                    if (response.data.status === 200) {
+                        clearInterval(intervalId)
+                        toast.success('Settings pushed to Seabass. Please refresh the site.')
+                        document.body.style.cursor = 'default'
+                        building.value = false
+                    }
+                }).catch(error => {
+                    clearInterval(intervalId)
+                    toast.error('Error checking build status on Seabass- check the server logs for more information.')
+                    document.body.style.cursor = 'default'
+                    building.value = false
+                })
+            }, 5000)
         }).catch(error => {
             toast.error('Error pushing settings to Seabass- check the server logs for more information.')
             document.body.style.cursor = 'default'
             building.value = false
         })
-    }  catch (error) {
+    } catch (error) {
         console.error(error)
         toast.error('Error pushing settings to Seabass- check the server logs for more information.')
         document.body.style.cursor = 'default'
         building.value = false
     }
-    }
+}
 
 </script>
 
@@ -338,7 +351,7 @@ onMounted(async () => {
             </select>
             
 
-            <div :style="currentRounded === 'sharp' ? 'border-radius:0px' : (currentRounded === 'subtle' ? 'border-radius:7%;' : 'border-radius:25%')" class='w-8 h-8 ring-accent-500 ring-4'></div></div>
+            <div :style="currentRounded === 'sharp' ? 'border-radius:0px' : (currentRounded === 'subtle' ? 'border-radius:7%' : 'border-radius:25%')" class='w-8 h-8 ring-accent-500 ring-4'></div></div>
             <div class = "flex mt-2 gap-3 items-center">
                 <input type = "checkbox" class="checkbox w-6 h-6 rounded" name="roundAvatarsCheckbox" v-model="roundAvatars"/>
                 <label for="roundAvatarsCheckbox" class="text-text-1">Circular avatars</label>

@@ -122,12 +122,12 @@ const build = (req) => {
             const { stdout, stderr } = await exec(commands[index])
             console.log(`Command: ${commands[index]}`)
             if (stdout) {
-                console.log(`Output: ${stdout}`)
+                console.log(`Output: ${JSON.stringify(stdout)}`)
             }
             if (stderr) {
-                console.log(`Warning: ${stderr}`)
-                if (!(stderr.includes('warnings when minifying css')) || !(stderr.includes('github'))) {
-                    console.error(`Error executing command: ${stderr}`)
+                console.log(`Warning: ${JSON.stringify(stderr)}`)
+                if (!(stderr.toString().includes('warnings when minifying css')) || !(stderr.toString().includes('github'))) {
+                    console.error(`Error executing command: ${JSON.stringify(stderr)}`)
                     console.log('This is a non-blocking error, Seabass build will proceed')
                 }
             }

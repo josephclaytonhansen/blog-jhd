@@ -184,7 +184,10 @@ onMounted(async () => {
     building.value = true
     document.body.style.cursor = 'wait'
     try {
-        axios.post(`${process.env.VUE_APP_SERVER_URL}/build`, buildScript.value).then(response => {
+        axios.post(`${process.env.VUE_APP_SERVER_URL}/build`, buildScript.value, {headers:{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }}).then(response => {
             const jobId = response.data.jobId
             const intervalId = setInterval(() => {
                 axios.get(`${process.env.VUE_APP_SERVER_URL}/build/${jobId}`).then(response => {

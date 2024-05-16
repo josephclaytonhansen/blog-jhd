@@ -181,23 +181,23 @@ onMounted(async () => {
 
     const pushAndBuild = () => {
         toast.info('Pushing settings to Seabass, please wait...')
-        building = true
+        building.value = true
         document.body.style.cursor = 'wait'
         try{
         axios.post(`${process.env.VUE_APP_SERVER_URL}/build`, buildScript.value).then(response => {
             toast.success('Settings pushed to Seabass. Please refresh the site.')
             document.body.style.cursor = 'default'
-            building = false
+            building.value = false
         }).catch(error => {
             toast.error('Error pushing settings to Seabass- check the server logs for more information.')
             document.body.style.cursor = 'default'
-            building = false
+            building.value = false
         })
     }  catch (error) {
         console.error(error)
         toast.error('Error pushing settings to Seabass- check the server logs for more information.')
         document.body.style.cursor = 'default'
-        building = false
+        building.value = false
     }
     }
 

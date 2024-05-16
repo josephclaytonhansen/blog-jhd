@@ -23,12 +23,17 @@ try{
 console.log(`distDir: ${distDir}`)
 console.log(`newDistDir: ${newDistDir}`)
 
-try{
-if (fs.existsSync(newDistDir)) {
-  fs.removeSync(newDistDir)
-}
+try {
+  console.log(`Checking if ${newDistDir} exists...`)
+  if (fs.existsSync(newDistDir)) {
+    console.log(`Removing ${newDistDir}...`)
+    fs.removeSync(newDistDir);
+    console.log(`Removed ${newDistDir}.`)
+  }
 
-fs.copySync(distDir, newDistDir)
+  console.log(`Copying ${distDir} to ${newDistDir}...`)
+  fs.copySync(distDir, newDistDir);
+  console.log(`Copied ${distDir} to ${newDistDir}.`)
 } catch (e) {
   console.error('An error occurred:', e)
 }

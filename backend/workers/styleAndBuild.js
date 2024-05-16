@@ -73,6 +73,7 @@ const build = (req, res, next) => {
     .join(' ')
 
     let commands = [
+        'cd ../frontend && git pull || true',
         'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js` + ' exit',
         'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true` + ' exit',
         'cd ../frontend && ' + `${envVariables} node commit.js || true` + ' exit',

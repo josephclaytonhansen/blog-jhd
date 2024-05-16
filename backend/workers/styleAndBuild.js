@@ -67,11 +67,12 @@ const build = (req) => {
     
     let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
     
-    console.log = function(msg) {
-        logFile.write(msg + '\n')
+    console.log = function(message) {
+        fs.appendFileSync('seabassBuild.txt', message + '\n')
     }
-    console.error = function(msg) {
-        logFile.write(msg + '\n')
+    
+    console.error = function(message) {
+        fs.appendFileSync('seabassBuild.txt', message + '\n')
     }
     
     console.log('Building Seabass')
@@ -111,7 +112,6 @@ const build = (req) => {
 
     async function runCommand(index) {
         if (index >= commands.length) {
-            console.log('All commands executed successfully')
             console.log = existingConsoleLog
             console.error = existingConsoleError
             let readLog = fs.readFileSync('seabassBuild.txt', 'utf8')
@@ -134,6 +134,7 @@ const build = (req) => {
         } catch (error) {
             console.error(`Exec error: ${error}`)
             process.stdout.write(JSON.stringify({message: 'Error executing build', status: 500}))
+            return
         }
 
         return runCommand(index + 1)

@@ -384,41 +384,42 @@ a {
 }
 /* automated */
 h1, h2 {
-  text-transform: none;
+  text-transform: uppercase;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'undefined';
+  font-family: 'Cairo';
 }
 
 body {
-  font-family: 'undefined';
+  font-family: 'Cairo';
 }
 
+.avatar{border-radius:999rem;}
 
 
 #progress-bar, #progress-bar-fill{
-  display: none;
+  display: block;
 }
 
 .colorblock{
-  background-color: transparent;
-  padding: none!important;
+  background-color: theme('colors.backdrop-2');
+  
 }
 
 .colorblock_dark{
-  background-color: transparent;
-  padding: none!important;
+  background-color: theme('colors.backdrop-1');
+  
 }
 
 .colorblock_darker {
-  background-color: transparent;
-  padding: none!important;
+  background-color: theme('colors.backdrop-0');
+  
 }
 
 .colorblock_accent{
-  background-color: transparent;
-  ;
-  padding: none!important;
+  background-color: theme('colors.accent.700');
+  color:theme('colors.backdrop.100');
+  
 }
 
 .dividing-line{
@@ -442,9 +443,9 @@ body {
 }
 
 .sidebar{
-  display: none!important;
-  background-color: transparent;
-  color: theme('colors.text-0');
+  display: flex;
+  background-color: theme('colors.backdrop-2');
+  color: theme('colors.backdrop.200');
 
 }
 
@@ -471,6 +472,22 @@ body {
   }
 }
 /* end automated */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -29,6 +29,7 @@ import categoryRoutes from './routes/categoryRoutes.js'
 
 import { spawn } from 'child_process'
 import path from 'path'
+import process from 'process'
 
 
 const transporter = nodemailer.createTransport({
@@ -95,11 +96,11 @@ const buildLimiter = rate_limit({
 let jobs = {}
 let jobId = 0
 
-async function startBuildProcess(req, process) {
+async function startBuildProcess(req, processFunction) {
     jobId++
     jobs[jobId] = { status: 202 }
 
-    const buildProcess = spawn('node', [path.resolve(__dirname, process), JSON.stringify(req.body), jobId.toString()])
+    const buildProcess = spawn('node', [path.resolve(process.cwd(), processFunction), JSON.stringify(req.body), jobId.toString()])
 
     buildProcess.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`)

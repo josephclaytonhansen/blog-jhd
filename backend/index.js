@@ -27,9 +27,9 @@ import commentRoutes from './routes/commentRoutes.js'
 import tagRoutes from './routes/tagRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 
+import { spawn } from 'child_process'
+import path from 'path'
 import process from 'process'
-
-import startBuildProcess from './workers/startBuildProcess.js'
 
 
 const transporter = nodemailer.createTransport({
@@ -96,12 +96,43 @@ const buildLimiter = rate_limit({
 let jobs = {}
 let jobId = 0
 
+async function startBuildProcess(req, processFunction) {
+    console.log('Starting build process')
+    console.log(req.body)
+    jobId++
+    jobs[jobId] = { status: 202 }
+
+    const buildProcess = spawn('node', [path.join(process.cwd(), processFunction), JSON.stringify(req.body), jobId.toString()])
+
+    buildProcess.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`)
+        const result = JSON.parse(data)
+        jobs[jobId] = result
+    })
+
+    buildProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`)
+        const result = JSON.parse(data)
+        jobs[jobId] = result
+    })
+
+    buildProcess.on('close', (code) => {
+        console.log(`child process exited with code ${code}`)
+        if (code !== 0) {
+            jobs[jobId] = { message: 'Build failed', status: 500 }
+        }
+    })
+
+    return jobId
+}
+
 app.post('/build', buildLimiter, async (req, res) => {
-    const jobId = await startBuildProcess(req, '/workers/styleAndBuild.js', jobs, jobId)
+    const jobId = await startBuildProcess(req, '/workers/styleAndBuild.js')
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 
 app.get('/build/:jobId', (req, res) => {
+    const jobId = Number(req.params.jobId)
     const job = jobs[jobId]
     if (!job) {
         return res.status(404).json({ message: 'Job not found', jobs: jobs, jobId: jobId})

@@ -1,7 +1,6 @@
 import { spawn } from 'child_process'
 import path from 'path'
-let jobs = {}
-let jobId = 0
+
 const startBuildProcess = async (req, processFunction, jobs, jobId) => {
     console.log('Starting build process')
     console.log(req.body)

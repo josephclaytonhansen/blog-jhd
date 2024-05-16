@@ -93,10 +93,11 @@ const buildLimiter = rate_limit({
     legacyHeaders: false,
 })
 
-
+let jobs = {}
+let jobId = 0
 
 app.post('/build', buildLimiter, async (req, res) => {
-    const jobId = await startBuildProcess(req, '/workers/styleAndBuild.js')
+    const jobId = await startBuildProcess(req, '/workers/styleAndBuild.js', jobs, jobId)
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 

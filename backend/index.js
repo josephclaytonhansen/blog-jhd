@@ -28,6 +28,7 @@ import tagRoutes from './routes/tagRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 
 import { spawn } from 'child_process'
+import path from 'path'
 
 
 const transporter = nodemailer.createTransport({
@@ -98,7 +99,7 @@ async function startBuildProcess(req, process) {
     jobId++
     jobs[jobId] = { status: 202 }
 
-    const buildProcess = spawn('node', [process, JSON.stringify(req.body), jobId.toString()])
+    const buildProcess = spawn('node', [path.resolve(__dirname, process), JSON.stringify(req.body), jobId.toString()])
 
     buildProcess.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`)

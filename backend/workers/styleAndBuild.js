@@ -53,8 +53,8 @@ const existingConsoleError = console.error
 
 const build = (body) => {
 
-    fs.writeFileSync('seabassBuild.txt', '')
-    let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'});
+    fs.writeFileSync('.seabassbuildlog', '')
+    let logFile = fs.createWriteStream('.seabassbuildlog', {flags: 'a'});
 
     console.log = function(msg) {
         logFile.write(msg + '\n')

@@ -97,7 +97,7 @@ const build = (body) => {
         'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true`,
         'cd ../frontend && ' + `${envVariables} node commit.js || true`,
         'cd ../frontend && ' + `${envVariables} npm run build`,
-        'cd ../frontend && ' + `${envVariables} npm run process-site`
+        'cd ../frontend && npm run process-site`
     ]
 
     function runCommand(index) {

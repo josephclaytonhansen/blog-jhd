@@ -3,8 +3,10 @@ const path = require('path')
 
 const dirname = path.dirname(require.main.filename)
 
+let distDir, newDistDir
+
 try{
-const distDir = path.resolve(dirname, '../../dist')
+ distDir = path.resolve(dirname, '../../dist')
 } catch (e) {
   console.error('An error occurred:', e)
 }
@@ -13,7 +15,7 @@ if (!sitePrefix || sitePrefix === '') {
   throw new Error('SITE_PREFIX environment variable is required')
 }
 try{
-const newDistDir = path.resolve(dirname, `../../dist.${sitePrefix}`)
+ newDistDir = path.resolve(dirname, `../../dist.${sitePrefix}`)
 } catch (e) {
   console.error('An error occurred:', e)
 }

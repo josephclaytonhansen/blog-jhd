@@ -51,7 +51,7 @@ const validateParameter = (parameter, value) => {
 const existingConsoleLog = console.log
 const existingConsoleError = console.error
 
-const build = (req, res, next) => {
+const build = (req) => {
 
     fs.writeFile('seabassBuild.txt', '', err => {
         if (err) {
@@ -73,7 +73,7 @@ const build = (req, res, next) => {
     const parameters = req.body
     if (!parameters) {
         console.error('No parameters provided')
-        return res.status(400).json({message: 'No parameters provided'})
+        return {message: 'No parameters provided', status: 400}
     }
 
     for (const [key, value] of Object.entries(parameterLookup)) {
@@ -86,7 +86,7 @@ const build = (req, res, next) => {
         const valueAsString = String(value)
         if (!validateParameter(key, valueAsString)) {
             console.error(`Invalid parameter value: ${key}=${value}`)
-            return res.status(400).json({message: 'Invalid parameter value'})
+            return {message: 'Invalid parameter value', status: 400}
         }
     }
 
@@ -109,7 +109,7 @@ const build = (req, res, next) => {
             console.log = existingConsoleLog
             console.error = existingConsoleError
             let readLog = fs.readFileSync('seabassBuild.txt', 'utf8')
-            return res.status(200).json({message: 'Build executed successfully', logFile: readLog})
+            return {message: 'Build executed successfully', logFile: readLog, status: 200}
         }
 
         exec(commands[index], (error, stdout, stderr) => {
@@ -126,7 +126,7 @@ const build = (req, res, next) => {
             }
             if (error) {
                 console.error(`Exec error: ${error}`)
-                return res.status(500).json({message: 'Error executing build'})
+                return {message: 'Error executing build', status: 500}
             }
 
             runCommand(index + 1)

@@ -91,7 +91,29 @@ const buildLimiter = rate_limit({
     legacyHeaders: false,
 })
 
-app.post('/build', buildLimiter, build)
+let jobs = {}
+let jobId = 0
+
+const startBuildProcess = async (req, process) => {
+    const job = await process(req)
+    jobId++
+    jobs[jobId] = job
+    return jobId
+}
+
+app.post('/build', buildLimiter, async (req, res) => {
+    const jobId = await startBuildProcess(req, build)
+    res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
+})
+
+app.get('/build/:jobId', (req, res) => {
+    const jobId = req.params.jobId
+    const job = jobs[jobId]
+    if (!job) {
+        return res.status(404).json({ message: 'Job not found' })
+    } 
+    res.status(200).json({message: job.message, logFile: job.logFile? job.logFile : 'No log file available', status: job.status})
+})
 
 if (process.env.NODE_ENV === 'production') {
 app.use(limiter)

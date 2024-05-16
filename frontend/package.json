@@ -12,7 +12,7 @@
     "remove-site": "node ./src/workers/removeSite.js",
     "remove-site-page": "node ./src/workers/removeSitePages.js",
     "process-site": "node ./src/workers/processDist.js",
-    "git-commit": "git pull && node commit.js",
+    "git-commit": "node commit.js",
     "sitemap": "node ./src/workers/buildSitemap.js"
   },
   "dependencies": {

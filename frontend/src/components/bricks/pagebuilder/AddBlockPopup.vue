@@ -12,6 +12,34 @@ const addBlock = (block) => {
     emits('add-block', block)
 }
 
+import {
+    Heading,
+    Text,
+    Image,
+    Video,
+    Music,
+    Quote,
+    BoxSelect,
+    Columns2,
+    SquareSplitVertical,
+    GalleryHorizontalEnd,
+    LayoutGrid,
+    SquareChevronRight,
+    ScrollText,
+    MessageSquareText,
+    Calendar,
+    Ticket,
+    Filter,
+    Package,
+    Star,
+    StickyNote,
+    Microscope,
+    BarChart3,
+    ListCollapse,
+    GalleryThumbnails,
+    BookDown
+} from 'lucide-vue-next'
+
 import HeaderBlock from './blocks/HeaderBlock.vue'
 import TextBlock from './blocks/TextBlock.vue'
 import ImageBlock from './blocks/ImageBlock.vue'
@@ -39,31 +67,31 @@ import TabsBlock from './blocks/TabsBlock.vue'
 import FootnotesBlock from './blocks/FootnotesBlock.vue'
 
 const blocks = ref([
-    {name: 'Header', type: 'header', icon: '', component: 'HeaderBlock'},
-    {name: 'Text', type: 'text', icon: '', component: 'TextBlock'},
-    {name: 'Image', type: 'image', icon: '', component: 'ImageBlock'},
-    {name: 'Video', type: 'video', icon: '', component: 'VideoBlock'},
-    {name: 'Audio', type: 'audio', icon: '', component: 'AudioBlock'},
-    {name: 'Blockquote', type: 'blockquote', icon: '', component: 'BlockquoteBlock'},
-    {name: 'Colorblock', type: 'colorblock', icon: '', component: 'ColorblockBlock'},
-    {name: 'Full block', type: 'full-block', icon: '', component: 'FullBlock'},
-    {name: 'Divider', type: 'divider', icon: '', component: 'DividingLineBlock'},
-    {name: 'Slider', type: 'slider', icon: '', component: 'SliderBlock'},
-    {name: 'Gallery', type: 'gallery', icon: '', component: 'GalleryBlock'},
-    {name: 'Button', type: 'button', icon: '', component: 'ButtonBlock'},
-    {name: 'Script', type: 'script', icon: '', component: 'ScriptBlock'},
-    {name: 'Form', type: 'form', icon: '', component: 'FormBlock'},
-    {name: 'Calendar', type: 'calendar', icon: '', component: 'CalendarBlock'},
-    {name: 'Event', type: 'event', icon: '', component: 'EventBlock'},
-    {name: 'CTA', type: 'cta', icon: '', component: 'CTABlock'},
-    {name: 'Product', type: 'product', icon: '', component: 'ProductBlock'},
-    {name: 'Rating', type: 'rating', icon: '', component: 'RatingBlock'},
-    {name: 'Note', type: 'note', icon: '', component: 'NoteBlock'},
-    {name: 'Figure', type: 'figure', icon: '', component: 'FigureBlock'},
-    {name: 'Chart', type: 'chart', icon: '', component: 'ChartBlock'},
-    {name: 'Accordion', type: 'accordion', icon: '', component: 'AccordionBlock'},
-    {name: 'Tabs', type: 'tabs', icon: '', component: 'TabsBlock'},
-    {name: 'Footnotes', type: 'footnotes', icon: '', component: 'FootnotesBlock'},
+    {name: 'Header', type: 'header', icon: 'Heading', component: 'HeaderBlock'},
+    {name: 'Text', type: 'text', icon: 'Text', component: 'TextBlock'},
+    {name: 'Image', type: 'image', icon: 'Image', component: 'ImageBlock'},
+    {name: 'Video', type: 'video', icon: 'Video', component: 'VideoBlock'},
+    {name: 'Audio', type: 'audio', icon: 'Music', component: 'AudioBlock'},
+    {name: 'Blockquote', type: 'blockquote', icon: 'Quote', component: 'BlockquoteBlock'},
+    {name: 'Colorblock', type: 'colorblock', icon: 'BoxSelect', component: 'ColorblockBlock'},
+    {name: 'Full', type: 'full', icon: 'Columns2', component: 'FullBlock'},
+    {name: 'Dividing Line', type: 'dividing-line', icon: 'SquareSplitVertical', component: 'DividingLineBlock'},
+    {name: 'Slider', type: 'slider', icon: 'GalleryHorizontalEnd', component: 'SliderBlock'},
+    {name: 'Gallery', type: 'gallery', icon: 'LayoutGrid', component: 'GalleryBlock'},
+    {name: 'Button', type: 'button', icon: 'SquareChevronRight', component: 'ButtonBlock'},
+    {name: 'Script', type: 'script', icon: 'ScrollText', component: 'ScriptBlock'},
+    {name: 'Form', type: 'form', icon: 'MessageSquareText', component: 'FormBlock'},
+    {name: 'Calendar', type: 'calendar', icon: 'Calendar', component: 'CalendarBlock'},
+    {name: 'Event', type: 'event', icon: 'Ticket', component: 'EventBlock'},
+    {name: 'CTA', type: 'cta', icon: 'Filter', component: 'CTABlock'},
+    {name: 'Product', type: 'product', icon: 'Package', component: 'ProductBlock'},
+    {name: 'Rating', type: 'rating', icon: 'Star', component: 'RatingBlock'},
+    {name: 'Note', type: 'note', icon: 'StickyNote', component: 'NoteBlock'},
+    {name: 'Figure', type: 'figure', icon: 'Microscope', component: 'FigureBlock'},
+    {name: 'Chart', type: 'chart', icon: 'BarChart3', component: 'ChartBlock'},
+    {name: 'Accordion', type: 'accordion', icon: 'ListCollapse', component: 'AccordionBlock'},
+    {name: 'Tabs', type: 'tabs', icon: 'GalleryThumbnails', component: 'TabsBlock'},
+    {name: 'Footnotes', type: 'footnotes', icon: 'BookDown', component: 'FootnotesBlock'}
 ])
 
 

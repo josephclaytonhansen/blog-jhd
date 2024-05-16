@@ -27,7 +27,7 @@ import commentRoutes from './routes/commentRoutes.js'
 import tagRoutes from './routes/tagRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 
-import build from './workers/styleAndBuild.js'
+import { spawn } from 'child_process'
 
 
 const transporter = nodemailer.createTransport({
@@ -94,15 +94,31 @@ const buildLimiter = rate_limit({
 let jobs = {}
 let jobId = 0
 
-const startBuildProcess = async (req, process) => {
-    const job = await process(req)
+async function startBuildProcess(req, process) {
     jobId++
-    jobs[jobId] = job
+    jobs[jobId] = { status: 202 }
+
+    const buildProcess = spawn('node', [process, JSON.stringify(req.body), jobId.toString()])
+
+    buildProcess.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`)
+        const result = JSON.parse(data)
+        jobs[jobId] = result
+    })
+
+    buildProcess.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`)
+    })
+
+    buildProcess.on('close', (code) => {
+        console.log(`child process exited with code ${code}`)
+    })
+
     return jobId
 }
 
 app.post('/build', buildLimiter, async (req, res) => {
-    const jobId = await startBuildProcess(req, build)
+    const jobId = await startBuildProcess(req, '.workers/styleAndBuild.js')
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 

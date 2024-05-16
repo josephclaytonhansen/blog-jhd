@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
 import fs from 'fs'
 import path from 'path'
+import process from 'process'
 
 const parameterLookup = {
     THEME: {default: 'dark', allowedValues: ['dark', 'light', 'ultra-light']},
@@ -52,6 +53,11 @@ const existingConsoleLog = console.log
 const existingConsoleError = console.error
 
 const build = (req) => {
+    if (!req) {
+        req = {
+            body: JSON.parse(process.argv[2])
+        }
+    }
 
     fs.writeFile('seabassBuild.txt', '', err => {
         if (err) {
@@ -103,7 +109,7 @@ const build = (req) => {
         'cd ../frontend && ' + `${envVariables} npm run process-site`
     ]
 
-    function runCommand(index) {
+    async function runCommand(index) {
         if (index >= commands.length) {
             console.log('All commands executed successfully')
             console.log = existingConsoleLog
@@ -112,7 +118,8 @@ const build = (req) => {
             return {message: 'Build executed successfully', logFile: readLog, status: 200}
         }
 
-        exec(commands[index], (error, stdout, stderr) => {
+        try {
+            const { stdout, stderr } = await exec(commands[index])
             console.log(`Command: ${commands[index]}`)
             if (stdout) {
                 console.log(`Output: ${stdout}`)
@@ -124,16 +131,22 @@ const build = (req) => {
                     console.log('This is a non-blocking error, Seabass build will proceed')
                 }
             }
-            if (error) {
-                console.error(`Exec error: ${error}`)
-                return {message: 'Error executing build', status: 500}
-            }
+        } catch (error) {
+            console.error(`Exec error: ${error}`)
+            return {message: 'Error executing build', status: 500}
+        }
 
-            runCommand(index + 1)
-        })
+        return runCommand(index + 1)
     }
 
-    runCommand(0)
+    return runCommand(0)
 }
 
 export default build
+
+if (require.main === module) {
+    (async () => {
+        const result = await build()
+        console.log(JSON.stringify(result))
+    })()
+}

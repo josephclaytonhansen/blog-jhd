@@ -100,7 +100,7 @@ async function startBuildProcess(req, processFunction) {
     jobId++
     jobs[jobId] = { status: 202 }
 
-    const buildProcess = spawn('node', [path.join(process.cwd(), process), JSON.stringify(req.body), jobId.toString()])
+    const buildProcess = spawn('node', [path.join(process.cwd(), processFunction), JSON.stringify(req.body), jobId.toString()])
 
     buildProcess.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`)

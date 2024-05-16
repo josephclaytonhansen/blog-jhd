@@ -112,13 +112,16 @@ async function startBuildProcess(req, process) {
 
     buildProcess.on('close', (code) => {
         console.log(`child process exited with code ${code}`)
-    })
+        if (code !== 0) {
+            jobs[jobId] = { message: 'Build failed', status: 500 }
+        }
+    });
 
     return jobId
 }
 
 app.post('/build', buildLimiter, async (req, res) => {
-    const jobId = await startBuildProcess(req, '.workers/styleAndBuild.js')
+    const jobId = await startBuildProcess(req, 'workers/styleAndBuild.js')
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 
@@ -127,8 +130,11 @@ app.get('/build/:jobId', (req, res) => {
     const job = jobs[jobId]
     if (!job) {
         return res.status(404).json({ message: 'Job not found', jobs: jobs, jobId: jobId})
-    } 
-    res.status(200).json({message: job.message, logFile: job.logFile? job.logFile : 'No log file available', status: job.status})
+    } else if (job.status === 500){
+        return res.status(500).json({message: job.message})
+    } else {
+        res.status(200).json({message: job.message, logFile: job.logFile? job.logFile : 'No log file available', status: job.status})
+    }
 })
 
 if (process.env.NODE_ENV === 'production') {

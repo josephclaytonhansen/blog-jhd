@@ -155,6 +155,8 @@ app.use((err, req, res, next) => {
 })
 
 cron.schedule('0 0 1 * *', async () => {
+    jobId++
+    jobs[jobId] = { status: 202, message: 'running user cleanup' }
     let users = await User.find({
         role: 'unverified-user',
         createdAt: {
@@ -165,21 +167,27 @@ cron.schedule('0 0 1 * *', async () => {
         await user.remove()
 
     })
+    jobs[jobId] = { status: 200, message: 'user cleanup successful' }
 })
 
 cron.schedule('0 0 * * 0', () => {
+    jobId++
+    jobs[jobId] = { status: 202, message: 'running sitemap generator' }
     exec('cd ../frontend && npm run sitemap', (error, stdout, stderr) => {
         if (error) {
             console.error(`Error executing sitemap generation: ${error.message}`)
+            jobs[jobId] = { status: 500, message: 'Error executing sitemap generation', logFile: error.message }
             return
         }
 
         if (stderr) {
             console.error(`Error in sitemap generation: ${stderr}`)
+            jobs[jobId] = { status: 500, message: 'Error in sitemap generation', logFile: stderr }
             return
         }
 
         console.log(`Sitemap generation output: ${stdout}`)
+        jobs[jobId] = { status: 200, message: 'Sitemap generation successful' }
     })
 })
 

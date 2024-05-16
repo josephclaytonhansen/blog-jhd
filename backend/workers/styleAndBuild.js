@@ -92,7 +92,8 @@ const build = (req, res, next) => {
                 console.log(`Output: ${stdout}`)
             }
             if (stderr) {
-                if (!stderr.includes('warnings when minifying css')) {
+                console.log(`Warning: ${stderr}`)
+                if (!stderr.includes('warnings when minifying css')|| !stderr.includes('github')) {
                     console.error(`Error executing command: ${stderr}`)
                     return
                 } else {

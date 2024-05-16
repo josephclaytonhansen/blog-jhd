@@ -88,6 +88,7 @@ const build = (req, res, next) => {
         }
 
         exec(commands[index], (error, stdout, stderr) => {
+            console.log(`Command: ${commands[index]}`)
             if (stdout) {
                 console.log(`Output: ${stdout}`)
             }
@@ -95,6 +96,7 @@ const build = (req, res, next) => {
                 console.log(`Warning: ${stderr}`)
                 if (!(stderr.includes('warnings when minifying css')) || !(stderr.includes('github'))) {
                     console.error(`Error executing command: ${stderr}`)
+                    console.log('This is a non-blocking error, Seabass build will proceed')
                 }
             }
             if (error) {

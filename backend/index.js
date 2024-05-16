@@ -97,10 +97,12 @@ let jobs = {}
 let jobId = 0
 
 async function startBuildProcess(req, processFunction) {
+    console.log('Starting build process')
+    console.log(req)
     jobId++
     jobs[jobId] = { status: 202 }
 
-    const buildProcess = spawn('node', [path.join(process.cwd(), processFunction), JSON.stringify(req.body), jobId.toString()])
+    const buildProcess = spawn('node', [path.join(process.cwd(), processFunction), JSON.stringify(req), jobId.toString()])
 
     buildProcess.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`)
@@ -136,7 +138,10 @@ app.get('/build/:jobId', (req, res) => {
         return res.status(404).json({ message: 'Job not found', jobs: jobs, jobId: jobId})
     } else if (job.status === 500){
         return res.status(500).json({message: job.message})
-    } else {
+    } else if (job.status === 400){
+        return res.status(400).json({message: job.message})
+    }
+    else {
         res.status(200).json({message: job.message, logFile: job.logFile? job.logFile : 'No log file available', status: job.status})
     }
 })

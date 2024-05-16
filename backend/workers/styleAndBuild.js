@@ -94,7 +94,6 @@ const build = (req, res, next) => {
             if (stderr) {
                 if (!stderr.includes('warnings when minifying css')) {
                     console.error(`Error executing command: ${stderr}`)
-                    callback(new Error(stderr))
                     return
                 } else {
                     console.log(`Warning: ${stderr}`)

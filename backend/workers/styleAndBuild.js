@@ -110,7 +110,6 @@ const build = (body) => {
         }
 
         exec(commands[index], (error, stdout, stderr) => {
-            console.log(`Command: ${commands[index]}`)
             if (stdout) {
                 console.log(`Output: ${stdout}`)
             }

@@ -102,14 +102,11 @@ app.post('/build', [buildLimiter, authenticateToken], async (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin') {
         return res.status(403).send('Not authorized')
     }
-    jobId = await startBuildProcess(req, '/workers/styleAndBuild.js', jobs, jobId)
+    jobId = startBuildProcess(req, '/workers/styleAndBuild.js', jobs, jobId)
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 
-app.get('/build/:jobId', authenticateToken, (req, res) => {
-    if (!req.isAuthenticated() || req.user.role !== 'admin') {
-        return res.status(403).send('Not authorized')
-    }
+app.get('/build/:jobId', (req, res) => {
     jobId = Number(req.params.jobId)
     const job = jobs[jobId]
     if (!job) {

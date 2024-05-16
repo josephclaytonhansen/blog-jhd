@@ -54,13 +54,15 @@ const existingConsoleError = console.error
 const build = (req) => {
 
     fs.writeFileSync('seabassBuild.txt', '')
+    let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'});
+
     console.log = function(msg) {
         logFile.write(msg + '\n')
     }
     console.error = function(msg) {
         logFile.write(msg + '\n')
     }
-
+    
     console.log('Building Seabass')
 
     const parameters = req.body

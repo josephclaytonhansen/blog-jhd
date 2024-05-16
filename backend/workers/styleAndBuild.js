@@ -51,7 +51,7 @@ const validateParameter = (parameter, value) => {
 const existingConsoleLog = console.log
 const existingConsoleError = console.error
 
-const build = (req) => {
+const build = (body) => {
 
     fs.writeFileSync('seabassBuild.txt', '')
     let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'});
@@ -65,7 +65,7 @@ const build = (req) => {
 
     console.log('Building Seabass')
 
-    const parameters = req.body
+    const parameters = body
     if (!parameters) {
         console.error('No parameters provided')
         process.stdout.write(JSON.stringify({message: 'No parameters provided', status: 400}))
@@ -145,7 +145,7 @@ const __basename = basename(__filename)
 if (process.argv[1].endsWith(__basename)) {
     (async () => {
         const param = process.argv.slice(2)
-        const result = await build({ req: param })
+        const result = await build({ body: param })
         console.log(JSON.stringify(result))
     })()
 }

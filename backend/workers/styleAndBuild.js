@@ -1,4 +1,6 @@
 import { exec } from 'child_process'
+import fs from 'fs'
+import path from 'path'
 
 const parameterLookup = {
     THEME: {default: 'dark', allowedValues: ['dark', 'light', 'ultra-light']},
@@ -46,8 +48,28 @@ const validateParameter = (parameter, value) => {
     return true
 }
 
+const existingConsoleLog = console.log
+const existingConsoleError = console.error
+
 const build = (req, res, next) => {
+
+    fs.writeFile('seabassBuild.txt', '', err => {
+        if (err) {
+            console.error('Error clearing the log file:', err)
+        }
+    
+        let logFile = fs.createWriteStream('seabassBuild.txt', {flags: 'a'})
+        
+        console.log = function(msg) {
+            logFile.write(msg + '\n')
+        }
+        console.error = function(msg) {
+            logFile.write(msg + '\n')
+        }
+    })
+
     console.log('Building Seabass')
+
     const parameters = req.body
     if (!parameters) {
         console.error('No parameters provided')
@@ -84,6 +106,8 @@ const build = (req, res, next) => {
     function runCommand(index) {
         if (index >= commands.length) {
             console.log('All commands executed successfully')
+            console.log = existingConsoleLog
+            console.error = existingConsoleError
             return res.status(200).json({message: 'Build executed successfully'})
         }
 

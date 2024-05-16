@@ -107,7 +107,7 @@ app.post('/build', buildLimiter, async (req, res) => {
 })
 
 app.get('/build/:jobId', (req, res) => {
-    const jobId = req.params.jobId
+    const jobId = Number(req.params.jobId)
     const job = jobs[jobId]
     if (!job) {
         return res.status(404).json({ message: 'Job not found' })

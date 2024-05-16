@@ -82,7 +82,7 @@ const build = (body) => {
         const valueAsString = String(value)
         if (!validateParameter(key, valueAsString)) {
             console.error(`Invalid parameter value: ${key}=${value}`)
-            process.stdout.write(JSON.stringify({message: 'Invalid parameter value', status: 400}))
+            process.stdout.write(JSON.stringify({message: `Invalid parameter value: ${key}=${value}`, status: 400}))
             return
         }
     }

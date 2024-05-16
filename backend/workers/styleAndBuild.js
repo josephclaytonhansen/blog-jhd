@@ -74,11 +74,11 @@ const build = (req, res, next) => {
 
     let commands = [
         'cd ../frontend && git pull || true',
-        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js` + ' exit',
-        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true` + ' exit',
-        'cd ../frontend && ' + `${envVariables} node commit.js || true` + ' exit',
-        'cd ../frontend && ' + `${envVariables} npm run build` + ' exit',
-        'cd ../frontend && ' + `${envVariables} npm run process-site` + ' exit'
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildCss.js`,
+        'cd ../frontend && ' + `${envVariables} node ./src/workers/buildSitemap.js || true`,
+        'cd ../frontend && ' + `${envVariables} node commit.js || true`,
+        'cd ../frontend && ' + `${envVariables} npm run build`,
+        'cd ../frontend && ' + `${envVariables} npm run process-site`
     ]
 
     function runCommand(index) {

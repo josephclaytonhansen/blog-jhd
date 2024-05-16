@@ -98,12 +98,18 @@ import startBuildProcess from './workers/startBuildProcess.js'
 let jobs = {}
 let jobId = 0
 
-app.post('/build', buildLimiter, async (req, res) => {
+app.post('/build', [buildLimiter, authenticateToken], async (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== 'admin') {
+        return res.status(403).send('Not authorized')
+    }
     jobId = await startBuildProcess(req, '/workers/styleAndBuild.js', jobs, jobId)
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })
 
-app.get('/build/:jobId', (req, res) => {
+app.get('/build/:jobId', authenticateToken, (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== 'admin') {
+        return res.status(403).send('Not authorized')
+    }
     jobId = Number(req.params.jobId)
     const job = jobs[jobId]
     if (!job) {

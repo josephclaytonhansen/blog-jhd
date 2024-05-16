@@ -33,6 +33,24 @@ const userLoginByEmail = asyncHandler(async (req, res) => {
         user.sessionTimestamp = new Date().toISOString()
         await user.save()
         let auth_token = createToken(user)
+
+        if (user.lastIp !== user.registeredIp){
+            const mailOptions = {
+                from: process.env.EMAIL_FROM_USERNAME,
+                to: user.email,
+                subject: 'You\'ve logged in from a new IP address',
+                text: 'You\'ve logged in from a new IP address. If this was you, you can ignore this email. If this was not you, please reset your password.',
+            }
+            
+            req.transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log('Email sent: ' + info.response)
+                }
+            })
+        }
+
         res.json({
             auth_token: auth_token,
             user: user,

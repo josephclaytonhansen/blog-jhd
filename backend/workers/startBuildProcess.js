@@ -1,7 +1,6 @@
 async function startBuildProcess(req, processFunction, jobs, jobId) {
     console.log('Starting build process')
     console.log(req.body)
-    jobId++
     jobs[jobId] = { status: 202 }
 
     const buildProcess = spawn('node', [path.join(process.cwd(), processFunction), JSON.stringify(req.body), jobId.toString()])

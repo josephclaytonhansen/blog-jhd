@@ -144,7 +144,7 @@ const build = (req) => {
 
 export default build
 
-if (require.main === module) {
+if (process.argv[1] === __filename) {
     (async () => {
         const result = await build()
         console.log(JSON.stringify(result))

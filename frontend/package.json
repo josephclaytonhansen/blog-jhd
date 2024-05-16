@@ -11,7 +11,7 @@
     "create-site-page": "node ./src/workers/buildSitePages.js",
     "remove-site": "node ./src/workers/removeSite.js",
     "remove-site-page": "node ./src/workers/removeSitePages.js",
-    "process-site": "node ./src/workers/processDist.js",
+    "process-site": "node ./src/workers/processDist.cjs",
     "git-commit": "node commit.js",
     "sitemap": "node ./src/workers/buildSitemap.js"
   },

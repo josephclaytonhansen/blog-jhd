@@ -330,7 +330,7 @@
                         <div class="flex items-center gap-1 shrink" v-if = "user.role == 'admin' || user.role == 'author'">
                             <Newspaper /><h3>{{getUserPostsLength(user)}}</h3>
                         </div>
-                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300">
+                        <button class="cursor-pointer bg-accent-500 px-2 py-2 rounded  text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300">
                             <Cog @click="editUser(user._id)"/>
                         </button>
         
@@ -392,7 +392,7 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="updateUser(active_user._id)">
+                        <button class="cursor-pointer bg-accent-500 px-2 py-2 rounded  text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 mt-3" @click="updateUser(active_user._id)">
                             <Save/>
                         </button>
                         <button v-if = "active_user.role === 'user' && active_user.role !== 'admin'" class="cursor-pointer bg-green-500 px-2 py-2 rounded  text-text-0 hover:bg-green-600 hover:scale-105 transition-all duration-300 mt-3" @click="promoteUserToAuthor(active_user._id)">
@@ -414,7 +414,7 @@
                         <VenetianMask/>
                         </button>
                         <div class="w-[1px] h-[40px] mt-[12px] mx-1 border-r-2 border-backdrop-1"  v-if = "active_user.role !== 'admin'"></div>
-                        <button class="cursor-pointer bg-accent-600 px-2 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 mt-3" @click="deselectUser(active_user._id)">
+                        <button class="cursor-pointer bg-accent-500 px-2 py-2 rounded  text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 mt-3" @click="deselectUser(active_user._id)">
                             <UserX/>
                         </button>
                         

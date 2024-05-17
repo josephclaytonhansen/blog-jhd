@@ -113,7 +113,7 @@ onMounted( async() => {
             
         </div>
         <div class="fixed top-0 left-0 p-4" @click="router.push('/')">
-            <Home class="w-10 h-10 cursor-pointer bg-accent-600 p-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300"/>
+            <Home class="w-10 h-10 cursor-pointer bg-accent-500 p-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300"/>
         </div>
     </div>
 </template>

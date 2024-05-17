@@ -87,7 +87,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const viewPost = (slug) => {
-    router.push(`/p/${id}`)
+    router.push(`/p/${slug}`)
 }
 
 const editPost = (id) => {
@@ -480,19 +480,19 @@ const saveExistingDraft = async() => {
         </form>
 
         <div class = "flex gap-4 p-4">
-            <button v-if = "editingPostStatus === 'new-draft'" @click="doing === 'new' ? saveNewDraft() : saveExistingDraft()" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+            <button v-if = "editingPostStatus === 'new-draft'" @click="doing === 'new' ? saveNewDraft() : saveExistingDraft()" class="cursor-pointer bg-accent-500 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 flex items-center">
                 <Save class = "pr-2"/>Save draft
             </button>
-            <button v-if = "editingPostStatus === 'draft'" @click="publishPost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+            <button v-if = "editingPostStatus === 'draft'" @click="publishPost(editingPostId)" class="cursor-pointer bg-accent-500 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 flex items-center">
                 <Send class = "pr-2"/>Publish
             </button>
-            <button v-if = "editingPostStatus === 'draft'" @click="schedulePost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+            <button v-if = "editingPostStatus === 'draft'" @click="schedulePost(editingPostId)" class="cursor-pointer bg-accent-500 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 flex items-center">
                 <Clock class = "pr-2"/>Schedule
             </button>
-            <button v-if = "editingPostStatus === 'published'" @click="saveExistingDraft()" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+            <button v-if = "editingPostStatus === 'published'" @click="saveExistingDraft()" class="cursor-pointer bg-accent-500 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 flex items-center">
                 <Save class = "pr-2"/>Save
             </button>
-            <button v-if = "editingPostStatus === 'published'" @click="unpublishPost(editingPostId)" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+            <button v-if = "editingPostStatus === 'published'" @click="unpublishPost(editingPostId)" class="cursor-pointer bg-accent-500 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 flex items-center">
                 <CheckCheck class = "pr-2"/>Unpublish
             </button>
             
@@ -559,7 +559,7 @@ const saveExistingDraft = async() => {
         </table>
     </div>
     <div  class="fixed z-50 md:bottom-5 md:right-5 scale-75 md:scale-100 bottom-1 right-0 flex gap-4 ">
-        <button @click="newPost" class="cursor-pointer bg-accent-600 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 flex items-center">
+        <button @click="newPost" class="cursor-pointer bg-accent-500 px-5 py-2 rounded-lg   text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 flex items-center">
             <PenLine class = "pr-2"/>New post
         </button>
         

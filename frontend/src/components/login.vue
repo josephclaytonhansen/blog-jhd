@@ -136,7 +136,7 @@ const showLogin = () => {
                 <input title = "Your email address- this will not be visible publicly" class="grow rounded p-2 bg-backdrop-1 text-text-0 active:ring-2 active:ring-accent-300 accent-accent-600 focus:ring-3 focus:ring-accent-300 accent-accent-300" type="text" v-model="username" placeholder="Email">
                 <input title = "A secure password" class="grow rounded p-2 bg-backdrop-1 text-text-0  active:ring-2 active:ring-accent-300 accent-accent-600 focus:ring-3 focus:ring-accent-300 accent-accent-300" type="password" v-model="password" placeholder="Password  (at least 12 characters)">
                 <input title = "The name or username that will be publicly visible" class="grow rounded p-2 bg-backdrop-1 text-text-0  active:ring-2 active:ring-accent-300 accent-accent-600 focus:ring-3 focus:ring-accent-300 accent-accent-300" v-if="isRegistering" type="text" v-model="displayName" placeholder="Display Name">
-                <button class="cursor-pointer bg-accent-600 px-5 py-2 rounded  text-text-0 hover:bg-accent-700 hover:scale-105 transition-all duration-300 grow" type="submit">{{ isRegistering ? 'Sign up' : 'Login' }}</button>
+                <button class="cursor-pointer bg-accent-500 px-5 py-2 rounded  text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 grow" type="submit">{{ isRegistering ? 'Sign up' : 'Login' }}</button>
             </div>
             
             <p class="text-sm italic text-text-2" v-if="!isRegistering">Don't have an account? <button class="hover:text-text-0 transition-all duration-300" @click="showRegister">Sign up</button></p>

@@ -1,6 +1,6 @@
 import db from './mongo.js'
+import Blog from './models/blog.js'
 import User from './models/user.js'
-import Tag from './models/tag.js'
 import Comment from './models/comment.js'
 import { exec } from 'child_process'
 
@@ -92,6 +92,7 @@ const buildLimiter = rate_limit({
 })
 
 import startBuildProcess from './workers/startBuildProcess.js'
+import Blog from './models/blog.js'
 
 let jobs = {}
 let jobId = 0
@@ -212,6 +213,71 @@ cron.schedule('0 0 1 * *', async () => {
 
     })
     jobs[jobId] = { status: 200, message: 'user cleanup successful' }
+})
+
+cron.schedule('0 11 * * 5', () => {
+    jobId++
+    jobs[jobId] = { status: 202, message: 'sending admin digest' }
+    let date = new Date().toLocaleDateString()
+    let text = `Admin Digest for ${date}\n`
+    Comment.find({}).then((comments) => {
+        text += `Comments: ${comments.length}\n`
+        let flaggedComments = comments.filter((comment) => comment.flagged)
+        text += `Flagged Comments: ${flaggedComments.length}\n`
+        let visibleComments = comments.filter((comment) => comment.visible)
+        text += `Visible Comments: ${visibleComments.length}\n`
+        let hiddenComments = comments.filter((comment) => !comment.visible)
+        text += `Hidden Comments: ${hiddenComments.length}\n`
+        let newestComments = comments.sort((a, b) => b.date - a.date).slice(0, 3)
+        text += `Newest Comments:\n`
+        newestComments.forEach((comment) => {
+            text += `${comment.content.substring(0, 300)}... \n`
+        }
+        )})
+    text += '\n--------------------------------\n'
+    Blog.find({}).then((blogs) => {
+        text += `Blogs: ${blogs.length}\n`
+        let newestBlogs = blogs.sort((a, b) => b.date - a.date).slice(0, 3)
+        text += `Newest Blogs:\n`
+        newestBlogs.forEach((blog) => {
+            text += `${blog.title.substring(0, 300)}... \n`
+        })
+    })
+    text += '\n--------------------------------\n'
+    User.find({}).then((users) => {
+        text += `Users: ${users.length}\n`
+        let newestUsers = users.sort((a, b) => b.createdAt - a.createdAt).slice(0, 3)
+        text += `Newest Users:\n`
+        newestUsers.forEach((user) => {
+            text += `${user.displayName} \n`
+        })
+        text += 'Users scheduled for removal:\n'
+        users.filter((user) => user.role === 'unverified-user').forEach((user) => {
+            text += `${user.displayName} \n`
+        })
+        text += 'Users removed:\n'
+        removedUsers.forEach((user) => {
+            text += `${user.displayName} \n`
+        })
+    })
+    User.find({ role: 'admin' }).then((admins) => {
+        admins.forEach((admin) => {
+            const mailOptions = {
+                from: process.env.EMAIL_FROM_USERNAME,
+                to: admin.email,
+                subject: 'Weekly Admin Digest',
+                text: 'This is an automated message, do not reply.'
+            }
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log('Email sent: ' + info.response)
+                }
+            })
+        })
+    })
+    jobs[jobId] = { status: 200, message: 'admin digest sent' }
 })
 
 cron.schedule('0 0 * * 0', () => {

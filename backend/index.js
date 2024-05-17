@@ -92,7 +92,6 @@ const buildLimiter = rate_limit({
 })
 
 import startBuildProcess from './workers/startBuildProcess.js'
-import Blog from './models/blog.js'
 
 let jobs = {}
 let jobId = 0

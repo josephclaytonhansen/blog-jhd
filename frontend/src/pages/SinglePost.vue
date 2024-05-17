@@ -38,6 +38,7 @@ const getPost = async (displayNameSlugified) => {
     post.value = JSON.parse(cachedPost)
     isLoading.value = false
   } else {
+    isLoading.value = true
     sessionStorage.removeItem(`post-${displayNameSlugified}`)
     sessionStorage.removeItem(`timestamp-${displayNameSlugified}`)
     sessionStorage.removeItem('checkResult')

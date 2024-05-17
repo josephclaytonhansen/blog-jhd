@@ -13,6 +13,9 @@ import components from './${pageName}Components.ts'
 import Header from '../components/bricks/sitewide/Header.vue'
 import Footer from '../components/bricks/sitewide/Footer.vue'
 
+import { useRoute, useRouter } from 'vue-router'
+const router = useRouter()
+
 export default {
   props: {
     thisPageComponentName: String,
@@ -28,14 +31,16 @@ export default {
         props.footer = true
       }
       if (props.thisPageComponentName === undefined) {
-        props.thisPageComponentName = 'NotFound'
+        router.push('/NotFound')
       }
     const site = window.location.hostname
 
     onMounted(async () => {
       for (let componentName in components) {
         // Wait for the component to be imported
-        let component = await components[componentName]
+        let component = await components[componentName].catch((error) => {
+            router.push('/NotFound')
+        })
 
         // Use the component
         loadedComponents.value[componentName] = component.default

@@ -22,6 +22,7 @@ const routes = [
 // automated
 { path: '/About', component: () => import('./pages/About.vue'), props : {thisPageComponentName: 'About', header: true, footer: true} },
 { path: '/Contact', component: () => import('./pages/Contact.vue'), props : {thisPageComponentName: 'Contact', header: true, footer: true} },
+{ path: '/Seabass', component: () => import('./pages/Seabass.vue'), props : {thisPageComponentName: 'Seabass', header: true, footer: true} },
 //end automated
     { path: '/NotFound', component: () => import('./pages/NotFound.vue')},
     { path: '/:pathMatch(.*)*', component: () => import('./pages/NotFound.vue') }

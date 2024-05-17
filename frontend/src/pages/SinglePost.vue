@@ -58,14 +58,17 @@ const getPost = async (displayNameSlugified) => {
         credentials: 'include'
       }).then(async (response) => {
         if (response.status !== 200) {
+          isLoading.value = true
           router.push('/NotFound')
         }
         let posts = await response.json()
         post.value = posts.find(post => slugify(post.title) === displayNameSlugified)
         if (!(post.value._id)) {
+          isLoading.value = true
           router.push('/NotFound')
         }
         if (window.location.hostname !== post.value.site) {
+          isLoading.value = true
           router.push('/NotFound')
         }
         sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
@@ -81,6 +84,7 @@ const getPost = async (displayNameSlugified) => {
 }
 
 onMounted(async () => {
+  isLoading.value = true
   const route = useRoute()
   const titleSlugifiedFromUrlParams = route.params.slug
   await getPost(titleSlugifiedFromUrlParams)

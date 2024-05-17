@@ -24,8 +24,8 @@ const bgClass = computed(() => {
 </script>
 
 <template>
-    <div class="fixed bottom-0 left-0 w-screen overflow-hidden p-1 flex items-center justify-center gap-3" :class="bgClass">
+    <div class="fixed bottom-0 left-0 w-screen overflow-hidden p-2 flex items-center justify-center gap-5" :class="bgClass">
         <p class="font-body text-sm">{{props.message}}</p>
-        <button v-if="props.link" class="cursor-pointer bg-accent-700 px-4 py-1 rounded-lg text-text-0 hover:bg-accent-500 hover:scale-105 transition-all duration-300" @click="$router.push(props.link)">{{ props.linkText }}</button>
+        <button v-if="props.link" class="cursor-pointer bg-accent-500 px-4 py-1 rounded-lg text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300" @click="$router.push(props.link)">{{ props.linkText }}</button>
     </div>
 </template>

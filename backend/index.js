@@ -149,6 +149,50 @@ app.use('/comment', commentRoutes(transporter))
 app.use('/tag', tagRoutes)
 app.use('/category', categoryRoutes)
 
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain')
+    res.send(`
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot 
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Omgili
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ImagesiftBot 
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+    `)
+})
+
 app.use((err, req, res, next) => {
     console.error(err)
     res.status(500).send('An error occurred: ' +  JSON.stringify(err))

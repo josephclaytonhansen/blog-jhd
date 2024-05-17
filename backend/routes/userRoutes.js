@@ -26,10 +26,7 @@ dotenv.config()
 
 export default (transporter) => {
     router.get('/', authenticateToken, getUsers)
-    router.post('/login', async (req, res) => {
-        req.transporter = transporter
-        await userLoginByEmail(req, res)
-    })
+    router.post('/login', userLoginByEmail)
     router.post('/verify', verifyTokenUser)
     router.post('/checksession', checkSessionUser)
     router.post('/isverified', isVerifiedUser)

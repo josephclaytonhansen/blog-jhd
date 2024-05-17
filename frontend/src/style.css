@@ -384,14 +384,14 @@ a {
 }
 /* automated */
 h1, h2 {
-  text-transform: uppercase;
+  text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oswald';
+  font-family: 'Fira Sans';
 }
 
 body {
-  font-family: 'Martel';
+  font-family: 'Fira Sans';
 }
 
 .avatar{border-radius:999rem;}
@@ -402,50 +402,50 @@ body {
 }
 
 .colorblock{
-  background-color: transparent;
+  background-color: theme('colors.backdrop-2');
   
 }
 
 .colorblock_dark{
-  background-color: transparent;
+  background-color: theme('colors.backdrop-1');
   
 }
 
 .colorblock_darker {
-  background-color: transparent;
+  background-color: theme('colors.backdrop-0');
   
 }
 
 .colorblock_accent{
-  background-color: transparent;
-  ;
+  background-color: theme('colors.accent.700');
+  color:theme('colors.backdrop.100');
   
 }
 
 .dividing-line{
-  border-bottom: 2px solid theme('colors.backdrop-0');
+  border-bottom: none;
   width: 100%;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   border-top-width: 0;
 }
 
 .dividing-line-mid{
-  border-right: 2px solid theme('colors.backdrop-0');
+  border-right: none;
   height: 100%;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   border-top-width: 0;
 }
 
 .colorblock_accent .dividing-line{
-  border-bottom: 1px solid theme('colors.accent.600');
+  border-bottom: none;
 }
 
 .sidebar{
-  display: none!important;
-  background-color: transparent;
-  color: theme('colors.text-0');
+  display: flex;
+  background-color: theme('colors.backdrop-2');
+  color: theme('colors.backdrop.200');
 
 }
 
@@ -472,6 +472,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

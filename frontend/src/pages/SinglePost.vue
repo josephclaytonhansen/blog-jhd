@@ -64,6 +64,9 @@ const getPost = async (displayNameSlugified) => {
         if (!(post.value._id)) {
           router.push('/NotFound')
         }
+        if (window.location.hostname !== post.value.site) {
+          router.push('/NotFound')
+        }
         sessionStorage.setItem(`post-${displayNameSlugified}`, JSON.stringify(post.value))
         sessionStorage.setItem(`timestamp-${displayNameSlugified}`, new Date().getTime())
         isLoading.value = false

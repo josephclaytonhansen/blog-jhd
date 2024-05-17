@@ -134,6 +134,12 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+app.get('/servertime', (req, res) => {
+    const serverTime = new Date().toLocaleString()
+    console.log(serverTime)
+    res.send(`Server time is: ${serverTime}`)
+})
+
 app.use('/sitemap.xml', express.static('public/sitemap.xml'))
 
 app.get('/removed-users', authenticateToken, (req, res) => {

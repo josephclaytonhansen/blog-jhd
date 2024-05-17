@@ -220,7 +220,7 @@ cron.schedule('0 0 1 * *', async () => {
     jobs[jobId] = { status: 200, message: 'user cleanup successful' }
 })
 
-cron.schedule('0 11 * * 5', () => {
+cron.schedule('10 11 * * 5', () => {
     jobId++
     jobs[jobId] = { status: 202, message: 'sending admin digest' }
     let date = new Date().toLocaleDateString()
@@ -271,7 +271,7 @@ cron.schedule('0 11 * * 5', () => {
                 from: process.env.EMAIL_FROM_USERNAME,
                 to: admin.email,
                 subject: 'Weekly Admin Digest',
-                text: 'This is an automated message, do not reply.'
+                text: text,
             }
             transporter.sendMail(mailOptions, function(error, info){
                 if (error) {

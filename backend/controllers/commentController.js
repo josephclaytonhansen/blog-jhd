@@ -6,7 +6,7 @@ const getCommentsByBlogPost = asyncHandler(async (req, res) => {
     let sentUser = req.body.user || req.user
     console.log(sentUser)
     try{
-    let user = await User.findById(sentUser._id)
+    let user = await User.findOne({_id: {$eq:sentUser._id}})
     console.log(user)
     if (user){
         if (user.role === 'admin'){
@@ -84,7 +84,7 @@ const createComment = asyncHandler(async (req, res) => {
                 parent: req.body.parent,
 
             })
-            let commentUser = await User.findById(req.body.user)
+            let commentUser = await User.findOne({_id: {$eq:req.body.user}})
             comment.user = comment.user + '.' + commentUser.displayName
             await comment.save()
             res.json(comment)

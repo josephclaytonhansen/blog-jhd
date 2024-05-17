@@ -86,8 +86,8 @@ const toast = useToast()
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-const viewPost = (id) => {
-
+const viewPost = (slug) => {
+    router.push(`/p/${id}`)
 }
 
 const editPost = (id) => {
@@ -549,7 +549,7 @@ const saveExistingDraft = async() => {
                     </td>
                     <td class=" border-b-backdrop-800 border-b-2">
                         <div class='flex justify-center items-center m-auto'>
-                            <div class='cursor-pointer hover:text-text-0 transition-all duration-300' @click="viewPost(post._id)"><Eye /></div>
+                            <div class='cursor-pointer hover:text-text-0 transition-all duration-300' @click="viewPost(post.slug)"><Eye /></div>
                             <div class='cursor-pointer hover:text-text-0 transition-all duration-300 px-2' @click="editPost(post._id)"><Pencil /></div>
                             <div class='cursor-pointer hover:text-text-0 transition-all duration-300' @click="deletePost(post._id)"><Trash /></div>
                         </div>

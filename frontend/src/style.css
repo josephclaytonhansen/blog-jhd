@@ -387,11 +387,11 @@ h1, h2 {
   text-transform: uppercase;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oswald';
+  font-family: 'Noticia Text';
 }
 
 body {
-  font-family: 'Martel';
+  font-family: 'Gudea';
 }
 
 .avatar{border-radius:999rem;}
@@ -472,6 +472,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

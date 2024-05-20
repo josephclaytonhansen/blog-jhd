@@ -5,5 +5,5 @@ import VideoHero from '../components/bricks/sitewide/videoHero.vue'
 </script>
 <template>
     <Header />
-    <VideoHeader :fallbackImage="" :video="" :fallbackVideo=""/>
+    <VideoHeader :fallbackImage="''" :video="''" :fallbackVideo="''"/>
 </template>

@@ -49,7 +49,6 @@ const VCalendarOptions = {
     expanded: true,
     borderless: true,
     transparent: true,
-    color: "--accent-color"
 }
 
 app.use(VCalendar, VCalendarOptions)

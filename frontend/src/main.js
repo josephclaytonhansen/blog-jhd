@@ -3,6 +3,8 @@ import './style.css'
 import App from './App.vue'
 import router from './router.js'
 import 'tailwindcss/tailwind.css'
+import 'v-calendar/style.css'
+import VCalendar from 'v-calendar'
 
 import {createPinia} from 'pinia'
 
@@ -42,6 +44,15 @@ app.use(createHead())
 
 import Toast from "vue-toastification"
 import "vue-toastification/dist/index.css"
+
+const VCalendarOptions = {
+    expanded: true,
+    borderless: true,
+    transparent: true,
+    color: "--accent-color"
+}
+
+app.use(VCalendar, VCalendarOptions)
 
 app.use(Toast, toastOptions)
 app.use(pinia)

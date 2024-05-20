@@ -1,6 +1,7 @@
 
 <script setup>
+import Header from '../components/bricks/sitewide/header.vue'
 </script>
 <template>
-    <h1>Hello from blog.josephhansen.dev</h1>
+    <Header />
 </template>

@@ -1,4 +1,7 @@
 
-<script>
+<script setup>
+import Header from '../components/bricks/sitewide/header.vue'
 </script>
-<template></template>
+<template>
+    <Header />
+</template>

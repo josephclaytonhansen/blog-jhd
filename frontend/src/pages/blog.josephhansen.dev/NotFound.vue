@@ -1,6 +1,7 @@
 
-<script>
+<script setup>
+import Header from '../components/bricks/sitewide/header.vue'
 </script>
 <template>
-    <h1>404 from blog.josephhansen.dev</h1>
+    <Header />
 </template>

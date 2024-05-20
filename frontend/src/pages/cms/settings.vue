@@ -58,6 +58,10 @@ onMounted(async () => {
         {name: "Montserrat", font: 'font-Montserrat'},
         {name: "Nunito Sans", font: 'font-NunitoSans'},
         {name: "Oswald", font: 'font-Oswald'},
+        {name: "Mulish", font: 'font-Mulish'},
+        {name: "Gudea", font: 'font-Gudea'},
+        {name: "Figtree", font: 'font-Figtree'},
+        {name: "Economica", font: 'font-Economica'},
     ])
 
     const fontSerifOptions = ref([
@@ -72,6 +76,9 @@ onMounted(async () => {
         {name: "Slabo", font: 'font-Slabo'},
         {name: "Crimson Text", font: 'font-CrimsonText'},
         {name: "Playfair Display", font: 'font-PlayfairDisplay'},
+        {name: "Quattrocento", font: 'font-Quattrocento'},
+        {name: "Noticia Text", font: 'font-NoticiaText'},
+        {name: "Habibi", font: 'font-Habibi'},
     ])
 
     const colorOptions = ref([

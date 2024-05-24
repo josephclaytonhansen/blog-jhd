@@ -175,8 +175,15 @@ body {
 }
 
 @media screen and (forced-colors: active) {
+  *:focus {
+    outline-color: transparent;
+  }
   input, textarea, button, select, option, section {
     border: 1px solid transparent!important;
+  }
+  svg {
+    stroke: CanvasText !important;
+    fill: Canvas !important;
   }
 }
 

@@ -58,6 +58,11 @@
 
 }
 
+.centered{
+  display:grid;
+  place-items:center;
+}
+
 .ql-toolbar{
   border: none!important;
   margin-bottom: 0.5rem;

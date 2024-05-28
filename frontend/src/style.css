@@ -438,7 +438,6 @@ body {
   font-family: 'Fira Sans';
 }
 
-.avatar{border-radius:999rem;}
 
 
 #progress-bar, #progress-bar-fill{
@@ -467,23 +466,23 @@ body {
 }
 
 .dividing-line{
-  border-bottom: none;
+  border-bottom: 2px solid theme('colors.backdrop-0');
   width: 100%;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
   border-top-width: 0;
 }
 
 .dividing-line-mid{
-  border-right: none;
+  border-right: 2px solid theme('colors.backdrop-0');
   height: 100%;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
   border-top-width: 0;
 }
 
 .colorblock_accent .dividing-line{
-  border-bottom: none;
+  border-bottom: 1px solid theme('colors.accent.600');
 }
 
 .sidebar{
@@ -516,6 +515,7 @@ body {
   }
 }
 /* end automated */
+
 
 
 

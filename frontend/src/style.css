@@ -425,9 +425,7 @@ a {
 .Vue-Toastification__toast-body.toast {
   @apply self-center font-sans text-base font-normal leading-relaxed;
 }
-. {
-  text-transform: uppercase;
-}
+
 /* automated */
 h1, h2 {
   text-transform: uppercase;

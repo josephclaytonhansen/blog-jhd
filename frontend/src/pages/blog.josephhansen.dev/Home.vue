@@ -4,8 +4,8 @@
 import { ref, onMounted } from 'vue'
 import hdImage from '../../components/bricks/images/hdImage.vue'
 
-import Header from '../components/bricks/sitewide/Header.vue'
-import Footer from '../components/bricks/sitewide/Footer.vue'
+import Header from '../../components/bricks/sitewide/Header.vue'
+import Footer from '../../components/bricks/sitewide/Footer.vue'
 
 import axios from 'axios'
 

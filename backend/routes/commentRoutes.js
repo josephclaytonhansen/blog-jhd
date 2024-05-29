@@ -130,7 +130,7 @@ export default (transporter) => {
 
                     // Send email to the original commentor
                     let blogPost = await Blog.findById(comment.blogPost)
-                    let blogUrl = 'https://' + blogPost.site + '/p/' + blogPost.slug
+                    let blogUrl = 'https://' + blogPost.site + '/p/' + blogpost.slug
                     let emailBody = `A new reply has been made to your comment on: <a href = ${blogUrl}>${blogPost.title}</a> by ${replyUser.displayName}: ${reply.content}<br/><br/>If you find the reply interesting, you can reply to it and continue the conversation. If the reply is inappropriate, please flag it for review.<br/><br/>This is an automated message, do not reply.`
                     const mailOptions = {
                         from: process.env.EMAIL_FROM_USERNAME,

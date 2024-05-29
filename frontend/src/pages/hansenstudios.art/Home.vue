@@ -1,9 +1,7 @@
 
 <script setup>
-import Header from '../../components/bricks/sitewide/Header.vue'
 import VideoHero from '../../components/bricks/sitewide/videoHero.vue'
 </script>
 <template>
-    <Header />
-    <VideoHeader :fallbackImage="''" :video="''" :fallbackVideo="''"/>
+    <VideoHero :fallbackImage="''" :video="''" :fallbackVideo="''"/>
 </template>

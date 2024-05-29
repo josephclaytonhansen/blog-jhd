@@ -1,7 +1,5 @@
 
 <script setup>
-import Header from '../../components/bricks/sitewide/Header.vue'
-import Footer from '../../components/bricks/sitewide/Footer.vue'
 
 import { ref, onMounted } from 'vue'
 import hdImage from '../../components/bricks/images/hdImage.vue'
@@ -63,7 +61,6 @@ const postLink = (post) => {
 
 
 <template>
-    <Header />
     <div class="p-5 w-full text-text-1">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
@@ -88,5 +85,4 @@ const postLink = (post) => {
         </div>
         
     </div>
-    <Footer />
 </template>

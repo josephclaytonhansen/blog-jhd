@@ -41,7 +41,7 @@ const createSitemap = async (smStream) => {
     const posts = await getPosts()
     const filteredPosts = filterPosts(posts)
     filteredPosts.forEach((post) => {
-        const url = `https://${process.env.SITE_PREFIX}/p/${post.slug}`
+        const url = `https://${process.env.SITE_PREFIX}/p/${post.slug.replace(/'/g, '')}`
         console.log('Adding post:', url)
         smStream.write({
             url,

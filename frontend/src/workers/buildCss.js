@@ -69,28 +69,6 @@ ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''
 
 }
 
-@layer components {
-  #post_content {
-    margin: auto;
-    width: 80vw;
-    max-width: 70ch;
-  }
-  @screen sm {
-    #post_content {
-      width: 70vw;
-    }
-  }
-  @screen md {
-    #post_content {
-      width: 60vw;
-    }
-  }
-  @screen lg {
-    #post_content {
-      width: 50vw;
-    }
-  }
-}
 /* end automated */
 `
 

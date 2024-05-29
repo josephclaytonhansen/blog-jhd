@@ -30,7 +30,7 @@ const blogSchema = new mongoose.Schema({
 })
 
 blogSchema.pre('save', function(next) {
-    this.slug = this.title.toLowerCase().split(' ').join('-').replace(/'/g, '')
+    this.slug = this.title.toLowerCase().split(' ').join('-').replace(/[?'!-]/g, '')
     next()
 })
 

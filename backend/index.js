@@ -100,11 +100,16 @@ import startBuildProcess from './workers/startBuildProcess.js'
 let jobs = {}
 
 let jobId = 0
+const jobIdFilePath = path.join(dir, '.jobid')
 
 try {
-    jobId = Number(fs.readFileSync(path.join(dir, '.jobid'), 'utf8'))
+    if (fs.existsSync(jobIdFilePath)) {
+        jobId = Number(fs.readFileSync(jobIdFilePath, 'utf8'))
+    } else {
+        fs.writeFileSync(jobIdFilePath, '0')
+    }
 } catch (err) {
-    console.error('Failed to load jobId from file:', err)
+    console.error('Failed to load or create jobId file:', err)
 }
 
 app.post('/build', [buildLimiter, authenticateToken], async (req, res) => {

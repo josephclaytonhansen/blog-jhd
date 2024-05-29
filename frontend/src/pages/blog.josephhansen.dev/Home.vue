@@ -4,6 +4,7 @@
 import { ref, onMounted } from 'vue'
 import hdImage from '../../components/bricks/images/hdImage.vue'
 
+
 import axios from 'axios'
 
 const site = window.location.hostname
@@ -63,12 +64,12 @@ const postLink = (post) => {
 
 
 <template>
-    <div class="p-5 w-full min-h-screen text-text-1 bg-backdrop-1">
+    <div class="p-8 w-full min-h-screen text-text-1 bg-backdrop-1">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
-                <h1 class="text-3xl font-header">Recent posts</h1>
-                <div class="flex flex-wrap gap-3">
-                    <div v-for="post in recentPosts" :key="post.id" class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 colorblock rounded" v-if="recentPosts">
+                <h1 class="text-3xl font-header pb-3">Recent posts</h1>
+                <div class="flex flex-wrap flex-col-reverse gap-3">
+                    <div v-for="post in recentPosts" :key="post.id" class="w-full colorblock rounded" v-if="recentPosts">
                         <router-link :to="postLink(post)">
                         <hdImage :image="post.featuredImage" :alt="post.title"/>
                         <div class="p-3 flex flex-col items-center align-middle">
@@ -78,7 +79,7 @@ const postLink = (post) => {
                         </router-link>
                     </div>
                 </div>
-                <button class="cursor-pointer bg-accent-500 px-5 py-2 rounded  text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 grow" @click="readMore">Read more</button>
+                <button class="cursor-pointer bg-accent-500 px-5 py-2 rounded mt-3 w-full text-text-0 hover:bg-accent-600 hover:scale-105 transition-all duration-300 grow" @click="readMore">Read more</button>
             </div>
 
             <div>

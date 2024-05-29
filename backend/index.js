@@ -29,6 +29,9 @@ import categoryRoutes from './routes/categoryRoutes.js'
 
 import process from 'process'
 
+import fs from 'fs'
+import path from 'path'
+
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -94,13 +97,25 @@ const buildLimiter = rate_limit({
 import startBuildProcess from './workers/startBuildProcess.js'
 
 let jobs = {}
+
 let jobId = 0
+
+try {
+    jobId = Number(fs.readFileSync(path.join(__dirname, '.jobid'), 'utf8'))
+} catch (err) {
+    console.error('Failed to load jobId from file:', err)
+}
 
 app.post('/build', [buildLimiter, authenticateToken], async (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin') {
         return res.status(403).send('Not authorized')
     }
     jobId++
+    fs.writeFile(path.join(__dirname, '.jobid'), String(jobId), (err) => {
+        if (err) {
+            console.error('Failed to save jobId to file:', err)
+        }
+    })
     startBuildProcess(req, '/workers/styleAndBuild.js', jobs, jobId)
     res.status(202).json({ message: "Seabass build in progress", jobId: jobId })
 })

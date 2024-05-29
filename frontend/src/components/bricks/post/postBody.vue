@@ -29,5 +29,5 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <div v-html="sanitizedContent" class="prose grow text-text-1"></div>
+    <div v-html="sanitizedContent" class="prose grow text-text-1 max-w-[80vw]"></div>
 </template>

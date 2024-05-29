@@ -9,6 +9,6 @@ tagD.value = props.tag
 
 <template>
     <div class="colorblock_accent px-2 py-1 text-sm rounded-lg italic cursor-pointer hover:bg-accent-600 duration-300 transition-all w-min">
-        <p>{{tagD}}</p>
+        <p style="text-wrap:nowrap">{{tagD}}</p>
     </div>
 </template>

@@ -241,7 +241,7 @@ h6 {
 @tailwind components;
 @tailwind utilities;
 
-:root{
+.prose.text-text-1{
   --tw-prose-body: theme('colors.text-1')!important;
   --tw-prose-headings: theme('colors.text-2')!important;
   --tw-prose-links: theme('colors.accent.500')!important;

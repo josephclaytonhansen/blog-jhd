@@ -20,9 +20,9 @@ onMounted(() => {
 
 const postLink = (post) => {
   if (post.location === '' || post.location === undefined || post.location === "/") {
-    return '/' + post.slug
+    return '/p/' + post.slug
   } else {
-    return '/' + post.location + '/' + post.slug
+    return '/p/' + post.location + '/' + post.slug
   }
 }
 

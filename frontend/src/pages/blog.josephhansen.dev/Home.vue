@@ -15,7 +15,7 @@ const trimExcerpt = (excerpt) => {
     if (excerpt.length > 300) {return excerpt.substring(0, 300) + '...'} else {return excerpt}}
 
 const getNRecentPostsStartingAt = (startIndex, count) => {
-    let url = `${process.env.VUE_APP_SERVER_URL}/posts/recent`
+    let url = `${process.env.VUE_APP_SERVER_URL}/blog/recent`
     let params = {
         site: site,
         startIndex: startIndex,
@@ -63,7 +63,7 @@ const postLink = (post) => {
 
 
 <template>
-    <div class="p-5 w-full text-text-1 bg-backdrop-1">
+    <div class="p-5 w-full min-h-screen text-text-1 bg-backdrop-1">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
                 <h1 class="text-3xl font-header">Recent posts</h1>

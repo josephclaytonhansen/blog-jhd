@@ -4,6 +4,15 @@ import infoBox from './infoBox.vue'
 const props = defineProps({
     post: Object,
 })
+
+const setMarginTopToScrollAmount = () => {
+    const sidebar = document.querySelector('.sidebar')
+    if (sidebar) {
+        sidebar.style.marginTop = `${window.scrollY}px`
+    }
+}
+
+window.addEventListener('scroll', setMarginTopToScrollAmount)
 </script>
 
 <template>

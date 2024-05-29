@@ -4,6 +4,8 @@
 import { ref, onMounted } from 'vue'
 import hdImage from '../../components/bricks/images/hdImage.vue'
 
+import axios from 'axios'
+
 const site = window.location.hostname
 const recentPosts = ref([])
 let startIndex = 0

@@ -7,8 +7,8 @@ import Footer from '../components/bricks/sitewide/Footer.vue'
 export default {
   props: {
     thisPageComponentName: String,
-    header: Boolean,
-    footer: Boolean
+    header: {type: Boolean, default: true},
+    footer: {type: Boolean, default: true}
   },
   setup(props) {
     const loadedComponents = ref({})

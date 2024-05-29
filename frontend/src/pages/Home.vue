@@ -1,8 +1,6 @@
 <script>
 import { ref, onMounted } from 'vue'
 import components from './HomeComponents.ts'
-import Header from '../components/bricks/sitewide/Header.vue'
-import Footer from '../components/bricks/sitewide/Footer.vue'
 
 export default {
   props: {
@@ -39,9 +37,7 @@ export default {
 </script>
 
 <template>
-  <Header :thisPageComponentName="'Header'" v-if = "header"/>
   <div>
     <component :is="components[`${site}${thisPageComponentName}`]"></component>
 </div>
-<Footer :thisPageComponentName="'Footer'" v-if = "footer"/>
 </template>

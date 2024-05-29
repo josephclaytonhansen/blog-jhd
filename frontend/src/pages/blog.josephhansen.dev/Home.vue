@@ -4,6 +4,8 @@
 import { ref, onMounted } from 'vue'
 import hdImage from '../../components/bricks/images/hdImage.vue'
 
+import Header from '../components/bricks/sitewide/Header.vue'
+import Footer from '../components/bricks/sitewide/Footer.vue'
 
 import axios from 'axios'
 
@@ -64,6 +66,7 @@ const postLink = (post) => {
 
 
 <template>
+    <Header :thisPageComponentName="'Header'" />
     <div class="p-8 w-full min-h-screen text-text-1 bg-backdrop-1">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
@@ -88,4 +91,5 @@ const postLink = (post) => {
         </div>
         
     </div>
+    <Footer :thisPageComponentName="'Footer'" />
 </template>

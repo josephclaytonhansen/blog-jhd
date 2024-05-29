@@ -39,9 +39,9 @@ export default {
 </script>
 
 <template>
-  <Header v-if = "header"/>
+  <Header :thisPageComponentName="'Header'" v-if = "header"/>
   <div>
     <component :is="components[`${site}${thisPageComponentName}`]"></component>
 </div>
-<Footer v-if = "footer"/>
+<Footer :thisPageComponentName="'Footer'" v-if = "footer"/>
 </template>

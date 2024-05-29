@@ -29,9 +29,6 @@
   --ultra-light-backdrop-0: rgb(230, 230, 230);
   --ultra-light-text-0: rgb(40,40,40);
   --ultra-light-text-1: rgb(0,0,0);
-  --tw-prose-body: theme('colors.text-1');
-  --tw-prose-headings: theme('colors.text-2');
-  --tw-prose-links: theme('colors.accent.500');
 }
 
 .prose p{
@@ -243,6 +240,12 @@ h6 {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root{
+  --tw-prose-body: theme('colors.text-1')!important;
+  --tw-prose-headings: theme('colors.text-2')!important;
+  --tw-prose-links: theme('colors.accent.500')!important;
+}
 
 a {
   @apply no-underline;

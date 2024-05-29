@@ -63,7 +63,7 @@ const postLink = (post) => {
 
 
 <template>
-    <div class="p-5 w-full text-text-1">
+    <div class="p-5 w-full text-text-1 bg-backdrop-1">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
                 <h1 class="text-3xl font-header">Recent posts</h1>

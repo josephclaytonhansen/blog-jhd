@@ -31,12 +31,8 @@ import process from 'process'
 
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
-import { dirname } from 'path'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
+let dir = process.cwd()
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -106,7 +102,7 @@ let jobs = {}
 let jobId = 0
 
 try {
-    jobId = Number(fs.readFileSync(path.join(__dirname, '.jobid'), 'utf8'))
+    jobId = Number(fs.readFileSync(path.join(dir, '.jobid'), 'utf8'))
 } catch (err) {
     console.error('Failed to load jobId from file:', err)
 }
@@ -116,7 +112,7 @@ app.post('/build', [buildLimiter, authenticateToken], async (req, res) => {
         return res.status(403).send('Not authorized')
     }
     jobId++
-    fs.writeFile(path.join(__dirname, '.jobid'), String(jobId), (err) => {
+    fs.writeFile(path.join(dir, '.jobid'), String(jobId), (err) => {
         if (err) {
             console.error('Failed to save jobId to file:', err)
         }

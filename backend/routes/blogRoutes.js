@@ -17,7 +17,8 @@ import {getBlogs,
     getBlogsByTag,
     unpublishBlog,
     publishBlog,
-    incrementBlogViews
+    incrementBlogViews,
+    getRecentBlogs
 } from '../controllers/blogController.js'
 
 const router = express.Router()
@@ -29,6 +30,7 @@ router.get('/category/:category', getBlogsByCategory)
 router.get('/by/:author', getBlogsByAuthor)
 router.post('/status', getBlogsByStatus)
 router.post('/date', getBlogsByDate)
+router.post('/recent', getRecentBlogs)
 router.get('/slug/:slug', getBlogBySlug)
 router.post('/create', authenticateToken, createBlog)
 router.put('/edit/:id', authenticateToken, editBlog)

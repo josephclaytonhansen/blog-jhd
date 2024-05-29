@@ -251,6 +251,13 @@ const unpublishBlog = asyncHandler(async (req, res) => {
     }
 })
 
+const getRecentBlogs = asyncHandler(async (req, res) => {
+    let count = req.params.count
+    let startIndex = req.params.startIndex
+    const blogs = await Blog.find({}).sort({date: -1}).skip(startIndex).limit(count)
+    res.json(blogs)
+})
+
 export {
     getBlogs,
     getBlogsByCategory,
@@ -267,5 +274,6 @@ export {
     getBlogsByTag,
     publishBlog,
     unpublishBlog,
-    incrementBlogViews
+    incrementBlogViews,
+    getRecentBlogs
 }

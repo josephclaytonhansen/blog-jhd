@@ -69,8 +69,8 @@ const postLink = (post) => {
     <Header :thisPageComponentName="'Header'" />
     <div class="p-8 w-full min-h-screen text-text-1 bg-backdrop-1">
         <h1 class="text-xl lg:text-5xl  pt-4 pb-16">Joseph Hansen's development blog and musings</h1>
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-16">
-            <div class="col-span-2">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-16">
+            <div class="col-span-1 lg:col-span-2">
                 <h2 class="text-lg lg:text-3xl pb-3">Recent posts</h2>
                 <div class="flex flex-wrap gap-8">
                     <div v-for="post in recentPosts" :key="post._id" class="colorblock rounded grow max-w-full lg:max-w-[50%]">

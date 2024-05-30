@@ -4,7 +4,7 @@ import path from 'path'
 
 const parameterLookup = {
     THEME: {default: 'dark', allowedValues: ['dark', 'light', 'ultra-light']},
-    FONT_SANS: {default: 'Fira Sans', allowedCharacters: "a-zA-Z "},
+    FONT_BODY: {default: 'Fira Sans', allowedCharacters: "a-zA-Z "},
     BACKDROP_COLOR: {default: 'slate', allowedCharacters: "a-z"},
     ACCENT_COLOR: {default: 'cyan', allowedCharacters: "a-z"},
     ROUNDED: {default: 'rounded', allowedValues: ['subtle', 'rounded', 'sharp']},
@@ -14,10 +14,8 @@ const parameterLookup = {
     LINES: {default: 'false', allowedValues: ['true', 'false']},
     SIDEBAR: {default: 'false', allowedValues: ['true', 'false']},
     SIDEBAR_COLOR_BLOCK: {default: 'false', allowedValues: ['true', 'false']},
-    FONT_SERIF: {default: 'Cormorant Garamond', allowedCharacters: "a-zA-Z "},
-    SERIF_HEADER_TEXT: {default: 'false', allowedValues: ['true', 'false']},
+    FONT_HEADER: {default: 'Cormorant Garamond', allowedCharacters: "a-zA-Z "},
     UPPERCASE_HEADERS: {default: 'false', allowedValues: ['true', 'false']},
-    SERIF_BODY_TEXT: {default: 'false', allowedValues: ['true', 'false']},
     SITE_PREFIX: {default: 'example.com', allowedCharacters: "a-zA-Z0-9\\-\\.", format: '*.*'},
     BACKEND_URL: {default: 'https://example.com', allowedCharacters: "a-zA-Z0-9\\-\\.\\/:", format: 'https://*.*'},
 }

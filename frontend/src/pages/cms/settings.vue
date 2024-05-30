@@ -151,8 +151,6 @@ onMounted(async () => {
 
     const currentTheme = ref('dark')
 
-    const serifBodyText = ref(false)
-    const serifHeaderText = ref(false)
     const uppercaseHeader1and2 = ref(false)
 
     const roundAvatars = ref(true)

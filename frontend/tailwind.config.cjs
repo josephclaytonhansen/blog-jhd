@@ -219,6 +219,7 @@ module.exports = {
         fontFamily: {
           'sans': [process.env.FONT_SANS || 'sans-serif'],
           'serif': [process.env.FONT_SERIF || 'serif'],
+          'san-serif': [process.env.FONT_SANS || 'sans-serif'],
           'FiraSans': ['Fira Sans', 'sans-serif'],
           'Lora': ['Lora', 'serif'],
           'Slabo': ['Slabo 13px', 'serif'],

@@ -73,7 +73,7 @@ const postLink = (post) => {
             <div class="col-span-2">
                 <h2 class="text-lg lg:text-3xl  pb-3">Recent posts</h2>
                 <div class="flex flex-wrap flex-col gap-8">
-                    <div v-for="post in recentPosts" :key="post._id" class="w-full colorblock rounded">
+                    <div v-for="post in recentPosts" :key="post._id" class="colorblock rounded w-1/2">
                         <router-link :to="postLink(post)">
                         <FourSquareImage :image="post.featuredImage" :alt="post.title"/>
                         <div class="p-3 flex flex-col items-center align-middle">

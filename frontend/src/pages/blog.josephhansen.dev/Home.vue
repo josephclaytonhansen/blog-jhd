@@ -70,7 +70,7 @@ const postLink = (post) => {
     <div class="p-8 w-full min-h-screen text-text-1 bg-backdrop-1">
         <h1 class="text-xl lg:text-5xl  pt-4 pb-16">Joseph Hansen's development blog and musings</h1>
         <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-12">
-            <div>
+            <div class="col-span-2">
                 <h2 class="text-lg lg:text-3xl  pb-3">Recent posts</h2>
                 <div class="flex flex-wrap flex-col gap-8">
                     <div v-for="post in recentPosts" :key="post._id" class="w-full colorblock rounded">

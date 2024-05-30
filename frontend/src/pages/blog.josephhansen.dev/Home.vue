@@ -35,11 +35,10 @@ const getNRecentPostsStartingAt = (startIndex, count) => {
 
     axios.post(url, params, config).then((response) => {
         response.data.forEach((newPost) => {
-            if (!recentPosts.value.some((post) => post.id === newPost.id)) {
+            if (!recentPosts.value.some((post) => post._id === newPost._id)) {
                 recentPosts.value.push(newPost)
             }
         })
-        console.log(recentPosts.value)
     }).catch((error) => {
         console.log(error)
     })
@@ -73,7 +72,7 @@ const postLink = (post) => {
             <div>
                 <h1 class="text-3xl font-header pb-3">Recent posts</h1>
                 <div class="flex flex-wrap flex-col-reverse gap-3">
-                    <div v-for="post in recentPosts" :key="post.id" class="w-full colorblock rounded">
+                    <div v-for="post in recentPosts" :key="post._id" class="w-full colorblock rounded">
                         <router-link :to="postLink(post)">
                         <hdImage :image="post.featuredImage" :alt="post.title"/>
                         <div class="p-3 flex flex-col items-center align-middle">

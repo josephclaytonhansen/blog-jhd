@@ -90,26 +90,26 @@ const postLink = (post) => {
                 <h2 class="text-lg lg:text-3xl  pb-3">Other sites</h2>
                 <h3 class="text-lg lg:text-2xl  pb-3">My sites</h3>
                 <div class="flex flex-wrap flex-col gap-3">
-                    <div class="w-full colorblock rounded p-3 flex justify-content-start align-middle">
+                    <div class="w-full colorblock rounded p-3 flex justify-start align-middle">
                         <a href="https://josephhansen.dev"><h4 class=" text-lg text-center">josephhansen.dev</h4></a>
                         <p class="text-text-2" >Web portfolio and services</p>
                     </div>
-                    <div class="w-full colorblock rounded p-3 flex justify-content-start align-middle">
+                    <div class="w-full colorblock rounded p-3 flex justify-start align-middle">
                         <a href="https://hansenstudios.art"><h4 class=" text-lg text-center">hansenstudios.art</h4></a>
                         <p class="text-text-2">My studio's art, animation, and other works</p>
                     </div>
-                    <div class="w-full colorblock rounded p-3 flex justify-content-start align-middle">
+                    <div class="w-full colorblock rounded p-3 flex justify-start align-middle">
                         <a href = "https://github.com/josephclaytonhansen"><h4 class=" text-lg text-center">github.com/josephclaytonhansen</h4></a>
                         <p class="text-text-2" >GitHub</p>
                     </div>
                 </div>
                 <h3 class="text-lg lg:text-2xl  pb-3 pt-12">Blogs I recommend</h3>
                 <div class="flex flex-wrap flex-col gap-3">
-                    <div class="w-full colorblock rounded p-3 flex justify-content-start align-middle">
+                    <div class="w-full colorblock rounded p-3 flex justify-start align-middle">
                         <a href = "https://mattdugan.com"><h4 class=" text-lg text-center">mattdugan.com</h4></a>
                         <p class="text-text-2" >An insightful and entertaining developer blog I'm a fan of</p>
                     </div>
-                    <div class="w-full colorblock rounded p-3 flex justify-content-start align-middle">
+                    <div class="w-full colorblock rounded p-3 flex justify-start align-middle">
                         <a href="https://blog.jgc.org"><h4 class=" text-lg text-center">blog.jgc.org</h4></a>
                         <p class="text-text-2" >John Graham-Cumming's blog; a lot of his retro computing stuff goes over my head, but it's all fascinating</p>
                     </div>

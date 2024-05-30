@@ -12,7 +12,7 @@ import axios from 'axios'
 const site = window.location.hostname
 const recentPosts = ref([])
 let startIndex = 0
-const count = 5
+const count = 6
 
 const trimExcerpt = (excerpt) => {
     if (excerpt.length > 300) {return excerpt.substring(0, 300) + '...'} else {return excerpt}}

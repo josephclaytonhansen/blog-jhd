@@ -190,7 +190,7 @@ onMounted(async () => {
 
     const currentRounded = ref('rounded')
 
-    watch([currentSelectedHeaderFont, currentSelectedBodyFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded, roundAvatars, readingProgressBar, colorBlock, lines, sidebar, sidebarColorBlock, backendUrl, currentSiteSettings], ([newHeaderFont, newBodyFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded, newRoundAvatars, newReadingProgressBar, newColorBlock, newLines, newSidebar, newSidebarColorBlock, newBackendUrl, newCurrentSiteSettings]) => {
+    watch([currentSelectedHeaderFont, currentSelectedBodyFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, uppercaseHeader1and2, currentRounded, roundAvatars, readingProgressBar, colorBlock, lines, sidebar, sidebarColorBlock, backendUrl, currentSiteSettings], ([newHeaderFont, newBodyFont, newAccentColor, newBackdropColor, newTheme, newUppercaseHeader1and2, newRounded, newRoundAvatars, newReadingProgressBar, newColorBlock, newLines, newSidebar, newSidebarColorBlock, newBackendUrl, newCurrentSiteSettings]) => {
         buildScript.value = {
             'THEME': newTheme,
             'FONT_HEADER': newHeaderFont.name,

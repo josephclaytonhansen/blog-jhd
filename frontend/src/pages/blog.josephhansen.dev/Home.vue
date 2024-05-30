@@ -71,7 +71,7 @@ const postLink = (post) => {
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
                 <h1 class="text-3xl font-header pb-3">Recent posts</h1>
-                <div class="flex flex-wrap flex-col-reverse gap-3">
+                <div class="flex flex-wrap flex-col gap-3">
                     <div v-for="post in recentPosts" :key="post._id" class="w-full colorblock rounded">
                         <router-link :to="postLink(post)">
                         <hdImage :image="post.featuredImage" :alt="post.title"/>

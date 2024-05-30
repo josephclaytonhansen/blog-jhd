@@ -436,17 +436,16 @@ a {
 
 /* automated */
 h1, h2 {
-  text-transform: none;
+  text-transform: uppercase;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fira Sans';
+  font-family: 'Gudea';
 }
 
 body {
-  font-family: 'Fira Sans';
+  font-family: 'Gudea';
 }
 
-.avatar{border-radius:999rem;}
 
 
 #progress-bar, #progress-bar-fill{
@@ -454,54 +453,55 @@ body {
 }
 
 .colorblock{
-  background-color: theme('colors.backdrop-2');
+  background-color: transparent;
   
 }
 
 .colorblock_dark{
-  background-color: theme('colors.backdrop-1');
+  background-color: transparent;
   
 }
 
 .colorblock_darker {
-  background-color: theme('colors.backdrop-0');
+  background-color: transparent;
   
 }
 
 .colorblock_accent{
-  background-color: theme('colors.accent.700');
-  color:theme('colors.backdrop.100');
+  background-color: transparent;
+  ;
   
 }
 
 .dividing-line{
-  border-bottom: none;
+  border-bottom: 2px solid theme('colors.backdrop-0');
   width: 100%;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
   border-top-width: 0;
 }
 
 .dividing-line-mid{
-  border-right: none;
+  border-right: 2px solid theme('colors.backdrop-0');
   height: 100%;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
   border-top-width: 0;
 }
 
 .colorblock_accent .dividing-line{
-  border-bottom: none;
+  border-bottom: 1px solid theme('colors.accent.600');
 }
 
 .sidebar{
-  display: flex;
-  background-color: theme('colors.backdrop-2');
-  color: theme('colors.backdrop.200');
+  display: none!important;
+  background-color: transparent;
+  color: theme('colors.text-0');
 
 }
 
 /* end automated */
+
 
 
 

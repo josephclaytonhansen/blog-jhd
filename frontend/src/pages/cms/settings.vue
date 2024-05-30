@@ -325,9 +325,9 @@ onMounted(async () => {
                 <p class="text-text-1 pl-2">Uppercase top-level headers</p>
             </div>
             <div class="prose">
-            <h5 class="text-text-0 text-3xl" :class="[currentSelectedHeaderFont.name, uppercaseHeader1and2 ? 'uppercase' : '']">Sample top-level heading</h5>
-            <h6 class="text-text-1 text-xl" :class = "currentSelectedHeaderFont.name">Sample mid-level heading</h6>
-            <p class="text-text-1" :class = "currentSelectedBodyFont.name">This is a sample paragraph. It should be easy to read and not too overwhelming. The fonts should complement each other.<br/><br/><span>The <em>quick brown fox</em> jumped over the <b>lazy dog.</b></span></p>
+            <h5 class="text-text-0 text-3xl" :class="[currentSelectedHeaderFont.font, uppercaseHeader1and2 ? 'uppercase' : '']">Sample top-level heading</h5>
+            <h6 class="text-text-1 text-xl" :class = "currentSelectedHeaderFont.font">Sample mid-level heading</h6>
+            <p class="text-text-1" :class = "currentSelectedBodyFont.font">This is a sample paragraph. It should be easy to read and not too overwhelming. The fonts should complement each other.<br/><br/><span>The <em>quick brown fox</em> jumped over the <b>lazy dog.</b></span></p>
             </div>
 
         </div>

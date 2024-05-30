@@ -68,8 +68,8 @@ const postLink = (post) => {
 <template>
     <Header :thisPageComponentName="'Header'" />
     <div class="p-8 w-full min-h-screen text-text-1 bg-backdrop-1">
-        <h1 class="text-xl lg:text-5xl  pt-4 pb-8">Joseph Hansen's development blog and musings</h1>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-8">
+        <h1 class="text-xl lg:text-5xl  pt-4 pb-16">Joseph Hansen's development blog and musings</h1>
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-12">
             <div>
                 <h2 class="text-lg lg:text-3xl  pb-3">Recent posts</h2>
                 <div class="flex flex-wrap flex-col gap-8">
@@ -90,38 +90,37 @@ const postLink = (post) => {
                 <h2 class="text-lg lg:text-3xl  pb-3">Other sites</h2>
                 <h3 class="text-lg lg:text-2xl  pb-3">My sites</h3>
                 <div class="flex flex-wrap flex-col gap-3">
-                    <div class="w-full colorblock rounded p-3">
+                    <div class="w-full colorblock rounded p-3 flex">
                         <a href="https://josephhansen.dev"><h4 class=" text-lg text-center">josephhansen.dev</h4></a>
                         <p class="text-text-2" >Web portfolio and services</p>
                     </div>
-                    <div class="w-full colorblock rounded p-3">
+                    <div class="w-full colorblock rounded p-3 flex">
                         <a href="https://hansenstudios.art"><h4 class=" text-lg text-center">hansenstudios.art</h4></a>
                         <p class="text-text-2">My studio's art, animation, and other works</p>
                     </div>
-                    <div class="w-full colorblock rounded p-3">
+                    <div class="w-full colorblock rounded p-3 flex">
                         <a href = "https://github.com/josephclaytonhansen"><h4 class=" text-lg text-center">github.com/josephclaytonhansen</h4></a>
                         <p class="text-text-2" >GitHub</p>
                     </div>
                 </div>
                 <h3 class="text-lg lg:text-2xl  py-3">Blogs I recommend</h3>
                 <div class="flex flex-wrap flex-col gap-3">
-                    <div class="w-full colorblock rounded p-3">
+                    <div class="w-full colorblock rounded p-3 flex">
                         <a href = "https://mattdugan.com"><h4 class=" text-lg text-center">mattdugan.com</h4></a>
                         <p class="text-text-2" >An insightful and entertaining developer blog I'm a fan of</p>
                     </div>
-                    <div class="w-full colorblock rounded p-3">
+                    <div class="w-full colorblock rounded p-3 flex">
                         <a href="https://blog.jgc.org"><h4 class=" text-lg text-center">blog.jgc.org</h4></a>
                         <p class="text-text-2" >John Graham-Cumming's blog; a lot of his retro computing stuff goes over my head, but it's all fascinating</p>
                     </div>
                 </div>
             </div>
-            <div>
-                <h2 class="text-lg lg:text-3xl  pb-3">Since you're here:</h2>
-                <div class="rounded colorblock p-3">
-                    <p class="text-text-2">
-                        Thanks for checking out my blog! My goal in life is to make the world a better place, and I hope I can inspire you to do the same. Consider donating to Ukraine or Gaza, going to a local city council meeting, planting pollinator flowers, or commiting a bug fix to an open source project :)
-                    </p>
-                </div>
+        </div>
+        <div class = "mt-8">
+            <div class="rounded colorblock p-3">
+                <p class="text-text-2">
+                    Thanks for checking out my blog! My goal in life is to make the world a better place, and I hope I can inspire you to do the same. Consider donating to Ukraine or Gaza, going to a local city council meeting, planting pollinator flowers, or commiting a bug fix to an open source project :)
+                </p>
             </div>
         </div>
         

@@ -2,7 +2,7 @@
 <script setup>
 
 import { ref, onMounted } from 'vue'
-import hdImage from '../../components/bricks/images/hdImage.vue'
+import threeSquareImage from '../../components/bricks/images/threesquareImage.vue'
 
 import Header from '../../components/bricks/sitewide/Header.vue'
 import Footer from '../../components/bricks/sitewide/Footer.vue'
@@ -68,14 +68,14 @@ const postLink = (post) => {
 <template>
     <Header :thisPageComponentName="'Header'" />
     <div class="p-8 w-full min-h-screen text-text-1 bg-backdrop-1">
-        <h1 class="text-5xl font-header py-6">Joseph Hansen's development blog and other musings</h1>
+        <h1 class="text-5xl font-header py-6">Joseph Hansen's development blog and musings</h1>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
             <div>
                 <h2 class="text-3xl font-header pb-3">Recent posts</h2>
-                <div class="flex flex-wrap flex-col gap-3">
+                <div class="flex flex-wrap flex-col gap-8">
                     <div v-for="post in recentPosts" :key="post._id" class="w-full colorblock rounded">
                         <router-link :to="postLink(post)">
-                        <hdImage :image="post.featuredImage" :alt="post.title"/>
+                        <threeSquareImage :image="post.featuredImage" :alt="post.title"/>
                         <div class="p-3 flex flex-col items-center align-middle">
                             <h3 class="font-header text-lg text-center">{{ post.title }}</h3>
                             <p class="text-text-2" >{{ trimExcerpt(post.excerpt) }}</p>

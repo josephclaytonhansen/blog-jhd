@@ -22,11 +22,11 @@ post.value = props.post
 <template>
     <div class = "w-full flex flex-col">
         <div class="flex justify-between items-center flex-wrap">
-            <h1 class="text-4xl font-header font-semibold">{{props.post.title}}</h1>
-            <h2 class="text-xs font-header italic grow">Written by {{author.displayName}}</h2>
+            <h1 class="text-4xl  font-semibold">{{props.post.title}}</h1>
+            <h2 class="text-xs  italic grow">Written by {{author.displayName}}</h2>
             <hr class="dividing-line-mid"/>
             <div class="flex gap-2 items-center">
-                <h2 class="text-xs font-header italic">{{props.post.category}}</h2>
+                <h2 class="text-xs  italic">{{props.post.category}}</h2>
                 <Tags :tags="props.post.tags" class="ml-2" />
             </div>
         </div>

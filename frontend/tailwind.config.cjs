@@ -250,8 +250,8 @@ module.exports = {
           'Gudea': ['Gudea', 'sans-serif'],
           'Figtree': ['Figtree', 'sans-serif'],
           'Economica': ['Economica', 'sans-serif'],
-          'header': process.env.SERIF_HEADER_TEXT === 'true' ? ['serif'] : ['sans-serif'],
-          'body': process.env.SERIF_BODY_TEXT === 'true' ? ['serif'] : ['sans-serif'],
+          'header': process.env.FONT_HEADER,
+          'body': process.env.FONT_BODY,
         },
         borderRadius: process.env.ROUNDED === 'subtle' ? {
           'none': '0',

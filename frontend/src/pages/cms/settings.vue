@@ -45,7 +45,7 @@ onMounted(async () => {
       return { prefixes, testResults }
     })
 
-    const fontSansOptions = ref([
+    const fontHeaderOptions = ref([
         {name: "Fira Sans", font: 'font-FiraSans'},
         {name: "Merriweather Sans", font: 'font-MerriweatherSans'},
         {name: "Cairo", font: 'font-Cairo'},
@@ -62,9 +62,7 @@ onMounted(async () => {
         {name: "Gudea", font: 'font-Gudea'},
         {name: "Figtree", font: 'font-Figtree'},
         {name: "Economica", font: 'font-Economica'},
-    ])
 
-    const fontSerifOptions = ref([
         {name: "Libre Baskerville", font: 'font-LibreBaskerville'},
         {name: "Martel", font: 'font-Martel'},
         {name: "CormorantGaramond", font: 'font-CormorantGaramond'},
@@ -79,6 +77,40 @@ onMounted(async () => {
         {name: "Quattrocento", font: 'font-Quattrocento'},
         {name: "Noticia Text", font: 'font-NoticiaText'},
         {name: "Habibi", font: 'font-Habibi'},
+    ])
+
+    const fontBodyOptions = ref([
+        {name: "Libre Baskerville", font: 'font-LibreBaskerville'},
+        {name: "Martel", font: 'font-Martel'},
+        {name: "CormorantGaramond", font: 'font-CormorantGaramond'},
+        {name: "Glegoo", font: 'font-Glegoo'},
+        {name: "Graduate", font: 'font-Graduate'},
+        {name: "Besley", font: 'font-Besley'},
+        {name: "Maitree", font: 'font-Maitree'},
+        {name: "Lora", font: 'font-Lora'},
+        {name: "Slabo", font: 'font-Slabo'},
+        {name: "Crimson Text", font: 'font-CrimsonText'},
+        {name: "Playfair Display", font: 'font-PlayfairDisplay'},
+        {name: "Quattrocento", font: 'font-Quattrocento'},
+        {name: "Noticia Text", font: 'font-NoticiaText'},
+        {name: "Habibi", font: 'font-Habibi'},
+
+        {name: "Fira Sans", font: 'font-FiraSans'},
+        {name: "Merriweather Sans", font: 'font-MerriweatherSans'},
+        {name: "Cairo", font: 'font-Cairo'},
+        {name: "Titilium", font: 'font-Titilium'},
+        {name: "Anaheim", font: 'font-Anaheim'},
+        {name: "Prompt", font: 'font-Prompt'},
+        {name: "Comfortaa", font: 'font-Comfortaa'},
+        {name: "Poppins", font: 'font-Poppins'},
+        {name: "Lato", font: 'font-Lato'},
+        {name: "Montserrat", font: 'font-Montserrat'},
+        {name: "Nunito Sans", font: 'font-NunitoSans'},
+        {name: "Oswald", font: 'font-Oswald'},
+        {name: "Mulish", font: 'font-Mulish'},
+        {name: "Gudea", font: 'font-Gudea'},
+        {name: "Figtree", font: 'font-Figtree'},
+        {name: "Economica", font: 'font-Economica'},
     ])
 
     const colorOptions = ref([
@@ -107,8 +139,8 @@ onMounted(async () => {
 
     ])
 
-    const currentSelectedSansFont = ref(fontSansOptions.value[0])
-    const currentSelectedSerifFont = ref(fontSerifOptions.value[0])
+    const currentSelectedHeaderFont = ref(fontHeaderOptions.value[0])
+    const currentSelectedBodyFont = ref(fontBodyOptions.value[0])
 
     const currentSelectedAccentColor = ref(colorOptions.value[13])
     const currentSelectedBackDropColor = ref(colorOptions.value[0])
@@ -135,12 +167,10 @@ onMounted(async () => {
 
     const buildScript = ref({
         'THEME': 'dark',
-        'FONT_SANS': 'Fira Sans',
-        'FONT_SERIF': 'Libre Baskerville',
+        'FONT_HEADER': 'Fira Sans',
+        'FONT_BODY': 'Libre Baskerville',
         'ACCENT_COLOR': 'blue',
         'BACKDROP_COLOR': 'slate', 
-        'SERIF_BODY_TEXT': false,
-        'SERIF_HEADER_TEXT': false,
         'UPPERCASE_HEADERS': false,
         'ROUNDED': 'rounded',
         'ROUND_AVATARS': false,
@@ -162,15 +192,13 @@ onMounted(async () => {
 
     const currentRounded = ref('rounded')
 
-    watch([currentSelectedSansFont, currentSelectedSerifFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded, roundAvatars, readingProgressBar, colorBlock, lines, sidebar, sidebarColorBlock, backendUrl, currentSiteSettings], ([newSansFont, newSerifFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded, newRoundAvatars, newReadingProgressBar, newColorBlock, newLines, newSidebar, newSidebarColorBlock, newBackendUrl, newCurrentSiteSettings]) => {
+    watch([currentSelectedHeaderFont, currentSelectedBodyFont, currentSelectedAccentColor, currentSelectedBackDropColor, currentTheme, serifBodyText, serifHeaderText, uppercaseHeader1and2, currentRounded, roundAvatars, readingProgressBar, colorBlock, lines, sidebar, sidebarColorBlock, backendUrl, currentSiteSettings], ([newHeaderFont, newBodyFont, newAccentColor, newBackdropColor, newTheme, newSerifBodyText, newSerifHeaderText, newUppercaseHeader1and2, newRounded, newRoundAvatars, newReadingProgressBar, newColorBlock, newLines, newSidebar, newSidebarColorBlock, newBackendUrl, newCurrentSiteSettings]) => {
         buildScript.value = {
             'THEME': newTheme,
-            'FONT_SANS': newSansFont.name,
-            'FONT_SERIF': newSerifFont.name,
+            'FONT_HEADER': newHeaderFont.name,
+            'FONT_BODY': newBodyFont.name,
             'ACCENT_COLOR': newAccentColor,
             'BACKDROP_COLOR': newBackdropColor,
-            'SERIF_BODY_TEXT': newSerifBodyText,
-            'SERIF_HEADER_TEXT': newSerifHeaderText,
             'UPPERCASE_HEADERS': newUppercaseHeader1and2,
             'ROUNDED': newRounded,
             'ROUND_AVATARS': newRoundAvatars,
@@ -283,27 +311,15 @@ onMounted(async () => {
         <div class="p-8 bg-backdrop-2 rounded shrink max-w-full lg:max-w-[31%]">
             <h2 class= "text-2xl text-text-0 pb-4  ">Font Settings</h2>
             <hr class="border-backdrop-1 my-2 border-b-2"/>
-            <h3 class="text-text-1 pb-2">Sans serif</h3>
-            <select v-model="currentSelectedSansFont" class="bg-backdrop-1 text-text-1 rounded p-2">
-                <option v-for="font in fontSansOptions" :key="font" :value="font">{{font.name}}</option>
+            <h3 class="text-text-1 pb-2">Header</h3>
+            <select v-model="currentSelectedHeaderFont" class="bg-backdrop-1 text-text-1 rounded p-2">
+                <option v-for="font in fontHeaderOptions" :key="font" :value="font">{{font.name}}</option>
             </select>
 
-            <h3 class="text-text-1 pb-2 pt-4">Serif</h3>
-            <select v-model="currentSelectedSerifFont" class="bg-backdrop-1 text-text-1 rounded p-2">
-                <option v-for="font in fontSerifOptions" :key="font" :value="font">{{font.name}}</option>
+            <h3 class="text-text-1 pb-2 pt-4">Body</h3>
+            <select v-model="currentSelectedBodyFont" class="bg-backdrop-1 text-text-1 rounded p-2">
+                <option v-for="font in fontBodyOptions" :key="font" :value="font">{{font.name}}</option>
             </select>
-
-            <div class = "flex mt-6">
-                <p class = "text-text-1 pr-2">Sans body text</p>
-                <Toggle v-model='serifBodyText' :width="8" :ringClass="'ring-accent-600 hover:ring-accent-500 ring-2 hover:ring-4'"/>
-                <p class = "text-text-1 pl-2">Serif body text</p>
-            </div>
-
-            <div class = "flex">
-                <p class="text-text-1 pr-2">Sans header text</p>
-                <Toggle v-model="serifHeaderText" :width="8" :ringClass="'ring-accent-600 hover:ring-accent-500 ring-2 hover:ring-4'"/>
-                <p class="text-text-1 pl-2">Serif header text</p>
-            </div>
 
             <div class="flex mb-6">
                 <p class="text-text-1 pr-2"></p>
@@ -311,9 +327,9 @@ onMounted(async () => {
                 <p class="text-text-1 pl-2">Uppercase top-level headers</p>
             </div>
             <div class="prose">
-            <h5 class="text-text-0 text-3xl" :class="[!serifHeaderText ? currentSelectedSansFont.font : currentSelectedSerifFont.font,uppercaseHeader1and2 ? 'uppercase' : '']">Sample top-level heading</h5>
-            <h6 class="text-text-1 text-xl" :class = "!serifHeaderText ? currentSelectedSansFont.font: currentSelectedSerifFont.font">Sample mid-level heading</h6>
-            <p class="text-text-1" :class = "!serifBodyText ? currentSelectedSansFont.font : currentSelectedSerifFont.font">This is a sample paragraph. It should be easy to read and not too overwhelming. The fonts should complement each other.<br/><br/><span>The <em>quick brown fox</em> jumped over the <b>lazy dog.</b></span></p>
+            <h5 class="text-text-0 text-3xl" :class="[!currentSelectedHeaderFont, uppercaseHeader1and2 ? 'uppercase' : '']">Sample top-level heading</h5>
+            <h6 class="text-text-1 text-xl" :class = "currentSelectedHeaderFont">Sample mid-level heading</h6>
+            <p class="text-text-1" :class = "currentSelectedBodyFont">This is a sample paragraph. It should be easy to read and not too overwhelming. The fonts should complement each other.<br/><br/><span>The <em>quick brown fox</em> jumped over the <b>lazy dog.</b></span></p>
             </div>
 
         </div>

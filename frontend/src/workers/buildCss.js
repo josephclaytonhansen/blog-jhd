@@ -8,11 +8,11 @@ h1, h2 {
   text-transform: ${process.env.UPPERCASE_HEADERS === 'true' ? 'uppercase' : 'none'};
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: '${process.env.SERIF_HEADER_TEXT === 'true' ? process.env.FONT_SERIF : process.env.FONT_SANS}';
+  font-family: '${process.env.FONT_HEADER}';
 }
 
 body {
-  font-family: '${process.env.SERIF_BODY_TEXT === 'true' ? process.env.FONT_SERIF : process.env.FONT_SANS}';
+  font-family: '${process.env.FONT_BODY}';
 }
 
 ${process.env.ROUND_AVATARS === 'true' ? '.avatar{border-radius:999rem;}\n' : ''}

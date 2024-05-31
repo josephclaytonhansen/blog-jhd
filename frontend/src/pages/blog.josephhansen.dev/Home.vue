@@ -75,10 +75,10 @@ const postLink = (post) => {
                 <div class="flex flex-wrap gap-8">
                     <div v-for="post in recentPosts" :key="post._id" class="colorblock rounded grow max-w-full lg:max-w-[50%]">
                         <router-link :to="postLink(post)">
-                        <FourSquareImage :image="post.featuredImage" :alt="post.title"/>
+                        <FourSquareImage :image="post.featuredImage" :alt="post.title" v-if="post.featuredImage && post.featuredImage !== ''"/>
                         <div class="p-3 flex flex-col items-center justify-start">
                             <h3 class=" text-lg text-center">{{ post.title }}</h3>
-                            <p class="text-text-2" >{{ trimExcerpt(post.excerpt) }}</p>
+                            <p class="text-text-2" v-if="post.excerpt && post.excerpt !== ''">{{ trimExcerpt(post.excerpt) }}</p>
                         </div> 
                         </router-link>
                     </div>
@@ -107,11 +107,15 @@ const postLink = (post) => {
                 <div class="flex flex-wrap flex-col gap-3">
                     <div class="w-full colorblock rounded p-3 flex items-center justify-start">
                         <a href = "https://mattdugan.com"><h4 class=" text-lg text-center">mattdugan.com</h4></a>
-                        <p class="text-text-2" >An insightful and entertaining developer blog I'm a fan of</p>
+                        <p class="text-text-2" >Matt Dugan is insightful and entertaining</p>
                     </div>
                     <div class="w-full colorblock rounded p-3 flex items-center justify-start">
                         <a href="https://blog.jgc.org"><h4 class=" text-lg text-center">blog.jgc.org</h4></a>
-                        <p class="text-text-2" >John Graham-Cumming's blog; a lot of his retro computing stuff goes over my head, but it's all fascinating</p>
+                        <p class="text-text-2" >John Graham-Cumming's blog- I love his handmade gadgets</p>
+                    </div>
+                    <div class="w-full colorblock rounded p-3 flex items-center justify-start">
+                        <a href="https://css-irl.info"><h4 class=" text-lg text-center">css-irl.info</h4></a>
+                        <p class="text-text-2" >Michelle's blog is a fantastic source for web sustainability</p>
                     </div>
                 </div>
             </div>

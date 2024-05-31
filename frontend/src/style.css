@@ -445,11 +445,11 @@ h1, h2 {
   text-transform: none;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Prompt';
+  font-family: 'Cairo';
 }
 
 body {
-  font-family: 'Montserrat';
+  font-family: 'Mulish';
 }
 
 .avatar{border-radius:999rem;}
@@ -508,6 +508,7 @@ body {
 }
 
 /* end automated */
+
 
 
 

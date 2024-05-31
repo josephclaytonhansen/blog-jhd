@@ -99,24 +99,16 @@ import startBuildProcess from './workers/startBuildProcess.js'
 
 let jobs = {}
 
-let jobId = 0
-const jobIdFilePath = path.join(dir, '.jobid')
-
-try {
-    if (fs.existsSync(jobIdFilePath)) {
-        jobId = Number(fs.readFileSync(jobIdFilePath, 'utf8'))
-    } else {
-        fs.writeFileSync(jobIdFilePath, '0')
-    }
-} catch (err) {
-    console.error('Failed to load or create jobId file:', err)
+const randomFiveDigitNumber = () => {
+    return Math.floor(10000 + Math.random() * 90000)
 }
+let jobId = 0
 
 app.post('/build', [buildLimiter, authenticateToken], async (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== 'admin') {
         return res.status(403).send('Not authorized')
     }
-    jobId++
+    let jobId = randomFiveDigitNumber()
     fs.writeFile(path.join(dir, '.jobid'), String(jobId), (err) => {
         if (err) {
             console.error('Failed to save jobId to file:', err)

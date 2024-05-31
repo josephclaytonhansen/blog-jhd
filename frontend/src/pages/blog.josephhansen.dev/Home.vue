@@ -2,7 +2,6 @@
 <script setup>
 
 import { ref, onMounted } from 'vue'
-import FourSquareImage from '../../components/bricks/images/foursquareImage.vue'
 
 import Header from '../../components/bricks/sitewide/Header.vue'
 import Footer from '../../components/bricks/sitewide/Footer.vue'
@@ -75,7 +74,6 @@ const postLink = (post) => {
                 <div class="flex flex-wrap gap-8">
                     <div v-for="post in recentPosts" :key="post._id" class="colorblock rounded grow max-w-full lg:max-w-[50%]">
                         <router-link :to="postLink(post)">
-                        <FourSquareImage :image="post.featuredImage" :alt="post.title" v-if="post.featuredImage && post.featuredImage !== ''"/>
                         <div class="p-3 flex flex-col items-center justify-start">
                             <h3 class=" text-lg text-center">{{ post.title }}</h3>
                             <p class="text-text-2" v-if="post.excerpt && post.excerpt !== ''">{{ trimExcerpt(post.excerpt) }}</p>

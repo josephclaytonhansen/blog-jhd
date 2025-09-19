@@ -1,0 +1,55 @@
+# Docker ignore patterns
+
+# Node modules
+**/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+docs/
+
+# SSL certificates (will be mounted)
+nginx/ssl/*.pem
+nginx/ssl/*.key
+
+# Backup files
+backups/
+*.backup
+
+# Temporary files
+tmp/
+temp/

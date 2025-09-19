@@ -1,0 +1,28 @@
+FROM node:20-alpine
+
+# Install git for commit operations
+RUN apk add --no-cache git
+
+WORKDIR /app
+
+# Copy root package.json for build commands
+COPY package*.json ./
+
+# Copy backend
+COPY backend/ ./backend/
+RUN cd backend && npm ci
+
+# Copy frontend 
+COPY frontend/ ./frontend/
+RUN cd frontend && npm ci
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S builder -u 1001
+
+# Change ownership of the app directory
+RUN chown -R builder:nodejs /app
+USER builder
+
+# Default command - can be overridden
+CMD ["npm", "run", "buildbot"]

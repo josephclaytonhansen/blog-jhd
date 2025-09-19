@@ -1,0 +1,148 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: blog-mongodb
+    restart: unless-stopped
+    environment:
+      # These create the initial admin user for MongoDB
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-blog}
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongodb/init:/docker-entrypoint-initdb.d
+    networks:
+      - blog-network
+    ports:
+      - "127.0.0.1:27017:27017"  # Only bind to localhost for security
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: blog-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      PORT: ${BACKEND_PORT:-3720}
+      # MongoDB connection string - this is what your app actually uses
+      MONGO_STRING: ${MONGO_STRING}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_PARSER_SECRET: ${COOKIE_PARSER_SECRET}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      EMAIL_FROM_USERNAME: ${EMAIL_FROM_USERNAME}
+      EMAIL_FROM_PASSWORD: ${EMAIL_FROM_PASSWORD}
+      FRONTEND_URLS: ${FRONTEND_URLS:-http://localhost:5173}
+      VUE_APP_SERVER_URL: ${VUE_APP_SERVER_URL:-http://localhost:3720}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - blog-network
+    ports:
+      - "127.0.0.1:3720:3720"  # Only bind to localhost since nginx will proxy
+    depends_on:
+      - mongodb
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3720/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Frontend Development Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: blog-frontend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      VUE_APP_SERVER_URL: ${VUE_APP_SERVER_URL:-http://localhost:3720}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - blog-network
+    ports:
+      - "127.0.0.1:5173:5173"  # Only bind to localhost
+    depends_on:
+      - backend
+
+  # Production Frontend Build (alternative to dev)
+  frontend-build:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: blog-frontend-build
+    environment:
+      NODE_ENV: production
+      VUE_APP_SERVER_URL: ${VUE_APP_SERVER_URL:-http://backend:3720}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - blog-network
+    command: ["npm", "run", "build"]
+    depends_on:
+      - backend
+    profiles:
+      - production
+
+  # Build automation service
+  buildbot:
+    build:
+      context: .
+      dockerfile: Dockerfile.buildbot
+    container_name: blog-buildbot
+    restart: "no"
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      MONGO_STRING: ${MONGO_STRING}
+      VUE_APP_SERVER_URL: ${VUE_APP_SERVER_URL:-http://backend:3720}
+    volumes:
+      - .:/app
+      - /app/backend/node_modules
+      - /app/frontend/node_modules
+
+    networks:
+      - blog-network
+    depends_on:
+      - mongodb
+      - backend
+    command: ["npm", "run", "buildbot"]
+    profiles:
+      - buildbot
+
+  # Commit automation service
+  commit-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.buildbot
+    container_name: blog-commit-bot
+    restart: "no"
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+    volumes:
+      - .:/app
+      - /app/backend/node_modules
+      - /app/frontend/node_modules
+    networks:
+      - blog-network
+    command: ["npm", "run", "commit"]
+    profiles:
+      - commit
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  blog-network:
+    driver: bridge
